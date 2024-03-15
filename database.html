@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database</title>
+    <!-- Agrega aquí tus enlaces a hojas de estilo, si es necesario -->
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Registro Completo de la Base de Datos</h1>
+        
+        <!-- Agrega una tabla para mostrar los datos -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Latitud</th>
+                    <th>Longitud</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                </tr>
+
+            </thead>
+            <tbody id="data-table-body">
+                <!-- Aquí se llenarán dinámicamente los datos -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Agrega aquí tus scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+        const socket = io();
+        console.log('Conexión a Socket.IO establecida correctamente.');
+
+        // Manejar el evento de actualización de la tabla
+        socket.on('locationUpdate', (data) => {
+            // Crear una nueva fila para los datos recibidos
+            const newRow = `<tr>
+                                <td>${data.Latitude}</td>
+                                <td>${data.Longitude}</td>
+                                <td>${data.Date}</td>
+                                <td>${data.Time}</td>
+                            </tr>`;
+
+            // Agregar la nueva fila a la tabla
+            $('#data-table-body').prepend(newRow);
+        });
+    </script>
+
+</body>
+
+</html>
