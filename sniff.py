@@ -4,7 +4,7 @@ from datetime import datetime
 
 # Configuración del socket
 UDP_IP = "0.0.0.0"  # Escuchar en todas las interfaces
-UDP_PORT = 25000
+UDP_PORT = 20000
 
 
 # Configuración del servidor web
