@@ -60,7 +60,7 @@ app.get('/database', (req, res) => {
     }
     const htmlContent = generateDatabasePage(results);
 
-    // Send the dynamically generated HTML to the client
+    // Envío dinámico a HTML client
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.write(htmlContent);
     res.end();
