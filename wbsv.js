@@ -67,7 +67,7 @@ app.get('/database', (req, res) => {
   });
 });
 
-// Function to generate HTML content for the /database page
+
 function generateDatabasePage(data) {
   let htmlContent = `
     <!DOCTYPE html>
