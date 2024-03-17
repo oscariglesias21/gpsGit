@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +23,6 @@
         }
     </style>
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -48,7 +46,6 @@
     </div>
     <div class="container mt-3">
         <div class="row justify-content-center">
-            <!-- Latitud -->
             <div class="col mb-3">
                 <div class="card">
                     <div class="card-header text-center">Latitud</div>
@@ -57,7 +54,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Longitud -->
             <div class="col mb-3">
                 <div class="card">
                     <div class="card-header text-center">Longitud</div>
@@ -66,7 +62,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Fecha -->
             <div class="col mb-3">
                 <div class="card">
                     <div class="card-header text-center">Fecha</div>
@@ -75,7 +70,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Hora -->
             <div class="col mb-3">
                 <div class="card">
                     <div class="card-header text-center">Hora</div>
@@ -85,7 +79,6 @@
                 </div>
             </div>
         </div>
-        <!-- Map Section Enclosed in a Card -->
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="card">
@@ -113,19 +106,30 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(myMap);
-        let marker = L.marker([0, 0]).addTo(myMap);
 
-        socket.on('locationUpdate', (data) => { //escucha eventos emitidos por el servidor
-            document.getElementById('latitude').innerText = data.Latitude; //funciones callback
+        let marker = L.marker([0, 0]).addTo(myMap);
+        let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
+        let resetTimer = null;
+
+        socket.on('locationUpdate', (data) => {
+            document.getElementById('latitude').innerText = data.Latitude;
             document.getElementById('longitude').innerText = data.Longitude;
             document.getElementById('date').innerText = data.Date;
             document.getElementById('time').innerText = data.Time;
 
-            const newLatLng = new L.LatLng(data.Latitude, data.Longitude); //objeto para representación de punto geográfico mediante clase LatLng
-            marker.setLatLng(newLatLng); //ubicar y cambiar marcador en el mapa mediante objetos newLatLng y setLatLng
-            myMap.setView(newLatLng, 20); //zoom del mapa mediante el método setview
+            const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
+            marker.setLatLng(newLatLng);
+            myMap.setView(newLatLng, 20);
+
+            routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
+
+            if (resetTimer !== null) {
+            clearTimeout(resetTimer);
+        }
+        resetTimer = setTimeout(() => {
+            routePath.setLatLngs([newLatLng]); // Resetea la polilínea manteniendo la última ubicación
+        }, 10000); // 10 segundos de inactividad
         });
     </script>
 </body>
-
 </html>

@@ -14,7 +14,7 @@ const dbConnection = mysql.createConnection({
   password: 'Osqui61832513',
   database: 'p2db'
 });
-const port = 15000;
+const port = 80;
 dbConnection.connect((err) => {
   if (err) {
     console.error('Error al conectar a la base de datos:', err);
