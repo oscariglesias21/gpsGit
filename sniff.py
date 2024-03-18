@@ -10,7 +10,7 @@ UDP_PORT = 20000
 # Configuración del servidor web
 web_server_url = "http://52.201.18.119:80/updateFromSniffer"
 web_server_url1 = "http://54.211.70.225:80/updateFromSniffer"
-web_server_url2 = "http://44.198.179.134/updateFromSniffer"
+web_server_url2 = "http://44.198.179.134:80/updateFromSniffer"
 
 def extract_gps_info(data):
     # Simula la extracción de los datos GPS del payload
