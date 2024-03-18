@@ -41,26 +41,7 @@ pipeline {
                 sh 'cd /home/ubuntu/gpsGit && npm run wbsv.js' // Compila el código de tu aplicación
             }
         }
-        stage('Deploy to EC2') {
-            steps {
-                script {
-                    // Copiar el repositorio a la instancia EC2 usando scp
-                    sh '''
-                        scp -i /home/ubuntu/hammer.pem -o StrictHostKeyChecking=no -r /var/lib/jenkins/jobs/thor ubuntu@44.198.179.134:/home/ubuntu/gpsGit
-                    '''
-                    // Conectarse a la instancia EC2 y ejecutar comandos de despliegue
-                    sshagent(['ubuntu']) {
-                        sh '''
-                            ssh -i /home/ubuntu/hammer.pem -o StrictHostKeyChecking=no ubuntu@44.198.179.134 '
-                            cd /home/ubuntu/gpsGit
-                            git pull
-                            node wbsv.js
-                            '
-                        '''
-                    }
-                }
-            }
-        }
+
     }
 }
 
