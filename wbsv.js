@@ -53,7 +53,7 @@ app.get('/', (req, res) => {
   });
 });
 app.get('/database', (req, res) => {
-  dbConnection.query('SELECT * FROM p2GPS ORDER BY ID DESC', (err, results) => {
+  dbConnection.query('SELECT * FROM p2GPS ORDER BY ID ASC', (err, results) => {
     if (err) {
       console.error('Error al consultar la base de datos:', err);
       return res.status(500).send('Internal Server Error');
