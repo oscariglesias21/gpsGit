@@ -40,26 +40,7 @@ pipeline {
                 sh 'npm install' // Instala las dependencias de Node.js
             }
         }
-                stage('Deploy to EC2') {
-            steps {
-                script {
-                    // Copiar el repositorio a la instancia EC2 usando scp
-                    sh '''
-                        scp -i /home/ubuntu/hammer.pem -o StrictHostKeyChecking=no -r /var/lib/jenkins/workspace/thor ubuntu@44.198.179.134:/home/ubuntu/gpsGit
-                    '''
-                    // Conectarse a la instancia EC2 y ejecutar comandos de despliegue
-                    sshagent(['ubuntu']) {
-                        sh '''
-                            ssh -i /home/ubuntu/hammer.pem -o StrictHostKeyChecking=no ubuntu@44.198.179.134 '
-                            /home/ubuntu/gpsGit
-                            git pull
-                            authbind node wbsv.js
-                            '
-                        '''
-                    }
-                }
-            }
-        }
+        
 
     }
 }
