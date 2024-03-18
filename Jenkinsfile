@@ -40,8 +40,15 @@ pipeline {
                 sh 'npm install' // Instala las dependencias de Node.js
             }
         }
-        
-
+        stage('Deploy to EC2') {
+            steps {
+                // Copiar archivos al servidor EC2
+                sshagent(['d86712c0-7eb1-4cdc-9134-ed0bc33d2c99']) {
+                    sh 'scp -r * ubuntu@44.198.179.134:/home/ubuntu/gpsGit'
+                }
+            }
+        }
     }
 }
+
 
