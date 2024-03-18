@@ -130,6 +130,6 @@ function generateDatabasePage(data) {
 }
 
 server.listen(port, () => {
-  console.log(`Servidor HTTP en ejecución en http://44.215.206.176:${port}/`);
+  console.log(`Servidor HTTP en ejecución`);
 });
           
