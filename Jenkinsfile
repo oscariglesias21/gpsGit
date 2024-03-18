@@ -1,15 +1,15 @@
 pipeline {
     agent any
         stages {
-//                stage('Clone repository') {
-//                    steps {
-//                         withCredentials([string(credentialsId: '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')]) {
-//
-//                            // Utiliza las credenciales de GitHub para autenticarte
-//                            git credentialsId: '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', url: 'https://github.com/oscariglesias21/gpsGit.git'
-//                         }
-//                    }
-//                }
+                stage('Clone repository') {
+                    steps {
+                         withCredentials([string(credentialsId: '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')]) {
+
+                            // Utiliza las credenciales de GitHub para autenticarte
+                            git credentialsId: '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', url: 'https://github.com/oscariglesias21/gpsGit.git'
+                         }
+                    }
+                }
                 stage('Copy files to EC2') {
                     steps {
                          withCredentials([string(credentialsId: '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')]) {
