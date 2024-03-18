@@ -10,6 +10,7 @@ UDP_PORT = 20000
 # Configuración del servidor web
 web_server_url = "http://52.201.18.119:80/updateFromSniffer"
 web_server_url1 = "http://54.211.70.225:80/updateFromSniffer"
+
 def extract_gps_info(data):
     # Simula la extracción de los datos GPS del payload
     # Asegúrate de adaptar esta parte al formato específico de tus datos
@@ -46,7 +47,7 @@ sock.bind((UDP_IP, UDP_PORT))
 
 print(f"Escuchando en UDP {UDP_IP}:{UDP_PORT}")
 while True:
-    data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
+    data, addr = sock.recvfrom(1024) 
     print(f"Recibido mensaje: {data} de {addr}")
 
     # Extraer y enviar los datos GPS
