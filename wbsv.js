@@ -32,7 +32,7 @@ app.post('/updateFromSniffer', (req, res) => {
       console.error('Error al insertar datos en la base de datos:', err);
       return res.status(500).send('Internal Server Error');
     }
-    // Envía la actualización a los clientes conectados a través de Socket.IO
+    // Envía la actualización a clientes conectados a través de Socket.IO
     io.emit('locationUpdate', { Latitude, Longitude, Date, Time });
 
     res.status(200).send('OK');
