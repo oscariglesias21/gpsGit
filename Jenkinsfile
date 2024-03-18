@@ -38,7 +38,7 @@ pipeline {
             steps {
                 // Ejecutar comandos de construcción
                 sh 'npm install' // Instala las dependencias de Node.js
-                sh '~/gpsGit && authbind node wbsv.js' // Compila el código de tu aplicación
+                sh '/var/lib/jenkins/workspace/thor && authbind node wbsv.js' // Compila el código de tu aplicación
             }
         }
 
