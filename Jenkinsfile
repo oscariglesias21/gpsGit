@@ -23,31 +23,44 @@
 //}
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 pipeline {
     agent any
     
     stages {
-        stage('Clonar Repositorio') {
+        stage('Checkout') {
+            steps {
+                // Clonar el repositorio de GitHub
+                git 'https://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@github.com/oscariglesias21/gpsGit.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                // Ejecutar comandos de construcción
+                sh 'npm install' // Instala las dependencias de Node.js
+                sh 'npm run build' // Compila el código de tu aplicación
+            }
+        }
+        stage('Deploy to EC2') {
             steps {
                 script {
-                    // Conectar a la instancia EC2
-                    sshCommand remote: [
-                        allowAnyHosts: true,
-                        failOnError: true,
-                        host: 'http://44.198.179.134',
-                        port: 22,
-                        user: 'ubuntu',
-                        keyFile: '/home/ubuntu/hammer.pem'
-                    ], command: '''
-                        # Clonar el repositorio de GitHub en la instancia EC2
-                        git clone https://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@github.com/oscariglesias21/gpsGit.git /home/ubuntu/gpsGit
+                    // Copiar el repositorio a la instancia EC2 usando scp
+                    sh '''
+                        scp -i /home/ubuntu/hammer.pem -o StrictHostKeyChecking=no -r /var/lib/jenkins/jobs/thor ubuntu@44.198.179.134:/home/ubuntu/gpsGit
                     '''
+                    // Conectarse a la instancia EC2 y ejecutar comandos de despliegue
+                    sshagent(['ubuntu']) {
+                        sh '''
+                            ssh -i /home/ubuntu/hammer.pem -o StrictHostKeyChecking=no ubuntu@44.198.179.134 '
+                            cd /home/ubuntu/gpsGit
+                            git pull
+                            node wbsv.js
+                            '
+                        '''
+                    }
                 }
             }
         }
-        
-        // Puedes añadir más etapas si deseas realizar más operaciones
     }
 }
 
