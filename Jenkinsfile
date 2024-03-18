@@ -38,7 +38,7 @@ pipeline {
             steps {
                 // Ejecutar comandos de construcción
                 sh 'npm install' // Instala las dependencias de Node.js
-                sh 'cd /home/ubuntu/gpsGit && npm run wbsv.js' // Compila el código de tu aplicación
+                sh '/home/ubuntu/gpsGit && npm run wbsv.js' // Compila el código de tu aplicación
             }
         }
 
