@@ -119,6 +119,7 @@
 
             const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
             marker.setLatLng(newLatLng);
+            myMap.setView(newLatLng);
 
             routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
 
