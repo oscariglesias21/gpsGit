@@ -40,6 +40,8 @@ def send_to_web_server(web_data):
         print(f"Datos enviados al servidor web. Respuesta: {response.status_code}")
         response1 = requests.post(web_server_url1, json=web_data)
         print(f"Datos enviados al servidor web. Respuesta: {response1.status_code}")
+        response2 = requests.post(web_server_url2, json=web_data)
+        print(f"Datos enviados al servidor web. Respuesta: {response2.status_code}")
     except Exception as e:
         print(f"Error al enviar datos al servidor web: {e}")
 
