@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Copy files to EC2') {
             steps {
-                sh 'scp -i "C:\Users\Jesus\Desktop\aws\hammer.pem" -r * ubuntu@44.198.179.134:/gpsGit'
+                sh 'scp -i C:\Users\Jesus\Desktop\aws\hammer.pem -r * ubuntu@44.198.179.134:/gpsGit'
             }
         }
     }
