@@ -102,7 +102,7 @@
         const socket = io();
         console.log('Conexión a Socket.IO establecida correctamente.');
 
-        const myMap = L.map('mapid').setView([0, 0], 1);
+        const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(myMap);
