@@ -129,7 +129,7 @@
 
             const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
         
-        if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 1000) {
+        if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 500) {
             // Si el marcador se ha movido más de 1000 metros, reinicia la polilínea
             routePath.setLatLngs([]);
             localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
