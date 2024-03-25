@@ -98,7 +98,6 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf"></script>
     <script>
         const socket = io();
         console.log('Conexión a Socket.IO establecida correctamente.');
@@ -111,7 +110,6 @@
         let marker = L.marker([0, 0]).addTo(myMap);
         let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
         let resetTimer = null;
-        let points = []; // Almacena los puntos de la ruta
 
         socket.on('locationUpdate', (data) => {
             document.getElementById('latitude').innerText = data.Latitude;
@@ -121,15 +119,10 @@
 
             const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
             marker.setLatLng(newLatLng);
-            points.push([data.Longitude, data.Latitude]); // Turf.js utiliza el orden [Longitud, Latitud]
+            myMap.setView(newLatLng);
 
-            if (points.length > 2) { // Necesitas al menos 3 puntos para suavizar la ruta
-                let line = turf.lineString(points);
-                let smoothedLine = turf.bezierSpline(line);
-                let smoothedLatLngs = smoothedLine.geometry.coordinates.map(coord => [coord[1], coord[0]]); // Convierte de nuevo a [Latitud, Longitud]
+            routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
 
-                routePath.setLatLngs(smoothedLatLngs); // Dibuja la ruta suavizada
-            }
             if (resetTimer !== null) {
             clearTimeout(resetTimer);
         }
