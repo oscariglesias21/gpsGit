@@ -128,7 +128,7 @@
                 let smoothedLine = turf.bezierSpline(line);
                 let smoothedLatLngs = smoothedLine.geometry.coordinates.map(coord => [coord[1], coord[0]]); // Convierte de nuevo a [Latitud, Longitud]
 
-                smoothedPath.setLatLngs(smoothedLatLngs); // Dibuja la ruta suavizada
+                routePath.setLatLngs(smoothedLatLngs); // Dibuja la ruta suavizada
             }
             if (resetTimer !== null) {
             clearTimeout(resetTimer);
