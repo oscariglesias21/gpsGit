@@ -127,6 +127,14 @@
             document.getElementById('time').innerText = data.Time;
 
             const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
+        // Verifica si hay que resetear la polilínea debido a un salto grande
+            if (routePath.getLatLngs().length > 0) {
+                const lastPoint = routePath.getLatLngs()[routePath.getLatLngs().length - 1];
+                if (lastPoint.distanceTo(newLatLng) > 1000) { // Umbral de 1000 metros
+                    routePath.setLatLngs([]); // Resetea la polilínea
+                    localStorage.removeItem('routePath'); // Limpia la ruta almacenada
+                }
+            }
             marker.setLatLng(newLatLng);
             routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
 
