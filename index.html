@@ -109,6 +109,7 @@
         let marker = L.marker([0, 0]).addTo(myMap);
         let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
         let resetTimer = null;
+        let lastMarkerPosition = null;
 
         // Intentar recuperar y dibujar la ruta almacenada
         const storedRoute = localStorage.getItem('routePath');
@@ -127,16 +128,16 @@
             document.getElementById('time').innerText = data.Time;
 
             const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
-        // Verifica si hay que resetear la polilínea debido a un salto grande
-            if (routePath.getLatLngs().length > 0) {
-                const lastPoint = routePath.getLatLngs()[routePath.getLatLngs().length - 1];
-                if (lastPoint.distanceTo(newLatLng) > 1000) { // Umbral de 1000 metros
-                    routePath.setLatLngs([]); // Resetea la polilínea
-                    localStorage.removeItem('routePath'); // Limpia la ruta almacenada
-                }
-            }
+        
+        if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 1000) {
+            // Si el marcador se ha movido más de 1000 metros, reinicia la polilínea
+            routePath.setLatLngs([]);
+            localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
+        }
+
             marker.setLatLng(newLatLng);
             routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
+            lastMarkerPosition = newLatLng;
 
             // Guardar la ruta actual en el almacenamiento local
             const currentRoute = routePath.getLatLngs();
@@ -148,7 +149,7 @@
             resetTimer = setTimeout(() => {
                 routePath.setLatLngs([newLatLng]); // Resetea la polilínea manteniendo la última ubicación
                 localStorage.setItem('routePath', JSON.stringify([{ lat: newLatLng.lat, lng: newLatLng.lng }]));
-            }, 10000); // 10 segundos delay
+            }, 3000); // 3 segundos delay
         });
     });
 </script>
