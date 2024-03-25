@@ -108,7 +108,6 @@
 
         let marker = L.marker([0, 0]).addTo(myMap);
         let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
-        let resetTimer = null;
         let lastMarkerPosition = null;
 
         // Intentar recuperar y dibujar la ruta almacenada
@@ -142,14 +141,6 @@
             // Guardar la ruta actual en el almacenamiento local
             const currentRoute = routePath.getLatLngs();
             localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
-
-            if (resetTimer !== null) {
-                clearTimeout(resetTimer);
-            }
-            resetTimer = setTimeout(() => {
-                routePath.setLatLngs([newLatLng]); // Resetea la polilínea manteniendo la última ubicación
-                localStorage.setItem('routePath', JSON.stringify([{ lat: newLatLng.lat, lng: newLatLng.lng }]));
-            }, 3000); // 3 segundos delay
         });
     });
 </script>
