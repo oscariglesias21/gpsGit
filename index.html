@@ -93,15 +93,14 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    <script src="https://cdn.jsdelivr.net/npmbootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        const socket = io();
-        console.log('Conexión a Socket.IO establecida correctamente.');
-
+    
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
         const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -111,6 +110,16 @@
         let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
         let resetTimer = null;
 
+        // Intentar recuperar y dibujar la ruta almacenada
+        const storedRoute = localStorage.getItem('routePath');
+        if (storedRoute) {
+            const routePoints = JSON.parse(storedRoute);
+            routePath.setLatLngs(routePoints.map(p => L.latLng(p.lat, p.lng)));
+        }
+
+        const socket = io();
+        console.log('Conexión a Socket.IO establecida correctamente.');
+
         socket.on('locationUpdate', (data) => {
             document.getElementById('latitude').innerText = data.Latitude;
             document.getElementById('longitude').innerText = data.Longitude;
@@ -119,16 +128,24 @@
 
             const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
             marker.setLatLng(newLatLng);
+            myMap.setView(newLatLng, myMap.getZoom());
 
             routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
 
+            // Guardar la ruta actual en el almacenamiento local
+            const currentRoute = routePath.getLatLngs();
+            localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
+
             if (resetTimer !== null) {
-            clearTimeout(resetTimer);
-        }
-        resetTimer = setTimeout(() => {
-            routePath.setLatLngs([newLatLng]); // Resetea la polilínea manteniendo la última ubicación
-        }, 10000); // 10 segundos delay
+                clearTimeout(resetTimer);
+            }
+            resetTimer = setTimeout(() => {
+                routePath.setLatLngs([newLatLng]); // Resetea la polilínea manteniendo la última ubicación
+                localStorage.setItem('routePath', JSON.stringify([{ lat: newLatLng.lat, lng: newLatLng.lng }]));
+            }, 10000); // 10 segundos delay
         });
-    </script>
+    });
+</script>
 </body>
 </html>
+
