@@ -101,7 +101,7 @@
     
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 10);
+        const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(myMap);
@@ -128,8 +128,6 @@
 
             const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
             marker.setLatLng(newLatLng);
-            myMap.setView(newLatLng, myMap.getZoom());
-
             routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
 
             // Guardar la ruta actual en el almacenamiento local
