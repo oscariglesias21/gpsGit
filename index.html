@@ -52,20 +52,19 @@
                     <div class="card-body">
                         <form id="timeRangeForm">
                             <div id="timeRangeGroup">
-                                <div class="mb-3">
-                                    <label for="startTime1" class="form-label">Hora de Inicio</label>
-                                    <input type="datetime-local" class="form-control" id="startTime1" name="startTime[]">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="endTime1" class="form-label">Hora de Fin</label>
-                                    <input type="datetime-local" class="form-control" id="endTime1" name="endTime[]">
+                                <!-- El grupo de rangos de tiempo se poblara dinámicamente aquí -->
+                                <div class="d-flex mb-3 align-items-center time-range">
+                                    <input type="datetime-local" class="form-control me-2" name="startTime[]" placeholder="Hora de Inicio">
+                                    <input type="datetime-local" class="form-control mx-2" name="endTime[]" placeholder="Hora de Fin">
+                                    <button type="button" class="btn btn-success btn-add-time-range">+</button>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary" id="addTimeRange">Agregar Rango de Tiempo</button>
                         </form>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>    
             <div class="col mb-3">
                 <div class="card">
                     <div class="card-header text-center">Latitud</div>
