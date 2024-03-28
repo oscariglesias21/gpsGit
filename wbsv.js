@@ -67,7 +67,7 @@ app.get('/database', (req, res) => {
   });
 });
 
-// Ruta de consulta
+// Ruta de consult
 app.get('/consulta', (req, res) => {
   res.send('Consulta de Históricos');
 });
