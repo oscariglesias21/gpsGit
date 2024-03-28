@@ -13,7 +13,7 @@
             padding: 6px 10px; /* Reduce el padding */
         }
         .card {
-            margin-bottom: 10px; /* Reduce el margen entre tarjetas */
+            margin-bottom: 8px; /* Reduce el margen entre tarjetas */
         }
         #mapid {
             height: 500px; /* Aumenta el tamaño del mapa */
@@ -88,6 +88,34 @@
                 </div>
             </div>
         </div>
+                <!-- Sección para seleccionar la ventana de tiempo -->
+                <div class="row justify-content-center mt-4">
+                    <div class="col-12 col-md-8">
+                        <div class="card">
+                            <div class="card-header text-center">Seleccionar ventana de tiempo</div>
+                            <div class="card-body">
+                                <form id="timeWindowForm">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="startTime" class="form-label">Inicio:</label>
+                                            <input type="datetime-local" class="form-control" id="startTime" required>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="endTime" class="form-label">Fin:</label>
+                                            <input type="datetime-local" class="form-control" id="endTime" required>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <button type="submit" class="btn btn-primary">Mostrar en mapa</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- Cierre del contenedor principal -->
+        </body>
+        </html>        
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
