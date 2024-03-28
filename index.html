@@ -46,6 +46,26 @@
     </div>
     <div class="container mt-3">
         <div class="row justify-content-center">
+            <div class="col-12 mb-3">
+                <div class="card">
+                    <div class="card-header">Buscar Rango de Tiempo</div>
+                    <div class="card-body">
+                        <form id="timeRangeForm">
+                            <div id="timeRangeGroup">
+                                <div class="mb-3">
+                                    <label for="startTime1" class="form-label">Hora de Inicio</label>
+                                    <input type="datetime-local" class="form-control" id="startTime1" name="startTime[]">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="endTime1" class="form-label">Hora de Fin</label>
+                                    <input type="datetime-local" class="form-control" id="endTime1" name="endTime[]">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="addTimeRange">Agregar Rango de Tiempo</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="col mb-3">
                 <div class="card">
                     <div class="card-header text-center">Latitud</div>
@@ -128,8 +148,8 @@
 
             const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
         
-        if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 500) {
-            // Si el marcador se ha movido más de 1000 metros, reinicia la polilínea
+        if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 400) {
+            // Si el marcador se ha movido más de 400 metros, reinicia la polilínea
             routePath.setLatLngs([]);
             localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
         }
