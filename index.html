@@ -79,44 +79,45 @@
                 </div>
             </div>
         </div>
-                <!-- Sección para seleccionar la ventana de tiempo -->
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12 col-md-8">
-                        <div class="card">
-                            <div class="card-header text-center">Seleccionar ventana de tiempo</div>
-                            <div class="card-body">
-                                <form id="timeWindowForm">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <label for="startTime" class="form-label">Inicio:</label>
-                                            <input type="datetime-local" class="form-control" id="startTime" required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="endTime" class="form-label">Fin:</label>
-                                            <input type="datetime-local" class="form-control" id="endTime" required>
-                                        </div>
-                                    </div>
-                                    <div class="text-center mt-3">
-                                        <button type="submit" class="btn btn-primary">Mostrar en mapa</button>
-                                    </div>
-                                </form>
-                            </div>
+<!-- Sección para seleccionar la ventana de tiempo -->
+<div class="row justify-content-center mt-4">
+    <div class="col-12 col-md-8">
+        <div class="card">
+            <div class="card-header text-center">Seleccionar ventana de tiempo</div>
+            <div class="card-body">
+                <form id="timeWindowForm">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label for="startTime" class="form-label">Inicio:</label>
+                            <input type="datetime-local" class="form-control" id="startTime" required>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="endTime" class="form-label">Fin:</label>
+                            <input type="datetime-local" class="form-control" id="endTime" required>
                         </div>
                     </div>
-                </div>
-            </div>  
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body p-0">
-                        <div id="mapid"></div>
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary">Mostrar en mapa</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Sección del mapa -->
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body p-0">
+                <div id="mapid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div> <!-- Cierre del contenedor principal -->
 </body>
-</html> 
+</html>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
