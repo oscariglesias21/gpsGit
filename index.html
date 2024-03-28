@@ -45,45 +45,48 @@
         <h1 class="gps-data">Ruta GPS</h1>
     </div>
     <div class="container mt-3">
+        <!-- Fila superior con datos y selección de ventana de tiempo -->
         <div class="row justify-content-center">
-            <!-- Primera fila con Latitud y Longitud -->
-            <div class="col-sm-6 col-md-3 mb-3">
-                <div class="card">
-                    <div class="card-header text-center">Latitud</div>
-                    <div class="card-body">
-                        <span id="latitude" class="card-title text-center">XX.XXXXX</span>
+            <!-- Columna izquierda con datos de GPS -->
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header text-center">Latitud</div>
+                            <div class="card-body">
+                                <span id="latitude" class="card-title text-center">XX.XXXXX</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 mb-3">
-                <div class="card">
-                    <div class="card-header text-center">Longitud</div>
-                    <div class="card-body">
-                        <span id="longitude" class="card-title text-center">XX.XXXXX</span>
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header text-center">Longitud</div>
+                            <div class="card-body">
+                                <span id="longitude" class="card-title text-center">XX.XXXXX</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header text-center">Fecha</div>
+                            <div class="card-body">
+                                <span id="date" class="card-title text-center">YYYY-MM-DD</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header text-center">Hora</div>
+                            <div class="card-body">
+                                <span id="time" class="card-title text-center">HH:MM:SS</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
     
-            <!-- Segunda fila con Fecha y Hora al lado de la ventana de tiempo -->
-            <div class="col-sm-6 col-md-3 mb-3">
-                <div class="card">
-                    <div class="card-header text-center">Fecha</div>
-                    <div class="card-body">
-                        <span id="date" class="card-title text-center">YYYY-MM-DD</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 mb-3">
-                <div class="card">
-                    <div class="card-header text-center">Hora</div>
-                    <div class="card-body">
-                        <span id="time" class="card-title text-center">HH:MM:SS</span>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Contenedor para la selección de la ventana de tiempo -->
-            <div class="col-md-6">
+            <!-- Columna derecha con selección de ventana de tiempo -->
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header text-center">Seleccionar ventana de tiempo</div>
                     <div class="card-body">
@@ -107,7 +110,7 @@
             </div>
         </div>
     
-        <!-- Sección del mapa -->
+        <!-- Fila con el mapa -->
         <div class="row justify-content-center mt-4">
             <div class="col-12">
                 <div class="card">
