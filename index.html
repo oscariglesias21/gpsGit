@@ -45,9 +45,9 @@
         <h1 class="gps-data">Ruta GPS</h1>
     </div>
     <div class="container mt-3">
-        <!-- Primera fila con dos pares de contenedores -->
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-3 mb-3">
+            <!-- Primera fila con Latitud y Longitud -->
+            <div class="col-sm-6 col-md-3 mb-3">
                 <div class="card">
                     <div class="card-header text-center">Latitud</div>
                     <div class="card-body">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3 mb-3">
+            <div class="col-sm-6 col-md-3 mb-3">
                 <div class="card">
                     <div class="card-header text-center">Longitud</div>
                     <div class="card-body">
@@ -63,7 +63,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3 mb-3">
+    
+            <!-- Segunda fila con Fecha y Hora al lado de la ventana de tiempo -->
+            <div class="col-sm-6 col-md-3 mb-3">
                 <div class="card">
                     <div class="card-header text-center">Fecha</div>
                     <div class="card-body">
@@ -71,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3 mb-3">
+            <div class="col-sm-6 col-md-3 mb-3">
                 <div class="card">
                     <div class="card-header text-center">Hora</div>
                     <div class="card-body">
@@ -79,8 +81,9 @@
                     </div>
                 </div>
             </div>
-            <!-- Contenedor de ventana de tiempo al lado de los datos de GPS -->
-            <div class="col-md-12 col-lg-6">
+    
+            <!-- Contenedor para la selección de la ventana de tiempo -->
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header text-center">Seleccionar ventana de tiempo</div>
                     <div class="card-body">
@@ -103,8 +106,8 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Sección del mapa debajo de los contenedores -->
+    
+        <!-- Sección del mapa -->
         <div class="row justify-content-center mt-4">
             <div class="col-12">
                 <div class="card">
@@ -114,7 +117,8 @@
                 </div>
             </div>
         </div>
-    </div> <!-- Cierre del contenedor principal -->
+    </div>
+    
     
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
