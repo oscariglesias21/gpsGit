@@ -15,10 +15,25 @@
         .card {
             margin-bottom: 5px; /* Reduce el margen entre tarjeta */
         }
-        #mapid {
-            height: 550px; /* Aumenta el tamaño del mapa */
-            width: 1500px;
+        .content-container {
+        display: flex; /* Activa Flexbox */
+        flex-direction: row; /* Organiza los hijos en fila */
+        align-items: flex-start; /* Alinea los hijos al inicio del contenedor en el eje cruzado */
         }
+    
+        .side-panel {
+        /* Ajusta el ancho del panel lateral o formulario si es necesario */
+            width: 300px; /* o cualquier otra medida fija o flexible que prefieras */
+            margin-right: 10px; /* Espacio entre el panel y el mapa */
+        }
+    
+        #mapid {
+            height: 550px; /* Altura del mapa */
+            flex-grow: 1; /* Permite que el mapa crezca para llenar el espacio disponible */
+            /* Si necesitas un ancho máximo, puedes establecerlo aquí */
+            max-width: 100%; /* Esto asegura que el mapa no se desborde de su contenedor */
+        }
+
         .gps-data {
             font-size: 25px; /* Ajusta el tamaño del título de la página */
         }
