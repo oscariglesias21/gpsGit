@@ -66,12 +66,6 @@ app.get('/database', (req, res) => {
     res.end();
   });
 });
-
-// Ruta de consult
-app.get('/consulta', (req, res) => {
-  res.send('Consulta de Históricos');
-});
-
 function generateDatabasePage(data) {
   let htmlContent = `
     <!DOCTYPE html>
@@ -222,3 +216,13 @@ function generateDatabasePage(data) {
   }
 });
 }
+// Ruta de consulta
+app.get('/consulta', (req, res) => {
+  res.send('Consulta de Históricos');
+});
+
+
+server.listen(port, () => {
+  console.log(`Servidor HTTP en ejecución`);
+});
+          
