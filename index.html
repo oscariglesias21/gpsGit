@@ -15,17 +15,14 @@
         .card {
             margin-bottom: 5px; /* Reduce el margen entre tarjeta */
         }
-        .content-container {
-        display: flex; /* Activa Flexbox */
-        flex-direction: row; /* Organiza los hijos en fila */
-        align-items: flex-start; /* Alinea los hijos al inicio del contenedor en el eje cruzado */
-        }
     
         #mapid {
             height: 450px; /* Altura del mapa */
-            max-width: 100%; /* Esto asegura que el mapa no se desborde de su contenedor */
+            width: 100%; /* Ocupa todo el ancho disponible */
         }
-
+        .container-fluid {
+            padding-top: 20px; /* Espacio en la parte superior para no pegarse a la barra de navegación */
+        }
         .gps-data {
             font-size: 25px; /* Ajusta el tamaño del título de la página */
         }
