@@ -4,11 +4,13 @@ from datetime import datetime
 
 # Configuración del socket
 UDP_IP = "0.0.0.0"  # Escuchar en todas las interfaces
-UDP_PORT = 21000
+UDP_PORT = 20000
 
 
 # Configuración del servidor web
-web_server_url = "http://44.215.206.176:80/updateFromSniffer"
+web_server_url = "http://52.201.18.119:80/updateFromSniffer"
+web_server_url1 = "http://54.211.70.225:80/updateFromSniffer"
+web_server_url2 = "http://44.198.179.134:80/updateFromSniffer"
 
 def extract_gps_info(data):
     # Simula la extracción de los datos GPS del payload
@@ -36,6 +38,10 @@ def send_to_web_server(web_data):
     try:
         response = requests.post(web_server_url, json=web_data)
         print(f"Datos enviados al servidor web. Respuesta: {response.status_code}")
+        response1 = requests.post(web_server_url1, json=web_data)
+        print(f"Datos enviados al servidor web. Respuesta: {response1.status_code}")
+        response2 = requests.post(web_server_url2, json=web_data)
+        print(f"Datos enviados al servidor web. Respuesta: {response2.status_code}")
     except Exception as e:
         print(f"Error al enviar datos al servidor web: {e}")
 
@@ -44,7 +50,7 @@ sock.bind((UDP_IP, UDP_PORT))
 
 print(f"Escuchando en UDP {UDP_IP}:{UDP_PORT}")
 while True:
-    data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
+    data, addr = sock.recvfrom(1024) 
     print(f"Recibido mensaje: {data} de {addr}")
 
     # Extraer y enviar los datos GPS

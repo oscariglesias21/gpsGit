@@ -32,7 +32,7 @@ app.post('/updateFromSniffer', (req, res) => {
       console.error('Error al insertar datos en la base de datos:', err);
       return res.status(500).send('Internal Server Error');
     }
-    // Envía la actualización a los clientes conectados a través de Socket.IO
+    // Envía la actualización a clientes conectados a través de Socket.IO
     io.emit('locationUpdate', { Latitude, Longitude, Date, Time });
 
     res.status(200).send('OK');
@@ -53,14 +53,14 @@ app.get('/', (req, res) => {
   });
 });
 app.get('/database', (req, res) => {
-  dbConnection.query('SELECT * FROM p2GPS', (err, results) => {
+  dbConnection.query('SELECT * FROM p2GPS ORDER BY ID ASC', (err, results) => {
     if (err) {
       console.error('Error al consultar la base de datos:', err);
       return res.status(500).send('Internal Server Error');
     }
     const htmlContent = generateDatabasePage(results);
 
-    // Send the dynamically generated HTML to the client
+    // Envío dinámico a HTML client
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.write(htmlContent);
     res.end();
@@ -130,6 +130,6 @@ function generateDatabasePage(data) {
 }
 
 server.listen(port, () => {
-  console.log(`Servidor HTTP en ejecución en http://44.215.206.176:${port}/`);
+  console.log(`Servidor HTTP en ejecución`);
 });
           
