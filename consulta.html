@@ -61,6 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(myMap);
+        
+        let marker = L.marker([0, 0]).addTo(myMap);
+        let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
+        let lastMarkerPosition = null;
 
     document.getElementById('timeWindowForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Evitar que el formulario recargue la página
