@@ -9,23 +9,35 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         .card-header, .card-body {
-            font-size: 16px; /* Reduce el tamaño de la fuente */
+            font-size: 14px; /* Further reduce the font size */
+            padding: 5px; /* Reduce padding inside the card */
         }
         .card {
-            margin-bottom: 5px; /* Reduce el margen entre tarjeta */
+            margin-bottom: 3px; /* Reduce the margin between cards */
+            margin-right: 5px; /* Add some spacing to the right of each card */
         }
-    
+        
         #mapid {
-            height: 400px; /* Altura del mapa */
-            width: 100%; /* Ocupa todo el ancho disponible */
+            height: 600px; /* Increase the height of the map */
+            width: 100%; /* The map will still take up the full width */
         }
         .container-fluid {
-            padding-top: 20px; /* Espacio en la parte superior para no pegarse a la barra de navegación */
+            padding-top: 10px; /* Reduced space on top */
         }
         .gps-data {
-            font-size: 25px; /* Ajusta el tamaño del título de la página */
+            font-size: 20px; /* Slightly reduce the title size */
+        }
+        /* New CSS to make the cards lay out in a row on larger screens */
+        @media (min-width: 768px) {
+            .row .col {
+                max-width: 200px; /* Set a max-width for the columns on larger screens */
+            }
+            .row .col .card {
+                height: 100px; /* Set a fixed height for the cards */
+            }
         }
     </style>
+    
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
