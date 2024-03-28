@@ -67,6 +67,10 @@ app.get('/database', (req, res) => {
   });
 });
 
+// Nueva ruta /consulta
+app.get('/consulta', (req, res) => {
+  res.send('Consulta de Históricos');
+});
 
 function generateDatabasePage(data) {
   let htmlContent = `

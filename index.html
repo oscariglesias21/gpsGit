@@ -39,6 +39,14 @@
                     </li>
                 </ul>
             </div>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/consulta">Consulta de Históricos</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="text-center mt-5">
@@ -84,32 +92,6 @@
                     </div>
                 </div>
             </div>
-    
-            <!-- Columna derecha con selección de ventana de tiempo -->
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header text-center">Seleccionar ventana de tiempo</div>
-                    <div class="card-body">
-                        <form id="timeWindowForm">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="startTime" class="form-label">Inicio:</label>
-                                    <input type="datetime-local" class="form-control" id="startTime" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="endTime" class="form-label">Fin:</label>
-                                    <input type="datetime-local" class="form-control" id="endTime" required>
-                                </div>
-                            </div>
-                            <div class="text-center mt-3">
-                                <button type="submit" class="btn btn-primary">Mostrar en mapa</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
         <!-- Fila con el mapa -->
         <div class="row justify-content-center mt-4">
             <div class="col-12">
@@ -174,8 +156,11 @@
             // Guardar la ruta actual en el almacenamiento local
             const currentRoute = routePath.getLatLngs();
             localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
-        });
+
     });
+});
+        
+
 </script>
 </body>
 </html>
