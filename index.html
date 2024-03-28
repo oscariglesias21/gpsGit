@@ -21,15 +21,6 @@
         .gps-data {
             font-size: 28px; /* Ajusta el tamaño del título de la página */
         }
-        /* Añadir estilos para alinear latitud y longitud, así como fecha y hora en la misma fila */
-        .gps-row {
-            display: flex;
-            justify-content: space-around;
-        }
-        .gps-col {
-            flex: 1; /* Ocupa todo el espacio disponible pero equitativamente entre los elementos */
-            margin: 0 4px; /* Añade un pequeño margen entre columnas */
-        }
     </style>
 </head>
 <body>
@@ -55,67 +46,50 @@
     </div>
     <div class="container mt-3">
         <div class="row justify-content-center">
-            <div class="col-12 mb-3">
+            <div class="col mb-3">
                 <div class="card">
-                    <div class="card-header">Buscar Rango de Tiempo</div>
+                    <div class="card-header text-center">Latitud</div>
                     <div class="card-body">
-                        <form id="timeRangeForm">
-                            <div id="timeRangeGroup">
-                                <!-- El grupo de rangos de tiempo se poblara dinámicamente aquí -->
-                                <div class="d-flex mb-3 align-items-center time-range">
-                                    <input type="datetime-local" class="form-control me-2" name="startTime[]" placeholder="Hora de Inicio">
-                                    <input type="datetime-local" class="form-control mx-2" name="endTime[]" placeholder="Hora de Fin">
-                                    <button type="button" class="btn btn-success btn-add-time-range">+</button>
-                                </div>
-                            </div>
-                        </form>
+                        <span id="latitude" class="card-title text-center">XX.XXXXX</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="card">
+                    <div class="card-header text-center">Longitud</div>
+                    <div class="card-body">
+                        <span id="longitude" class="card-title text-center">XX.XXXXX</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="card">
+                    <div class="card-header text-center">Fecha</div>
+                    <div class="card-body">
+                        <span id="date" class="card-title text-center">YYYY-MM-DD</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="card">
+                    <div class="card-header text-center">Hora</div>
+                    <div class="card-body">
+                        <span id="time" class="card-title text-center">HH:MM:SS</span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>    
-    <div class="container mt-3">
         <div class="row justify-content-center">
-            <!-- Ajuste para latitud y longitud en la misma fila -->
-            <div class="gps-row">
-                <div class="gps-col mb-3">
-                    <div class="card">
-                        <div class="card-header text-center">Latitud</div>
-                        <div class="card-body">
-                            <span id="latitude" class="card-title text-center">XX.XXXXX</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="gps-col mb-3">
-                    <div class="card">
-                        <div class="card-header text-center">Longitud</div>
-                        <div class="card-body">
-                            <span id="longitude" class="card-title text-center">XX.XXXXX</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Ajuste para fecha y hora en la misma fila -->
-            <div class="gps-row">
-                <div class="gps-col mb-3">
-                    <div class="card">
-                        <div class="card-header text-center">Fecha</div>
-                        <div class="card-body">
-                            <span id="date" class="card-title text-center">YYYY-MM-DD</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="gps-col mb-3">
-                    <div class="card">
-                        <div class="card-header text-center">Hora</div>
-                        <div class="card-body">
-                            <span id="time" class="card-title text-center">HH:MM:SS</span>
-                        </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div id="mapid"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
@@ -172,4 +146,3 @@
 </script>
 </body>
 </html>
-
