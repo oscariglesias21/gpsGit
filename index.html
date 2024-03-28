@@ -14,28 +14,30 @@
         }
         .card {
             margin-bottom: 5px; /* Reduce el margen entre tarjeta */
-            
+            border: none; /* Elimina el borde de la tarjeta */
         }
         .content-container {
             display: flex; /* Activa Flexbox */
-            flex-direction: row; /* Organiza los hijos en fila */
-            align-items: flex-start; /* Alinea los hijos al inicio del contenedor en el eje cruzado */
+            justify-content: center; /* Centra los hijos en el eje principal */
+            align-items: center; /* Centra los hijos en el eje cruzado */
+            height: 80vh; /* Asigna una altura al contenedor para que el mapa pueda centrarse verticalmente también */
+            width: 100vw; /* Asigna un ancho al contenedor para que tome todo el ancho de la vista */
         }
     
         #mapid {
-            margin: auto;
-            display: flex;
             height: 80vh; /* Establece la altura del mapa al 80% del alto de la ventana de visualización */
-            width: 90vw; /* Establece el ancho del mapa al 100% del ancho de la ventana de visualización */
+            width: 90vw; /* Establece el ancho del mapa al 90% del ancho de la ventana de visualización */
         }
+    
         .row {
-        justify-content: center; /* Centrar los elementos de la fila horizontalmente si estás usando Flexbox */
+            justify-content: center; /* Centrar los elementos de la fila horizontalmente si estás usando Flexbox */
         }
-
+    
         .gps-data {
             font-size: 25px; /* Ajusta el tamaño del título de la página */
         }
     </style>
+    
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
