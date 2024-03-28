@@ -10,16 +10,24 @@
     <style>
         .card-header, .card-body {
             font-size: 16px; /* Reduce el tamaño de la fuente */
-            padding: 6px 10px; /* Reduce el padding */
+            padding: 6px 8px; /* Reduce el padding */
         }
         .card {
-            margin-bottom: 8px; /* Reduce el margen entre tarjeta */
+            margin-bottom: 5px; /* Reduce el margen entre tarjeta */
         }
+        .content-container {
+        display: flex; /* Activa Flexbox */
+        flex-direction: row; /* Organiza los hijos en fila */
+        align-items: flex-start; /* Alinea los hijos al inicio del contenedor en el eje cruzado */
+        }
+    
         #mapid {
-            height: 500px; /* Aumenta el tamaño del mapa */
+            height: 600px; /* Altura del mapa */
+            max-width: 100%; /* Esto asegura que el mapa no se desborde de su contenedor */
         }
+
         .gps-data {
-            font-size: 28px; /* Ajusta el tamaño del título de la página */
+            font-size: 25px; /* Ajusta el tamaño del título de la página */
         }
     </style>
 </head>
@@ -39,6 +47,14 @@
                     </li>
                 </ul>
             </div>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/consulta">Consulta de Históricos</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="text-center mt-5">
@@ -48,9 +64,9 @@
         <!-- Fila superior con datos y selección de ventana de tiempo -->
         <div class="row justify-content-center">
             <!-- Columna izquierda con datos de GPS -->
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
+            <div class="container mt-3">
+                <div class="row justify-content-center">
+                    <div class="col mb-3">        
                         <div class="card">
                             <div class="card-header text-center">Latitud</div>
                             <div class="card-body">
@@ -58,7 +74,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col mb-3">
                         <div class="card">
                             <div class="card-header text-center">Longitud</div>
                             <div class="card-body">
@@ -66,7 +82,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col mb-3">
                         <div class="card">
                             <div class="card-header text-center">Fecha</div>
                             <div class="card-body">
@@ -74,7 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col mb-3">
                         <div class="card">
                             <div class="card-header text-center">Hora</div>
                             <div class="card-body">
@@ -84,32 +100,6 @@
                     </div>
                 </div>
             </div>
-    
-            <!-- Columna derecha con selección de ventana de tiempo -->
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header text-center">Seleccionar ventana de tiempo</div>
-                    <div class="card-body">
-                        <form id="timeWindowForm">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="startTime" class="form-label">Inicio:</label>
-                                    <input type="datetime-local" class="form-control" id="startTime" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="endTime" class="form-label">Fin:</label>
-                                    <input type="datetime-local" class="form-control" id="endTime" required>
-                                </div>
-                            </div>
-                            <div class="text-center mt-3">
-                                <button type="submit" class="btn btn-primary">Mostrar en mapa</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
         <!-- Fila con el mapa -->
         <div class="row justify-content-center mt-4">
             <div class="col-12">
@@ -174,8 +164,9 @@
             // Guardar la ruta actual en el almacenamiento local
             const currentRoute = routePath.getLatLngs();
             localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
-        });
+
     });
+});
 </script>
 </body>
 </html>
