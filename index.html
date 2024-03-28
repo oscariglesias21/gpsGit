@@ -8,32 +8,22 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        #mapid {
-            height: 70vh; /* Altura del mapa ajustada para darle mayor presencia */
-        }
         .card-header, .card-body {
-            font-size: 16px;
-            padding: 6px 8px;
+            font-size: 16px; /* Reduce el tamaño de la fuente */
         }
         .card {
-            margin-bottom: 5px;
-            border: none; /* Quita el borde del contenedor del mapa */
+            margin-bottom: 5px; /* Reduce el margen entre tarjeta */
         }
-        .container-fluid, .row {
-            padding: 0; /* Remueve el padding para maximizar el tamaño del mapa */
-            margin: 0; /* Remueve el margen para maximizar el tamaño del mapa */
+    
+        #mapid {
+            height: 400px; /* Altura del mapa */
+            width: 100%; /* Ocupa todo el ancho disponible */
+        }
+        .container-fluid {
+            padding-top: 20px; /* Espacio en la parte superior para no pegarse a la barra de navegación */
         }
         .gps-data {
             font-size: 25px; /* Ajusta el tamaño del título de la página */
-            margin-top: 1rem; /* Agrega un poco de espacio encima del título */
-        }
-        /* Ajustes adicionales para centrar el formulario y mejorarlo visualmente */
-        .time-selection-container {
-            max-width: 600px;
-            margin: auto; /* Centrar el formulario */
-            padding: 15px; /* Espaciado interior */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombreado suave */
-            border-radius: 5px; /* Bordes redondeados */
         }
     </style>
 </head>
