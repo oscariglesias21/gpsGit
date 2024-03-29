@@ -133,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
+                console.log(data);
                 if (data.length > 0) {
                     const latlngs = data.map(point => [point.Latitude, point.Longitude]);
                     routePath.setLatLngs(latlngs);
@@ -142,6 +143,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .catch(error => {
+                if (error instanceof SyntaxError) {
+                console.error('Error parsing JSON:', error);
+                alert("Error al procesar la respuesta del servidor.");
+            } else {
+                console.error('Network or other error:', error);
+                alert("Hubo un problema al cargar los datos.");
+            }
                 console.error('Error fetching or processing data:', error);
                 alert("Hubo un problema al cargar los datos.");
             });
