@@ -230,15 +230,15 @@ app.get('/consulta', (req, res) => {
   });
 });
 
-app.get('/obtenerRuta', (req, res) => {
-  const { fechaInicio, horaInicio, fechaFin, horaFin } = req.query;
+app.get('/consultaHistoricos', (req, res) => {
+  const { startDate, startTime, endDate, endTime } = req.query;
   const query = `
       SELECT Latitude, Longitude
       FROM p2GPS
       WHERE (Date > ? OR (Date = ? AND Time >= ?))
         AND (Date < ? OR (Date = ? AND Time <= ?))`;
   
-  dbConnection.query(query, [fechaInicio, fechaInicio, horaInicio, fechaFin, fechaFin, horaFin], (error, results, fields) => {
+  dbConnection.query(query, [startDate, startTime, endDate, endTime], (error, results) => {
       if (error) {
           console.error('Error en consulta:', error);
           res.status(500).send('Server Error');

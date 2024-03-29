@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function cargarDatos(startDate, startTime, endDate, endTime) {
-    const link = `/consulta?startDate=${startDate}&startTime=${startTime}&endDate=${endDate}&endTime=${endTime}`;
+    const link = `/consultaHistoricos?startDate=${startDate}&startTime=${startTime}&endDate=${endDate}&endTime=${endTime}`;
     fetch(link)
         .then(response => {
             if (!response.ok) {
