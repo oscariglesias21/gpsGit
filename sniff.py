@@ -24,6 +24,7 @@ def extract_gps_info(data):
     datetime_obj = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S.%f")
     fecha = datetime_obj.strftime("%d/%m/%Y")  # Formato de fecha modificado a dd/mm/yyyy
     hora = datetime_obj.strftime("%H:%M:%S")  # Formato de hora a HH:MM:SS
+    print("La fecha es" +fecha)
 
     return {
         "Latitude": latitud,
