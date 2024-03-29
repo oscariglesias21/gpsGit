@@ -237,7 +237,7 @@ app.get('/consulta-historicos', (req, res) => {
       WHERE (Date > ? OR (Date = ? AND Time >= ?))
         AND (Date < ? OR (Date = ? AND Time <= ?))`;
   
-  dbConnection.query(query, [startDate, startTime, endDate, endTime], (error, results) => {
+  dbConnection.query(query, [startDate, startDate, startTime, endDate, endDate, endTime], (error, results) => {
       if (error) {
           console.error('Error en consulta:', error);
           res.status(500).send('Server Error');
