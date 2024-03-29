@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         #mapid {
-            height: 370px; /* Altura del mapa */
+            height: 380px; /* Altura del mapa */
             width: 100%; /* Ocupa todo el ancho disponible */
         }
         .container-fluid {
@@ -21,13 +21,16 @@
         }
         .small-title {
             font-size: 20px; /* Set the font size to your preference */
-}
+        }
         .small-card-header {
-            font-size: 10px; /* Smaller font size for card headers */
+            font-size: 13px; /* Smaller font size for card headers */
         }
         .small-label {
-            font-size: 10px; /* Smaller font size for labels */
-}
+            font-size: 13px; /* Smaller font size for labels */
+        }
+        .small-button {
+            font-size: 13px; /* Set the desired font size for the button */
+        }
     </style>
 </head>
 <body>
@@ -72,7 +75,7 @@
                                 <input type="datetime-local" class="form-control" id="endTime" required>
                             </div>
                             <div class="text-center mt-2">
-                                <button type="submit" class="btn btn-primary">Mostrar en mapa</button>
+                                <button type="submit" class="btn btn-primary small-button">Mostrar en mapa</button>
                             </div>
                         </form>
                     </div>
