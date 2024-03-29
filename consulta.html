@@ -127,58 +127,51 @@
             // We'll also create a polyline for the route
             let routePath = L.polyline([], {color: 'red'}).addTo(myMap);
 
-            // This is the form submit event listener
-            document.getElementById('timeWindowForm').addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent the form from reloading the page
+        // Function to load historical data based on the selected date and time range
+        function cargarDatosHistoricos(fechaInicio, horaInicio, fechaFin, horaFin) {
+            const params = new URLSearchParams({
+                fechaInicio: fechaInicio,
+                horaInicio: horaInicio,
+                fechaFin: fechaFin,
+                horaFin: horaFin
+            });
 
-                // Retrieve start and end times from the form
-                const startTime = document.getElementById('startTime').value;
-                const endTime = document.getElementById('endTime').value;
-
-                // Here, you would send the start and end times to your server and get the route data back
-                // For demonstration purposes, let's assume the `data` variable is the response from the server
-                // and is an array of objects with 'lat' and 'lng' properties
-                fetch('/obtenerRuta', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ startTime, endTime })
-                })
+            // Fetch the data from your server
+            fetch(`/obtenerRuta?${params}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Handle the route data received from the server
+                    routePath.setLatLngs([]);
+                    data.forEach(point => {
+                        routePath.addLatLng([point.Latitude, point.Longitude]);
+                    });
+
                     if (data.length > 0) {
-                        // Update the route polyline with the new coordinates
-                        const latlngs = data.map(point => [point.lat, point.lng]);
-                        routePath.setLatLngs(latlngs);
-
-                        // Remove existing markers if they exist
-                        if (startMarker) {
-                            myMap.removeLayer(startMarker);
-                        }
-                        if (endMarker) {
-                            myMap.removeLayer(endMarker);
-                        }
-
-                        // Add new markers for start and end points of the route
-                        startMarker = L.marker(latlngs[0]).addTo(myMap).bindPopup('Inicio del recorrido').openPopup();
-                        endMarker = L.marker(latlngs[latlngs.length - 1]).addTo(myMap).bindPopup('Fin del recorrido').openPopup();
-
-                        // Fit the map view to the route bounds
                         myMap.fitBounds(routePath.getBounds());
-                        alert("Ruta seleccionada es válida")
+                        const lastPoint = routePath.getLatLngs()[routePath.getLatLngs().length - 1];
+                        L.marker(lastPoint).addTo(myMap);
                     } else {
-                        // If there are no points in the time window, alert the user
                         alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching or processing data:', error);
                 });
-            });
+        }
 
+        // Event listener for the form submission
+        document.getElementById('timeWindowForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Collect the date and time values from the form
+            const fechaInicio = document.getElementById('startDate').value;
+            const horaInicio = document.getElementById('startTime').value;
+            const fechaFin = document.getElementById('endDate').value;
+            const horaFin = document.getElementById('endTime').value;
+
+            // Call the function to load and display the data
+            cargarDatosHistoricos(fechaInicio, horaInicio, fechaFin, horaFin);
         });
+    });
 </script>
 </body>
 </html>

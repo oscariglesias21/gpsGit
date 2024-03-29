@@ -216,29 +216,30 @@ function generateDatabasePage(data) {
   }
 });
 }
-app.post('/obtenerRuta', (req, res) => {
-  const startTime = req.body.startTime;
-  const endTime = req.body.endTime;
+app.get('/obtenerRuta', (req, res) => {
+  const { fechaInicio, horaInicio, fechaFin, horaFin } = req.query;
 
-  const query = "SELECT Latitude, Longitude FROM ruta WHERE CONCAT(Date, ' ', Time) BETWEEN ? AND ?";
+  // You'll need to combine the date and time strings appropriately here
+  // assuming they're in a compatible format for your database
+  const startDateTime = `${fechaInicio} ${horaInicio}:00`;
+  const endDateTime = `${fechaFin} ${horaFin}:00`;
 
-  // Ejecutar la consulta SQL
-  dbConnection.query(query, [startTime, endTime], (error, results) => {
-    if (error) {
-      console.error('Error al ejecutar la consulta:', error);
-      res.status(500).send('Error al obtener la ruta.');
-      return;
-    }
+  const query = `
+      SELECT Latitude, Longitude
+      FROM p2GPS 
+      WHERE Date BETWEEN ? AND ?`;
 
-    // Enviar los resultados al cliente
-    res.json(results);
+  dbConnection.query(query, [startDateTime, endDateTime], (error, results) => {
+      if (error) {
+          console.error('Error on the query:', error);
+          res.status(500).send('Server Error');
+          return;
+      }
+      // Send the results to the client
+      res.json(results);
   });
 });
-// Cerrar la conexión a la base de datos al cerrar el servidor
-process.on('SIGINT', () => {
-  connection.end();
-  process.exit();
-});
+
 
 // Ruta de consulta
 app.get('/consulta', (req, res) => {
