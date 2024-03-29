@@ -22,7 +22,7 @@ def extract_gps_info(data):
 
     timestamp_str = timestamp_str.replace("Timestamp:", "").strip()
     datetime_obj = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S.%f")
-    fecha = datetime_obj.strftime("%Y-%m-%d")  # Formato de fecha modificado a YYYY-MM-DD
+    fecha = datetime_obj.strftime("%d-%m-%Y")  # Formato de fecha modificado a YYYY-MM-DD
     hora = datetime_obj.strftime("%H:%M:%S")  # Formato de hora a HH:MM:SS
     print("La fecha es" +fecha)
 
