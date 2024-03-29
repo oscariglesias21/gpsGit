@@ -189,7 +189,6 @@ function generateDatabasePage(data) {
 
   return htmlContent;
 }
-
     const server = http.createServer(app);
     const io = socketIo(server);
     
@@ -230,7 +229,7 @@ app.get('/consulta', (req, res) => {
   });
 });
 
-app.get('/consultaHistoricos', (req, res) => {
+app.get('/consulta-historicos', (req, res) => {
   const { startDate, startTime, endDate, endTime } = req.query;
   const query = `
       SELECT Latitude, Longitude
