@@ -85,7 +85,7 @@
                             <label for="endTime" class="form-label small-label">Hora de fin:</label>
                             <input type="time" class="form-control" id="endTime" required>
                             
-                            <button type="submit" class="btn btn-primary btn-custom small-button">Mostrar en mapa</button>
+                            <button type="submit" id="submitButton" class="btn btn-primary btn-custom small-button">Mostrar en mapa</button>
                         </form>
                     </div>
                 </div>
@@ -146,8 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Hubo un problema al cargar los datos.");
             });
     }
-    document.getElementById('timeWindowForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+    document.getElementById('submitButton').addEventListener('click', () => {
         const fechaInicio = document.getElementById('startDate').value;
         const horaInicio = document.getElementById('startTime').value;
         const fechaFin = document.getElementById('endDate').value;
