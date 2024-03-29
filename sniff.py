@@ -6,7 +6,6 @@ from datetime import datetime
 UDP_IP = "0.0.0.0"  # Escuchar en todas las interfaces
 UDP_PORT = 20000
 
-
 # Configuración del servidor web
 web_server_url = "http://52.201.18.119:80/updateFromSniffer"
 web_server_url1 = "http://54.211.70.225:80/updateFromSniffer"
@@ -20,28 +19,25 @@ def extract_gps_info(data):
 
     latitud = float(latitud_str.split(":")[1])
     longitud = float(longitud_str.split(":")[1])
-  
 
     timestamp_str = timestamp_str.replace("Timestamp:", "").strip()
     datetime_obj = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S.%f")
-    fecha = datetime_obj.date()
-    hora = datetime_obj.time()
+    fecha = datetime_obj.strftime("%d/%m/%Y")  # Formato de fecha modificado a dd/mm/yyyy
+    hora = datetime_obj.strftime("%H:%M:%S")  # Formato de hora a HH:MM:SS
 
     return {
         "Latitude": latitud,
         "Longitude": longitud,
-        "Date": str(fecha),
-        "Time": str(hora)
+        "Date": fecha,  # Fecha ya formateada
+        "Time": hora    # Hora ya formateada
     }
 
 def send_to_web_server(web_data):
     try:
-        response = requests.post(web_server_url, json=web_data)
-        print(f"Datos enviados al servidor web. Respuesta: {response.status_code}")
-        response1 = requests.post(web_server_url1, json=web_data)
-        print(f"Datos enviados al servidor web. Respuesta: {response1.status_code}")
-        response2 = requests.post(web_server_url2, json=web_data)
-        print(f"Datos enviados al servidor web. Respuesta: {response2.status_code}")
+        # Iterar sobre las URLs del servidor web
+        for url in [web_server_url, web_server_url1, web_server_url2]:
+            response = requests.post(url, json=web_data)
+            print(f"Datos enviados a {url}. Respuesta: {response.status_code}")
     except Exception as e:
         print(f"Error al enviar datos al servidor web: {e}")
 
