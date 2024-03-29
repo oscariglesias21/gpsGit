@@ -15,6 +15,10 @@
         .container-fluid {
             padding-top: 20px; /* Espacio en la parte superior para no pegarse a la barra de navegación */
         }
+        /* Ajustes de contenedor más pequeño para la selección de tiempo */
+        .time-selection-container {
+            margin: 0 auto; /* Centrado automático */
+        }
     </style>
 </head>
 <body>
@@ -29,9 +33,8 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/database">Regresar a página principal</a>
+                        <a class="nav-link" href="/">Regresar a página principal</a>
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -46,7 +49,7 @@
 
         <!-- Formulario de selección de tiempo -->
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-md-6 time-selection-container"> <!-- Tamaño ajustado para pantallas medianas -->
                 <div class="card">
                     <div class="card-header text-center">Seleccionar ventana de tiempo</div>
                     <div class="card-body">
@@ -71,10 +74,13 @@
         <!-- Contenedor del mapa -->
         <div class="row justify-content-center mt-4">
             <div class="col-12">
-                <div id="mapid"></div> <!-- Quita la clase card para que el mapa se extienda completamente -->
+                <div id="mapid"></div> <!-- El mapa mantiene su ancho completo -->
             </div>
         </div>
     </div>
+</body>
+</html>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
