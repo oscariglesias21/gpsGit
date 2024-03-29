@@ -155,6 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const horaInicio = document.getElementById('startTime').value;
         const fechaFin = document.getElementById('endDate').value;
         const horaFin = document.getElementById('endTime').value;
+        
+        console.log('Fecha de inicio:', fechaInicio);
+        console.log('Hora de inicio:', horaInicio);
+        console.log('Fecha de fin:', fechaFin);
+        console.log('Hora de fin:', horaFin);
+
         cargarDatos(fechaInicio, horaInicio, fechaFin, horaFin);
     });
 });
