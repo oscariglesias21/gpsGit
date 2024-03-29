@@ -48,7 +48,7 @@ print(f"Escuchando en UDP {UDP_IP}:{UDP_PORT}")
 while True:
     data, addr = sock.recvfrom(1024) 
     print(f"Recibido mensaje: {data} de {addr}")
-
+    print("La fecha es {fecha}")
     # Extraer y enviar los datos GPS
     gps_data = extract_gps_info(data)
     send_to_web_server(gps_data)
