@@ -216,31 +216,6 @@ function generateDatabasePage(data) {
   }
 });
 }
-app.get('/obtenerRuta', (req, res) => {
-  const { fechaInicio, horaInicio, fechaFin, horaFin } = req.query;
-
-  // You'll need to combine the date and time strings appropriately here
-  // assuming they're in a compatible format for your database
-  const startDateTime = `${fechaInicio} ${horaInicio}:00`;
-  const endDateTime = `${fechaFin} ${horaFin}:00`;
-
-  const query = `
-      SELECT Latitude, Longitude
-      FROM p2GPS 
-      WHERE Date BETWEEN ? AND ?`;
-
-  dbConnection.query(query, [startDateTime, endDateTime], (error, results) => {
-      if (error) {
-          console.error('Error on the query:', error);
-          res.status(500).send('Server Error');
-          return;
-      }
-      // Send the results to the client
-      res.json(results);
-  });
-});
-
-
 // Ruta de consulta
 app.get('/consulta', (req, res) => {
   fs.readFile('consulta.html', (error, data) => {
@@ -255,6 +230,23 @@ app.get('/consulta', (req, res) => {
   });
 });
 
+app.get('/obtenerRuta', (req, res) => {
+  const { fechaInicio, horaInicio, fechaFin, horaFin } = req.query;
+  const query = `
+      SELECT Latitude, Longitude
+      FROM p2GPS
+      WHERE (Date > ? OR (Date = ? AND Time >= ?))
+        AND (Date < ? OR (Date = ? AND Time <= ?))`;
+  
+  dbConnection.query(query, [fechaInicio, fechaInicio, horaInicio, fechaFin, fechaFin, horaFin], (error, results, fields) => {
+      if (error) {
+          console.error('Error en consulta:', error);
+          res.status(500).send('Server Error');
+          return;
+      }
+      res.json(results);
+  });
+});
 
 server.listen(port, () => {
   console.log(`Servidor HTTP en ejecución`);
