@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         #mapid {
-            height: 350px; /* Altura del mapa */
+            height: 370px; /* Altura del mapa */
             width: 100%; /* Ocupa todo el ancho disponible */
         }
         .container-fluid {
@@ -20,7 +20,13 @@
             margin: 0 auto; /* Centrado automático */
         }
         .small-title {
-            font-size: 18px; /* Set the font size to your preference */
+            font-size: 20px; /* Set the font size to your preference */
+}
+        .small-card-header {
+            font-size: 16px; /* Smaller font size for card headers */
+        }
+        .small-label {
+            font-size: 14px; /* Smaller font size for labels */
 }
     </style>
 </head>
@@ -54,15 +60,15 @@
         <div class="row justify-content-center">
             <div class="col-md-6 time-selection-container"> <!-- Tamaño ajustado para pantallas medianas -->
                 <div class="card">
-                    <div class="card-header text-center">Seleccionar ventana de tiempo</div>
+                    <div class="card-header text-center small-card-header">Seleccionar ventana de tiempo</div>
                     <div class="card-body">
                         <form id="timeWindowForm" class="row g-3">
                             <div class="col-md-6">
-                                <label for="startTime" class="form-label">Inicio:</label>
+                                <label for="startTime" class="form-label small-label">Inicio:</label>
                                 <input type="datetime-local" class="form-control" id="startTime" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="endTime" class="form-label">Fin:</label>
+                                <label for="endTime" class="form-label small-label">Fin:</label>
                                 <input type="datetime-local" class="form-control" id="endTime" required>
                             </div>
                             <div class="text-center mt-2">
