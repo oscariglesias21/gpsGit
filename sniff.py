@@ -28,8 +28,8 @@ def extract_gps_info(data):
     return {
         "Latitude": latitud,
         "Longitude": longitud,
-        "Date": fecha,  # Fecha ya formateada
-        "Time": hora    # Hora ya formateada
+        "Date": str(fecha),  # Fecha ya formateada
+        "Time": str(hora)    # Hora ya formateada
     }
 
 def send_to_web_server(web_data):
