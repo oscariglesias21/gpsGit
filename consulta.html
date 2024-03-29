@@ -131,14 +131,21 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             console.log(data);
             if (data.length > 0) {
-                // Assuming 'data' is an array of { latitud, longitud } objects
-                const latlngs = data.map(point => [point.latitud, point.longitud]);
-                routePath.setLatLngs(latlngs);
+                // Clear the previous route
+                routePath.setLatLngs([]);
+
+                // Iterate through the data array and add each point to the route
+                data.forEach(point => {
+                    routePath.addLatLng([point.latitud, point.longitud]);
+                });
                 myMap.fitBounds(routePath.getBounds());
+                // Add a marker at the initial point of the route
+                const firstPoint = [data[0].latitud, data[0].longitud];
+                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup('Punto inicial').openPopup();
 
                 // Add a marker at the last point of the route
-                const lastPoint = latlngs[latlngs.length - 1];
-                L.marker(lastPoint).addTo(myMap);
+                const lastPoint = [data[data.length - 1].latitud, data[data.length - 1].longitud];
+                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup('Punto final').openPopup();
             } else {
                 alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
             }
