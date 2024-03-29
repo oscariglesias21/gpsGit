@@ -216,6 +216,29 @@ function generateDatabasePage(data) {
   }
 });
 }
+app.post('/obtenerRuta', (req, res) => {
+  const startTime = req.body.startTime;
+  const endTime = req.body.endTime;
+
+  const query = "SELECT Latitude, Longitude FROM ruta WHERE CONCAT(Date, ' ', Time) BETWEEN ? AND ?";
+
+  // Ejecutar la consulta SQL
+  connection.query(query, [startTime, endTime], (error, results) => {
+    if (error) {
+      console.error('Error al ejecutar la consulta:', error);
+      res.status(500).send('Error al obtener la ruta.');
+      return;
+    }
+
+    // Enviar los resultados al cliente
+    res.json(results);
+  });
+});
+// Cerrar la conexión a la base de datos al cerrar el servidor
+process.on('SIGINT', () => {
+  connection.end();
+  process.exit();
+});
 
 // Ruta de consulta
 app.get('/consulta', (req, res) => {

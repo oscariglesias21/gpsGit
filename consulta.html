@@ -94,7 +94,7 @@
 </html>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npmbootstrap@5.3.3/dist/js/bootstrap.min.js"
@@ -103,7 +103,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
         const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -113,30 +113,39 @@ document.addEventListener('DOMContentLoaded', () => {
         let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
         let lastMarkerPosition = null;
 
-    document.getElementById('timeWindowForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Evitar que el formulario recargue la página
+        document.getElementById('timeWindowForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar que el formulario recargue la página
 
-        const startTime = new Date(document.getElementById('startTime').value);
-        const endTime = new Date(document.getElementById('endTime').value);
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
 
-        // Asegúrate de tener la marca de tiempo en cada punto para que este código funcione
-        const filteredRoute = JSON.parse(localStorage.getItem('routePath') || '[]')
-            .filter(point => {
-                const pointTime = new Date(point.timestamp);
-                return pointTime >= startTime && pointTime <= endTime;
-        })
-        .map(p => L.latLng(p.lat, p.lng));
+            // Enviar los datos del formulario al servidor
+            fetch('/obtenerRuta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ startTime, endTime })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Manejar los datos de la ruta recibidos del servidor
+                if (data.length > 0) {
+                    // Dibuja la ruta filtrada en el mapa
+                    const filteredRoute = data.map(p => L.latLng(p.lat, p.lng));
+                    routePath.setLatLngs(filteredRoute);
+                    // Ajusta la vista del mapa a la nueva ruta
+                    myMap.fitBounds(L.latLngBounds(filteredRoute));
+                } else {
+                    // Si no hay puntos en la ventana de tiempo, mostrar un mensaje
+                    alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
+                }
+            })
+            .catch(error => {
+                console.error('Error al enviar o recibir datos:', error);
+            });
+        });
 
-        if (filteredRoute.length > 0) {
-            // Dibuja la ruta filtrada en el mapa
-            routePath.setLatLngs(filteredRoute);
-            // Ajusta la vista del mapa a la nueva ruta
-            myMap.fitBounds(L.latLngBounds(filteredRoute));
-        } else {
-            // Si no hay puntos en la ventana de tiempo, quizás mostrar un mensaje o simplemente no actualizar la ruta
-            alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
-        }
-    });
 });
 </script>
 </body>
