@@ -4,38 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulta de Históricos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         #mapid {
-            height: 600px; /* Increase the height of the map */
-            width: 100%; /* Let the map use the full width */
+            height: 400px; /* Altura del mapa */
+            width: 80%; /* Ocupa todo el ancho disponible */
         }
         .container-fluid {
-            padding: 10px 15px; /* Reduce the top padding and set horizontal padding */
-        }
-        .text-center.mb-4 {
-            margin-bottom: 0.5rem !important; /* Decrease space below the page title */
-        }
-        .card-header {
-            padding: 0.5rem 1rem; /* Decrease padding within the card header */
-        }
-        .card-body {
-            padding: 1rem; /* Decrease padding within the card body */
-        }
-        form#timeWindowForm .row.g-3 {
-            margin-right: 0; /* Remove right margin on form row */
-            margin-left: 0; /* Remove left margin on form row */
-        }
-        form#timeWindowForm .form-control {
-            padding: 0.375rem 0.75rem; /* Decrease padding within form inputs */
-        }
-        form#timeWindowForm .btn-primary {
-            padding: 0.375rem 0.75rem; /* Decrease padding within the submit button */
+            padding-top: 20px; /* Espacio en la parte superior para no pegarse a la barra de navegación */
         }
     </style>
-    
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -88,13 +66,12 @@
             </div>
         </div>
 
-<!-- Contenedor del mapa -->
-<div class="row justify-content-center mt-4">
-    <div class="col-12">
-        <div id="mapid"></div>
-    </div>
-</div>
-
+        <!-- Contenedor del mapa -->
+        <div class="row justify-content-center mt-4">
+            <div class="col-12">
+                <div id="mapid"></div> <!-- Quita la clase card para que el mapa se extienda completamente -->
+            </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
