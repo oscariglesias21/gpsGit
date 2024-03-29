@@ -118,8 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }).addTo(myMap);
 
     let routePath = L.polyline([], { color: 'red' }).addTo(myMap);
-    function cargarDatos(fechaInicio, horaInicio, fechaFin, horaFin) {
-    const link = `/consulta?fechaInicio=${fechaInicio}&horaInicio=${horaInicio}&fechaFin=${fechaFin}&horaFin=${horaFin}`;
+    function cargarDatos(startDate, startTime, endDate, endTime) {
+    const link = `/consulta?startDate=${startDate}&startTime=${startTime}&endDate=${endDate}&endTime=${endTime}`;
 
     fetch(link)
         .then(response => {
@@ -157,17 +157,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.getElementById('submitButton').addEventListener('click', () => {
-        const fechaInicio = document.getElementById('startDate').value;
-        const horaInicio = document.getElementById('startTime').value;
-        const fechaFin = document.getElementById('endDate').value;
-        const horaFin = document.getElementById('endTime').value;
+        const startDate = document.getElementById('startDate').value;
+        const startTime = document.getElementById('startTime').value;
+        const endDate = document.getElementById('endDate').value;
+        const endTime = document.getElementById('endTime').value;
 
-        console.log('Fecha de inicio:', fechaInicio);
-        console.log('Hora de inicio:', horaInicio);
-        console.log('Fecha de fin:', fechaFin);
-        console.log('Hora de fin:', horaFin);
+        console.log('Fecha de inicio:', startDate);
+        console.log('Hora de inicio:', startTime);
+        console.log('Fecha de fin:', endDate);
+        console.log('Hora de fin:', endTime);
 
-        cargarDatos(fechaInicio, horaInicio, fechaFin, horaFin);
+        cargarDatos(startDate, startTime, endDate, endTime);
     });
 });
 </script>
