@@ -9,27 +9,31 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         #mapid {
-            height: 380px; /* Altura del mapa */
-            width: 100%; /* Ocupa todo el ancho disponible */
+            height: 380px; /* Adjust the height if necessary to match your design preferences */
+            width: 100%;
         }
-        .container-fluid {
-            padding-top: 20px; /* Espacio en la parte superior para no pegarse a la barra de navegación */
+        .container-map {
+            max-width: 1200px; /* Maximum width of the centered container, adjust as necessary */
+            margin: auto; /* Center the container */
         }
-        /* Ajustes de contenedor más pequeño para la selección de tiempo */
-        .time-selection-container {
-            margin: 0 auto; /* Centrado automático */
+        .card {
+            box-shadow: none; /* Remove box-shadow if you prefer for a flatter design */
+            border: none; /* Optional: remove border for a cleaner look */
         }
-        .small-title {
-            font-size: 20px; /* Set the font size to your preference */
+        .form-inline-custom {
+            display: flex;
+            gap: 10px; /* Adjust the gap between form elements */
+            flex-wrap: wrap; /* Wrap onto the next line if space is insufficient */
+            align-items: center; /* Align items vertically */
+            justify-content: center; /* Center form items horizontally */
         }
-        .small-card-header {
-            font-size: 13px; /* Smaller font size for card headers */
+        .btn-custom {
+            padding: .375rem .75rem; /* Adjust padding to change button size */
         }
-        .small-label {
-            font-size: 13px; /* Smaller font size for labels */
-        }
-        .small-button {
-            font-size: 13px; /* Set the desired font size for the button */
+        @media (min-width: 768px) { /* Adjust this breakpoint as needed */
+            .form-inline-custom .form-control {
+                max-width: 165px; /* Limit the width of the form inputs */
+            }
         }
     </style>
 </head>
@@ -51,47 +55,44 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid">
+    <div class="container-map">
         <!-- Título de la página -->
         <div class="row">
             <div class="col-12">
-                <h2 class="text-center mb-4 small-title">Consulta de Trazado</h2>
+                <h2 class="text-center my-3 small-title">Consulta de Trazado</h2>
             </div>
         </div>
 
         <!-- Formulario de selección de tiempo -->
-        <div class="row justify-content-center">
-            <div class="col-md-6 time-selection-container"> <!-- Tamaño ajustado para pantallas medianas -->
+        <div class="row justify-content-center mb-3">
+            <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header text-center small-card-header">Seleccionar ventana de tiempo</div>
                     <div class="card-body">
-                        <form id="timeWindowForm" class="row g-3">
-                            <div class="col-md-6">
-                                <label for="startTime" class="form-label small-label">Inicio:</label>
-                                <input type="datetime-local" class="form-control" id="startTime" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="endTime" class="form-label small-label">Fin:</label>
-                                <input type="datetime-local" class="form-control" id="endTime" required>
-                            </div>
-                            <div class="text-center mt-2">
-                                <button type="submit" class="btn btn-primary small-button">Mostrar en mapa</button>
-                            </div>
-                        </form>
+                        <div class="form-inline-custom">
+                            <label for="startTime" class="form-label small-label">Inicio:</label>
+                            <input type="datetime-local" class="form-control" id="startTime" required>
+                            
+                            <label for="endTime" class="form-label small-label">Fin:</label>
+                            <input type="datetime-local" class="form-control" id="endTime" required>
+                            
+                            <button type="submit" class="btn btn-primary btn-custom small-button">Mostrar en mapa</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Contenedor del mapa -->
-        <div class="row justify-content-center mt-4">
+        <div class="row">
             <div class="col-12">
-                <div id="mapid"></div> <!-- El mapa mantiene su ancho completo -->
+                <div id="mapid"></div>
             </div>
         </div>
     </div>
 </body>
 </html>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
