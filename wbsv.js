@@ -223,7 +223,7 @@ app.post('/obtenerRuta', (req, res) => {
   const query = "SELECT Latitude, Longitude FROM ruta WHERE CONCAT(Date, ' ', Time) BETWEEN ? AND ?";
 
   // Ejecutar la consulta SQL
-  connection.query(query, [startTime, endTime], (error, results) => {
+  dbConnection.query(query, [startTime, endTime], (error, results) => {
     if (error) {
       console.error('Error al ejecutar la consulta:', error);
       res.status(500).send('Error al obtener la ruta.');
