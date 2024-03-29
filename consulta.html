@@ -118,7 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }).addTo(myMap);
 
     let routePath = L.polyline([], { color: 'red' }).addTo(myMap);
-    document.getElementById('timeWindowForm').addEventListener('submit', function(event) {
+
+    document.getElementById('submitButton').addEventListener('submit', () => {
         event.preventDefault(); // Prevent form submission
         const startDate = document.getElementById('startDate').value;
         const startTime = document.getElementById('startTime').value;
