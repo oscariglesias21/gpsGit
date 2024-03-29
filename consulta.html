@@ -71,14 +71,19 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header text-center small-card-header">Seleccionar ventana de tiempo</div>
-                    <!-- ... other parts of your HTML ... -->
                     <div class="card-body">
                         <form id="timeWindowForm" class="form-inline-custom">
-                            <label for="startTime" class="form-label small-label">Inicio:</label>
-                            <input type="datetime-local" class="form-control" id="startTime" required>
+                            <label for="startDate" class="form-label small-label">Fecha de inicio:</label>
+                            <input type="date" class="form-control" id="startDate" required>
                             
-                            <label for="endTime" class="form-label small-label">Fin:</label>
-                            <input type="datetime-local" class="form-control" id="endTime" required>
+                            <label for="startTime" class="form-label small-label">Hora de inicio:</label>
+                            <input type="time" class="form-control" id="startTime" required>
+                            
+                            <label for="endDate" class="form-label small-label">Fecha de fin:</label>
+                            <input type="date" class="form-control" id="endDate" required>
+                            
+                            <label for="endTime" class="form-label small-label">Hora de fin:</label>
+                            <input type="time" class="form-control" id="endTime" required>
                             
                             <button type="submit" class="btn btn-primary btn-custom small-button">Mostrar en mapa</button>
                         </form>
