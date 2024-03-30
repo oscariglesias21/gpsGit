@@ -122,6 +122,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
@@ -156,31 +159,31 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(link)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Respuesta de Network no fue ok');
             }
             return response.json();
         })
         .then(data => {
             console.log(data);
             if (data.length > 0) {
-                // Clear the previous route
+                // Borra ruta previa
                 routePath.setLatLngs([]);
-                markers.forEach(marker => marker.remove()); // Remove each marker from the map
-                markers = []; // Clear the markers array
+                markers.forEach(marker => marker.remove()); // Remueve marcadores previos
+                markers = []; 
 
-                // Iterate through the data array and add each point to the route
+                // Itera a través del vector de datos y agrega los puntos
                 data.forEach(point => {
                     const lat = parseFloat(point.Latitude); 
                     const lng = parseFloat(point.Longitude);
                     routePath.addLatLng([lat, lng]);
                 });
                 myMap.fitBounds(routePath.getBounds());
-                // Add a marker at the initial point of the route
+                // Adición de marcador inicial
                 const firstPoint = [data[0].Latitude, data[0].Longitude];
                 const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup('Punto inicial').openPopup();
                 markers.push(firstMarker);
 
-                // Add a marker at the last point of the route
+                // Adición de marcador final
                 const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
                 const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup('Punto final').openPopup();
                 markers.push(lastMarker);
@@ -189,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .catch(error => {
-            console.error('Error fetching or processing data:', error);
+            console.error('Error en fetch o procesando datos:', error);
             alert("Hubo un problema al cargar los datos.");
         });
     }
