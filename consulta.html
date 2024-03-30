@@ -69,34 +69,34 @@
 
         <!-- Formulario de selección de tiempo -->
 <!-- Formulario de selección de tiempo -->
+<!-- Formulario de selección de tiempo -->
 <div class="row justify-content-center mb-3">
     <div class="col-lg-8">
         <div class="card">
-            <div class="card-header text-center small-card-header">Seleccionar ventana de tiempo</div>
             <div class="card-body">
-                <form id="timeWindowForm" class="row"> <!-- Use the row class here -->
-                    <div class="col-md-3"> <!-- Adjust the col-md-# to fit your design -->
-                        <label for="startDate" class="form-label small-label">Fecha de inicio:</label>
-                        <input type="date" class="form-control" id="startDate" required>
+                <form id="timeWindowForm" class="row g-3"> <!-- Use 'g-3' for spacing between columns -->
+                    <div class="col-md-2">
+                        <label for="startDate" class="form-label">Fecha de inicio:</label>
+                        <input type="date" class="form-control form-control-sm" id="startDate" required>
                     </div>
                     
-                    <div class="col-md-3">
-                        <label for="startTime" class="form-label small-label">Hora de inicio:</label>
-                        <input type="time" class="form-control" id="startTime" required>
+                    <div class="col-md-2">
+                        <label for="startTime" class="form-label">Hora de inicio:</label>
+                        <input type="time" class="form-control form-control-sm" id="startTime" required>
                     </div>
                     
-                    <div class="col-md-3">
-                        <label for="endDate" class="form-label small-label">Fecha de fin:</label>
-                        <input type="date" class="form-control" id="endDate" required>
+                    <div class="col-md-2">
+                        <label for="endDate" class="form-label">Fecha de fin:</label>
+                        <input type="date" class="form-control form-control-sm" id="endDate" required>
                     </div>
                     
-                    <div class="col-md-3">
-                        <label for="endTime" class="form-label small-label">Hora de fin:</label>
-                        <input type="time" class="form-control" id="endTime" required>
+                    <div class="col-md-2">
+                        <label for="endTime" class="form-label">Hora de fin:</label>
+                        <input type="time" class="form-control form-control-sm" id="endTime" required>
                     </div>
 
-                    <div class="col-12 text-center mt-3"> <!-- This ensures the button is centered and on its own line -->
-                        <button type="submit" id="submitButton" class="btn btn-primary btn-custom">Mostrar en mapa</button>
+                    <div class="col-md-4 d-flex align-items-end"> <!-- This aligns the button to the bottom of the column -->
+                        <button type="submit" id="submitButton" class="btn btn-primary btn-custom btn-sm w-100">Mostrar en mapa</button>
                     </div>
                 </form>
             </div>
