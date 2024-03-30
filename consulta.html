@@ -111,6 +111,8 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <script>
+
+let markers = [];
 document.addEventListener('DOMContentLoaded', () => {
     const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -148,6 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.length > 0) {
                 // Clear the previous route
                 routePath.setLatLngs([]);
+                markers.forEach(marker => marker.remove()); // Remove each marker from the map
+                markers = []; // Clear the markers array
 
                 // Iterate through the data array and add each point to the route
                 data.forEach(point => {
@@ -159,10 +163,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Add a marker at the initial point of the route
                 const firstPoint = [data[0].Latitude, data[0].Longitude];
                 const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup('Punto inicial').openPopup();
+                markers.push(firstMarker);
 
                 // Add a marker at the last point of the route
                 const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
                 const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup('Punto final').openPopup();
+                markers.push(lastMarker);
             } else {
                 alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
             }
