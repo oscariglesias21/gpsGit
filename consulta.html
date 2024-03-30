@@ -33,6 +33,15 @@
         .small-title{
             font-size: 18px;
         }
+        .form-inline-custom {
+            position: relative; /* This creates a new stacking context */
+            z-index: 1000; /* This is arbitrary; the value just needs to be high enough to be on top of other elements */
+        }
+
+        /* Make sure your inputs are not being clipped by an overflow property */
+        .card-body {
+            overflow: visible; /* This ensures that nothing within the card body is clipped */
+        }
         @media (min-width: 768px) { /* Adjust this breakpoint as needed */
             .form-inline-custom .form-control {
                 max-width: 165px; /* Limit the width of the form inputs */
