@@ -13,7 +13,7 @@
             width: 100%;
         }
         .container-map {
-            max-width: 2000px; /* Maximum width of the centered container, adjust as necessary */
+            max-width: 1500px; /* Maximum width of the centered container, adjust as necessary */
             margin: auto; /* Center the container */
         }
         .card {
@@ -38,6 +38,19 @@
                 max-width: 165px; /* Limit the width of the form inputs */
             }
         }
+        @media (min-width: 768px) { /* Adjusting for tablets and desktops */
+            .col-lg-8 {
+                max-width: none; /* This will allow the column to take up more space */
+            }
+            .form-inline-custom .form-control {
+                max-width: none; /* This will prevent the form controls from wrapping */
+            }
+        }
+        .card {
+            max-width: none; /* Remove the max-width or increase it to allow more space */
+}
+
+
     </style>
 </head>
 <body>
