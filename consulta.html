@@ -38,18 +38,6 @@
                 max-width: 165px; /* Limit the width of the form inputs */
             }
         }
-        @media (min-width: 768px) { /* Adjusting for tablets and desktops */
-            .col-lg-8 {
-                max-width: none; /* This will allow the column to take up more space */
-            }
-            .form-inline-custom .form-control {
-                max-width: none; /* This will prevent the form controls from wrapping */
-            }
-        }
-        .card {
-            max-width: none; /* Remove the max-width or increase it to allow more space */
-}
-
 
     </style>
 </head>
@@ -80,31 +68,41 @@
         </div>
 
         <!-- Formulario de selección de tiempo -->
-        <div class="row justify-content-center mb-3">
-            <div class="col-lg-8">
-                <div class="card">
-                    <div class="card-header text-center small-card-header">Seleccionar ventana de tiempo</div>
-                    <div class="card-body">
-                        <form id="timeWindowForm" class="form-inline-custom">
-                            <label for="startDate" class="form-label small-label">Fecha de inicio:</label>
-                            <input type="date" class="form-control" id="startDate" required>
-                            
-                            <label for="startTime" class="form-label small-label">Hora de inicio:</label>
-                            <input type="time" class="form-control" id="startTime" required>
-                            
-                            <label for="endDate" class="form-label small-label">Fecha de fin:</label>
-                            <input type="date" class="form-control" id="endDate" required>
-                            
-                            <label for="endTime" class="form-label small-label">Hora de fin:</label>
-                            <input type="time" class="form-control" id="endTime" required>
-                            
-                            <button type="submit" id="submitButton" class="btn btn-primary btn-custom small-button">Mostrar en mapa</button>
-                        </form>
+<!-- Formulario de selección de tiempo -->
+<div class="row justify-content-center mb-3">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header text-center small-card-header">Seleccionar ventana de tiempo</div>
+            <div class="card-body">
+                <form id="timeWindowForm" class="row"> <!-- Use the row class here -->
+                    <div class="col-md-3"> <!-- Adjust the col-md-# to fit your design -->
+                        <label for="startDate" class="form-label small-label">Fecha de inicio:</label>
+                        <input type="date" class="form-control" id="startDate" required>
                     </div>
-                </div>
+                    
+                    <div class="col-md-3">
+                        <label for="startTime" class="form-label small-label">Hora de inicio:</label>
+                        <input type="time" class="form-control" id="startTime" required>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label for="endDate" class="form-label small-label">Fecha de fin:</label>
+                        <input type="date" class="form-control" id="endDate" required>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label for="endTime" class="form-label small-label">Hora de fin:</label>
+                        <input type="time" class="form-control" id="endTime" required>
+                    </div>
+
+                    <div class="col-12 text-center mt-3"> <!-- This ensures the button is centered and on its own line -->
+                        <button type="submit" id="submitButton" class="btn btn-primary btn-custom">Mostrar en mapa</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
         <!-- Contenedor del mapa -->
         <div class="row">
