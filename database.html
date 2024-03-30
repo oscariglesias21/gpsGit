@@ -104,39 +104,42 @@
         </tbody>
     </table>
 </div>
-
 <script>
-window.addEventListener('DOMContentLoaded', () => {
-  const tableBody = document.getElementById('table-body');
-
-  // Función para obtener los datos de la base de datos
-  function fetchData() {
-    fetch('/database')
-      .then(response => response.json())
-      .then(data => {
-        // Limpiamos el cuerpo de la tabla
-        tableBody.innerHTML = '';
-
-        // Iteramos sobre los datos en orden descendente
-        data.forEach(record => {
-          // Creamos una fila de tabla para cada registro
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${record.Longitude}</td>
-            <td>${record.Latitude}</td>
-            <td>${record.Date}</td>
-            <td>${record.Time}</td>
-          `;
-          tableBody.appendChild(row);
+    document.addEventListener('DOMContentLoaded', () => {
+    function generateDatabase() {
+        fetch('/database-datos', {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(results => {
+            console.log(results); // Agregar este console.log para verificar la estructura de los datos
+            const tableBody = document.getElementById('table-body');
+            // Limpiamos el cuerpo de la tabla
+            tableBody.innerHTML = '';
+            // Iteramos sobre los datos en orden descendente
+            results.forEach(record => {
+                // Creamos una fila de tabla para cada registro
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.Longitude}</td>
+                    <td>${record.Latitude}</td>
+                    <td>${record.Date}</td>
+                    <td>${record.Time}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener los últimos datos:', error);
         });
-      })
-      .catch(error => console.error('Error al obtener datos:', error));
-  }
-
-  // Llamamos a la función para cargar los datos al cargar página
-  fetchData();
+    }
+    // Llamada a la función para generar la base de datos
+    generateDatabase();
 });
 </script>
+
 
 </body>
 </html>
