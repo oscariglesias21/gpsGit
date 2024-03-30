@@ -151,15 +151,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Iterate through the data array and add each point to the route
                 data.forEach(point => {
-                    routePath.addLatLng([point.latitud, point.longitud]);
+                    const lat = parseFloat(point.Latitude); 
+                    const lng = parseFloat(point.Longitude);
+                    routePath.addLatLng([lat, lng]);
                 });
                 myMap.fitBounds(routePath.getBounds());
                 // Add a marker at the initial point of the route
-                const firstPoint = [data[0].latitud, data[0].longitud];
+                const firstPoint = [data[0].Latitude, data[0].Longitude];
                 const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup('Punto inicial').openPopup();
 
                 // Add a marker at the last point of the route
-                const lastPoint = [data[data.length - 1].latitud, data[data.length - 1].longitud];
+                const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
                 const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup('Punto final').openPopup();
             } else {
                 alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
