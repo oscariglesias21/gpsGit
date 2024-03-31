@@ -9,7 +9,7 @@ jobs:
           fingerprints:
             - "SHA256:MerXeLmIk662ZRepQU4FbpEC5tvnU7jx1Yt4cV2B17k" # Fingerprint oscar
             - "SHA256:gvDudu58T2BodjaGSREXbstbfLWGvy92w+4JprJOdiY" # Fingerprint jose
-            - "SHA256:3WChUnpHZ1NaNi03ewattj7zmf/aA/L8sAZld+0cGKQ" #Fingerprint jesus
+            - "SHA256:3WChUnpHZ1NaNi03ewattj7zmf/aA/L8sAZld+0cGKQ" # Fingerprint jesus
       - run:
           name: SSH and Pull Latest Code
           command: |
