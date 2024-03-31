@@ -180,12 +180,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 myMap.fitBounds(routePath.getBounds());
                 // Adición de marcador inicial
                 const firstPoint = [data[0].Latitude, data[0].Longitude];
-                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup('Punto inicial').openPopup();
+                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup('Inicio').openPopup();
                 markers.push(firstMarker);
 
                 // Adición de marcador final
                 const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
-                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup('Punto final').openPopup();
+                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup('Fin').openPopup();
                 markers.push(lastMarker);
             } else {
                 alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
