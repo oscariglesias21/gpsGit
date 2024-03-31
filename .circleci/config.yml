@@ -9,7 +9,6 @@ jobs:
           fingerprints:
             - "SHA256:MerXeLmIk662ZRepQU4FbpEC5tvnU7jx1Yt4cV2B17k" # Use the actual fingerprint of your EC2 SSH key
             - "SHA256:gvDudu58T2BodjaGSREXbstbfLWGvy92w+4JprJOdiY" # Fingerprint colaborador
-            - "SHA256:3WChUnpHZ1NaNi03ewattj7zmf/aA/L8sAZld+0cGKQ" #Fingerprint colaborador 2
       - run:
           name: SSH and Pull Latest Code
           command: |
@@ -17,7 +16,7 @@ jobs:
       - run:
           name: SSH and Pull Latest Code - Collaborator
           command: |
-            ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-211-70-225.compute-1.amazonaws.com "cd ~/clones/clones2/gpsGit && git pull origin master"
+            ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-211-70-225.compute-1.amazonaws.com "cd ~/gpsGit && git pull origin master"
 
 workflows:
   version: 2
