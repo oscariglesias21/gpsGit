@@ -10,12 +10,13 @@ jobs:
             - "SHA256:MerXeLmIk662ZRepQU4FbpEC5tvnU7jx1Yt4cV2B17k" # Use the actual fingerprint of your EC2 SSH key
       - run:
           name: Deploy Application with PM2
-          command: >
+          command: |
             ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-201-18-119.compute-1.amazonaws.com "
               cd ~/gpsGit || exit;
               git pull origin master;
               npm install;
-              pm2 restart 'web server' || pm2 start wbsv.js --name 'web server'
+              npm install pm2 -g;  # Install PM2 globally
+              pm2 restart 'web server' || pm2 start wbsv.js --name 'web server';
             "
       
 workflows:
