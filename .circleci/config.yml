@@ -2,26 +2,28 @@ version: 2.1
 
 jobs:
   deploy:
-    machine: true
+    runs-on: ubuntu-latest
+    env:
+      DB_SECRET_HOST: ${{ secrets.DB_SECRET_HOST }}
+      DB_SECRET_USER: ${{ secrets.DB_SECRET_USER }}
+      DB_SECRET_PASSWORD: ${{ secrets.DB_SECRET_PASSWORD }}
+      DB_SECRET_DATABASE: ${{ secrets.DB_SECRET_DATABASE }}
     steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:MerXeLmIk662ZRepQU4FbpEC5tvnU7jx1Yt4cV2B17k" # Fingerprint oscar
-            - "SHA256:gvDudu58T2BodjaGSREXbstbfLWGvy92w+4JprJOdiY" # Fingerprint jose
-            - "SHA256:3WChUnpHZ1NaNi03ewattj7zmf/aA/L8sAZld+0cGKQ" # Fingerprint jesus
-      - run:
-          name: SSH and Pull Latest Code
-          command: |
-            ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-201-18-119.compute-1.amazonaws.com "cd ~/gpsGitClone/gpsGit && git pull origin master && pm2 restart 1"
-      - run:
-          name: SSH and Pull Latest Code - Collaborator
-          command: |
-            ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-211-70-225.compute-1.amazonaws.com "cd ~/gpsGit && git pull origin master && pm2 restart 0"
-      - run:
-          name: SSH and Pull Latest Code - Collaborator 2
-          command: |
-            ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-82-103-211.compute-1.amazonaws.com "cd ~/gps/gpsGit && git pull origin master"
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: SSH and Pull Latest Code
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-201-18-119.compute-1.amazonaws.com "cd ~/gpsGitClone/gpsGit && git pull origin master && pm2 restart 1"
+
+      - name: SSH and Pull Latest Code - Collaborator
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-211-70-225.compute-1.amazonaws.com "cd ~/gpsGit && git pull origin master && pm2 restart 0"
+
+      - name: SSH and Pull Latest Code - Collaborator 2
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-82-103-211.compute-1.amazonaws.com "cd ~/gps/gpsGit && git pull origin master"
+
 workflows:
   version: 2
   build-and-deploy:

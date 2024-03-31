@@ -8,10 +8,10 @@ const app = express();
 app.use(express.json()); 
 
 const dbConnection = mysql.createConnection({
-  host: 'dbgps.cj42w80qu3u7.us-east-1.rds.amazonaws.com',
-  user: 'oscariglesias_21',
-  password: 'Osqui61832513',
-  database: 'p2db'
+  host: process.env.DB_SECRET_HOST,
+  user: process.env.DB_SECRET_USER,
+  password: process.env.DB_SECRET_PASSWORD,
+  database: process.env.DB_SECRET_DATABASE
 });
 const port = 80;
 dbConnection.connect((err) => {
