@@ -39,7 +39,7 @@ app.post('/updateFromSniffer', (req, res) => {
   });
 });
 
-// Servir el archivo HTML index.html
+// Servir el archivo HTML index
 app.get('/', (req, res) => {
   fs.readFile('index.html', (error, data) => {
     if (error) {
