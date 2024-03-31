@@ -17,7 +17,9 @@ jobs:
               npm install
               # Uncomment the next line if you have a build step
               # npm run build
-              pm2 restart "web server" || pm2 start wbsv.js --name "web server"EOF>>
+              pm2 restart "web server" || pm2 start wbsv.js --name "web server"
+EOF  # Ensure this EOF is on a new line with no indentation
+
 workflows:
   version: 2
   build-and-deploy:
