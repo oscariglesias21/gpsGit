@@ -8,7 +8,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "SHA256:MerXeLmIk662ZRepQU4FbpEC5tvnU7jx1Yt4cV2B17k" # Use the actual fingerprint of your EC2 SSH key
-            - "SHA256:gvDudu58T2BodjaGSREXbstbfLWGvy92w+4JprJOdiY" # Fingerprint del colaborador
+            - "SHA256:gvDudu58T2BodjaGSREXbstbfLWGvy92w+4JprJOdiY" # Fingerprint colaborador
       - run:
           name: SSH and Pull Latest Code
           command: |
