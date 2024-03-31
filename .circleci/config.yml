@@ -18,10 +18,6 @@ jobs:
           name: SSH and Pull Latest Code - Collaborator
           command: |
             ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-211-70-225.compute-1.amazonaws.com "cd ~/clones/clones2/gpsGit && git pull origin master"
-      - run:
-          name: SSH and Pull Latest Code - Collaborator 2
-          command: |
-            ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-82-103-211.compute-1.amazonaws.com "cd ~/gps/gpsGit && git pull origin master"
 
 workflows:
   version: 2
