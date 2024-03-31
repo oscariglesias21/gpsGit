@@ -3,17 +3,15 @@ const fs = require('fs');
 const socketIo = require('socket.io');
 const mysql = require('mysql2');
 const express = require('express');
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../home/ubuntu/.env') });
 
 const app = express();
 app.use(express.json()); 
 
 const dbConnection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  host: 'dbgps.cj42w80qu3u7.us-east-1.rds.amazonaws.com',
+  user: 'oscariglesias_21',
+  password: 'Osqui61832513',
+  database: 'p2db'
 });
 const port = 80;
 dbConnection.connect((err) => {
