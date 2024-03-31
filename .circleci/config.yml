@@ -18,7 +18,8 @@ jobs:
               # Uncomment the next line if you have a build step
               # npm run build
               pm2 restart "web server" || pm2 start wbsv.js --name "web server"
-              EOF
+
+EOF
 
 workflows:
   version: 2
