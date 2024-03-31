@@ -11,14 +11,14 @@ jobs:
       - run:
           name: Deploy Application with PM2
           command: |
-            ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-201-18-119.compute-1.amazonaws.com << 'EOF'
+            ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-201-18-119.compute-1.amazonaws.com <<EOF
               cd ~/gpsGit || exit
               git pull origin master
               npm install
               # Uncomment the next line if you have a build step
               # npm run build
               pm2 restart "web server" || pm2 start wbsv.js --name "web server"
-            EOF
+EOF
 
 workflows:
   version: 2
@@ -28,4 +28,3 @@ workflows:
           filters:
             branches:
               only: master
-
