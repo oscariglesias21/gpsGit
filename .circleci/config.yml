@@ -9,9 +9,16 @@ jobs:
           fingerprints:
             - "SHA256:MerXeLmIk662ZRepQU4FbpEC5tvnU7jx1Yt4cV2B17k" # Use the actual fingerprint of your EC2 SSH key
       - run:
-          name: SSH and Pull Latest Code
+          name: Deploy Application with PM2
           command: |
-            ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-201-18-119.compute-1.amazonaws.com "cd ~/gpsGit && git pull origin master"
+            ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-201-18-119.compute-1.amazonaws.com << 'EOF'
+              cd ~/gpsGit || exit
+              git pull origin master
+              npm install
+              # Uncomment the next line if you have a build step
+              # npm run build
+              pm2 restart "web server" || pm2 start wbsv.js --name "web server"
+            EOF
 
 workflows:
   version: 2
@@ -21,3 +28,4 @@ workflows:
           filters:
             branches:
               only: master
+
