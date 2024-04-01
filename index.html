@@ -107,49 +107,55 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(myMap);
+document.addEventListener('DOMContentLoaded', () => {
+    const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(myMap);
 
-        let marker = L.marker([0, 0]).addTo(myMap);
-        let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
-        let lastMarkerPosition = null;
+    let marker = L.marker([0, 0]).addTo(myMap);
+    let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
+    let lastMarkerPosition = null;
+    
+    // Temporizador para detectar inactividad
+    let inactivityTimer;
 
-        // Intentar recuperar y dibujar la ruta almacenada
-        const storedRoute = localStorage.getItem('routePath');
-        if (storedRoute) {
-            const routePoints = JSON.parse(storedRoute);
-            routePath.setLatLngs(routePoints.map(p => L.latLng(p.lat, p.lng)));
-        }
+    // Intentar recuperar y dibujar la ruta almacenada
+    const storedRoute = localStorage.getItem('routePath');
+    if (storedRoute) {
+        const routePoints = JSON.parse(storedRoute);
+        routePath.setLatLngs(routePoints.map(p => L.latLng(p.lat, p.lng)));
+    }
 
-        const socket = io();
-        console.log('Conexión a Socket.IO establecida correctamente.');
+    const socket = io();
+    console.log('Conexión a Socket.IO establecida correctamente.');
 
-        socket.on('locationUpdate', (data) => {
-            document.getElementById('latitude').innerText = data.Latitude;
-            document.getElementById('longitude').innerText = data.Longitude;
-            document.getElementById('date').innerText = data.Date;
-            document.getElementById('time').innerText = data.Time;
+    socket.on('locationUpdate', (data) => {
+        // Reiniciar el temporizador de inactividad cada vez que se recibe una actualización
+        clearTimeout(inactivityTimer);
+        inactivityTimer = setTimeout(() => {
+            routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
+            localStorage.removeItem('routePath'); // Opcional: Limpia la ruta almacenada
+            console.log('La ruta ha sido borrada debido a la inactividad.');
+        }, 10000); // 10000 milisegundos = 10 segundos
 
-            const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
-        
-        if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 200) {
-            // Si el marcador se ha movido más de 200 metros, reinicia la polilínea
-            routePath.setLatLngs([]);
-            localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
-        }
+        document.getElementById('latitude').innerText = data.Latitude;
+        document.getElementById('longitude').innerText = data.Longitude;
+        document.getElementById('date').innerText = data.Date;
+        document.getElementById('time').innerText = data.Time;
 
-            marker.setLatLng(newLatLng);
-            routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
-            lastMarkerPosition = newLatLng;
+        const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
+        marker.setView(newLatLng);
+        marker.setLatLng(newLatLng);
+        routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
+        lastMarkerPosition = newLatLng;
 
-            // Guardar la ruta actual en el almacenamiento local
-            const currentRoute = routePath.getLatLngs();
-            localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
-        });
+        // Guardar la ruta actual en el almacenamiento local
+        const currentRoute = routePath.getLatLngs();
+        localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
     });
+});
+
 </script>
 </body>
 </html>
