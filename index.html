@@ -166,6 +166,10 @@
         } else {
             alert('Ubicación no disponible.'); // O maneja este caso como prefieras
         }
+         // Guardar la ruta actual en el almacenamiento local
+         const currentRoute = routePath.getLatLngs();
+            localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
+
     });
 });
 </script>
