@@ -19,6 +19,7 @@ jobs:
           command: |
             DB_SECRET_HOST=${DB_SECRET_HOST} DB_SECRET_USER=${DB_SECRET_USER} DB_SECRET_PASSWORD=${DB_SECRET_PASSWORD} DB_SECRET_DATABASE=${DB_SECRET_DATABASE} ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-82-103-211.compute-1.amazonaws.com "cd ~/gps/gpsGit && git pull origin master"
 
+
 workflows:
   version: 2
   build-and-deploy:
