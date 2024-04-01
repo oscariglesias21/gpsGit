@@ -146,6 +146,7 @@
             document.getElementById('time').innerText = data.Time;
 
             const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
+            centrarMapa = newLatLng;
         
         if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 400) {
             // Si el marcador se ha movido más de 400 metros, reinicia la polilínea
@@ -159,8 +160,8 @@
 
         });
         document.getElementById('centrarMapaBtn').addEventListener('click', () => {
-        if (newLatLng) {
-            myMap.setView(newLatLng); // Centra el mapa en la última ubicación conocida
+        if (centrarMapa) {
+            myMap.setView(centrarMapa); // Centra el mapa en la última ubicación conocida
         } else {
             alert('Ubicación no disponible.'); // O maneja este caso como prefieras
         }
