@@ -41,6 +41,7 @@
                         <a class="nav-link" href="/consulta" target="_blank">Consultar Recorridos Específicos</a>
                     </li>
                 </ul>
+                <button id="centrarMapaBtn" class="btn btn-primary ms-auto">Centrar Mapa</button>
             </div>
         </div>
     </nav>
@@ -157,6 +158,13 @@
             lastMarkerPosition = newLatLng;
 
         });
+        document.getElementById('centrarMapaBtn').addEventListener('click', () => {
+        if (newLatLng) {
+            myMap.setView(newLatLng); // Centra el mapa en la última ubicación conocida
+        } else {
+            alert('Ubicación no disponible.'); // O maneja este caso como prefieras
+        }
+    });
     });
 </script>
 </body>
