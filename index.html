@@ -35,7 +35,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/database" target="_blank">Ver Base de Datos</a>
+                        <a class="nav-link" href="/database" target="_blank">Ver Historial de Datos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/consulta" target="_blank">Consultar Recorridos Específicos</a>
@@ -138,7 +138,7 @@
                 localStorage.removeItem('routePath'); // Opcional: Limpia la ruta almacenada
                 console.log('La ruta ha sido borrada debido a la inactividad.');
             }, 20000); // 20000 milisegundos = 20 segundos
-            
+
             document.getElementById('latitude').innerText = data.Latitude;
             document.getElementById('longitude').innerText = data.Longitude;
             document.getElementById('date').innerText = data.Date;
