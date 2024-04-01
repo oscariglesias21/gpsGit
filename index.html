@@ -153,6 +153,7 @@
         }
 
             marker.setLatLng(newLatLng);
+            map.setView(newLatLng);
             routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
             lastMarkerPosition = newLatLng;
 
