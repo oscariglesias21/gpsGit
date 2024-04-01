@@ -2,24 +2,26 @@ version: 2.1
 
 jobs:
   deploy:
-    docker:
-      - image: cimg/base:stable
+    machine: true
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:MerXeLmIk662ZRepQU4FbpEC5tvnU7jx1Yt4cV2B17k" # Fingerprint oscar
+            - "SHA256:gvDudu58T2BodjaGSREXbstbfLWGvy92w+4JprJOdiY" # Fingerprint jose
+            - "SHA256:3WChUnpHZ1NaNi03ewattj7zmf/aA/L8sAZld+0cGKQ" # Fingerprint jesus
       - run:
           name: SSH and Pull Latest Code
           command: |
-            DB_SECRET_HOST=${DB_SECRET_HOST} DB_SECRET_USER=${DB_SECRET_USER} DB_SECRET_PASSWORD=${DB_SECRET_PASSWORD} DB_SECRET_DATABASE=${DB_SECRET_DATABASE} ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-201-18-119.compute-1.amazonaws.com "cd ~/gpsGitClone/gpsGit && git pull origin master && pm2 restart 1"
+            ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-201-18-119.compute-1.amazonaws.com "cd ~/gpsGitClone/gpsGit && git pull origin master && pm2 restart 1"
       - run:
           name: SSH and Pull Latest Code - Collaborator
           command: |
-            DB_SECRET_HOST=${DB_SECRET_HOST} DB_SECRET_USER=${DB_SECRET_USER} DB_SECRET_PASSWORD=${DB_SECRET_PASSWORD} DB_SECRET_DATABASE=${DB_SECRET_DATABASE} ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-211-70-225.compute-1.amazonaws.com "cd ~/gpsGit && git pull origin master && pm2 restart 0"
+            ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-211-70-225.compute-1.amazonaws.com "cd ~/gpsGit && git pull origin master && pm2 restart 0"
       - run:
           name: SSH and Pull Latest Code - Collaborator 2
           command: |
-            DB_SECRET_HOST=${DB_SECRET_HOST} DB_SECRET_USER=${DB_SECRET_USER} DB_SECRET_PASSWORD=${DB_SECRET_PASSWORD} DB_SECRET_DATABASE=${DB_SECRET_DATABASE} ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-82-103-211.compute-1.amazonaws.com "cd ~/gps/gpsGit && git pull origin master"
-
-
+            ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-82-103-211.compute-1.amazonaws.com "cd ~/gps/gpsGit && git pull origin master"
 workflows:
   version: 2
   build-and-deploy:
