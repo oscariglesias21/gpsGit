@@ -4,13 +4,15 @@ jobs:
   deploy:
     docker:
       - image: cimg/base:stable
-    environment:
-      DB_SECRET_HOST: ${DB_SECRET_HOST}
-      DB_SECRET_USER: ${DB_SECRET_USER}
-      DB_SECRET_PASSWORD: ${DB_SECRET_PASSWORD}
-      DB_SECRET_DATABASE: ${DB_SECRET_DATABASE}
     steps:
       - checkout
+      - run:
+          name: Set Environment Variables
+          command: |
+            echo 'export DB_SECRET_HOST=${DB_SECRET_HOST}' >> $BASH_ENV
+            echo 'export DB_SECRET_USER=${DB_SECRET_USER}' >> $BASH_ENV
+            echo 'export DB_SECRET_PASSWORD=${DB_SECRET_PASSWORD}' >> $BASH_ENV
+            echo 'export DB_SECRET_DATABASE=${DB_SECRET_DATABASE}' >> $BASH_ENV
       - run:
           name: SSH and Pull Latest Code
           command: |
