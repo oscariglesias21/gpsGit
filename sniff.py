@@ -8,8 +8,7 @@ UDP_PORT = 20000
 
 # Configuración del servidor web
 web_server_url = "http://52.201.18.119:80/updateFromSniffer"
-web_server_url1 = "http://54.211.70.225:80/updateFromSniffer"
-web_server_url2 = "http://3.82.103.211:80/updateFromSniffer"
+
 
 def extract_gps_info(data):
     # Simula la extracción de los datos GPS del payload
@@ -24,8 +23,6 @@ def extract_gps_info(data):
     datetime_obj = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S.%f")
     fecha = datetime_obj.strftime("%Y-%m-%d") 
     hora = datetime_obj.strftime("%H:%M:%S")  # Formato de hora a HH:MM:SS
-    
-
     return {
         "Latitude": latitud,
         "Longitude": longitud,
@@ -36,7 +33,7 @@ def extract_gps_info(data):
 def send_to_web_server(web_data):
     try:
         # Iterar sobre las URLs del servidor web
-        for url in [web_server_url, web_server_url1, web_server_url2]:
+        for url in [web_server_url]:
             response = requests.post(url, json=web_data)
             print(f"Datos enviados a {url}. Respuesta: {response.status_code}")
     except Exception as e:
