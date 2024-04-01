@@ -121,6 +121,7 @@
         let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
         let lastMarkerPosition = null;
         let inactivityTimer;
+        let centrarMapa = null;
 
         // Intentar recuperar y dibujar la ruta almacenada
         const storedRoute = localStorage.getItem('routePath');
