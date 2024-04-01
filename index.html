@@ -35,7 +35,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/database">Ver Base de Datos</a>
+                        <a class="nav-link" href="/database" target="_blank">Ver Hisorial de Datos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/consulta" target="_blank">Consultar Recorridos Específicos</a>
                     </li>
                 </ul>
             </div>
@@ -48,9 +51,9 @@
         <!-- Fila superior con datos y selección de ventana de tiempo -->
         <div class="row justify-content-center">
             <!-- Columna izquierda con datos de GPS -->
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
+            <div class="container mt-3">
+                <div class="row justify-content-center">
+                    <div class="col mb-3">        
                         <div class="card">
                             <div class="card-header text-center">Latitud</div>
                             <div class="card-body">
@@ -58,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col mb-3">
                         <div class="card">
                             <div class="card-header text-center">Longitud</div>
                             <div class="card-body">
@@ -66,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col mb-3">
                         <div class="card">
                             <div class="card-header text-center">Fecha</div>
                             <div class="card-body">
@@ -74,7 +77,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col mb-3">
                         <div class="card">
                             <div class="card-header text-center">Hora</div>
                             <div class="card-body">
@@ -84,7 +87,7 @@
                     </div>
                 </div>
             </div>
-        <!-- Fila con el mapa -->
+         <!-- Fila con el mapa -->
         <div class="row justify-content-center mt-4">
             <div class="col-12">
                 <div class="card">
@@ -144,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             routePath.setLatLngs([]);
             localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
         }
-        
+
         document.getElementById('latitude').innerText = data.Latitude;
         document.getElementById('longitude').innerText = data.Longitude;
         document.getElementById('date').innerText = data.Date;
