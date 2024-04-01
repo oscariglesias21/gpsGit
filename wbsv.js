@@ -94,16 +94,16 @@ app.get('/database-datos', (req, res) => {
     function sendLatestDataToClients() {
       dbConnection.query('SELECT * FROM p2GPS ORDER BY ID DESC LIMIT 1', (err, results) => {
         if (err) throw err;
-  if (results.length > 0) {
-    const latestLocation = {
-      Latitude: results[0].Latitude,
-      Longitude: results[0].Longitude,
-      Date: results[0].Date,
-      Time: results[0].Time
-    };
-    io.emit('locationUpdate', latestLocation);
-  }
-});
+        if (results.length > 0) {
+          const latestLocation = {
+            Latitude: results[0].Latitude,
+            Longitude: results[0].Longitude,
+            Date: results[0].Date,
+            Time: results[0].Time
+          };
+          io.emit('locationUpdate', latestLocation);
+        }
+      });
 }
 // Ruta de consulta
 app.get('/consulta', (req, res) => {
