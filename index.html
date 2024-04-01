@@ -145,14 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('time').innerText = data.Time;
 
         const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
-        marker.setView(newLatLng);
+        myMap.setView(newLatLng);
         marker.setLatLng(newLatLng);
         routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
         lastMarkerPosition = newLatLng;
-
-        // Guardar la ruta actual en el almacenamiento local
-        const currentRoute = routePath.getLatLngs();
-        localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
     });
 });
 
