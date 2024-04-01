@@ -139,6 +139,12 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('La ruta ha sido borrada debido a la inactividad.');
         }, 10000); // 10000 milisegundos = 10 segundos
 
+        if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 200) {
+            // Si el marcador se ha movido más de 200 metros, reinicia la polilínea
+            routePath.setLatLngs([]);
+            localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
+        }
+        
         document.getElementById('latitude').innerText = data.Latitude;
         document.getElementById('longitude').innerText = data.Longitude;
         document.getElementById('date').innerText = data.Date;
