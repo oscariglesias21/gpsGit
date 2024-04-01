@@ -119,6 +119,7 @@
         let marker = L.marker([0, 0]).addTo(myMap);
         let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
         let lastMarkerPosition = null;
+        let inactivityTimer;
 
         // Intentar recuperar y dibujar la ruta almacenada
         const storedRoute = localStorage.getItem('routePath');
@@ -131,6 +132,13 @@
         console.log('Conexión a Socket.IO establecida correctamente.');
 
         socket.on('locationUpdate', (data) => {
+        clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
+                localStorage.removeItem('routePath'); // Opcional: Limpia la ruta almacenada
+                console.log('La ruta ha sido borrada debido a la inactividad.');
+            }, 20000); // 20000 milisegundos = 20 segundos
+            
             document.getElementById('latitude').innerText = data.Latitude;
             document.getElementById('longitude').innerText = data.Longitude;
             document.getElementById('date').innerText = data.Date;
