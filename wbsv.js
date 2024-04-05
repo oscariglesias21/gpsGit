@@ -121,13 +121,25 @@ app.get('/consulta', (req, res) => {
 
 app.get('/consulta-historicos', (req, res) => {
   const { startDateTime, endDateTime } = req.query;
+
+  // Assuming startDateTime and endDateTime are in the format 'YYYY-MM-DDTHH:MM'
+  const startParts = startDateTime.split('T');
+  const endParts = endDateTime.split('T');
+
+  // Separating the date and time for the start and end times
+  const startDate = startParts[0];
+  const startTime = startParts[1];
+  const endDate = endParts[0];
+  const endTime = endParts[1];
+
   const query = `
       SELECT Latitude, Longitude
       FROM p2GPS
       WHERE (Date > ? OR (Date = ? AND Time >= ?))
         AND (Date < ? OR (Date = ? AND Time <= ?))`;
-  
-  dbConnection.query(query, [startDateTime, startDateTime, endDateTime, endDateTime], (error, results) => {
+
+  // The parameters must match the order and number of '?' placeholders in the query
+  dbConnection.query(query, [startDate, startDate, startTime, endDate, endDate, endTime], (error, results) => {
       if (error) {
           console.error('Error en consulta:', error);
           res.status(500).send('Server Error');
@@ -136,6 +148,7 @@ app.get('/consulta-historicos', (req, res) => {
       res.json(results);
   });
 });
+
 
 server.listen(port, () => {
   console.log(`Servidor HTTP en ejecución`);

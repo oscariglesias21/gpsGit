@@ -78,13 +78,18 @@
                 <form id="timeWindowForm" class="row g-3"> <!-- Use 'g-3' for spacing between columns -->
                     <div class="col-md-4">
                         <label for="startDateTime" class="form-label">Fecha y hora de inicio:</label>
-                        <input type="datetime-local" class="form-control form-control-sm" id="startDateTime" required>
-                    </div>
-                    
-                    <div class="col-md-4">
+                        <input type="datetime-local" class="form-control form-control-sm" id="startDateTime" onchange="updateDateTimeDisplay()" required>
+                      </div>
+                      
+                      <div class="col-md-4">
                         <label for="endDateTime" class="form-label">Fecha y hora de fin:</label>
-                        <input type="datetime-local" class="form-control form-control-sm" id="endDateTime" required>
-                    </div>     
+                        <input type="datetime-local" class="form-control form-control-sm" id="endDateTime" onchange="updateDateTimeDisplay()" required>
+                      </div>
+                      
+                      <!-- Add the spans where the split date and time will be displayed -->
+                      <p>Fecha de inicio: <span id="startDateSpan"></span> Hora de inicio: <span id="startTimeSpan"></span></p>
+                      <p>Fecha de fin: <span id="endDateSpan"></span> Hora de fin: <span id="endTimeSpan"></span></p>
+                      
 
                     <div class="col-md-4 d-flex align-items-end"> <!-- This aligns the button to the bottom of the column -->
                         <button type="submit" id="submitButton" class="btn btn-primary btn-custom btn-sm w-100">Mostrar en mapa</button>
@@ -126,16 +131,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let routePath = L.polyline([], { color: 'red' }).addTo(myMap);
 
+
     document.getElementById('submitButton').addEventListener('click', () => {
-        event.preventDefault(); // Prevent form submission
-        const startDateTime = document.getElementById('startDateTime').value;
-        const endDateTime = document.getElementById('endDateTime').value;
+    event.preventDefault(); // Prevent form submission
+    const startDateTime = document.getElementById('startDateTime').value;
+    const endDateTime = document.getElementById('endDateTime').value;
 
-        console.log('Fecha de inicio / hora de inicio:', startDateTime);
-        console.log('Fecha de fin / Hora de fin:', endDateTime);
+    // Call the function to split and display date and time
+    updateDateTimeDisplay(startDateTime, endDateTime);
 
-        cargarDatos(startDateTime, endDateTime);
-    });
+    cargarDatos(startDateTime, endDateTime);
+});
 
     function cargarDatos(startDateTime, endDateTime) {
     const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
@@ -179,6 +185,16 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Hubo un problema al cargar los datos.");
         });
     }
+    
+    function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
+    const [startDate, startTime] = startDateTimeStr.split('T');
+    const [endDate, endTime] = endDateTimeStr.split('T');
+
+    document.getElementById('startDateSpan').textContent = startDate;
+    document.getElementById('startTimeSpan').textContent = startTime;
+    document.getElementById('endDateSpan').textContent = endDate;
+    document.getElementById('endTimeSpan').textContent = endTime;
+}
 });
 </script>
 </body>
