@@ -128,21 +128,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('submitButton').addEventListener('click', () => {
         event.preventDefault(); // Prevent form submission
-        const startDate = document.getElementById('startDate').value;
-        const startTime = document.getElementById('startTime').value;
-        const endDate = document.getElementById('endDate').value;
-        const endTime = document.getElementById('endTime').value;
+        const startDateTime = document.getElementById('startDateTime').value;
+        const endDateTime = document.getElementById('endDateTime').value;
 
-        console.log('Fecha de inicio:', startDate);
-        console.log('Hora de inicio:', startTime);
-        console.log('Fecha de fin:', endDate);
-        console.log('Hora de fin:', endTime);
+        console.log('Fecha de inicio / hora de inicio:', startDateTime);
+        console.log('Fecha de fin / Hora de fin:', endDateTime);
 
-        cargarDatos(startDate, startTime, endDate, endTime);
+        cargarDatos(startDateTime, endDateTime);
     });
 
-    function cargarDatos(startDate, startTime, endDate, endTime) {
-    const link = `/consulta-historicos?startDate=${startDate}&startTime=${startTime}&endDate=${endDate}&endTime=${endTime}`;
+    function cargarDatos(startDateTime, endDateTime) {
+    const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
     fetch(link)
         .then(response => {
             if (!response.ok) {
