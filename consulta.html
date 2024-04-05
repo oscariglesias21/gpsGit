@@ -76,25 +76,15 @@
                 <p class="text-center mb-3"><strong>Ingrese una ventana de tiempo para conocer el recorrido histórico del vehículo</strong></p>
 
                 <form id="timeWindowForm" class="row g-3"> <!-- Use 'g-3' for spacing between columns -->
-                    <div class="col-md-2">
-                        <label for="startDate" class="form-label">Fecha de inicio:</label>
-                        <input type="datetime-local" id="startDate" required>
+                    <div class="col-md-4">
+                        <label for="startDateTime" class="form-label">Fecha y hora de inicio:</label>
+                        <input type="datetime-local" class="form-control form-control-sm" id="startDateTime" required>
                     </div>
                     
-                    <div class="col-md-2">
-                        <label for="startTime" class="form-label">Hora de inicio:</label>
-                        <input type="datetime-local" id="startTime" required>
-                    </div>
-                    
-                    <div class="col-md-2">
-                        <label for="endDate" class="form-label">Fecha de fin:</label>
-                        <input type="date" class="form-control form-control-sm" id="endDate" required>
-                    </div>
-                    
-                    <div class="col-md-2">
-                        <label for="endTime" class="form-label">Hora de fin:</label>
-                        <input type="time" class="form-control form-control-sm" id="endTime" required>
-                    </div>
+                    <div class="col-md-4">
+                        <label for="endDateTime" class="form-label">Fecha y hora de fin:</label>
+                        <input type="datetime-local" class="form-control form-control-sm" id="endDateTime" required>
+                    </div>     
 
                     <div class="col-md-4 d-flex align-items-end"> <!-- This aligns the button to the bottom of the column -->
                         <button type="submit" id="submitButton" class="btn btn-primary btn-custom btn-sm w-100">Mostrar en mapa</button>
