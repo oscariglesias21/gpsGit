@@ -26,7 +26,7 @@ dbConnection.connect((err) => {
 
 app.post('/updateFromSniffer', (req, res) => {
   const { Latitude, Longitude, Date, Time } = req.body;
-  const insertQuery = 'INSERT INTO p2GPS (Latitude, Longitude, Date, Time) VALUES (?, ?, ?, ?)';
+  const insertQuery = 'INSERT INTO p2GPS2 (Latitude, Longitude, Date, Time) VALUES (?, ?, ?, ?)';
   const insertValues = [Latitude, Longitude, Date, Time];
   dbConnection.query(insertQuery, insertValues, (err, results) => {
     if (err) {
@@ -67,7 +67,7 @@ app.get('/database', (req, res) => {
 });
 
 app.get('/database-datos', (req, res) => {
-  dbConnection.query('SELECT Latitude, Longitude, Date, Time FROM p2GPS ORDER BY ID DESC', (err, results) => {
+  dbConnection.query('SELECT Latitude, Longitude, Date, Time FROM p2GPS2 ORDER BY ID DESC', (err, results) => {
     if (err) {
       console.error('Error al consultar la base de datos:', err);
       return res.status(500).send('Internal Server Error');
@@ -92,7 +92,7 @@ app.get('/database-datos', (req, res) => {
     });
     // Consulta el último dato en la base de datos y lo envía a todos los clientes
     function sendLatestDataToClients() {
-      dbConnection.query('SELECT * FROM p2GPS ORDER BY ID DESC LIMIT 1', (err, results) => {
+      dbConnection.query('SELECT * FROM p2GPS2 ORDER BY ID DESC LIMIT 1', (err, results) => {
         if (err) throw err;
   if (results.length > 0) {
     const latestLocation = {
@@ -134,7 +134,7 @@ app.get('/consulta-historicos', (req, res) => {
 
   const query = `
       SELECT Latitude, Longitude
-      FROM p2GPS
+      FROM p2GPS2
       WHERE (Date > ? OR (Date = ? AND Time >= ?))
         AND (Date < ? OR (Date = ? AND Time <= ?))`;
 
