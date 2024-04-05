@@ -133,6 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const startDateTime = document.getElementById('startDateTime').value;
     const endDateTime = document.getElementById('endDateTime').value;
 
+    // Call the function to split and display date and time
+    updateDateTimeDisplay(startDateTime, endDateTime);
+
     cargarDatos(startDateTime, endDateTime);
 });
 
@@ -178,6 +181,14 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Hubo un problema al cargar los datos.");
         });
     }
+
+    function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
+        const [startDate, startTime] = startDateTimeStr.split('T');
+        const [endDate, endTime] = endDateTimeStr.split('T');
+        
+        document.getElementById('startDateSpan').textContent = startDate;
+        document.getElementById('endDateSpan').textContent = endDate;
+}
 });
 </script>
 </body>
