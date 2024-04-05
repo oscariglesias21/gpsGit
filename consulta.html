@@ -33,6 +33,9 @@
         .small-title{
             font-size: 24px;
         }
+        #startDateSpan, #startTimeSpan, #endDateSpan, #endTimeSpan {
+            display: none;
+        }
         @media (min-width: 768px) { /* Adjust this breakpoint as needed */
             .form-inline-custom .form-control {
                 max-width: 165px; /* Limit the width of the form inputs */
@@ -68,24 +71,29 @@
         </div>
 
 <!-- Formulario de selección de tiempo -->
-<!-- Removed the paragraphs for start and end date display -->
-<!-- Formulario de selección de tiempo -->
 <div class="row justify-content-center mb-3">
     <div class="col-lg-8">
         <div class="card">
             <div class="card-body">
+
                 <p class="text-center mb-3"><strong>Ingrese una ventana de tiempo para conocer el recorrido histórico del vehículo</strong></p>
+
                 <form id="timeWindowForm" class="row g-3"> <!-- Use 'g-3' for spacing between columns -->
                     <div class="col-md-4">
                         <label for="startDateTime" class="form-label">Fecha y hora de inicio:</label>
-                        <input type="datetime-local" class="form-control form-control-sm" id="startDateTime" required>
-                    </div>
-                    
-                    <div class="col-md-4">
+                        <input type="datetime-local" class="form-control form-control-sm" id="startDateTime" onchange="updateDateTimeDisplay()" required>
+                      </div>
+                      
+                      <div class="col-md-4">
                         <label for="endDateTime" class="form-label">Fecha y hora de fin:</label>
-                        <input type="datetime-local" class="form-control form-control-sm" id="endDateTime" required>
-                    </div>
-                    
+                        <input type="datetime-local" class="form-control form-control-sm" id="endDateTime" onchange="updateDateTimeDisplay()" required>
+                      </div>
+                      
+                      <p>Fecha de inicio: <span id="startDateSpan"></span> <span id="startTimeSpan"></span></p>
+                      <p>Fecha de fin: <span id="endDateSpan"></span> <span id="endTimeSpan"></span></p>
+
+                      
+
                     <div class="col-md-4 d-flex align-items-end"> <!-- This aligns the button to the bottom of the column -->
                         <button type="submit" id="submitButton" class="btn btn-primary btn-custom btn-sm w-100">Mostrar en mapa</button>
                     </div>
@@ -94,7 +102,6 @@
         </div>
     </div>
 </div>
-
 
         <!-- Contenedor del mapa -->
         <div class="row">
@@ -185,9 +192,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
         const [startDate, startTime] = startDateTimeStr.split('T');
         const [endDate, endTime] = endDateTimeStr.split('T');
-        
+
         document.getElementById('startDateSpan').textContent = startDate;
+        document.getElementById('startTimeSpan').textContent = startTime;
         document.getElementById('endDateSpan').textContent = endDate;
+        document.getElementById('endTimeSpan').textContent = endTime;
 }
 });
 </script>
