@@ -21,6 +21,13 @@
         .gps-data {
             font-size: 28px; /* Ajusta el tamaño del título de la página */
         }
+        /* Estilos para el botón "Regresar a Ubicación" */
+        #centrarMapaBtn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
@@ -34,14 +41,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a class="nav-link" href="/database" target="_blank">Ver Historial de Datos</a>
-                    </li>
+                    </li>-->
                     <li class="nav-item">
-                        <a class="nav-link" href="/consulta" target="_blank">Consultar Recorridos Específicos</a>
+                        <a class="btn btn-primary ms-auto" href="/consulta" target="_blank">Recorridos</a>
                     </li>
                 </ul>
-                <button id="centrarMapaBtn" class="btn btn-primary ms-auto">Regresar a Ubicación</button>
             </div>
         </div>
     </nav>
@@ -88,12 +94,15 @@
                     </div>
                 </div>
             </div>
-        <!-- Fila con el mapa -->
-        <div class="row justify-content-center mt-4">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body p-0">
-                        <div id="mapid"></div>
+            <!-- Fila con el mapa -->
+            <div class="row justify-content-center mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div id="mapid"></div>
+                            <!-- Botón "Regresar a Ubicación" -->
+                            <button id="centrarMapaBtn" class="btn btn-primary">&#x1F4CD; </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,6 +129,7 @@
         let marker = L.marker([0, 0]).addTo(myMap);
         let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
         let lastMarkerPosition = null;
+
         let inactivityTimer;
         let centrarMapa = null;
 
