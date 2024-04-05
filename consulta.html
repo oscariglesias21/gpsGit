@@ -87,8 +87,8 @@
                       </div>
                       
                       <!-- Add the spans where the split date and time will be displayed -->
-                      <p>Fecha de inicio: <span id="startDateSpan"></span> Hora de inicio: <span id="startTimeSpan"></span></p>
-                      <p>Fecha de fin: <span id="endDateSpan"></span> Hora de fin: <span id="endTimeSpan"></span></p>
+                      <p><span id="startDateSpan"></span> <span id="startTimeSpan"></span></p>
+                      <p><span id="endDateSpan"></span> <span id="endTimeSpan"></span></p>
                       
 
                     <div class="col-md-4 d-flex align-items-end"> <!-- This aligns the button to the bottom of the column -->
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Hubo un problema al cargar los datos.");
         });
     }
-    
+
     function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
     const [startDate, startTime] = startDateTimeStr.split('T');
     const [endDate, endTime] = endDateTimeStr.split('T');
