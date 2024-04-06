@@ -87,12 +87,12 @@
                         <form id="timeWindowForm" class="row g-3"> <!-- Use 'g-3' for spacing between columns -->
                             <div class="col-md-4">
                                 <label for="startDateTime" class="form-label">Fecha y hora de inicio:</label>
-                                <input type="datetime-local" class="form-control form-control-sm" id="startDateTime" onchange="updateDateTimeDisplay()" required>
+                                <input type="text" id="startDateTime" onchange="updateDateTimeDisplay(this.value, document.getElementById('endDateTime').value)" required>
                               </div>
 
                               <div class="col-md-4">
                                 <label for="endDateTime" class="form-label">Fecha y hora de fin:</label>
-                                <input type="datetime-local" class="form-control form-control-sm" id="endDateTime" onchange="updateDateTimeDisplay()" required>
+                                <input type="text" id="endDateTime" onchange="updateDateTimeDisplay(document.getElementById('startDateTime').value, this.value)" required>
                               </div>
 
                               <span id="startDateSpan"></span> <span id="startTimeSpan"></span>
@@ -267,12 +267,21 @@
             });
     }
     
-    function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
-        const [startDate, startTime] = startDateTimeStr.split('T');
-        const [endDate, endTime] = endDateTimeStr.split('T');
+    function updateDateTimeDisplay() {
+    const startDateTimeStr = document.getElementById('startDateTime').value;
+    const endDateTimeStr = document.getElementById('endDateTime').value;
     
-        document.getElementById('startDateSpan').textContent = `Fecha de inicio: ${startDate}, Hora: ${startTime}`; // Corrección aquí
-        document.getElementById('endDateSpan').textContent = `Fecha de fin: ${endDate}, Hora: ${endTime}`; // Corrección aquí
+    // Asegúrate de que ambos valores no sean vacíos antes de intentar hacer el split.
+    if (startDateTimeStr && endDateTimeStr) {
+        const [startDate, startTime] = startDateTimeStr.split(' ');
+        const [endDate, endTime] = endDateTimeStr.split(' ');
+
+        document.getElementById('startDateSpan').textContent = startDate;
+        document.getElementById('startTimeSpan').textContent = startTime;
+        document.getElementById('endDateSpan').textContent = endDate;
+        document.getElementById('endTimeSpan').textContent = endTime;
     }
+}
+
     </script>
         
