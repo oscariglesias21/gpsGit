@@ -169,6 +169,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 // Polilínea actual para el nuevo conjunto de datos
                 let rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
                 let ultimoPunto = null;
+                routePath.setLatLngs([]);
                 markers.forEach(marker => marker.remove()); // Remove each marker from the map
                 markers = []; // Clear the markers array
 
