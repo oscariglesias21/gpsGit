@@ -87,12 +87,12 @@
                         <form id="timeWindowForm" class="row g-3"> <!-- Use 'g-3' for spacing between columns -->
                             <div class="col-md-4">
                                 <label for="startDateTime" class="form-label">Fecha y hora de inicio:</label>
-                                <input type="text" id="startDateTime" onchange="updateDateTimeDisplay(this.value, document.getElementById('endDateTime').value)" required>
+                                <input type="datetime-local" class="form-control form-control-sm" id="startDateTime" onchange="updateDateTimeDisplay()" required>
                               </div>
 
                               <div class="col-md-4">
                                 <label for="endDateTime" class="form-label">Fecha y hora de fin:</label>
-                                <input type="text" id="endDateTime" onchange="updateDateTimeDisplay(document.getElementById('startDateTime').value, this.value)" required>
+                                <input type="datetime-local" class="form-control form-control-sm" id="endDateTime" onchange="updateDateTimeDisplay()" required>
                               </div>
 
                               <span id="startDateSpan"></span> <span id="startTimeSpan"></span>
