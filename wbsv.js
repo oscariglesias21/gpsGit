@@ -139,7 +139,7 @@ app.get('/consulta-historicos', (req, res) => {
   const endTime = endParts[1];
 
   const query = `
-      SELECT Latitude, Longitude
+      SELECT Latitude, Longitude, Time
       FROM p2GPS2
       WHERE (Date > ? OR (Date = ? AND Time >= ?))
         AND (Date < ? OR (Date = ? AND Time <= ?))`;
