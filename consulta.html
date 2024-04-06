@@ -193,8 +193,8 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 markers = [];
 
                 // Formatear la hora del primer y último punto
-                const firstPointTime = new Date(data[0].Timestamp).toLocaleString();
-                const lastPointTime = new Date(data[data.length - 1].Timestamp).toLocaleString();
+                const firstPointTime = new Date(data[0].Time).toLocaleString();
+                const lastPointTime = new Date(data[data.length - 1].Time).toLocaleString();
 
                 // Adición de marcadores para el trayecto actual
                 const firstPoint = [parseFloat(data[0].Latitude), parseFloat(data[0].Longitude)];
