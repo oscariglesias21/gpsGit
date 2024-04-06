@@ -110,6 +110,14 @@
     </div>
 </div>
 
+<!-- Slider para controlar el tiempo del recorrido -->
+<div class="row justify-content-center my-3">
+    <div class="col-lg-8">
+        <input type="range" class="form-range" min="0" max="100" value="0" id="timeSlider">
+    </div>
+</div>
+
+
         <!-- Contenedor del mapa -->
         <div class="row">
             <div class="col-12">
@@ -158,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+let marcadorDeslizable;
 function cargarDatos(startDateTime, endDateTime, myMap) {
     const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
     fetch(link)
@@ -170,7 +179,6 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
         .then(data => {
             console.log(data);
             if (data.length > 0) {
-                // Clear previous routes and their markers
                 trayectos.forEach(trayecto => trayecto.remove());
                 trayectos = [];
 
@@ -204,6 +212,28 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
 
                 // Fit the map to the bounds of the current route
                 myMap.fitBounds(rutaActual.getBounds());
+
+                if (!marcadorDeslizable) {
+                    marcadorDeslizable = L.marker([0, 0], {
+                        draggable: 'true'
+                    }).addTo(myMap);
+                }
+
+                // Ajustar el slider
+                const slider = document.getElementById('timeSlider');
+                slider.max = data.length - 1; // El máximo es el último índice de tus datos
+                slider.value = 0; // Resetear a la posición inicial
+
+                slider.oninput = function() {
+                    const puntoSeleccionado = data[this.value];
+                    const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
+                    marcadorDeslizable.setLatLng(latLng);
+                    marcadorDeslizable.bindPopup(`Timestamp: ${puntoSeleccionado.DateTime}`).openPopup();
+                };
+
+                // Inicializar el marcador en la posición inicial
+                slider.oninput();
+
 
                 // Add start and end markers for the current interval
                 const firstDateTime = data[0].DateTime; // DateTime of the first point
