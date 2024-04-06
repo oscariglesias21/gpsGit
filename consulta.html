@@ -170,22 +170,21 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 let rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
                 let ultimoPunto = null;
 
-                data.forEach(point => {
-                    const lat = parseFloat(point.Latitude); 
-                    const lng = parseFloat(point.Longitude);
-                    const nuevoPunto = L.latLng(lat, lng);
-                    
-                    // Comienza una nueva polilínea si el último punto está demasiado lejos
-                    if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 1000) {
-                        // Finaliza la polilínea anterior y comienza una nueva
-                        rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
-                        markers.forEach(marker => marker.remove()); // Remueve marcadores previos
-                        markers = [];
-                    }
-                    rutaActual.addLatLng(nuevoPunto);
-                    ultimoPunto = nuevoPunto;
-                });
+            data.forEach((point, index) => {
+                const lat = parseFloat(point.Latitude); 
+                const lng = parseFloat(point.Longitude);
+                const date = point.Date; // Asumiendo que el campo se llama 'Date' en tus resultados
+                const time = point.Time; // Asumiendo que el campo se llama 'Time' en tus resultados
+                const dateTime = new Date(`${date}T${time}`).toLocaleString();
 
+            // Solo para el primer y último punto, crea marcadores con popups que muestren la fecha y hora
+                if (index === 0 || index === data.length - 1) {
+                    const marker = L.marker([lat, lng]).addTo(myMap)
+                                    .bindPopup(`Punto ${index === 0 ? 'Inicial' : 'Final'} - Hora: ${dateTime}`)
+                                    .openPopup();
+                    markers.push(marker);
+                }
+            });
                 myMap.fitBounds(rutaActual.getBounds());
                 
                 // Limpia los marcadores antiguos y añade nuevos para el trayecto actual
