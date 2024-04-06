@@ -150,22 +150,24 @@
 
 flatpickr("#startDateTime", {
   enableTime: true,
-  dateFormat: "Y-m-dTH:i",
+  dateFormat: "Y-m-d H:i",
   altInput: true,
   altFormat: "F j, Y H:i",
   time_24hr: true,
   minuteIncrement: 15,
-  placeholder: "Selecciona la fecha y hora de inicio"
+  placeholder: "Selecciona la fecha y hora de inicio", // Esto establece el placeholder
+  altInputClass: "form-control form-control-sm" // Esto asigna la clase CSS al input visual de Flatpickr
 });
 
 flatpickr("#endDateTime", {
   enableTime: true,
-  dateFormat: "Y-m-dTH:i",
+  dateFormat: "Y-m-d H:i",
   altInput: true,
   altFormat: "F j, Y H:i",
   time_24hr: true,
   minuteIncrement: 15,
-  placeholder: "Selecciona la fecha y hora de fin"
+  placeholder: "Selecciona la fecha y hora de fin", // Esto establece el placeholder
+  altInputClass: "form-control form-control-sm" // Esto asigna la clase CSS al input visual de Flatpickr
 });
 
 
