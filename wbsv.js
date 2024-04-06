@@ -40,6 +40,12 @@ app.post('/updateFromSniffer', (req, res) => {
   });
 });
 
+app.post('/FromSniffer', (req, res) => {
+  const { Latitude, Longitude, Date, Time } = req.body;
+  io.emit('locationUpdate', { Latitude, Longitude, Date, Time });
+  res.status(200).send('OK');
+});
+
 // Servir el archivo HTML index
 app.get('/', (req, res) => {
   fs.readFile('index.html', (error, data) => {
