@@ -166,6 +166,12 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
         .then(data => {
             console.log(data);
             if (data.length > 0) {
+                // Clear existing markers and routes
+                markers.forEach(marker => marker.remove());
+                trayectos.forEach(trayecto => trayecto.remove());
+                markers = [];
+                trayectos = [];
+
                 // Polilínea actual para el nuevo conjunto de datos
                 let rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
                 let ultimoPunto = null;
@@ -173,37 +179,28 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 data.forEach(point => {
                     const lat = parseFloat(point.Latitude); 
                     const lng = parseFloat(point.Longitude);
-                    const dateTime = point.DateTime;
                     const nuevoPunto = L.latLng(lat, lng);
                     
                     // Comienza una nueva polilínea si el último punto está demasiado lejos
                     if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
                         // Finaliza la polilínea anterior y comienza una nueva
                         rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
-                        markers.forEach(marker => marker.remove()); // Remueve marcadores previos
-                        markers = [];
                     }
                     rutaActual.addLatLng(nuevoPunto);
                     ultimoPunto = nuevoPunto;
                 });
 
                 myMap.fitBounds(rutaActual.getBounds());
-                
-                // Limpia los marcadores antiguos y añade nuevos para el trayecto actual
+
+                // Add start and end markers for the new route
                 const firstDateTime = data[0].DateTime; // DateTime de primer punto
                 const firstPoint = [data[0].Latitude, data[0].Longitude];
-                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup();
+                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`);
                 markers.push(firstMarker);
 
-                // Add this before adding the lastMarker
-                if (markers.length > 1) {
-                // Remove the last marker which is at the end of the markers array
-                const lastMarker = markers.pop();
-                lastMarker.remove();
-}
                 const lastDateTime = data[data.length - 1].DateTime; // DateTime del último punto
                 const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
-                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup();
+                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`);
                 markers.push(lastMarker);
 
                 // Guardar la polilínea actual en el arreglo de trayectos
