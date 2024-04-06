@@ -133,29 +133,28 @@
 <script>
 
 let markers = [];
+let trayectos = []; // Almacena las polilíneas de cada trayecto
+
 document.addEventListener('DOMContentLoaded', () => {
     const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
 
-    let routePath = L.polyline([], { color: 'red' }).addTo(myMap);
-
-
     document.getElementById('submitButton').addEventListener('click', () => {
-    event.preventDefault(); // Prevent form submission
-    const startDateTime = document.getElementById('startDateTime').value;
-    const endDateTime = document.getElementById('endDateTime').value;
+        event.preventDefault(); // Previene la acción por defecto del formulario
+        const startDateTime = document.getElementById('startDateTime').value;
+        const endDateTime = document.getElementById('endDateTime').value;
 
-    
+        // Actualiza y muestra la fecha y hora seleccionadas
+        updateDateTimeDisplay(startDateTime, endDateTime);
 
-    // Call the function to split and display date and time
-    updateDateTimeDisplay(startDateTime, endDateTime);
-
-    cargarDatos(startDateTime, endDateTime);
+        // Carga los datos para el intervalo de tiempo seleccionado
+        cargarDatos(startDateTime, endDateTime, myMap);
+    });
 });
 
-    function cargarDatos(startDateTime, endDateTime) {
+function cargarDatos(startDateTime, endDateTime, myMap) {
     const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
     fetch(link)
         .then(response => {
@@ -167,24 +166,29 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             console.log(data);
             if (data.length > 0) {
-                // Borra ruta previa
-                routePath.setLatLngs([]);
-                markers.forEach(marker => marker.remove()); // Remueve marcadores previos
-                markers = []; 
+                // Crea una nueva ruta para el intervalo de tiempo actual
+                let rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
 
-                // Itera a través del vector de datos y agrega los puntos
                 data.forEach(point => {
                     const lat = parseFloat(point.Latitude); 
                     const lng = parseFloat(point.Longitude);
-                    addPointToRoute(lat, lng);
+                    rutaActual.addLatLng([lat, lng]);
                 });
-                myMap.fitBounds(routePath.getBounds());
-                // Adición de marcador inicial
+
+                // Agrega la nueva ruta al arreglo de trayectos
+                trayectos.push(rutaActual);
+
+                myMap.fitBounds(rutaActual.getBounds());
+
+                // Limpia marcadores antiguos
+                markers.forEach(marker => marker.remove());
+                markers = [];
+
+                // Adición de marcadores para el trayecto actual
                 const firstPoint = [data[0].Latitude, data[0].Longitude];
                 const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup('Punto Inicial').openPopup();
                 markers.push(firstMarker);
 
-                // Adición de marcador final
                 const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
                 const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup('Punto Final').openPopup();
                 markers.push(lastMarker);
@@ -193,44 +197,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .catch(error => {
-            console.error('Error en fetch o procesando datos:', error);
+            console.error('Hubo un error al cargar los datos: ', error);
             alert("Hubo un problema al cargar los datos.");
         });
-    }
-
-    function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
-        const [startDate, startTime] = startDateTimeStr.split('T');
-        const [endDate, endTime] = endDateTimeStr.split('T');
-
-        document.getElementById('startDateSpan').textContent = startDate;
-        document.getElementById('startTimeSpan').textContent = startTime;
-        document.getElementById('endDateSpan').textContent = endDate;
-        document.getElementById('endTimeSpan').textContent = endTime;
 }
-    function addPointToRoute(lat, lng) {
-    // Umbral de distancia en metros, por ejemplo 1000 metros (1 km)
-    const MAX_DISTANCE = 10000;
-    
-    // Obtiene el último punto de la ruta actual
-    const lastPoint = routePath.getLatLngs().slice(-1)[0];
-    if (lastPoint) {
-        // Calcula la distancia entre el último punto y el nuevo punto
-        const distance = myMap.distance(lastPoint, [lat, lng]);
-        // Si la distancia es mayor al umbral, no agrega el punto
-        if (distance > MAX_DISTANCE) {
-        console.log('Punto demasiado lejano, no se añade a la ruta');
-        return;
-        }
-    }
-    
-    // Añade el nuevo punto a la ruta
-    routePath.addLatLng([lat, lng]);
-    }
 
-// Utiliza esta función en lugar de routePath.addLatLng directamente
-// cuando cargues nuevos puntos de la ruta.
+function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
+    const [startDate, startTime] = startDateTimeStr.split('T');
+    const [endDate, endTime] = endDateTimeStr.split('T');
 
-});
+    document.getElementById('startDateSpan').textContent = startDate;
+    document.getElementById('startTimeSpan').textContent = startTime;
+    document.getElementById('endDateSpan').textContent = endDate;
+    document.getElementById('endTimeSpan').textContent = endTime;
+}
+
 </script>
 </body>
 </html>
