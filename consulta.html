@@ -173,9 +173,12 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 data.forEach(point => {
                     const lat = parseFloat(point.Latitude); 
                     const lng = parseFloat(point.Longitude);
-                    const dateTime = point.DateTime;
+                    const dateTime = point.DateTime; // Extract the DateTime for each point
                     const nuevoPunto = L.latLng(lat, lng);
                     
+                    // Store dateTime information in the LatLng object for later use
+                    nuevoPunto.dateTime = dateTime;
+
                     // Comienza una nueva polilínea si el último punto está demasiado lejos
                     if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 1000) {
                         // Finaliza la polilínea anterior y comienza una nueva
@@ -187,15 +190,33 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                     ultimoPunto = nuevoPunto;
                 });
 
+                // Create a popup that will be updated and reused
+                const popup = L.popup();
+
+                // Add event listener for 'mouseover' on the polyline
+                rutaActual.on('mouseover', function(e) {
+                    // Set the content and location of the popup
+                    popup
+                        .setLatLng(e.latlng)
+                        .setContent('DateTime: ' + e.latlng.dateTime)
+                        .openOn(myMap);
+                });
+
+                // Optionally, close the popup when it's no longer hovered over
+                rutaActual.on('mouseout', function(e) {
+                    myMap.closePopup(popup);
+                });
+
+
                 myMap.fitBounds(rutaActual.getBounds());
                 
                 // Limpia los marcadores antiguos y añade nuevos para el trayecto actual
-                const firstDateTime = data[0].DateTime; // Get the DateTime for the first data point
+                const firstDateTime = data[0].DateTime; // DateTime de primer punto
                 const firstPoint = [data[0].Latitude, data[0].Longitude];
                 const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup();
                 markers.push(firstMarker);
 
-                const lastDateTime = data[data.length - 1].DateTime; // Get the DateTime for the last data point
+                const lastDateTime = data[data.length - 1].DateTime; // DateTime del último punto
                 const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
                 const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup();
                 markers.push(lastMarker);
