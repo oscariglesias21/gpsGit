@@ -155,69 +155,57 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function cargarDatos(startDateTime, endDateTime, myMap) {
-    // Define the endpoint with query parameters
     const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
-
     fetch(link)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Respuesta de Network no fue ok');
             }
             return response.json();
         })
         .then(data => {
             console.log(data);
             if (data.length > 0) {
-                // Clear markers and routes of the previous interval
-                markers.forEach(marker => marker.remove());
-                markers = [];
-                
-                trayectos.forEach(trayecto => trayecto.remove()); // This clears previous routes
-                trayectos = []; // Reset the routes array
-
-                // Start a new polyline for the new set of data
+                // Polilínea actual para el nuevo conjunto de datos
                 let rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+                let ultimoPunto = null;
 
                 data.forEach(point => {
                     const lat = parseFloat(point.Latitude); 
                     const lng = parseFloat(point.Longitude);
+                    const dateTime = point.DateTime;
                     const nuevoPunto = L.latLng(lat, lng);
-
+                    
+                    // Comienza una nueva polilínea si el último punto está demasiado lejos
+                    if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
+                        // Finaliza la polilínea anterior y comienza una nueva
+                        rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+                        markers.forEach(marker => marker.remove()); // Remueve marcadores previos
+                        markers = [];
+                    }
                     rutaActual.addLatLng(nuevoPunto);
+                    ultimoPunto = nuevoPunto;
                 });
 
-                trayectos.push(rutaActual); // Store the new route
-
-                // Fit the map to the bounds of the last route
                 myMap.fitBounds(rutaActual.getBounds());
+                
+                // Limpia los marcadores antiguos y añade nuevos para el trayecto actual
+                const firstDateTime = data[0].DateTime; // DateTime de primer punto
+                const firstPoint = [data[0].Latitude, data[0].Longitude];
+                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto de partida: ${firstDateTime}`).openPopup();
+                markers.push(firstMarker);
 
-                // Add start and end markers for the current interval
-                addStartAndEndMarkers(data, myMap);
-
+                // Guardar la polilínea actual en el arreglo de trayectos
+                trayectos.push(rutaActual);
             } else {
-                alert("There are no route data available for the selected time window.");
+                alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
             }
         })
         .catch(error => {
-            console.error('There was an error fetching the data: ', error);
-            alert("There was a problem loading the data.");
+            console.error('Hubo un error al cargar los datos: ', error);
+            alert("Hubo un problema al cargar los datos.");
         });
 }
-
-function addStartAndEndMarkers(data, myMap) {
-    const firstDateTime = data[0].DateTime; // DateTime of the first point
-    const firstPoint = [data[0].Latitude, data[0].Longitude];
-    const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Start Point: ${firstDateTime}`);
-    markers.push(firstMarker);
-
-    const lastDateTime = data[data.length - 1].DateTime; // DateTime of the last point
-    const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
-    const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`End Point: ${lastDateTime}`);
-    markers.push(lastMarker);
-}
-
-
-
 
 function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
     const [startDate, startTime] = startDateTimeStr.split('T');
