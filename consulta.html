@@ -177,7 +177,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                     const nuevoPunto = L.latLng(lat, lng);
                     
                     // Comienza una nueva polilínea si el último punto está demasiado lejos
-                    if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 1000) {
+                    if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 10) {
                         // Finaliza la polilínea anterior y comienza una nueva
                         rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
                         markers.forEach(marker => marker.remove()); // Remueve marcadores previos
@@ -212,7 +212,6 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
         });
 }
 
-
 function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
     const [startDate, startTime] = startDateTimeStr.split('T');
     const [endDate, endTime] = endDateTimeStr.split('T');
@@ -222,7 +221,6 @@ function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
     document.getElementById('endDateSpan').textContent = endDate;
     document.getElementById('endTimeSpan').textContent = endTime;
 }
-
 </script>
 </body>
 </html>
