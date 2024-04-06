@@ -179,38 +179,35 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
         .then(data => {
             console.log(data);
             if (data.length > 0) {
+                // Eliminar trayectos existentes y limpiar el arreglo
                 trayectos.forEach(trayecto => trayecto.remove());
                 trayectos = [];
 
-                markers.forEach(marker => marker.remove()); // Remove each marker from the map
-                markers = []; // Clear the markers array
-                
-                // Clear the current route and prepare it for new data
-                rutaActual.setLatLngs([]);
+                // Eliminar marcadores existentes y limpiar el arreglo
+                markers.forEach(marker => marker.remove());
+                markers = [];
+
+                // Iniciar una nueva polilínea para el trayecto actual
+                rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+                trayectos.push(rutaActual); // Asegúrate de añadir al arreglo
 
                 let ultimoPunto = null;
-
-                // Iterate through the data array and add each point to the route
                 data.forEach(point => {
                     const lat = parseFloat(point.Latitude); 
                     const lng = parseFloat(point.Longitude);
                     const nuevoPunto = L.latLng(lat, lng);
 
-                    // If the last point is too far from the current point, start a new polyline
                     if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-                        // Finalize the previous polyline and start a new one
+                        // Cerrar la polilínea anterior y empezar una nueva
                         rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
-                        trayectos.push(rutaActual); // Store the new polyline
+                        trayectos.push(rutaActual); // Añadir al arreglo inmediatamente
                     }
 
                     rutaActual.addLatLng(nuevoPunto);
                     ultimoPunto = nuevoPunto;
                 });
 
-                // Add the current route to the array of routes
-                trayectos.push(rutaActual);
-
-                // Fit the map to the bounds of the current route
+                // Ajustar el mapa a la polilínea actual
                 myMap.fitBounds(rutaActual.getBounds());
 
                 if (!marcadorDeslizable) {
