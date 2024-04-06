@@ -192,7 +192,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 // Limpia los marcadores antiguos y añade nuevos para el trayecto actual
                 const firstDateTime = data[0].DateTime; // DateTime de primer punto
                 const firstPoint = [data[0].Latitude, data[0].Longitude];
-                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup();
+                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto de partida: ${firstDateTime}`).openPopup();
                 markers.push(firstMarker);
 
                 // Guardar la polilínea actual en el arreglo de trayectos
