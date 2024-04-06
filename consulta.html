@@ -261,7 +261,7 @@ let marcadorDeslizable;
                         const puntoSeleccionado = data[this.value];
                         const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
                         marcadorDeslizable.setLatLng(latLng);
-                        marcadorDeslizable.bindPopup(`Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup(); 
+                        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup(); 
                     };
 
                     slider.oninput();
