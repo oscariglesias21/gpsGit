@@ -155,65 +155,69 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function cargarDatos(startDateTime, endDateTime, myMap) {
+    // Define the endpoint with query parameters
     const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+
     fetch(link)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Respuesta de Network no fue ok');
+                throw new Error('Network response was not ok');
             }
             return response.json();
         })
         .then(data => {
             console.log(data);
             if (data.length > 0) {
-                // Clear existing markers and routes
+                // Clear markers of the current interval
                 markers.forEach(marker => marker.remove());
-                trayectos.forEach(trayecto => trayecto.remove());
                 markers = [];
-                trayectos = [];
 
-                // Polilínea actual para el nuevo conjunto de datos
+                // Start a new polyline for the new set of data
                 let rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+                trayectos.push(rutaActual); // Store the polyline
+
                 let ultimoPunto = null;
 
                 data.forEach(point => {
                     const lat = parseFloat(point.Latitude); 
                     const lng = parseFloat(point.Longitude);
                     const nuevoPunto = L.latLng(lat, lng);
-                    
-                    // Comienza una nueva polilínea si el último punto está demasiado lejos
+
+                    // Check the distance to determine if we should start a new polyline
                     if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-                        // Finaliza la polilínea anterior y comienza una nueva
+                        // Finalize the previous polyline and start a new one
                         rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+                        trayectos.push(rutaActual);
                     }
+
                     rutaActual.addLatLng(nuevoPunto);
                     ultimoPunto = nuevoPunto;
                 });
 
+                // Fit the map to the bounds of the last route
                 myMap.fitBounds(rutaActual.getBounds());
 
-                // Add start and end markers for the new route
-                const firstDateTime = data[0].DateTime; // DateTime de primer punto
+                // Add start and end markers for the current interval
+                const firstDateTime = data[0].DateTime; // DateTime of the first point
                 const firstPoint = [data[0].Latitude, data[0].Longitude];
-                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`);
+                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Start Point: ${firstDateTime}`);
                 markers.push(firstMarker);
 
-                const lastDateTime = data[data.length - 1].DateTime; // DateTime del último punto
+                const lastDateTime = data[data.length - 1].DateTime; // DateTime of the last point
                 const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
-                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`);
+                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`End Point: ${lastDateTime}`);
                 markers.push(lastMarker);
 
-                // Guardar la polilínea actual en el arreglo de trayectos
-                trayectos.push(rutaActual);
             } else {
-                alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
+                alert("There are no route data available for the selected time window.");
             }
         })
         .catch(error => {
-            console.error('Hubo un error al cargar los datos: ', error);
-            alert("Hubo un problema al cargar los datos.");
+            console.error('There was an error fetching the data: ', error);
+            alert("There was a problem loading the data.");
         });
 }
+
 
 function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
     const [startDate, startTime] = startDateTimeStr.split('T');
