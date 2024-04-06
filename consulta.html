@@ -195,8 +195,8 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto de partida: ${firstDateTime}`).openPopup();
                 markers.push(firstMarker);
 
-                const lastDateTime = data[0].DateTime; // DateTime de primer punto
-                const lastPoint = [data[0].Latitude, data[0].Longitude];
+                const lastDateTime = data[data.length - 1].DateTime; // DateTime de primer punto
+                const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
                 const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto de partida: ${lastDateTime}`).openPopup();
                 markers.push(lastMarker);
 
