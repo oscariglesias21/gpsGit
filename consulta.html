@@ -87,7 +87,6 @@
     <div class="col-lg-8">
         <div class="card">
             <div class="card-body">
-                <p class="text-center mb-3"><strong>Ingrese una ventana de tiempo para conocer el recorrido histórico del vehículo</strong></p>
                 <div id="timeWindowForm" class="row1">
                     <div class="col-md-4">
                         <label for="startDateTime" class="form-label">Fecha y hora de inicio:</label>
@@ -148,24 +147,25 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-  flatpickr("#startDateTime", {
+    
+flatpickr("#startDateTime", {
     enableTime: true,
-    dateFormat: "Y-m-dTH:i",
+    dateFormat: "Y-m-dTH:i", // Formato que se envía al servidor
+    altInput: true,
+    altFormat: "Y-m-d H:i", // Formato que ve el usuario
     time_24hr: true,
-    minuteIncrement: 15,
-    onChange: function(selectedDates, dateStr, instance) {
-      console.log("Fecha de inicio seleccionada:", dateStr);
-    }
-  });
-  flatpickr("#endDateTime", {
+    minuteIncrement: 1
+});
+
+flatpickr("#endDateTime", {
     enableTime: true,
-    dateFormat: "Y-m-dTH:i",
+    dateFormat: "Y-m-dTH:i", // Formato que se envía al servidor
+    altInput: true,
+    altFormat: "Y-m-d H:i", // Formato que ve el usuario
     time_24hr: true,
-    minuteIncrement: 15,
-    onChange: function(selectedDates, dateStr, instance) {
-      console.log("Fecha final seleccionada:", dateStr);
-    }
-  });
+    minuteIncrement: 1
+});
+
 </script>
 <script>
 let markers = [];
