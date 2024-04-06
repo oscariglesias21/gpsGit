@@ -149,24 +149,25 @@
 <script>
 
 flatpickr("#startDateTime", {
-    enableTime: true,
-    dateFormat: "Y-m-dTH:i", // Formato que se envía al servidor
-    altInput: true,
-    altFormat: "Y-m-d H:i", // Formato que ve el usuario
-    time_24hr: true,
-    minuteIncrement: 15,
-    "placeholder": "Fecha y hora de inicio"
+  enableTime: true,
+  dateFormat: "Y-m-dTH:i",
+  altInput: true,
+  altFormat: "F j, Y H:i",
+  time_24hr: true,
+  minuteIncrement: 15,
+  placeholder: "Selecciona la fecha y hora de inicio"
 });
 
 flatpickr("#endDateTime", {
-    enableTime: true,
-    dateFormat: "Y-m-dTH:i", // Formato que se envía al servidor
-    altInput: true,
-    altFormat: "Y-m-d H:i", // Formato que ve el usuario
-    time_24hr: true,
-    minuteIncrement: 15,
-    "placeholder": "Fecha y hora de fin"
+  enableTime: true,
+  dateFormat: "Y-m-dTH:i",
+  altInput: true,
+  altFormat: "F j, Y H:i",
+  time_24hr: true,
+  minuteIncrement: 15,
+  placeholder: "Selecciona la fecha y hora de fin"
 });
+
 
 </script>
 <script>
