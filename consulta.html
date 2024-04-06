@@ -146,30 +146,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="path_to_flatpickr.js"></script>
+<script src="path_to_flatpickr_l10n_es.js"></script>
 <script>
-
+flatpickr.localize(flatpickr.l10ns.es);
 flatpickr("#startDateTime", {
   enableTime: true,
   dateFormat: "Y-m-dTH:i",
   altInput: true,
-  altFormat: "J de F de Y H:i",
+  altFormat: "F j, Y H:i",
   time_24hr: false,
   minuteIncrement: 15,
   altInputClass: "form-control form-control-sm",
-  placeholder: "Selecciona la fecha y hora de inicio",
-  "locale": "es"
+  placeholder: "Selecciona la fecha y hora de inicio"
 });
 
 flatpickr("#endDateTime", {
   enableTime: true,
   dateFormat: "Y-m-dTH:i",
   altInput: true,
-  altFormat: "J de F de Y H:i",
+  altFormat: "F j, Y H:i",
   time_24hr: false,
   minuteIncrement: 15,
   altInputClass: "form-control form-control-sm",
-  placeholder: "Selecciona la fecha y hora de fin",
-  "locale": "es"
+  placeholder: "Selecciona la fecha y hora de fin"
 });
 
 
