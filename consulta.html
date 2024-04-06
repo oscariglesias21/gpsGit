@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.forEach(point => {
                     const lat = parseFloat(point.Latitude); 
                     const lng = parseFloat(point.Longitude);
-                    routePath.addLatLng([lat, lng]);
+                    addPointToRoute(lat, lng);
                 });
                 myMap.fitBounds(routePath.getBounds());
                 // Adición de marcador inicial
