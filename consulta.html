@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }
     function addPointToRoute(lat, lng) {
     // Umbral de distancia en metros, por ejemplo 1000 metros (1 km)
-    const MAX_DISTANCE = 200;
+    const MAX_DISTANCE = 1000;
     
     // Obtiene el último punto de la ruta actual
     const lastPoint = routePath.getLatLngs().slice(-1)[0];
