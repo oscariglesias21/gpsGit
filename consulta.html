@@ -141,6 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
 
+    let routePath = L.polyline([], { color: 'red' }).addTo(myMap);
+
     document.getElementById('submitButton').addEventListener('click', () => {
         event.preventDefault(); // Previene la acción por defecto del formulario
         const startDateTime = document.getElementById('startDateTime').value;
