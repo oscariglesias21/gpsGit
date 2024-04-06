@@ -175,24 +175,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
 
-    document.getElementById('submitButton').addEventListener('click', (event) => {
+    document.getElementById('submitButton').addEventListener('click', () => {
         event.preventDefault(); // Previene la acción por defecto del formulario
         const startDateTime = document.getElementById('startDateTime').value;
         const endDateTime = document.getElementById('endDateTime').value;
+
+        // Actualiza y muestra la fecha y hora seleccionadas
         updateDateTimeDisplay(startDateTime, endDateTime);
+
+        // Carga los datos para el intervalo de tiempo seleccionado
         cargarDatos(startDateTime, endDateTime, myMap);
     });
-
-    // Mostrar el modal de instrucciones si es la primera vez que el usuario visita la página
     if (!localStorage.getItem('hasSeenInstructions')) {
-        var instructionsModal = new bootstrap.Modal(document.getElementById('instructionsModal'), {
+        var myModal = new bootstrap.Modal(document.getElementById('instructionsModal'), {
             keyboard: false
         });
-        instructionsModal.show();
+        myModal.show();
         localStorage.setItem('hasSeenInstructions', 'true');
     }
 });
-
 
 let marcadorDeslizable;
 function cargarDatos(startDateTime, endDateTime, myMap) {
