@@ -197,7 +197,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
 
                 const lastDateTime = data[data.length - 1].DateTime; // DateTime de primer punto
                 const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
-                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto de partida: ${lastDateTime}`).openPopup();
+                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto de llegada: ${lastDateTime}`).openPopup();
                 markers.push(lastMarker);
 
                 // Guardar la polilínea actual en el arreglo de trayectos
