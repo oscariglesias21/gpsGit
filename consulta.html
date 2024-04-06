@@ -109,6 +109,28 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="instructionsModal" tabindex="-1" aria-labelledby="instructionsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="instructionsModalLabel">Cómo usar la Consulta de Recorridos</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Bienvenido a la Consulta de Recorridos. Aquí puedes:
+          <ul>
+            <li>Seleccionar una fecha y hora de inicio y fin para ver el recorrido histórico del vehículo.</li>
+            <li>Utilizar el slider para moverte a través del recorrido del vehículo y visualizar la fecha y el tiempo donde estuvo en cierto lugar.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 
 <!-- Slider para controlar el tiempo del recorrido -->
 <div class="row justify-content-center my-3">
@@ -153,18 +175,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
 
-    document.getElementById('submitButton').addEventListener('click', () => {
+    document.getElementById('submitButton').addEventListener('click', (event) => {
         event.preventDefault(); // Previene la acción por defecto del formulario
         const startDateTime = document.getElementById('startDateTime').value;
         const endDateTime = document.getElementById('endDateTime').value;
-
-        // Actualiza y muestra la fecha y hora seleccionadas
         updateDateTimeDisplay(startDateTime, endDateTime);
-
-        // Carga los datos para el intervalo de tiempo seleccionado
         cargarDatos(startDateTime, endDateTime, myMap);
     });
+
+    // Mostrar el modal de instrucciones si es la primera vez que el usuario visita la página
+    if (!localStorage.getItem('hasSeenInstructions')) {
+        var instructionsModal = new bootstrap.Modal(document.getElementById('instructionsModal'), {
+            keyboard: false
+        });
+        instructionsModal.show();
+        localStorage.setItem('hasSeenInstructions', 'true');
+    }
 });
+
 
 let marcadorDeslizable;
 function cargarDatos(startDateTime, endDateTime, myMap) {
@@ -225,7 +253,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                     const puntoSeleccionado = data[this.value];
                     const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
                     marcadorDeslizable.setLatLng(latLng);
-                    marcadorDeslizable.bindPopup(`Timestamp: ${puntoSeleccionado.DateTime}`).openPopup();
+                    marcadorDeslizable.bindPopup(`Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup();
                 };
 
                 // Inicializar el marcador en la posición inicial
