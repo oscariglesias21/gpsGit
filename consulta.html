@@ -134,14 +134,14 @@
 
 let markers = [];
 let trayectos = []; // Almacena las polilíneas de cada trayecto
-let routePath;
+
 document.addEventListener('DOMContentLoaded', () => {
     const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
 
-    routePath = L.polyline([], { color: 'red' }).addTo(myMap);
+    let rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
 
     document.getElementById('submitButton').addEventListener('click', () => {
         event.preventDefault(); // Previene la acción por defecto del formulario
@@ -169,9 +169,8 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
             console.log(data);
             if (data.length > 0) {
                 // Polilínea actual para el nuevo conjunto de datos
-                let rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
                 let ultimoPunto = null;
-                routePath.setLatLngs([]);
+                rutaActual.setLatLngs([]);
                 markers.forEach(marker => marker.remove()); // Remove each marker from the map
                 markers = []; // Clear the markers array
 
