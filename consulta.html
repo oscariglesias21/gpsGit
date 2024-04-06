@@ -194,13 +194,13 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 markers = [];
 
                 // Adición de marcadores para el trayecto actual
-                const firstPoint = [data[0].Latitude, data[0].Longitude];
-                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup('Punto Inicial - Hora: ${time}').openPopup();
+                const firstPoint = [data[0].Latitude, data[0].Longitude].Timestamp;
+                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Final - Hora: ${firstPointTime}`).openPopup();
                 
                 markers.push(firstMarker);
 
-                const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
-                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup('Punto Final - Hora: ${time}').openPopup();
+                const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude].Timestamp;
+                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final - Hora: ${lastPointTime}`).openPopup();
                 markers.push(lastMarker);
 
                 // Guardar la polilínea actual en el arreglo de trayectos
