@@ -174,7 +174,8 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                     const lat = parseFloat(point.Latitude); 
                     const lng = parseFloat(point.Longitude);
                     const nuevoPunto = L.latLng(lat, lng);
-                    
+                    const time = point.Timestamp;
+
                     // Comienza una nueva polilínea si el último punto está demasiado lejos
                     if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 1000) {
                         // Finaliza la polilínea anterior y comienza una nueva
@@ -194,11 +195,12 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
 
                 // Adición de marcadores para el trayecto actual
                 const firstPoint = [data[0].Latitude, data[0].Longitude];
-                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup('Punto Inicial').openPopup();
+                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup('Punto Inicial - Hora: ${time}').openPopup();
+                
                 markers.push(firstMarker);
 
                 const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
-                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup('Punto Final').openPopup();
+                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup('Punto Final - Hora: ${time}').openPopup();
                 markers.push(lastMarker);
 
                 // Guardar la polilínea actual en el arreglo de trayectos
