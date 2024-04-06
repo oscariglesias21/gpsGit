@@ -207,6 +207,29 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('endDateSpan').textContent = endDate;
         document.getElementById('endTimeSpan').textContent = endTime;
 }
+    function addPointToRoute(lat, lng) {
+    // Umbral de distancia en metros, por ejemplo 1000 metros (1 km)
+    const MAX_DISTANCE = 200;
+    
+    // Obtiene el último punto de la ruta actual
+    const lastPoint = routePath.getLatLngs().slice(-1)[0];
+    if (lastPoint) {
+        // Calcula la distancia entre el último punto y el nuevo punto
+        const distance = myMap.distance(lastPoint, [lat, lng]);
+        // Si la distancia es mayor al umbral, no agrega el punto
+        if (distance > MAX_DISTANCE) {
+        console.log('Punto demasiado lejano, no se añade a la ruta');
+        return;
+        }
+    }
+    
+    // Añade el nuevo punto a la ruta
+    routePath.addLatLng([lat, lng]);
+    }
+
+// Utiliza esta función en lugar de routePath.addLatLng directamente
+// cuando cargues nuevos puntos de la ruta.
+
 });
 </script>
 </body>
