@@ -130,7 +130,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <script>
+<script>
 
 let markers = [];
 let trayectos = []; // Almacena las polilíneas de cada trayecto
@@ -170,14 +170,11 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 let rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
                 let ultimoPunto = null;
 
-                // Create a popup that will be updated and reused
-                const popup = L.popup();
-
                 data.forEach(point => {
                     const lat = parseFloat(point.Latitude); 
                     const lng = parseFloat(point.Longitude);
                     const dateTime = point.DateTime;
-                    const nuevoPunto = L.latLng(lat, lng, { dateTime: dateTime }); // Attach dateTime to the point
+                    const nuevoPunto = L.latLng(lat, lng);
                     
                     // Comienza una nueva polilínea si el último punto está demasiado lejos
                     if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 1000) {
@@ -188,14 +185,6 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                     }
                     rutaActual.addLatLng(nuevoPunto);
                     ultimoPunto = nuevoPunto;
-                });
-
-                rutaActual.on('mouseover', function(e) {
-                    // Update the popup content with the dateTime of the closest point on the polyline
-                    popup
-                        .setLatLng(e.latlng)
-                        .setContent('DateTime: ' + e.layerPoint.dateTime)
-                        .openOn(myMap);
                 });
 
                 myMap.fitBounds(rutaActual.getBounds());
@@ -222,6 +211,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
             alert("Hubo un problema al cargar los datos.");
         });
 }
+
 
 function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
     const [startDate, startTime] = startDateTimeStr.split('T');
