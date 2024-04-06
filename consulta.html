@@ -1,54 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de Históricos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta de Históricos</title>
+  <link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-        #mapid {
-            height: 450px; /* Adjust the height if necessary to match your design preferences */
-            width: 100%;
+   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+   <style>
+    #mapid {
+        height: 450px; /* Adjust the height if necessary to match your design preferences */
+        width: 100%;
+    }
+    .container-map {
+        max-width: 1500px; /* Maximum width of the centered container, adjust as necessary */
+        margin: auto; /* Center the container */
+    }
+    .card {
+        box-shadow: none; /* Remove box-shadow if you prefer for a flatter design */
+        border: none; /* Optional: remove border for a cleaner look */
+    }
+    .form-inline-custom {
+        display: flex;
+        gap: 10px; /* Adjust the gap between form elements */
+        flex-wrap: wrap; /* Wrap onto the next line if space is insufficient */
+        align-items: center; /* Align items vertically */
+        justify-content: center; /* Center form items horizontally */
+    }
+    .btn-custom {
+        padding: .375rem .75rem; /* Adjust padding to change button size */
+    }
+    .small-title{
+        font-size: 24px;
+    }
+    #startDateSpan, #startTimeSpan, #endDateSpan, #endTimeSpan {
+        display: none;
+    }
+    .date-time-info {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+    }   
+    @media (min-width: 768px) { /* Adjust this breakpoint as needed */
+        .form-inline-custom .form-control {
+            max-width: 165px; /* Limit the width of the form inputs */
         }
-        .container-map {
-            max-width: 1500px; /* Maximum width of the centered container, adjust as necessary */
-            margin: auto; /* Center the container */
-        }
-        .card {
-            box-shadow: none; /* Remove box-shadow if you prefer for a flatter design */
-            border: none; /* Optional: remove border for a cleaner look */
-        }
-        .form-inline-custom {
-            display: flex;
-            gap: 10px; /* Adjust the gap between form elements */
-            flex-wrap: wrap; /* Wrap onto the next line if space is insufficient */
-            align-items: center; /* Align items vertically */
-            justify-content: center; /* Center form items horizontally */
-        }
-        .btn-custom {
-            padding: .375rem .75rem; /* Adjust padding to change button size */
-        }
-        .small-title{
-            font-size: 24px;
-        }
-        #startDateSpan, #startTimeSpan, #endDateSpan, #endTimeSpan {
-            display: none;
-        }
-        .date-time-info {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            overflow: hidden;
-            clip: rect(1px, 1px, 1px, 1px);
-        }   
-        @media (min-width: 768px) { /* Adjust this breakpoint as needed */
-            .form-inline-custom .form-control {
-                max-width: 165px; /* Limit the width of the form inputs */
-            }
-        }
-
+    }
+    .row1{
+        display: flex;
+        justify-content: space-between;
+    }
     </style>
 </head>
 <body>
@@ -66,53 +70,42 @@
                         <a class="btn btn-primary ms-auto me-2" href="/consulta" target="_blank">Regresar a Página Principal</a>
                     </li>
                     <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#instructionsModal">
-                        Instrucciones de uso
+                        <b>Instrucciones</b>
                     </button>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="container-map">
-        <!-- Título de la página -->
-        <div class="row">
-            <div class="col-12">
-                <h2 class="text-center my-3 small-title">Consulta de Recorridos</h2>
-            </div>
+<div class="container-map">
+    <div class="row">
+        <div classo="col-12">
+            <h1 class="text-center my-3 small-title">Consulta de Recorridos</h1>
         </div>
-
-<!-- Formulario de selección de tiempo -->
+    </div>
+</div>
 <div class="row justify-content-center mb-3">
     <div class="col-lg-8">
         <div class="card">
             <div class="card-body">
-
-                <p class="text-center mb-3"><strong>Ingrese una ventana de tiempo para conocer el recorrido histórico del vehículo</strong></p>
-
-                <form id="timeWindowForm" class="row g-3"> <!-- Use 'g-3' for spacing between columns -->
+                <div id="timeWindowForm" class="row1">
                     <div class="col-md-4">
                         <label for="startDateTime" class="form-label">Fecha y hora de inicio:</label>
-                        <input type="datetime-local" class="form-control form-control-sm" id="startDateTime" onchange="updateDateTimeDisplay()" required>
-                      </div>
-                      
-                      <div class="col-md-4">
+                        <input type="text" id="startDateTime" onchange="updateDateTimeDisplay()" required>
+                    </div>
+                    <div class="col-md-4">
                         <label for="endDateTime" class="form-label">Fecha y hora de fin:</label>
-                        <input type="datetime-local" class="form-control form-control-sm" id="endDateTime" onchange="updateDateTimeDisplay()" required>
-                      </div>
-                      
-                      <span id="startDateSpan"></span> <span id="startTimeSpan"></span>
-                      <span id="endDateSpan"></span> <span id="endTimeSpan"></span>
-
-                      
-
+                        <input type="text" id="endDateTime" onchange="updateDateTimeDisplay()" required>
+                    </div>
+                    <span id="startDateSpan"></span> <span id="startTimeSpan"></span>
+                    <span id="endDateSpan"></span> <span id="endTimeSpan"></span>
                     <div class="col-md-4 d-flex align-items-end"> <!-- This aligns the button to the bottom of the column -->
                         <button type="submit" id="submitButton" class="btn btn-primary btn-custom btn-sm w-100">Mostrar en mapa</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Modal -->
 <div class="modal fade" id="instructionsModal" tabindex="-1" aria-labelledby="instructionsModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -133,167 +126,167 @@
       </div>
     </div>
   </div>
-  
-
-<!-- Slider para controlar el tiempo del recorrido -->
 <div class="row justify-content-center my-3">
     <div class="col-lg-8">
         <input type="range" class="form-range" min="0" max="100" value="0" id="timeSlider">
     </div>
 </div>
-
-
-        <!-- Contenedor del mapa -->
-        <div class="row">
-            <div class="col-12">
-                <div id="mapid"></div>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-12">
+        <div id="mapid"></div>
     </div>
-</body>
-</html>
-
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-
-let markers = [];
-let trayectos = []; // Almacena las polilíneas de cada trayecto
-let rutaActual;
-
-document.addEventListener('DOMContentLoaded', () => {
-    const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(myMap);
-
-    rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
-
-    document.getElementById('submitButton').addEventListener('click', () => {
-        event.preventDefault(); // Previene la acción por defecto del formulario
-        const startDateTime = document.getElementById('startDateTime').value;
-        const endDateTime = document.getElementById('endDateTime').value;
-
-        // Actualiza y muestra la fecha y hora seleccionadas
-        updateDateTimeDisplay(startDateTime, endDateTime);
-
-        // Carga los datos para el intervalo de tiempo seleccionado
-        cargarDatos(startDateTime, endDateTime, myMap);
-    });
-    if (!localStorage.getItem('hasSeenInstructions')) {
-        console.log('Mostrando modal');
-        var myModal = new bootstrap.Modal(document.getElementById('instructionsModal'), {
-            keyboard: false
-        });
-        myModal.show();
-        localStorage.setItem('hasSeenInstructions', 'true');
+  flatpickr("#startDateTime", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    time_24hr: true,
+    minuteIncrement: 15,
+    onChange: function(selectedDates, dateStr, instance) {
+      console.log("Fecha de inicio seleccionada:", dateStr);
     }
-});
+  });
+  flatpickr("#endDateTime", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    time_24hr: true,
+    minuteIncrement: 15,
+    onChange: function(selectedDates, dateStr, instance) {
+      console.log("Fecha final seleccionada:", dateStr);
+    }
+  });
+</script>
+<script>
+    let markers = [];
+    let trayectos = []; // Almacena las polilíneas de cada trayecto
+    let rutaActual;
+    document.addEventListener('DOMContentLoaded', () => {
+        const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(myMap);
 
-let marcadorDeslizable;
-function cargarDatos(startDateTime, endDateTime, myMap) {
-    const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
-    fetch(link)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-            if (data.length > 0) {
-                // Eliminar trayectos existentes y limpiar el arreglo
-                trayectos.forEach(trayecto => trayecto.remove());
-                trayectos = [];
+        rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
 
-                // Eliminar marcadores existentes y limpiar el arreglo
-                markers.forEach(marker => marker.remove());
-                markers = [];
+        document.getElementById('submitButton').addEventListener('click', () => {
+            event.preventDefault(); // Previene la acción por defecto del formulario
+            const startDateTime = document.getElementById('startDateTime').value;
+            const endDateTime = document.getElementById('endDateTime').value;
 
-                // Iniciar una nueva polilínea para el trayecto actual
-                rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
-                trayectos.push(rutaActual); // Asegúrate de añadir al arreglo
+            // Actualiza y muestra la fecha y hora seleccionadas
+            updateDateTimeDisplay(startDateTime, endDateTime);
 
-                let ultimoPunto = null;
-                data.forEach(point => {
-                    const lat = parseFloat(point.Latitude); 
-                    const lng = parseFloat(point.Longitude);
-                    const nuevoPunto = L.latLng(lat, lng);
+            // Carga los datos para el intervalo de tiempo seleccionado
+            cargarDatos(startDateTime, endDateTime, myMap);
+        });
+    });
 
-                    if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-                        // Cerrar la polilínea anterior y empezar una nueva
-                        rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
-                        trayectos.push(rutaActual); // Añadir al arreglo inmediatamente
+    let marcadorDeslizable;
+    function cargarDatos(startDateTime, endDateTime, myMap) {
+        const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+        fetch(link)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                if (data.length > 0) {
+                    // Eliminar trayectos existentes y limpiar el arreglo
+                    trayectos.forEach(trayecto => trayecto.remove());
+                    trayectos = [];
+
+                    // Eliminar marcadores existentes y limpiar el arreglo
+                    markers.forEach(marker => marker.remove());
+                    markers = [];
+
+                    // Iniciar una nueva polilínea para el trayecto actual
+                    rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+                    trayectos.push(rutaActual); // Asegúrate de añadir al arreglo
+
+                    let ultimoPunto = null;
+                    data.forEach(point => {
+                        const lat = parseFloat(point.Latitude); 
+                        const lng = parseFloat(point.Longitude);
+                        const nuevoPunto = L.latLng(lat, lng);
+
+                        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
+                            // Cerrar la polilínea anterior y empezar una nueva
+                            rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+                            trayectos.push(rutaActual); // Añadir al arreglo inmediatamente
+                        }
+
+                        rutaActual.addLatLng(nuevoPunto);
+                        ultimoPunto = nuevoPunto;
+                    });
+
+                    // Ajustar el mapa a la polilínea actual
+                    myMap.fitBounds(rutaActual.getBounds());
+
+                    if (!marcadorDeslizable) {
+                        marcadorDeslizable = L.marker([0, 0], {
+                            draggable: 'true'
+                        }).addTo(myMap);
                     }
 
-                    rutaActual.addLatLng(nuevoPunto);
-                    ultimoPunto = nuevoPunto;
-                });
+                    // Ajustar el slider
+                    const slider = document.getElementById('timeSlider');
+                    slider.max = data.length - 1; // El máximo es el último índice de tus datos
+                    slider.value = 0; // Resetear a la posición inicial
 
-                // Ajustar el mapa a la polilínea actual
-                myMap.fitBounds(rutaActual.getBounds());
+                    slider.oninput = function() {
+                        const puntoSeleccionado = data[this.value];
+                        const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
+                        marcadorDeslizable.setLatLng(latLng);
+                        marcadorDeslizable.bindPopup(`Timestamp: ${puntoSeleccionado.DateTime}`).openPopup();
+                    };
 
-                if (!marcadorDeslizable) {
-                    marcadorDeslizable = L.marker([0, 0], {
-                        draggable: 'true'
-                    }).addTo(myMap);
+                    // Inicializar el marcador en la posición inicial
+                    slider.oninput();
+
+
+                    // Add start and end markers for the current interval
+                    const firstDateTime = data[0].DateTime; // DateTime of the first point
+                    const firstPoint = [parseFloat(data[0].Latitude), parseFloat(data[0].Longitude)];
+                    const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup();
+                    markers.push(firstMarker);
+
+                    const lastDateTime = data[data.length - 1].DateTime; // DateTime of the last point
+                    const lastPoint = [parseFloat(data[data.length - 1].Latitude), parseFloat(data[data.length - 1].Longitude)];
+                    const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup();
+                    markers.push(lastMarker);
+                } else {
+                    alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
                 }
+            })
+            .catch(error => {
+                console.error('Error fetching or processing data:', error);
+                alert("Hubo un problema al cargar los datos.");
+            });
+    }
 
-                // Ajustar el slider
-                const slider = document.getElementById('timeSlider');
-                slider.max = data.length - 1; // El máximo es el último índice de tus datos
-                slider.value = 0; // Resetear a la posición inicial
+    function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
+        const [startDate, startTime] = startDateTimeStr.split('T');
+        const [endDate, endTime] = endDateTimeStr.split('T');
 
-                slider.oninput = function() {
-                    const puntoSeleccionado = data[this.value];
-                    const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
-                    marcadorDeslizable.setLatLng(latLng);
-                    marcadorDeslizable.bindPopup(`Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup();
-                };
-
-                // Inicializar el marcador en la posición inicial
-                slider.oninput();
-
-
-                // Add start and end markers for the current interval
-                const firstDateTime = data[0].DateTime; // DateTime of the first point
-                const firstPoint = [parseFloat(data[0].Latitude), parseFloat(data[0].Longitude)];
-                const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup();
-                markers.push(firstMarker);
-
-                const lastDateTime = data[data.length - 1].DateTime; // DateTime of the last point
-                const lastPoint = [parseFloat(data[data.length - 1].Latitude), parseFloat(data[data.length - 1].Longitude)];
-                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup();
-                markers.push(lastMarker);
-            } else {
-                alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching or processing data:', error);
-            alert("Hubo un problema al cargar los datos.");
-        });
-}
-
-function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
-    const [startDate, startTime] = startDateTimeStr.split('T');
-    const [endDate, endTime] = endDateTimeStr.split('T');
-
-    document.getElementById('startDateSpan').textContent = startDate;
-    document.getElementById('startTimeSpan').textContent = startTime;
-    document.getElementById('endDateSpan').textContent = endDate;
-    document.getElementById('endTimeSpan').textContent = endTime;
-}
+        document.getElementById('startDateSpan').textContent = startDate;
+        document.getElementById('startTimeSpan').textContent = startTime;
+        document.getElementById('endDateSpan').textContent = endDate;
+        document.getElementById('endTimeSpan').textContent = endTime;
+    }
 </script>
+
 </body>
 </html>
