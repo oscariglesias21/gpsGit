@@ -278,7 +278,12 @@
             });
     }
 
-    function updateDateTimeDisplay(startDateTimeStr, endDateTimeStr) {
+    function updateDateTimeDisplay() {
+    const startDateTimeStr = document.getElementById('startDateTime').value;
+    const endDateTimeStr = document.getElementById('endDateTime').value;
+    
+    // Asegúrate de que ambos valores no sean vacíos antes de intentar hacer el split.
+    if (startDateTimeStr && endDateTimeStr) {
         const [startDate, startTime] = startDateTimeStr.split(' ');
         const [endDate, endTime] = endDateTimeStr.split(' ');
 
@@ -287,6 +292,7 @@
         document.getElementById('endDateSpan').textContent = endDate;
         document.getElementById('endTimeSpan').textContent = endTime;
     }
+}
 </script>
 
 </body>
