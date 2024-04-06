@@ -147,14 +147,15 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    
+
 flatpickr("#startDateTime", {
     enableTime: true,
     dateFormat: "Y-m-dTH:i", // Formato que se envía al servidor
     altInput: true,
     altFormat: "Y-m-d H:i", // Formato que ve el usuario
     time_24hr: true,
-    minuteIncrement: 1
+    minuteIncrement: 15,
+    "placeholder": "Fecha y hora de inicio"
 });
 
 flatpickr("#endDateTime", {
@@ -163,7 +164,8 @@ flatpickr("#endDateTime", {
     altInput: true,
     altFormat: "Y-m-d H:i", // Formato que ve el usuario
     time_24hr: true,
-    minuteIncrement: 1
+    minuteIncrement: 15,
+    "placeholder": "Fecha y hora de fin"
 });
 
 </script>
