@@ -195,11 +195,6 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup();
                 markers.push(firstMarker);
 
-                const lastDateTime = data[data.length - 1].DateTime; // DateTime del último punto
-                const lastPoint = [data[data.length - 1].Latitude, data[data.length - 1].Longitude];
-                const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup();
-                markers.push(lastMarker);
-
                 // Guardar la polilínea actual en el arreglo de trayectos
                 trayectos.push(rutaActual);
             } else {
