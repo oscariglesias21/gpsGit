@@ -134,14 +134,14 @@
 
 let markers = [];
 let trayectos = []; // Almacena las polilíneas de cada trayecto
-
+let routePath;
 document.addEventListener('DOMContentLoaded', () => {
     const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
 
-    let routePath = L.polyline([], { color: 'red' }).addTo(myMap);
+    routePath = L.polyline([], { color: 'red' }).addTo(myMap);
 
     document.getElementById('submitButton').addEventListener('click', () => {
         event.preventDefault(); // Previene la acción por defecto del formulario
