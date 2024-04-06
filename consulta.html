@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cargarDatos(startDateTime, endDateTime, myMap);
     });
     if (!localStorage.getItem('hasSeenInstructions')) {
+        console.log('Mostrando modal');
         var myModal = new bootstrap.Modal(document.getElementById('instructionsModal'), {
             keyboard: false
         });
