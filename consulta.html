@@ -168,33 +168,42 @@
   });
 </script>
 <script>
-    let markers = [];
-    let trayectos = []; // Almacena las polilíneas de cada trayecto
-    let rutaActual;
-    document.addEventListener('DOMContentLoaded', () => {
-        const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(myMap);
+let markers = [];
+let trayectos = []; // Almacena las polilíneas de cada trayecto
+let rutaActual;
 
-        rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+document.addEventListener('DOMContentLoaded', () => {
+    const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(myMap);
 
-        document.getElementById('submitButton').addEventListener('click', () => {
-            event.preventDefault(); // Previene la acción por defecto del formulario
-            const startDateTime = document.getElementById('startDateTime').value;
-            const endDateTime = document.getElementById('endDateTime').value;
+    rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
 
-            // Actualiza y muestra la fecha y hora seleccionadas
-            updateDateTimeDisplay(startDateTime, endDateTime);
+    document.getElementById('submitButton').addEventListener('click', (event) => {
+        event.preventDefault(); // Previene la acción por defecto del formulario
+        const startDateTime = document.getElementById('startDateTime').value;
+        const endDateTime = document.getElementById('endDateTime').value;
 
-            // Carga los datos para el intervalo de tiempo seleccionado
-            cargarDatos(startDateTime, endDateTime, myMap);
-        });
+        // Actualiza y muestra la fecha y hora seleccionadas
+        updateDateTimeDisplay(startDateTime, endDateTime);
+
+        // Carga los datos para el intervalo de tiempo seleccionado
+        cargarDatos(startDateTime, endDateTime, myMap);
     });
+    if (!localStorage.getItem('hasSeenInstructions')) {
+        console.log('Mostrando modal');
+        var myModal = new bootstrap.Modal(document.getElementById('instructionsModal'), {
+            keyboard: false
+        });
+        myModal.show();
+        localStorage.setItem('hasSeenInstructions', 'true');
+    }
+});
 
-    let marcadorDeslizable;
+let marcadorDeslizable;
     function cargarDatos(startDateTime, endDateTime, myMap) {
-        const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+        const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; // Corrección aquí
         fetch(link)
             .then(response => {
                 if (!response.ok) {
@@ -213,9 +222,8 @@
                     markers.forEach(marker => marker.remove());
                     markers = [];
 
-                    // Iniciar una nueva polilínea para el trayecto actual
                     rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
-                    trayectos.push(rutaActual); // Asegúrate de añadir al arreglo
+                    trayectos.push(rutaActual);
 
                     let ultimoPunto = null;
                     data.forEach(point => {
@@ -224,16 +232,14 @@
                         const nuevoPunto = L.latLng(lat, lng);
 
                         if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-                            // Cerrar la polilínea anterior y empezar una nueva
                             rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
-                            trayectos.push(rutaActual); // Añadir al arreglo inmediatamente
+                            trayectos.push(rutaActual);
                         }
 
                         rutaActual.addLatLng(nuevoPunto);
                         ultimoPunto = nuevoPunto;
                     });
 
-                    // Ajustar el mapa a la polilínea actual
                     myMap.fitBounds(rutaActual.getBounds());
 
                     if (!marcadorDeslizable) {
@@ -242,31 +248,27 @@
                         }).addTo(myMap);
                     }
 
-                    // Ajustar el slider
                     const slider = document.getElementById('timeSlider');
-                    slider.max = data.length - 1; // El máximo es el último índice de tus datos
-                    slider.value = 0; // Resetear a la posición inicial
+                    slider.max = data.length - 1;
+                    slider.value = 0;
 
                     slider.oninput = function() {
                         const puntoSeleccionado = data[this.value];
                         const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
                         marcadorDeslizable.setLatLng(latLng);
-                        marcadorDeslizable.bindPopup(`Timestamp: ${puntoSeleccionado.DateTime}`).openPopup();
+                        marcadorDeslizable.bindPopup(`Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup(); 
                     };
 
-                    // Inicializar el marcador en la posición inicial
                     slider.oninput();
 
-
-                    // Add start and end markers for the current interval
-                    const firstDateTime = data[0].DateTime; // DateTime of the first point
+                    const firstDateTime = data[0].DateTime;
                     const firstPoint = [parseFloat(data[0].Latitude), parseFloat(data[0].Longitude)];
-                    const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup();
+                    const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup(); 
                     markers.push(firstMarker);
 
-                    const lastDateTime = data[data.length - 1].DateTime; // DateTime of the last point
+                    const lastDateTime = data[data.length - 1].DateTime;
                     const lastPoint = [parseFloat(data[data.length - 1].Latitude), parseFloat(data[data.length - 1].Longitude)];
-                    const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup();
+                    const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup(); 
                     markers.push(lastMarker);
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
@@ -278,22 +280,19 @@
             });
     }
 
-    function updateDateTimeDisplay() {
+function updateDateTimeDisplay() {
     const startDateTimeStr = document.getElementById('startDateTime').value;
     const endDateTimeStr = document.getElementById('endDateTime').value;
-    
-    // Asegúrate de que ambos valores no sean vacíos antes de intentar hacer el split.
-    if (startDateTimeStr && endDateTimeStr) {
-        const [startDate, startTime] = startDateTimeStr.split(' ');
-        const [endDate, endTime] = endDateTimeStr.split(' ');
 
-        document.getElementById('startDateSpan').textContent = startDate;
-        document.getElementById('startTimeSpan').textContent = startTime;
-        document.getElementById('endDateSpan').textContent = endDate;
-        document.getElementById('endTimeSpan').textContent = endTime;
+    if (startDateTimeStr && endDateTimeStr) {
+            const [startDate, startTime] = startDateTimeStr.split(' ');
+            const [endDate, endTime] = endDateTimeStr.split(' ');
+
+            document.getElementById('startDateSpan').textContent = startDate;
+            document.getElementById('startTimeSpan').textContent = startTime;
+            document.getElementById('endDateSpan').textContent = endDate;
+            document.getElementById('endTimeSpan').textContent = endTime;
     }
 }
-</script>
 
-</body>
-</html>
+</script>
