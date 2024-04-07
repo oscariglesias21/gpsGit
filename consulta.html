@@ -14,12 +14,19 @@
         width: 100%;
     }
     .container-map {
-        max-width: 1500px; /* Maximum width of the centered container, adjust as necessary */
-        margin: auto; /* Center the container */
+        max-width: 90%;
+        margin: auto;
+        padding: 20px; 
     }
     .card {
         box-shadow: none; /* Remove box-shadow if you prefer for a flatter design */
         border: none; /* Optional: remove border for a cleaner look */
+    }
+    .card-body{
+        padding: 20px;
+    }
+    .form-label{
+        margin-bottom: 0.5rem;
     }
     .form-inline-custom {
         display: flex;
@@ -45,6 +52,12 @@
         clip: rect(1px, 1px, 1px, 1px);
     }   
     @media (min-width: 768px) { /* Adjust this breakpoint as needed */
+        .container-map {
+            padding: 10px;
+        }
+        .navbar-nav {
+            flex-direction: column;
+        }
         .form-inline-custom .form-control {
             max-width: 165px; /* Limit the width of the form inputs */
         }
@@ -83,23 +96,25 @@
         </div>
     </div>
 </div>
-<div class="row justify-content-center mb-3">
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-body">
-                <div id="timeWindowForm" class="row1">
-                    <div class="col-md-4">
-                        <label for="startDateTime" class="form-label">Fecha y hora de inicio:</label>
-                        <input type="text" id="startDateTime" onchange="updateDateTimeDisplay()" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="endDateTime" class="form-label">Fecha y hora de fin:</label>
-                        <input type="text" id="endDateTime" onchange="updateDateTimeDisplay()" required>
-                    </div>
-                    <span id="startDateSpan"></span> <span id="startTimeSpan"></span>
-                    <span id="endDateSpan"></span> <span id="endTimeSpan"></span>
-                    <div class="col-md-4 d-flex align-items-end"> <!-- This aligns the button to the bottom of the column -->
-                        <button type="submit" id="submitButton" class="btn btn-primary btn-custom btn-sm w-100">Mostrar en mapa</button>
+<div class="container">
+    <div class="row justify-content-center mb-3">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <div id="timeWindowForm" class="row">
+                        <div class="col-md-4">
+                            <label for="startDateTime" class="form-label">Fecha y hora de inicio:</label>
+                            <input type="text" id="startDateTime" onchange="updateDateTimeDisplay()" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="endDateTime" class="form-label">Fecha y hora de fin:</label>
+                            <input type="text" id="endDateTime" onchange="updateDateTimeDisplay()" required>
+                        </div>
+                        <span id="startDateSpan"></span> <span id="startTimeSpan"></span>
+                        <span id="endDateSpan"></span> <span id="endTimeSpan"></span>
+                        <div class="col-md-4 d-flex align-items-end"> 
+                            <button type="submit" id="submitButton" class="btn btn-primary btn-custom btn-sm w-100">Mostrar en mapa</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -127,17 +142,18 @@
       </div>
     </div>
   </div>
-<div class="row justify-content-center my-3">
-    <div class="col-lg-8">
-        <input type="range" class="form-range" min="0" max="100" value="0" id="timeSlider">
+<div class="container">
+    <div class="row justify-content-center my-3">
+        <div class="col-lg-8">
+            <input type="range" class="form-range" min="0" max="100" value="0" id="timeSlider">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div id="mapid"></div>
+        </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
-        <div id="mapid"></div>
-    </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
@@ -149,155 +165,152 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script>
-
-flatpickr("#startDateTime", {
-  enableTime: true,
-  dateFormat: "Y-m-dTH:i",
-  altInput: true,
-  altFormat: "Y-m-d H:i",
-  time_24hr: false,
-  minuteIncrement: 15,
-  altInputClass: "form-control form-control-sm",
-});
-
-flatpickr("#endDateTime", {
-  enableTime: true,
-  dateFormat: "Y-m-dTH:i",
-  altInput: true,
-  altFormat: "Y-m-d H:i",
-  time_24hr: false,
-  minuteIncrement: 15,
-  altInputClass: "form-control form-control-sm",
-});
-
-
-</script>
-<script>
-let markers = [];
-let trayectos = []; // Almacena las polilíneas de cada trayecto
-let rutaActual;
-
-document.addEventListener('DOMContentLoaded', () => {
-    const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(myMap);
-
-    rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
-
-    document.getElementById('submitButton').addEventListener('click', (event) => {
-        event.preventDefault(); // Previene la acción por defecto del formulario
-        const startDateTime = document.getElementById('startDateTime').value;
-        const endDateTime = document.getElementById('endDateTime').value;
-
-        // Actualiza y muestra la fecha y hora seleccionadas
-        updateDateTimeDisplay(startDateTime, endDateTime);
-
-        // Carga los datos para el intervalo de tiempo seleccionado
-        cargarDatos(startDateTime, endDateTime, myMap);
+    flatpickr("#startDateTime", {
+    enableTime: true,
+    dateFormat: "Y-m-dTH:i",
+    altInput: true,
+    altFormat: "Y-m-d H:i",
+    time_24hr: false,
+    minuteIncrement: 15,
+    altInputClass: "form-control form-control-sm",
     });
-    if (!localStorage.getItem('hasSeenInstructions')) {
-        console.log('Mostrando modal');
-        var myModal = new bootstrap.Modal(document.getElementById('instructionsModal'), {
-            keyboard: false
+    flatpickr("#endDateTime", {
+    enableTime: true,
+    dateFormat: "Y-m-dTH:i",
+    altInput: true,
+    altFormat: "Y-m-d H:i",
+    time_24hr: false,
+    minuteIncrement: 15,
+    altInputClass: "form-control form-control-sm",
+    });
+</script>
+
+<script>
+    let markers = [];
+    let trayectos = []; // Almacena las polilíneas de cada trayecto
+    let rutaActual;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(myMap);
+
+        rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+
+        document.getElementById('submitButton').addEventListener('click', (event) => {
+            event.preventDefault(); // Previene la acción por defecto del formulario
+            const startDateTime = document.getElementById('startDateTime').value;
+            const endDateTime = document.getElementById('endDateTime').value;
+
+            // Actualiza y muestra la fecha y hora seleccionadas
+            updateDateTimeDisplay(startDateTime, endDateTime);
+
+            // Carga los datos para el intervalo de tiempo seleccionado
+            cargarDatos(startDateTime, endDateTime, myMap);
         });
-        myModal.show();
-        localStorage.setItem('hasSeenInstructions', 'true');
-    }
-});
+        if (!localStorage.getItem('hasSeenInstructions')) {
+            console.log('Mostrando modal');
+            var myModal = new bootstrap.Modal(document.getElementById('instructionsModal'), {
+                keyboard: false
+            });
+            myModal.show();
+            localStorage.setItem('hasSeenInstructions', 'true');
+        }
+    });
 
-let marcadorDeslizable;
-    function cargarDatos(startDateTime, endDateTime, myMap) {
-        const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; // Corrección aquí
-        fetch(link)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                if (data.length > 0) {
-                    // Eliminar trayectos existentes y limpiar el arreglo
-                    trayectos.forEach(trayecto => trayecto.remove());
-                    trayectos = [];
+    let marcadorDeslizable;
+        function cargarDatos(startDateTime, endDateTime, myMap) {
+            const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; // Corrección aquí
+            fetch(link)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    if (data.length > 0) {
+                        // Eliminar trayectos existentes y limpiar el arreglo
+                        trayectos.forEach(trayecto => trayecto.remove());
+                        trayectos = [];
 
-                    // Eliminar marcadores existentes y limpiar el arreglo
-                    markers.forEach(marker => marker.remove());
-                    markers = [];
+                        // Eliminar marcadores existentes y limpiar el arreglo
+                        markers.forEach(marker => marker.remove());
+                        markers = [];
 
-                    rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
-                    trayectos.push(rutaActual);
+                        rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+                        trayectos.push(rutaActual);
 
-                    let ultimoPunto = null;
-                    data.forEach(point => {
-                        const lat = parseFloat(point.Latitude); 
-                        const lng = parseFloat(point.Longitude);
-                        const nuevoPunto = L.latLng(lat, lng);
+                        let ultimoPunto = null;
+                        data.forEach(point => {
+                            const lat = parseFloat(point.Latitude); 
+                            const lng = parseFloat(point.Longitude);
+                            const nuevoPunto = L.latLng(lat, lng);
 
-                        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-                            rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
-                            trayectos.push(rutaActual);
+                            if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
+                                rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+                                trayectos.push(rutaActual);
+                            }
+
+                            rutaActual.addLatLng(nuevoPunto);
+                            ultimoPunto = nuevoPunto;
+                        });
+
+                        myMap.fitBounds(rutaActual.getBounds());
+
+                        if (!marcadorDeslizable) {
+                            marcadorDeslizable = L.marker([0, 0], {
+                                draggable: 'true'
+                            }).addTo(myMap);
                         }
 
-                        rutaActual.addLatLng(nuevoPunto);
-                        ultimoPunto = nuevoPunto;
-                    });
+                        const slider = document.getElementById('timeSlider');
+                        slider.max = data.length - 1;
+                        slider.value = 0;
 
-                    myMap.fitBounds(rutaActual.getBounds());
+                        slider.oninput = function() {
+                            const puntoSeleccionado = data[this.value];
+                            const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
+                            marcadorDeslizable.setLatLng(latLng);
+                            marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup(); 
+                        };
 
-                    if (!marcadorDeslizable) {
-                        marcadorDeslizable = L.marker([0, 0], {
-                            draggable: 'true'
-                        }).addTo(myMap);
+                        slider.oninput();
+
+                        const firstDateTime = data[0].DateTime;
+                        const firstPoint = [parseFloat(data[0].Latitude), parseFloat(data[0].Longitude)];
+                        const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup(); 
+                        markers.push(firstMarker);
+
+                        const lastDateTime = data[data.length - 1].DateTime;
+                        const lastPoint = [parseFloat(data[data.length - 1].Latitude), parseFloat(data[data.length - 1].Longitude)];
+                        const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup(); 
+                        markers.push(lastMarker);
+                    } else {
+                        alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
                     }
+                })
+                .catch(error => {
+                    console.error('Error fetching or processing data:', error);
+                    alert("Hubo un problema al cargar los datos.");
+                });
+        }
 
-                    const slider = document.getElementById('timeSlider');
-                    slider.max = data.length - 1;
-                    slider.value = 0;
+    function updateDateTimeDisplay() {
+        const startDateTimeStr = document.getElementById('startDateTime').value;
+        const endDateTimeStr = document.getElementById('endDateTime').value;
 
-                    slider.oninput = function() {
-                        const puntoSeleccionado = data[this.value];
-                        const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
-                        marcadorDeslizable.setLatLng(latLng);
-                        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup(); 
-                    };
+        if (startDateTimeStr && endDateTimeStr) {
+                const [startDate, startTime] = startDateTimeStr.split(' ');
+                const [endDate, endTime] = endDateTimeStr.split(' ');
 
-                    slider.oninput();
-
-                    const firstDateTime = data[0].DateTime;
-                    const firstPoint = [parseFloat(data[0].Latitude), parseFloat(data[0].Longitude)];
-                    const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup(); 
-                    markers.push(firstMarker);
-
-                    const lastDateTime = data[data.length - 1].DateTime;
-                    const lastPoint = [parseFloat(data[data.length - 1].Latitude), parseFloat(data[data.length - 1].Longitude)];
-                    const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup(); 
-                    markers.push(lastMarker);
-                } else {
-                    alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching or processing data:', error);
-                alert("Hubo un problema al cargar los datos.");
-            });
+                document.getElementById('startDateSpan').textContent = startDate;
+                document.getElementById('startTimeSpan').textContent = startTime;
+                document.getElementById('endDateSpan').textContent = endDate;
+                document.getElementById('endTimeSpan').textContent = endTime;
+        }
     }
-
-function updateDateTimeDisplay() {
-    const startDateTimeStr = document.getElementById('startDateTime').value;
-    const endDateTimeStr = document.getElementById('endDateTime').value;
-
-    if (startDateTimeStr && endDateTimeStr) {
-            const [startDate, startTime] = startDateTimeStr.split(' ');
-            const [endDate, endTime] = endDateTimeStr.split(' ');
-
-            document.getElementById('startDateSpan').textContent = startDate;
-            document.getElementById('startTimeSpan').textContent = startTime;
-            document.getElementById('endDateSpan').textContent = endDate;
-            document.getElementById('endTimeSpan').textContent = endTime;
-    }
-}
 
 </script>
