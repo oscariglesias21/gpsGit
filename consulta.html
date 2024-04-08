@@ -10,7 +10,7 @@
    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
    <style>
     #mapid {
-        height: 450px; /* Adjust the height if necessary to match your design preferences */
+        height: 450px; 
         width: 100%;
     }
     .container-map {
@@ -19,8 +19,8 @@
         padding: 20px; 
     }
     .card {
-        box-shadow: none; /* Remove box-shadow if you prefer for a flatter design */
-        border: none; /* Optional: remove border for a cleaner look */
+        box-shadow: none; 
+        border: none; 
     }
     .card-body{
         padding: 20px;
@@ -30,13 +30,13 @@
     }
     .form-inline-custom {
         display: flex;
-        gap: 10px; /* Adjust the gap between form elements */
-        flex-wrap: wrap; /* Wrap onto the next line if space is insufficient */
-        align-items: center; /* Align items vertically */
-        justify-content: center; /* Center form items horizontally */
+        gap: 10px;
+        flex-wrap: wrap; 
+        align-items: center; 
+        justify-content: center; 
     }
     .btn-custom {
-        padding: .375rem .75rem; /* Adjust padding to change button size */
+        padding: .375rem .75rem; 
     }
     .small-title{
         font-size: 24px;
@@ -51,7 +51,7 @@
         overflow: hidden;
         clip: rect(1px, 1px, 1px, 1px);
     }   
-    @media (min-width: 768px) { /* Adjust this breakpoint as needed */
+    @media (min-width: 768px) { 
         .container-map {
             padding: 10px;
         }
@@ -59,7 +59,7 @@
             flex-direction: column;
         }
         .form-inline-custom .form-control {
-            max-width: 165px; /* Limit the width of the form inputs */
+            max-width: 165px;
         }
     }
     .row1{
@@ -146,12 +146,14 @@
       </div>
     </div>
   </div>
+
 <div class="container">
     <div class="row justify-content-center my-3">
         <div class="col-lg-8">
             <input type="range" class="form-range" min="0" max="100" value="0" id="timeSlider">
         </div>
     </div>
+
     <div class="row">
         <div class="col-12">
             <div id="mapid"></div>
@@ -223,9 +225,9 @@
         }
     });
 
-    let marcadorDeslizable;
+    let marcadorDeslizable; //definición de marcador deslizable
         function cargarDatos(startDateTime, endDateTime, myMap) {
-            const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; // Corrección aquí
+            const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
             fetch(link)
                 .then(response => {
                     if (!response.ok) {
@@ -264,6 +266,7 @@
 
                         myMap.fitBounds(rutaActual.getBounds());
 
+                        //implementación de slider
                         if (!marcadorDeslizable) {
                             marcadorDeslizable = L.marker([0, 0], {
                                 draggable: 'true'
@@ -282,12 +285,14 @@
                         };
 
                         slider.oninput();
-
+                        
+                        //marcador de inicio
                         const firstDateTime = data[0].DateTime;
                         const firstPoint = [parseFloat(data[0].Latitude), parseFloat(data[0].Longitude)];
                         const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup(); 
                         markers.push(firstMarker);
 
+                        //marcador de final
                         const lastDateTime = data[data.length - 1].DateTime;
                         const lastPoint = [parseFloat(data[data.length - 1].Latitude), parseFloat(data[data.length - 1].Longitude)];
                         const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup(); 
@@ -297,7 +302,7 @@
                     }
                 })
                 .catch(error => {
-                    console.error('Error fetching or processing data:', error);
+                    console.error('Error en fetch o procesando data:', error);
                     alert("Hubo un problema al cargar los datos.");
                 });
         }
