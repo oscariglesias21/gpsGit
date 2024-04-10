@@ -69,6 +69,9 @@
     .btn-consistent-size {
     padding: .375rem .75rem; 
     }
+    #timeSlider {
+    display: none;
+    }
 
     </style>
 </head>
@@ -332,13 +335,17 @@
                         const lastPoint = [parseFloat(data[data.length - 1].Latitude), parseFloat(data[data.length - 1].Longitude)];
                         const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup(); 
                         markers.push(lastMarker);
+
+                        document.getElementById('timeSlider').style.display = 'block'; 
                     } else {
                         alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
+                        document.getElementById('timeSlider').style.display = 'none';
                     }
                 })
                 .catch(error => {
                     console.error('Error en fetch o procesando data:', error);
                     alert("Hubo un problema al cargar los datos.");
+                    document.getElementById('timeSlider').style.display = 'none';
                 });
         }
 
