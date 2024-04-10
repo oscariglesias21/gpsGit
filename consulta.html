@@ -320,6 +320,7 @@
                             const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
                             marcadorDeslizable.setLatLng(latLng);
                             marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup(); 
+                            myMap.setView(latLng, myMap.getZoom());
                         };
 
                         slider.oninput();
