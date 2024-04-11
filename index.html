@@ -169,15 +169,17 @@
                 console.log('La ruta ha sido borrada debido a la inactividad.');
             }, 20000); // 20000 milisegundos = 20 segundos
 
+            const dateElement = document.getElementById('date');
+
             document.getElementById('latitude').innerText = data.Latitude;
             document.getElementById('longitude').innerText = data.Longitude;
             document.getElementById('date').innerText = data.Date;
             document.getElementById('time').innerText = data.Time;
 
-            if (date) {
-            const dateString = date.textContent || date.innerText;
-            const formattedDate = dateString.split('T')[0]; // Extrae solo la parte de la fecha
-            dateElement.textContent = formattedDate; // Establece el texto con la fecha formateada
+            if (dateElement) {
+                const dateString = dateElement.textContent || dateElement.innerText;
+                const formattedDate = dateString.split('T')[0]; // Extrae solo la parte de la fecha
+                dateElement.textContent = formattedDate; // Establece el texto con la fecha formateada
             }
             const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
             centrarMapa = newLatLng;
