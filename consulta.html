@@ -322,6 +322,12 @@ var endFlatpickr = flatpickr("#endDateTime", {
 
                         //implementación de slider
                         if (!marcadorDeslizable) {
+                            const customIcon = L.icon({
+                                iconUrl: 'assets/logotruck.png', // Path to your custom logo image
+                                iconSize: [50, 50], // Size of the icon, adjust as needed
+                                iconAnchor: [25, 25], // Point of the icon which will correspond to marker's location
+                                popupAnchor: [0, -25] // Point from which the popup should open relative to the iconAnchor
+                            });
                             marcadorDeslizable = L.marker([0, 0], {
                                 draggable: 'true'
                             }).addTo(myMap);
