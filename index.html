@@ -28,6 +28,18 @@
             right: 20px;
             z-index: 1000;
         }
+        /* Ocultar la 'T' */
+        #date::after {
+            content: ' ';
+            font-size: 0;
+        }
+
+        /* Reducir el tamaño de los ceros iniciales */
+        #time span.zero {
+            font-size: 0; /* Hace que los ceros sean invisibles */
+            color: transparent; /* O hace los ceros transparentes */
+        }
+
     </style>
 </head>
 <body>
@@ -99,6 +111,7 @@
                     </div>
                 </div>
             </div>
+            
             <!-- Fila con el mapa -->
             <div class="row justify-content-center mt-4">
                 <div class="col-12">
@@ -161,6 +174,11 @@
             document.getElementById('date').innerText = data.Date;
             document.getElementById('time').innerText = data.Time;
 
+            if (date) {
+            const dateString = date.textContent || date.innerText;
+            const formattedDate = dateString.split('T')[0]; // Extrae solo la parte de la fecha
+            dateElement.textContent = formattedDate; // Establece el texto con la fecha formateada
+            }
             const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
             centrarMapa = newLatLng;
         
@@ -184,7 +202,6 @@
          // Guardar la ruta actual en el almacenamiento local
          const currentRoute = routePath.getLatLngs();
             localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
-
     });
 });
 </script>
