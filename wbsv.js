@@ -7,7 +7,7 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '/home/ubuntu/.env') });
 
 const app = express();
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'assets')));
 app.use(express.json()); 
 
 const dbConnection = mysql.createConnection({
