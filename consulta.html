@@ -76,30 +76,33 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <!-- Logo and Title -->
-            <a class="navbar-brand" href="#" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <!-- Group logo and title together -->
+        <div style="display: flex; align-items: center;">
+            <a class="navbar-brand" href="#">
                 <span>GeoTracker GPS</span>
-                <img src="/image_cleanup.png" alt="Geo Tracker Logo" style="height: 60px; border-radius: 50%;">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <a type="button" class="btn btn-primary btn-consistent-size me-2" href="/">
-                        <b>Página Principal</b>
-                    </a>
-                    <button type="button" class="btn btn-info btn-consistent-size" data-bs-toggle="modal" data-bs-target="#instructionsModal">
-                        <b>Instrucciones de Usuario</b>
-                    </button>
-                </ul>
-            </div>
+            <img src="/image_cleanup.png" alt="Geo Tracker Logo" style="height: 60px; border-radius: 50%; margin-left: 10px;">
         </div>
-    </nav>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <a type="button" class="btn btn-primary btn-consistent-size me-2" href="/">
+                    <b>Página Principal</b>
+                </a>
+                <button type="button" class="btn btn-info btn-consistent-size" data-bs-toggle="modal" data-bs-target="#instructionsModal">
+                    <b>Instrucciones de Usuario</b>
+                </button>
+            </ul>
+        </div>
+    </div>
+</nav>
+    
 <div class="container-map">
     <div class="row">
         <div classo="col-12">
