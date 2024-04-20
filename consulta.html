@@ -315,6 +315,14 @@ var endFlatpickr = flatpickr("#endDateTime", {
                             rutaActual.addLatLng(nuevoPunto);
                             ultimoPunto = nuevoPunto;
                         });
+                        
+                        let arrowHead = L.polylineDecorator(rutaActual, {
+                            patterns: [
+                                // Agregar una flecha al final de la polilínea
+                                {offset: '100%', repeat: 0, symbol: L.Symbol.arrowHead({pixelSize: 15, pathOptions: {fillOpacity: 1, weight: 0}})}
+                                // ... o flechas a lo largo de la polilínea ...
+                            ]
+                        }).addTo(myMap);
 
                         myMap.fitBounds(rutaActual.getBounds());
 
