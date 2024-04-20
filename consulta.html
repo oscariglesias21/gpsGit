@@ -300,7 +300,14 @@ var endFlatpickr = flatpickr("#endDateTime", {
                         markers.forEach(marker => marker.remove());
                         markers = [];
 
-                        rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+                        rutaActual = L.polyline([], {
+                            color: 'blue',      // Cambia el color a azul o el que prefieras
+                            weight: 5,          // Ajusta el grosor de la línea
+                            opacity: 0.7,       // Ajusta la opacidad de la línea
+                            lineJoin: 'round',  // Establece cómo se unen los segmentos de la línea ('miter' es predeterminado, 'round' o 'bevel')
+                            dashArray: '20, 15' // Crea un efecto de línea punteada o rayada ('20' es la longitud de la línea, '15' es el espacio entre las líneas)
+                        }).addTo(myMap);
+
                         trayectos.push(rutaActual);
 
                         let ultimoPunto = null;
@@ -317,7 +324,13 @@ var endFlatpickr = flatpickr("#endDateTime", {
                             rutaActual.addLatLng(nuevoPunto);
                             ultimoPunto = nuevoPunto;
                         });
-                        
+
+                        let arrowHead = L.polylineDecorator(rutaActual, {
+                            patterns: [
+                                // Define el patrón de flechas aquí, con un estilo que combine o contraste con la polilínea
+                                {offset: '100%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 15, pathOptions: {fillOpacity: 1, color: 'red', weight: 2}})}
+                            ]
+                        }).addTo(myMap);
 
                         myMap.fitBounds(rutaActual.getBounds());
 
