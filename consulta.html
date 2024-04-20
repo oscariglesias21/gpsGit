@@ -315,8 +315,11 @@ var endFlatpickr = flatpickr("#endDateTime", {
                             const nuevoPunto = L.latLng(lat, lng);
 
                             if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-                                rutaActual = L.polyline([], { color: 'blue' }).addTo(myMap);
-                                trayectos.push(rutaActual);
+                                L.polylineDecorator(rutaActual, {
+                                patterns: [
+                                    {offset: '100%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 15, pathOptions: {fillOpacity: 1, color: 'red'}})}
+                                ]
+                            }).addTo(myMap);
                             }
 
                             rutaActual.addLatLng(nuevoPunto);
