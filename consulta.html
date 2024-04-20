@@ -351,18 +351,6 @@ var endFlatpickr = flatpickr("#endDateTime", {
                         };
 
                         slider.oninput();
-                        
-                        //marcador de inicio
-                        const firstDateTime = data[0].DateTime;
-                        const firstPoint = [parseFloat(data[0].Latitude), parseFloat(data[0].Longitude)];
-                        const firstMarker = L.marker(firstPoint).addTo(myMap).bindPopup(`Punto Inicial: ${firstDateTime}`).openPopup(); 
-                        markers.push(firstMarker);
-
-                        //marcador de final
-                        const lastDateTime = data[data.length - 1].DateTime;
-                        const lastPoint = [parseFloat(data[data.length - 1].Latitude), parseFloat(data[data.length - 1].Longitude)];
-                        const lastMarker = L.marker(lastPoint).addTo(myMap).bindPopup(`Punto Final: ${lastDateTime}`).openPopup(); 
-                        markers.push(lastMarker);
 
                         document.getElementById('timeSlider').style.display = 'block'; 
                     } else {
