@@ -316,15 +316,19 @@ var endFlatpickr = flatpickr("#endDateTime", {
 
                             if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
                                 L.polylineDecorator(rutaActual, {
-                                patterns: [
-                                    {offset: '100%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 15, pathOptions: {fillOpacity: 1, color: 'red'}})}
-                                ]
-                            }).addTo(myMap);
-                            }
+                                    patterns: [
+                                        {offset: '100%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 15, pathOptions: {fillOpacity: 1, color: 'red'}})}
+                                    ]
+                                }).addTo(myMap);
+                            
+                            // Comenzar un nuevo trayecto
+                            rutaActual = L.polyline([], polylineOptions).addTo(myMap);
+                            trayectos.push(rutaActual);
+                        }
 
-                            rutaActual.addLatLng(nuevoPunto);
-                            ultimoPunto = nuevoPunto;
-                        });
+                        rutaActual.addLatLng(nuevoPunto);
+                        ultimoPunto = nuevoPunto;
+                    });
 
                         let arrowHead = L.polylineDecorator(rutaActual, {
                             patterns: [
