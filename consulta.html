@@ -315,7 +315,7 @@ var endFlatpickr = flatpickr("#endDateTime", {
                             const nuevoPunto = L.latLng(lat, lng);
 
                             if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-                                rutaActual = L.polyline([], { color: 'red' }).addTo(myMap);
+                                rutaActual = L.polyline([], { color: 'blue' }).addTo(myMap);
                                 trayectos.push(rutaActual);
                             }
 
@@ -326,7 +326,7 @@ var endFlatpickr = flatpickr("#endDateTime", {
                         let arrowHead = L.polylineDecorator(rutaActual, {
                             patterns: [
                                 // Define el patrón de flechas aquí, con un estilo que combine o contraste con la polilínea
-                                {offset: '100%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 15, pathOptions: {fillOpacity: 1, color: 'red', weight: 2}})}
+                                {offset: '100%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 15, pathOptions: {fillOpacity: 1, color: 'blue', weight: 2}})}
                             ]
                         }).addTo(myMap);
 
