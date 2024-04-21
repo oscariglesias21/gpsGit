@@ -315,13 +315,26 @@ var endFlatpickr = flatpickr("#endDateTime", {
                             const nuevoPunto = L.latLng(lat, lng);
 
                             if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-                                rutaActual = L.polyline([], { color: 'blue' }).addTo(myMap);
-                                trayectos.push(rutaActual);
-                            }
-
-                            rutaActual.addLatLng(nuevoPunto);
-                            ultimoPunto = nuevoPunto;
-                        });
+                                if (ultimoPunto) {
+                                        L.polylineDecorator(rutaActual, {
+                                            patterns: [
+                                                {offset: '100%', repeat: 0, symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {fillOpacity: 1, color: 'blue'}})}
+                                            ]
+                                        }).addTo(myMap);
+                                    }
+                                    // Comenzar un nuevo trayecto
+                                    rutaActual = L.polyline([], { color: 'transparent' }).addTo(myMap); // Línea transparente
+                                    trayectos.push(rutaActual);
+                                }
+                                rutaActual.addLatLng(nuevoPunto);
+                                ultimoPunto = nuevoPunto;
+                            });
+                            // Aplicar el decorador de flechas al último segmento de la polilínea
+                            L.polylineDecorator(rutaActual, {
+                                patterns: [
+                                    {offset: '50%', repeat: '30px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {fillOpacity: 1, color: 'blue'}})}
+                                ]
+                            }).addTo(myMap);
 
                         let arrowHead = L.polylineDecorator(rutaActual, {
                             patterns: [
