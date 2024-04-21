@@ -74,39 +74,28 @@
             height: calc(100vh - 56px); /* Altura de la ventana menos la altura de la barra de navegación */
             width: 100%;
         }
-        .btn-toggle {
-            position: absolute;
-            top: 0;
-            right: 0;
-            z-index: 1010; /* Mayor que el de .floating-container para que esté por encima */
-            background-color: #f8f9fa; /* O el color que prefieras */
-            border-radius: 0 8px 0 8px; /* Redondear esquinas superiores derechas e inferiores izquierdas */
-        }
         .barra-activadora {
-            position: absolute;
-            top: 50px; /* Ajusta esto según la posición exacta de la barra en tu página */
-            left: 200px; /* Ajusta esto según la posición exacta de la barra en tu página */
-            width: 50px; /* El ancho del área que activará el tooltip */
-            height: 20px; /* La altura del área que activará el tooltip */
-            cursor: pointer; /* Cambia el cursor para indicar que es interactuable */
-            z-index: 2; /* Asegúrate de que esté sobre otros elementos */
+            position: relative; /* Esto permite que el tooltip se posicione en relación a la barra */
+            /* Definir dimensiones y posicionamiento según sea necesario */
+            width: 100%; /* o el ancho específico de la barra */
+            height: 100%; /* o la altura específica de la barra */
         }
 
         .tooltip-text {
             visibility: hidden;
-            width: 140px;
+            width: 160px; /* o el ancho deseado para el texto del tooltip */
             background-color: black;
             color: white;
             text-align: center;
             border-radius: 6px;
-            padding: 5px;
+            padding: 5px 0;
             position: absolute;
-            z-index: 3;
-            bottom: 100%; /* Desplaza el tooltip encima de la barra activadora */
+            z-index: 1;
+            bottom: 20px; /* Distancia desde la parte superior de la barra */
             left: 50%;
-            transform: translateX(-50%);
+            margin-left: -80px; /* Desplazamiento a la izquierda para centrar el tooltip */
             opacity: 0;
-            transition: visibility 0s, opacity 0.5s ease-in-out;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .barra-activadora:hover .tooltip-text {
@@ -141,7 +130,6 @@
             font-size: 14px; /* Reducir el tamaño de la fuente del contenido de las tarjetas */
         }
     }
-
 
     </style>
 </head>
@@ -191,7 +179,7 @@
                 </div>
             </div>
             <div class="barra-activadora">
-                <div class="tooltip-text">Consulte Fecha y Hora de Recorrido</div>
+                <span class="tooltip-text">Consulte Fecha y Hora de Recorrido</span>
             </div>
             
         </div>
