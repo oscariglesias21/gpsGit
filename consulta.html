@@ -249,6 +249,8 @@ var endFlatpickr = flatpickr("#endDateTime", {
     let markers = [];
     let trayectos = []; // Almacena las polilíneas de cada trayecto
     let rutaActual;
+    let decoradores = []; // Almacena las instancias de los decoradores de flechas
+
 
     document.addEventListener('DOMContentLoaded', () => {
         const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
@@ -298,6 +300,9 @@ var endFlatpickr = flatpickr("#endDateTime", {
                         markers.forEach(marker => marker.remove());
                         markers = [];
 
+                        decoradores.forEach(decorador => decorador.remove());
+                        decoradores = [];
+                        
                         rutaActual = L.polyline([], {
                             color: 'blue',      // Cambia el color a azul o el que prefieras
                             weight: 3,          // Ajusta el grosor de la línea
