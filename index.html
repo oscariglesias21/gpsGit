@@ -116,31 +116,43 @@
 
         /* Estilos para pantallas pequeñas */
         @media (max-width: 767px) {
-        .floating-container {
-            top: 5%; /* O el porcentaje que mejor se ajuste */
-            left: 50%;
-            transform: translateX(-50%);
-            width: auto; /* O un ancho específico si prefieres */
-            padding: 5px; /* Reducir el relleno si es necesario */
-        }
+            .floating-container {
+                top: 5%; /* Mantener un poco de espacio en la parte superior */
+                left: 50%;
+                transform: translateX(-50%);
+                width: 95%; /* Ocupar casi todo el ancho de la pantalla para hacer las tarjetas más anchas */
+                padding: 5px; /* Mantener un relleno para la estética */
+            }
 
-        .data-card {
-            margin: 2px; /* Reducir el margen alrededor de las tarjetas */
-            padding: 5px; /* Reducir el relleno dentro de las tarjetas */
-        }
+            .data-card {
+                margin: 2px; /* Reducir el margen alrededor de las tarjetas */
+                padding: 5px; /* Reducir el relleno dentro de las tarjetas */
+            }
 
-        .card-header {
-            font-size: 14px; /* Reducir el tamaño de la fuente de los títulos de las tarjetas */
-        }
+            .card-header {
+                font-size: 12px; /* Reducir aún más el tamaño de la fuente de los títulos de las tarjetas */
+                padding: 4px; /* Reducir el relleno del encabezado para ahorrar espacio */
+            }
 
-        .card-body {
-            padding: 5px; /* Reducir el relleno dentro del cuerpo de las tarjetas */
-        }
+            .card-body {
+                padding: 4px; /* Reducir el relleno dentro del cuerpo de las tarjetas */
+            }
 
-        .card-title {
-            font-size: 14px; /* Reducir el tamaño de la fuente del contenido de las tarjetas */
+            .card-title {
+                font-size: 12px; /* Reducir aún más el tamaño de la fuente del contenido de las tarjetas */
+            }
+
+            .card {
+                margin-bottom: 4px; /* Reducir el margen entre tarjetas */
+                border: none; /* Opcional: quitar los bordes de las tarjetas para un diseño más limpio */
+                background: none; /* Opcional: hacer que el fondo de las tarjetas sea transparente */
+            }
+
+            /* Estilos para ajustar la altura del mapa y evitar que las tarjetas lo cubran demasiado */
+            #mapid {
+                height: calc(100vh - 150px); /* Ajustar la altura para que las tarjetas y la barra de navegación no cubran tanto mapa */
+            }
         }
-    }
 
     </style>
 </head>
