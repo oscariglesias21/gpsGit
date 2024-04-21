@@ -82,13 +82,13 @@
 
         /* Estilos para pantallas pequeñas */
         @media (max-width: 767px) {
-            .floating-container {
-                top: auto;
-                bottom: 200px; /* Colocar en la parte inferior en dispositivos pequeños */
-                left: 50%;
-                transform: translateX(-50%); /* Centrar horizontalmente */
-            }
+        .floating-container {
+            top: 10%; /* Ajusta este porcentaje para moverlo más arriba */
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            /* Esto centra el contenedor en la pantalla, ajusta el valor de translateY para moverlo hacia arriba o abajo */
         }
+    }
 
     </style>
 </head>
