@@ -298,49 +298,51 @@ var endFlatpickr = flatpickr("#endDateTime", {
                         markers.forEach(marker => marker.remove());
                         markers = [];
 
-// Dentro de la función cargarDatos...
+                        rutaActual = L.polyline([], {
+                            color: 'blue',      // Cambia el color a azul o el que prefieras
+                            weight: 3,          // Ajusta el grosor de la línea
+                            opacity: 0.7,       // Ajusta la opacidad de la línea
+                            lineJoin: 'round',  // Establece cómo se unen los segmentos de la línea ('miter' es predeterminado, 'round' o 'bevel')
+                        }).addTo(myMap);
 
-// Opciones para el estilo de la polilínea y las flechas
-                        let polylineOptions = {
-                            color: 'blue',      
-                            weight: 3,          
-                            opacity: 0.7,       
-                            lineJoin: 'round',  
-                        };
+                        trayectos.push(rutaActual);
 
-                        let arrowOptions = {
-                            patterns: [
-                                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {fillOpacity: 1, color: 'blue'}})}
-                            ]
-                        };
-
-                        // Agrega las polilíneas y las decoraciones
+                        let ultimoPunto = null;
                         data.forEach(point => {
                             const lat = parseFloat(point.Latitude); 
                             const lng = parseFloat(point.Longitude);
                             const nuevoPunto = L.latLng(lat, lng);
 
                             if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-                                // Si hay una polilínea anterior, añade las flechas a ella
-                                if (rutaActual) {
-                                    L.polylineDecorator(rutaActual, arrowOptions).addTo(myMap);
+                                if (ultimoPunto) {
+                                        L.polylineDecorator(rutaActual, {
+                                            patterns: [
+                                                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3, lineJoin: 'round'}})}
+                                            ]
+                                        }).addTo(myMap);
+                                    }
+                                    // Comenzar un nuevo trayecto
+                                    rutaActual = L.polyline([], { color: 'blue' }).addTo(myMap); // Línea transparente
+                                    trayectos.push(rutaActual);
                                 }
-                                // Comienza una nueva polilínea
-                                rutaActual = L.polyline([], polylineOptions).addTo(myMap); 
-                                trayectos.push(rutaActual);
-                            }
+                                rutaActual.addLatLng(nuevoPunto);
+                                ultimoPunto = nuevoPunto;
+                            });
+                            // Aplicar el decorador de flechas al último segmento de la polilínea
+                            L.polylineDecorator(rutaActual, {
+                                patterns: [
+                                    {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3, lineJoin: 'round'}})}
+                                ]
+                            }).addTo(myMap);
 
-                            rutaActual.addLatLng(nuevoPunto);
-                            ultimoPunto = nuevoPunto;
-                        });
-
-                        // Asegúrate de añadir las flechas al último segmento de la polilínea
-                        if (rutaActual) {
-                            L.polylineDecorator(rutaActual, arrowOptions).addTo(myMap);
-                        }
+                        let arrowHead = L.polylineDecorator(rutaActual, {
+                            patterns: [
+                                // Define el patrón de flechas aquí, con un estilo que combine o contraste con la polilínea
+                                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3, lineJoin: 'round'}})}
+                            ]
+                        }).addTo(myMap);
 
                         myMap.fitBounds(rutaActual.getBounds());
-
 
                         //implementación de slider
                         if (!marcadorDeslizable) {
