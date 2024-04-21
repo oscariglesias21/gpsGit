@@ -320,22 +320,33 @@ var endFlatpickr = flatpickr("#endDateTime", {
 
                             if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
                                 if (ultimoPunto) {
-                                        L.polylineDecorator(rutaActual, {
-                                            patterns: [
-                                                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3, lineJoin: 'round'}})}
-                                            ]
-                                        }).addTo(myMap);
-                                    }
-                                    // Comenzar un nuevo trayecto
-                                    rutaActual = L.polyline([], { color: 'blue' }).addTo(myMap); // Línea transparente
-                                    trayectos.push(rutaActual);
-                                }
-                                rutaActual.addLatLng(nuevoPunto);
-                                ultimoPunto = nuevoPunto;
-                            });
+                        let decorador = L.polylineDecorator(rutaActual, {
+                            patterns: [
+                                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3}})}
+                            ]
+                        }).addTo(myMap);
+                        decoradores.push(decorador);
+                    }
+                    
+                    // Comienza un nuevo segmento
+                    rutaActual = L.polyline([], { color: 'blue', weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+                    trayectos.push(rutaActual);
+                }
 
-                        myMap.fitBounds(rutaActual.getBounds());
+                // Añade el nuevo punto al segmento actual
+                rutaActual.addLatLng(nuevoPunto);
+                ultimoPunto = nuevoPunto;
+            });
 
+            // Decora el último segmento después de salir del bucle forEach
+            if (rutaActual.getLatLngs().length > 0) {
+                let decorador = L.polylineDecorator(rutaActual, {
+                    patterns: [
+                        {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3}})}
+                    ]
+                }).addTo(myMap);
+                decoradores.push(decorador);
+            }
                         //implementación de slider
                         if (!marcadorDeslizable) {
                             marcadorDeslizable = L.marker([0, 0], {
