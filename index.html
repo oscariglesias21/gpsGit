@@ -39,6 +39,108 @@
             font-size: 0; /* Hace que los ceros sean invisibles */
             color: transparent; /* O hace los ceros transparentes */
         }
+        #map-container {
+            position: relative; /* Nuevo contenedor para el mapa con posición relativa */
+        }
+
+        .floating-container {
+            position: absolute; /* Contenedor flotante que contiene todos los datos */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+            top: 10%;
+            z-index: 1000; /* Asegúrate de que esté por encima del mapa */
+            display: flex;
+            flex-wrap: wrap;
+            width: calc(100% - 40px);
+            max-width: 400px; /* o el ancho que prefieras */
+            background: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+            border-radius: 8px; /* Esquinas redondeadas */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+            padding: 10px; /* Espaciado interno */
+        }
+
+        /* Estilos de los contenedores de datos para que sean más pequeños y no cubran el mapa */
+        .data-card {
+            width: calc(50% - 10px); /* Ajusta el ancho para 2 tarjetas por fila */
+            margin-bottom: 10px;
+            margin: 5px; /* Espaciado entre tarjetas */
+            border: 1px solid #ddd; /* Borde sutil */
+        }
+
+        /* Estilo para el mapa para asegurarte de que utilice toda la altura y anchura disponible */
+        #mapid {
+            height: calc(100vh - 56px); /* Altura de la ventana menos la altura de la barra de navegación */
+            width: 100%;
+        }
+        .btn-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1010; /* Mayor que el de .floating-container para que esté por encima */
+            background-color: #f8f9fa; /* O el color que prefieras */
+            border-radius: 0 8px 0 8px; /* Redondear esquinas superiores derechas e inferiores izquierdas */
+        }
+        .barra-activadora {
+            position: absolute;
+            top: 50px; /* Ajusta esto según la posición exacta de la barra en tu página */
+            left: 200px; /* Ajusta esto según la posición exacta de la barra en tu página */
+            width: 50px; /* El ancho del área que activará el tooltip */
+            height: 20px; /* La altura del área que activará el tooltip */
+            cursor: pointer; /* Cambia el cursor para indicar que es interactuable */
+            z-index: 2; /* Asegúrate de que esté sobre otros elementos */
+        }
+
+        .tooltip-text {
+            visibility: active;
+            width: 140px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 3;
+            bottom: 100%; /* Desplaza el tooltip encima de la barra activadora */
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s ease-in-out;
+        }
+
+        .barra-activadora:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Estilos para pantallas pequeñas */
+        @media (max-width: 767px) {
+        .floating-container {
+            top: 5%; /* O el porcentaje que mejor se ajuste */
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto; /* O un ancho específico si prefieres */
+            padding: 5px; /* Reducir el relleno si es necesario */
+        }
+
+        .data-card {
+            margin: 2px; /* Reducir el margen alrededor de las tarjetas */
+            padding: 5px; /* Reducir el relleno dentro de las tarjetas */
+        }
+
+        .card-header {
+            font-size: 14px; /* Reducir el tamaño de la fuente de los títulos de las tarjetas */
+        }
+
+        .card-body {
+            padding: 5px; /* Reducir el relleno dentro del cuerpo de las tarjetas */
+        }
+
+        .card-title {
+            font-size: 14px; /* Reducir el tamaño de la fuente del contenido de las tarjetas */
+        }
+    }
 
     </style>
 </head>
@@ -72,11 +174,29 @@
         <h1 class="gps-data">Ruta GPS</h1>
     </div>
     <div class="container mt-3">
-        <!-- Fila superior con datos y selección de ventana de tiempo -->
         <div class="row justify-content-center">
-            <!-- Columna izquierda con datos de GPS -->
+            <!-- Columna izquierda con datos de GPS, aquí insertamos Latitud y Longitud -->
             <div class="col-lg-6">
                 <div class="row">
+                    <!-- Tarjeta de Latitud -->
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header text-center">Latitud</div>
+                            <div class="card-body">
+                                <span id="latitude" class="card-title text-center">XX.XX</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tarjeta de Longitud -->
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header text-center">Longitud</div>
+                            <div class="card-body">
+                                <span id="longitude" class="card-title text-center">XX.XX</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tarjeta de Fecha -->
                     <div class="col-md-6 mb-3">
                         <div class="card">
                             <div class="card-header text-center">Fecha</div>
@@ -85,6 +205,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Tarjeta de Hora -->
                     <div class="col-md-6 mb-3">
                         <div class="card">
                             <div class="card-header text-center">Hora</div>
@@ -95,16 +216,12 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Fila con el mapa -->
-            <div class="row justify-content-center mt-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body p-0">
-                            <div id="mapid"></div>
-                            <!-- Botón "Regresar a Ubicación" -->
-                            <button id="centrarMapaBtn" class="btn btn-primary">&#x1F4CD; </button>
-                        </div>
+        <!-- El mapa -->
+        <div id="mapid"></div>
+
+        <!-- Botón "Regresar a Ubicación" -->
+        <button id="centrarMapaBtn" class="btn btn-primary">&#x1F4CD; </button>
+    </div>
                     </div>
                 </div>
             </div>
@@ -188,6 +305,18 @@
          // Guardar la ruta actual en el almacenamiento local
          const currentRoute = routePath.getLatLngs();
             localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
+    });
+        document.getElementById('toggle-data-view').addEventListener('click', function() {
+        var dataCards = document.querySelectorAll('.data-card');
+        for (var i = 0; i < dataCards.length; i++) {
+            if (dataCards[i].style.display === 'none') {
+                dataCards[i].style.display = '';
+                this.textContent = '–'; // Cambiar el texto a "minimizar"
+            } else {
+                dataCards[i].style.display = 'none';
+                this.textContent = '+'; // Cambiar el texto a "maximizar"
+            }
+        }
     });
 });
 </script>
