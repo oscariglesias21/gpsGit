@@ -303,7 +303,7 @@ var endFlatpickr = flatpickr("#endDateTime", {
                             weight: 3,          // Ajusta el grosor de la línea
                             opacity: 0.7,       // Ajusta la opacidad de la línea
                             lineJoin: 'round',  // Establece cómo se unen los segmentos de la línea ('miter' es predeterminado, 'round' o 'bevel')
-                            dashArray: '20, 15' // Crea un efecto de línea punteada o rayada ('20' es la longitud de la línea, '15' es el espacio entre las líneas)
+                            dashArray: '10, 15' // Crea un efecto de línea punteada o rayada ('20' es la longitud de la línea, '15' es el espacio entre las líneas)
                         }).addTo(myMap);
 
                         trayectos.push(rutaActual);
@@ -318,7 +318,7 @@ var endFlatpickr = flatpickr("#endDateTime", {
                                 if (ultimoPunto) {
                                         L.polylineDecorator(rutaActual, {
                                             patterns: [
-                                                {offset: '50%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {fillOpacity: 1, color: 'blue', weight: 3}})}
+                                                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {fillOpacity: 1, color: 'blue', weight: 3}})}
                                             ]
                                         }).addTo(myMap);
                                     }
@@ -332,14 +332,14 @@ var endFlatpickr = flatpickr("#endDateTime", {
                             // Aplicar el decorador de flechas al último segmento de la polilínea
                             L.polylineDecorator(rutaActual, {
                                 patterns: [
-                                    {offset: '50%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {fillOpacity: 1, color: 'blue', weight: 3}})}
+                                    {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {fillOpacity: 1, color: 'blue', weight: 3}})}
                                 ]
                             }).addTo(myMap);
 
                         let arrowHead = L.polylineDecorator(rutaActual, {
                             patterns: [
                                 // Define el patrón de flechas aquí, con un estilo que combine o contraste con la polilínea
-                                {offset: '50%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {fillOpacity: 1, color: 'blue', weight: 3}})}
+                                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {fillOpacity: 1, color: 'blue', weight: 3}})}
                             ]
                         }).addTo(myMap);
 
