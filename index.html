@@ -82,13 +82,40 @@
 
         /* Estilos para pantallas pequeñas */
         @media (max-width: 767px) {
+            #map-container {
+                height: calc(100vh - 60px); /* Reduce la altura del mapa en pantallas pequeñas */
+            }
+
             .floating-container {
-                top: auto;
-                bottom: 20px; /* Colocar en la parte inferior en dispositivos pequeños */
+                bottom: 10px; /* Colocar en la parte inferior y reducir el margen */
                 left: 50%;
-                transform: translateX(-50%); /* Centrar horizontalmente */
+                transform: translateX(-50%);
+                max-height: 20vh; /* Asegúrate de que el contenedor flotante no sea muy alto */
+                overflow: auto; /* Permite el scroll dentro del contenedor si es necesario */
+            }
+
+            .data-card {
+                padding: 5px; /* Reducir el padding dentro de los contenedores de datos */
+                font-size: 12px; /* Reducir el tamaño de la fuente */
+            }
+
+            #centrarMapaBtn {
+                width: 30px; /* Reducir el tamaño del botón de centrar mapa */
+                height: 30px;
+                padding: 5px; /* Reducir el padding del botón */
+            }
+
+            .btn-toggle {
+                width: 30px; /* Reducir el tamaño del botón de minimizar/maximizar */
+                height: 30px;
+            }
+
+            /* Posiblemente ocultar otros elementos no esenciales */
+            .navbar, .footer {
+                display: none;
             }
         }
+
 
     </style>
 </head>
