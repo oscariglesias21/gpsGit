@@ -83,12 +83,31 @@
         /* Estilos para pantallas pequeñas */
         @media (max-width: 767px) {
         .floating-container {
-            top: 10%; /* Ajusta este porcentaje para moverlo más arriba */
+            top: 10%; /* O el porcentaje que mejor se ajuste */
             left: 50%;
-            transform: translateX(-50%) translateY(-50%);
-            /* Esto centra el contenedor en la pantalla, ajusta el valor de translateY para moverlo hacia arriba o abajo */
+            transform: translateX(-50%);
+            width: auto; /* O un ancho específico si prefieres */
+            padding: 5px; /* Reducir el relleno si es necesario */
+        }
+
+        .data-card {
+            margin: 2px; /* Reducir el margen alrededor de las tarjetas */
+            padding: 5px; /* Reducir el relleno dentro de las tarjetas */
+        }
+
+        .card-header {
+            font-size: 14px; /* Reducir el tamaño de la fuente de los títulos de las tarjetas */
+        }
+
+        .card-body {
+            padding: 5px; /* Reducir el relleno dentro del cuerpo de las tarjetas */
+        }
+
+        .card-title {
+            font-size: 14px; /* Reducir el tamaño de la fuente del contenido de las tarjetas */
         }
     }
+
 
     </style>
 </head>
