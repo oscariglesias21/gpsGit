@@ -45,8 +45,10 @@
 
         .floating-container {
             position: absolute; /* Contenedor flotante que contiene todos los datos */
-            top: 20px;
-            left: 20px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
             z-index: 1000; /* Asegúrate de que esté por encima del mapa */
             display: flex;
             flex-wrap: wrap;
