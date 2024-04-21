@@ -173,49 +173,24 @@
     <div class="text-center mt-5">
         <h1 class="gps-data">Ruta GPS</h1>
     </div>
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <!-- Columna izquierda con datos de GPS, aquí insertamos Latitud y Longitud -->
-            <div class="col-lg-6">
-                <div class="row">
-                    <!-- Tarjeta de Latitud -->
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header text-center">Latitud</div>
-                            <div class="card-body">
-                                <span id="latitude" class="card-title text-center">XX.XX</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Tarjeta de Longitud -->
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header text-center">Longitud</div>
-                            <div class="card-body">
-                                <span id="longitude" class="card-title text-center">XX.XX</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Tarjeta de Fecha -->
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header text-center">Fecha</div>
-                            <div class="card-body">
-                                <span id="date" class="card-title text-center">YYYY-MM-DD</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Tarjeta de Hora -->
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header text-center">Hora</div>
-                            <div class="card-body">
-                                <span id="time" class="card-title text-center">HH:MM:SS</span>
-                            </div>
-                        </div>
-                    </div>
+    <div id="map-container">
+        <div class="floating-container">
+            <button id="toggle-data-view" class="btn btn-sm btn-toggle">&#x2013;</button>
+            <!-- Contenedores flotantes para latitud, longitud, fecha y hora -->
+            <div class="card data-card">
+                <div class="card-header text-center">Fecha</div>
+                <div class="card-body">
+                    <span id="date" class="card-title text-center">YYYY-MM-DD</span>
                 </div>
             </div>
+            <div class="card data-card">
+                <div class="card-header text-center">Hora</div>
+                <div class="card-body">
+                    <span id="time" class="card-title text-center">HH:MM:SS</span>
+                </div>
+            </div>
+            
+        </div>
         <!-- El mapa -->
         <div id="mapid"></div>
 
