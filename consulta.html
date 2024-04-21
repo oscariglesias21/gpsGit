@@ -302,7 +302,7 @@ var endFlatpickr = flatpickr("#endDateTime", {
 
                         decoradores.forEach(decorador => decorador.remove());
                         decoradores = [];
-                        
+
                         rutaActual = L.polyline([], {
                             color: 'blue',      // Cambia el color a azul o el que prefieras
                             weight: 3,          // Ajusta el grosor de la línea
@@ -333,19 +333,6 @@ var endFlatpickr = flatpickr("#endDateTime", {
                                 rutaActual.addLatLng(nuevoPunto);
                                 ultimoPunto = nuevoPunto;
                             });
-                            // Aplicar el decorador de flechas al último segmento de la polilínea
-                            L.polylineDecorator(rutaActual, {
-                                patterns: [
-                                    {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3, lineJoin: 'round'}})}
-                                ]
-                            }).addTo(myMap);
-
-                        let arrowHead = L.polylineDecorator(rutaActual, {
-                            patterns: [
-                                // Define el patrón de flechas aquí, con un estilo que combine o contraste con la polilínea
-                                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3, lineJoin: 'round'}})}
-                            ]
-                        }).addTo(myMap);
 
                         myMap.fitBounds(rutaActual.getBounds());
 
