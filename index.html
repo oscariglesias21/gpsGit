@@ -117,7 +117,7 @@
         /* Estilos para pantallas pequeñas */
         @media (max-width: 767px) {
         .floating-container {
-            top: 5%; /* O el porcentaje que mejor se ajuste */
+            top: 8%; /* O el porcentaje que mejor se ajuste */
             left: 50%;
             transform: translateX(-50%);
             width: auto; /* O un ancho específico si prefieres */
@@ -175,6 +175,7 @@
     </div>
     <div id="map-container">
         <div class="floating-container">
+            <button id="toggle-data-view" class="btn btn-sm btn-toggle">&#x2013;</button>
             <!-- Contenedores flotantes para latitud, longitud, fecha y hora -->
             <div class="card data-card">
                 <div class="card-header text-center">Latitud</div>
