@@ -82,33 +82,37 @@
             background-color: #f8f9fa; /* O el color que prefieras */
             border-radius: 0 8px 0 8px; /* Redondear esquinas superiores derechas e inferiores izquierdas */
         }
-        .tooltip-container {
-    position: relative;
-    display: inline-block; /* o lo que sea apropiado para tu diseño */
+        .barra-activadora {
+            position: absolute;
+            top: 50px; /* Ajusta esto según la posición exacta de la barra en tu página */
+            left: 200px; /* Ajusta esto según la posición exacta de la barra en tu página */
+            width: 50px; /* El ancho del área que activará el tooltip */
+            height: 20px; /* La altura del área que activará el tooltip */
+            cursor: pointer; /* Cambia el cursor para indicar que es interactuable */
+            z-index: 2; /* Asegúrate de que esté sobre otros elementos */
         }
 
         .tooltip-text {
             visibility: hidden;
-            width: 120px;
+            width: 140px;
             background-color: black;
             color: white;
             text-align: center;
             border-radius: 6px;
-            padding: 5px 0;
+            padding: 5px;
             position: absolute;
-            z-index: 1;
-            bottom: 125%; /* Desplaza hacia abajo desde la parte superior del botón */
+            z-index: 3;
+            bottom: 100%; /* Desplaza el tooltip encima de la barra activadora */
             left: 50%;
-            margin-left: -60px; /* Centra el tooltip */
+            transform: translateX(-50%);
             opacity: 0;
-            transition: opacity 0.6s;
+            transition: visibility 0s, opacity 0.5s ease-in-out;
         }
 
-        .tooltip-container:hover .tooltip-text {
+        .barra-activadora:hover .tooltip-text {
             visibility: visible;
             opacity: 1;
         }
-
 
         /* Estilos para pantallas pequeñas */
         @media (max-width: 767px) {
@@ -186,10 +190,10 @@
                     <span id="time" class="card-title text-center">HH:MM:SS</span>
                 </div>
             </div>
-            <div class="tooltip-container">
-                <button id="botonPlus" class="btn-plus">+</button>
-                <div class="tooltip-text">Fecha y Hora de Movimiento del Vehículo</div>
+            <div class="barra-activadora">
+                <div class="tooltip-text">Consulte Fecha y Hora de Recorrido</div>
             </div>
+            
         </div>
         <!-- El mapa -->
         <div id="mapid"></div>
