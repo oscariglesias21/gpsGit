@@ -52,12 +52,18 @@
             flex-wrap: wrap;
             width: calc(100% - 40px);
             max-width: 400px; /* o el ancho que prefieras */
+            background: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+            border-radius: 8px; /* Esquinas redondeadas */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+            padding: 10px; /* Espaciado interno */
         }
 
         /* Estilos de los contenedores de datos para que sean más pequeños y no cubran el mapa */
         .data-card {
             width: calc(50% - 10px); /* Ajusta el ancho para 2 tarjetas por fila */
             margin-bottom: 10px;
+            margin: 5px; /* Espaciado entre tarjetas */
+            border: 1px solid #ddd; /* Borde sutil */
         }
 
         /* Estilo para el mapa para asegurarte de que utilice toda la altura y anchura disponible */
@@ -66,6 +72,15 @@
             width: 100%;
         }
 
+        /* Estilos para pantallas pequeñas */
+        @media (max-width: 767px) {
+            .floating-container {
+                top: auto;
+                bottom: 20px; /* Colocar en la parte inferior en dispositivos pequeños */
+                left: 50%;
+                transform: translateX(-50%); /* Centrar horizontalmente */
+            }
+        }
 
     </style>
 </head>
