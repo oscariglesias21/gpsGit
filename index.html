@@ -54,7 +54,7 @@
             display: flex;
             flex-wrap: wrap;
             width: calc(100% - 40px);
-            max-width: 300px; /* o el ancho que prefieras */
+            max-width: 250px; /* o el ancho que prefieras */
             background: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
             border-radius: 8px; /* Esquinas redondeadas */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
@@ -151,6 +151,9 @@
             /* Estilos para ajustar la altura del mapa y evitar que las tarjetas lo cubran demasiado */
             #mapid {
                 height: calc(100vh - 150px); /* Ajustar la altura para que las tarjetas y la barra de navegación no cubran tanto mapa */
+            }
+            .card.latitude, .card.longitude {
+                display: none; /* Oculta los elementos y su espacio */
             }
         }
 
