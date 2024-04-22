@@ -54,15 +54,17 @@
     }
     .floating-options-container {
         position: absolute;
-        top: 40px;
-        left: 10px;
-        width: calc(100% - 20px); /* O el ancho que desees, ajustado para no tocar los bordes de la pantalla */
-        background: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
-        border-radius: 10px; /* Esquinas redondeadas para estética */
+        top: 15%; /* Aumenta este valor para bajar la barra de controles */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 95%;
+        background: rgba(255, 255, 255, 0.9);
         padding: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera para resaltar */
-        z-index: 1000; /* Asegúrate de que esté por encima del mapa */
+        border-radius: 8px;
+        z-index: 1000; /* Asegura que el contenedor está por encima del mapa */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
+
     #mapid {
         height: calc(100vh - 120px); /* Ajusta la altura para asegurarte de que el mapa sea visible */
     }
@@ -77,6 +79,18 @@
         .form-inline-custom .form-control {
             max-width: 165px;
         }
+        .floating-options-container {
+        position: absolute;
+        top: 15%; /* Aumenta este valor para bajar la barra de controles */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 95%;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        border-radius: 8px;
+        z-index: 1000; /* Asegura que el contenedor está por encima del mapa */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
     }
     .row1{
         display: flex;
@@ -88,20 +102,8 @@
     #timeSlider {
     display: none;
     }
-    .floating-options-container {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        width: calc(100% - 20px); /* O el ancho que desees, ajustado para no tocar los bordes de la pantalla */
-        background: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
-        border-radius: 10px; /* Esquinas redondeadas para estética */
-        padding: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera para resaltar */
-        z-index: 1000; /* Asegúrate de que esté por encima del mapa */
-    }
-    #mapid {
-        height: calc(100vh - 120px); /* Ajusta la altura para asegurarte de que el mapa sea visible */
-    }
+
+
 
     </style>
 </head>
