@@ -11,20 +11,19 @@
 
    <style>
     #mapid {
-        height: 450px; 
-        width: 100%;
+        height: 75px; 
     }
-    .container-map {
+    .container-map, .container {
         max-width: 90%;
         margin: auto;
-        padding: 20px; 
+        padding: 0 10px; /* Reduced side padding */
     }
     .card {
         box-shadow: none; 
         border: none; 
     }
     .card-body{
-        padding: 20px;
+        padding: 10px;
     }
     .form-label{
         margin-bottom: 0.5rem;
@@ -51,7 +50,14 @@
         height: 1px;
         overflow: hidden;
         clip: rect(1px, 1px, 1px, 1px);
-    }   
+    }
+    .navbar {
+        padding: 0.5rem 1rem; /* Adjust the padding to make the navbar smaller */
+    }
+    .form-inline-custom .form-control, .form-inline-custom .btn-custom {
+        margin-bottom: 0;
+    }
+    
     @media (min-width: 768px) { 
         .container-map {
             padding: 10px;
