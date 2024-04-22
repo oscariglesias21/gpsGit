@@ -50,11 +50,11 @@
             transform: translate(-50%, -50%);
             box-sizing: border-box;
             top: 15%;
-            z-index: 1000; /* Asegúrate de que esté por encima del mapa */
+            z-index: 1000; 
             display: flex;
             flex-wrap: wrap;
             width: calc(100% - 40px);
-            max-width: 250px; /* o el ancho que prefieras */
+            max-width: 250px;
             background: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
             border-radius: 8px; /* Esquinas redondeadas */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
@@ -178,12 +178,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
-                    <!--<li class="nav-item">
-                        <a class="nav-link" href="/database" target="_blank">Ver Historial de Datos</a>
-                    </li>-->
-                    <li class="nav-item">
-                        <a class="btn btn-primary ms-auto" href="/consulta" target="_blank">Recorridos</a>
-                    </li>
+                    <a type="button" class="btn btn-primary btn-consistent-size me-2" href="/consulta">
+                        <b>Recorridos</b>
+                    </a>
                 </ul>
             </div>
         </div>
