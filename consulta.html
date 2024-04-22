@@ -51,7 +51,22 @@
         height: 1px;
         overflow: hidden;
         clip: rect(1px, 1px, 1px, 1px);
-    }   
+    }
+    .floating-options-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: calc(100% - 20px); /* O el ancho que desees, ajustado para no tocar los bordes de la pantalla */
+        background: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+        border-radius: 10px; /* Esquinas redondeadas para estética */
+        padding: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera para resaltar */
+        z-index: 1000; /* Asegúrate de que esté por encima del mapa */
+    }
+    #mapid {
+        height: calc(100vh - 120px); /* Ajusta la altura para asegurarte de que el mapa sea visible */
+    }
+    
     @media (min-width: 768px) { 
         .container-map {
             padding: 10px;
@@ -72,6 +87,20 @@
     }
     #timeSlider {
     display: none;
+    }
+    .floating-options-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: calc(100% - 20px); /* O el ancho que desees, ajustado para no tocar los bordes de la pantalla */
+        background: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+        border-radius: 10px; /* Esquinas redondeadas para estética */
+        padding: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera para resaltar */
+        z-index: 1000; /* Asegúrate de que esté por encima del mapa */
+    }
+    #mapid {
+        height: calc(100vh - 120px); /* Ajusta la altura para asegurarte de que el mapa sea visible */
     }
 
     </style>
@@ -105,12 +134,12 @@
     
 <div class="container-map">
     <div class="row">
-        <div classo="col-12">
+        <div class="col-12">
             <h1 class="text-center my-3 small-title">Consulta de Recorridos</h1>
         </div>
     </div>
 </div>
-<div class="container">
+<div class="floating-options-container">
     <div class="row justify-content-center mb-3">
         <div class="col-lg-8">
             <div class="card">
