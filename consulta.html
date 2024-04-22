@@ -51,31 +51,7 @@
         height: 1px;
         overflow: hidden;
         clip: rect(1px, 1px, 1px, 1px);
-    }
-    .floating-options-container {
-        position: absolute;
-        top: 10px; /* O cualquier otro valor para posicionar adecuadamente en la página */
-        left: 10px;
-        width: auto; /* Ajusta la anchura según el contenido */
-        background: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
-        padding: 10px;
-        border-radius: 8px;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        gap: 10px; /* Espacio entre elementos del formulario */
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-
-    #mapid {
-        height: 90vh; /* Ocupa la mayoría de la pantalla */
-        width: calc(100% - 20px); /* Asegura que no se salga de los márgenes de la pantalla */
-        margin-top: 50px; /* Ajusta según la altura de tu contenedor de opciones */
-    }
-
-/* Puede que necesites ajustar las clases específicas de Bootstrap para los inputs y el botón si están siendo usadas aquí */
-
-
+    }   
     @media (min-width: 768px) { 
         .container-map {
             padding: 10px;
@@ -86,18 +62,6 @@
         .form-inline-custom .form-control {
             max-width: 165px;
         }
-        .floating-options-container {
-        position: absolute;
-        top: 30%; /* Aumenta este valor para bajar la barra de controles */
-        left: 50%;
-        transform: translateX(-50%);
-        width: 95%;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 10px;
-        border-radius: 8px;
-        z-index: 1000; /* Asegura que el contenedor está por encima del mapa */
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
     }
     .row1{
         display: flex;
@@ -109,8 +73,6 @@
     #timeSlider {
     display: none;
     }
-
-
 
     </style>
 </head>
@@ -148,7 +110,7 @@
         </div>
     </div>
 </div>
-<div class="floating-options-container">
+<div class="container">
     <div class="row justify-content-center mb-3">
         <div class="col-lg-8">
             <div class="card">
