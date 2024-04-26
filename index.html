@@ -41,7 +41,7 @@
         }
         #map-container {
             position: relative; /* Nuevo contenedor para el mapa con posición relativa */
-            padding-left: 250px;
+            
         }
 
         .floating-container {
@@ -117,17 +117,6 @@
         .latitude, .longitude {
                 display: none; /* Oculta los elementos y su espacio */
         }
-        .sidebar {
-            background-color: #f8f9fa; /* Adjust the color as needed */
-            position: fixed; /* Fixed sidebar on the left */
-            top: 56px; /* Height of the navbar */
-            bottom: 0; /* Extend to the bottom of the page */
-            left: 0; /* Align to the left */
-            width: 250px; /* Width of the sidebar */
-            overflow-y: auto; /* Enable scroll if content is taller than the screen */
-            z-index: 1000; /* Ensure the sidebar is on top of other content */
-            box-shadow: 2px 0px 5px rgba(0,0,0,0.1); /* Shadow for a 3D effect */
-        }
 
         /* Estilos para pantallas pequeñas */
         @media (max-width: 767px) {
@@ -183,6 +172,10 @@
                 </a>
                 <img src="/image_cleanup.png" alt="Geo Tracker Logo" style="height: 60px; border-radius: 50%; margin-left: 10px;">
             </div>
+            <div class="navbar-text ms-auto">
+                <span id="navbar-date" style="margin-right: 20px;">Fecha: YYYY-MM-DD</span>
+                <span id="navbar-time">Hora: HH:MM:SS</span>
+            </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -216,18 +209,16 @@
                     <span id="longitude" class="card-title text-center">XX.XX</span>
                 </div>
             </div>
-            <div class="sidebar">
-                <div class="card data-card">
-                    <div class="card-header text-center">Fecha</div>
-                    <div class="card-body">
-                        <span id="date" class="card-title text-center">YYYY-MM-DD</span>
-                    </div>
+            <div class="card data-card">
+                <div class="card-header text-center">Fecha</div>
+                <div class="card-body">
+                    <span id="date" class="card-title text-center">YYYY-MM-DD</span>
                 </div>
-                <div class="card data-card">
-                    <div class="card-header text-center">Hora</div>
-                    <div class="card-body">
-                        <span id="time" class="card-title text-center">HH:MM:SS</span>
-                    </div>
+            </div>
+            <div class="card data-card">
+                <div class="card-header text-center">Hora</div>
+                <div class="card-body">
+                    <span id="time" class="card-title text-center">HH:MM:SS</span>
                 </div>
             </div>
         </div>
