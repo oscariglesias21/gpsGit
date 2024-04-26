@@ -41,6 +41,7 @@
         }
         #map-container {
             position: relative; /* Nuevo contenedor para el mapa con posición relativa */
+            padding-left: 250px;
         }
 
         .floating-container {
@@ -115,6 +116,17 @@
         }
         .latitude, .longitude {
                 display: none; /* Oculta los elementos y su espacio */
+        }
+        .sidebar {
+            background-color: #f8f9fa; /* Adjust the color as needed */
+            position: fixed; /* Fixed sidebar on the left */
+            top: 56px; /* Height of the navbar */
+            bottom: 0; /* Extend to the bottom of the page */
+            left: 0; /* Align to the left */
+            width: 250px; /* Width of the sidebar */
+            overflow-y: auto; /* Enable scroll if content is taller than the screen */
+            z-index: 1000; /* Ensure the sidebar is on top of other content */
+            box-shadow: 2px 0px 5px rgba(0,0,0,0.1); /* Shadow for a 3D effect */
         }
 
         /* Estilos para pantallas pequeñas */
@@ -204,16 +216,18 @@
                     <span id="longitude" class="card-title text-center">XX.XX</span>
                 </div>
             </div>
-            <div class="card data-card">
-                <div class="card-header text-center">Fecha</div>
-                <div class="card-body">
-                    <span id="date" class="card-title text-center">YYYY-MM-DD</span>
+            <div class="sidebar">
+                <div class="card data-card">
+                    <div class="card-header text-center">Fecha</div>
+                    <div class="card-body">
+                        <span id="date" class="card-title text-center">YYYY-MM-DD</span>
+                    </div>
                 </div>
-            </div>
-            <div class="card data-card">
-                <div class="card-header text-center">Hora</div>
-                <div class="card-body">
-                    <span id="time" class="card-title text-center">HH:MM:SS</span>
+                <div class="card data-card">
+                    <div class="card-header text-center">Hora</div>
+                    <div class="card-body">
+                        <span id="time" class="card-title text-center">HH:MM:SS</span>
+                    </div>
                 </div>
             </div>
         </div>
