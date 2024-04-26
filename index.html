@@ -44,22 +44,22 @@
         }
 
         .floating-container {
-            position: absolute; /* Contenedor flotante que contiene todos los datos */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-sizing: border-box;
-            top: 15%;
-            z-index: 1000; 
-            display: flex;
-            flex-wrap: wrap;
-            width: calc(100% - 40px);
-            max-width: 250px;
-            background: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
-            border-radius: 8px; /* Esquinas redondeadas */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-            padding: 10px; /* Espaciado interno */
+            position: absolute; /* Asegura que el contenedor sea flotante y se pueda posicionar libremente */
+            top: 50%; /* Centra el contenedor en la mitad verticalmente */
+            left: 0; /* Alinea el contenedor al lado izquierdo de la pantalla */
+            transform: translateY(-50%); /* Asegura que esté centrado verticalmente */
+            width: 200px; /* Define el ancho de la barra */
+            background: #000; /* Color de fondo de la barra, puedes cambiarlo por el que prefieras */
+            color: #fff; /* Color del texto dentro de la barra */
+            padding: 10px; /* Espaciado interno de la barra */
+            box-sizing: border-box; /* Asegura que el padding no aumente el ancho de la barra */
+            display: flex; /* Utiliza flexbox para organizar el contenido interior */
+            flex-direction: column; /* Orienta los elementos internos verticalmente */
+            justify-content: center; /* Centra el contenido en el eje cruzado */
+            align-items: center; /* Centra los elementos horizontalmente */
+            z-index: 1000; /* Asegura que la barra esté sobre el mapa */
         }
+
 
         /* Estilos de los contenedores de datos para que sean más pequeños y no cubran el mapa */
         .data-card {
@@ -189,34 +189,35 @@
         <h1 class="gps-data">Ruta GPS</h1>
     </div>
     <div id="map-container">
+<!-- Barra lateral para la información -->
         <div class="floating-container">
-            <button id="toggle-data-view" class="btn btn-sm btn-toggle">&#x2013;</button>
             <!-- Contenedores flotantes para latitud, longitud, fecha y hora -->
-            <div class="card data-card latitude">
+            <div class="data-card">
                 <div class="card-header text-center">Latitud</div>
                 <div class="card-body">
                     <span id="latitude" class="card-title text-center">XX.XX</span>
                 </div>
             </div>
-            <div class="card data-card longitude">
+            <div class="data-card">
                 <div class="card-header text-center">Longitud</div>
                 <div class="card-body">
                     <span id="longitude" class="card-title text-center">XX.XX</span>
                 </div>
             </div>
-            <div class="card data-card">
+            <div class="data-card">
                 <div class="card-header text-center">Fecha</div>
                 <div class="card-body">
                     <span id="date" class="card-title text-center">YYYY-MM-DD</span>
                 </div>
             </div>
-            <div class="card data-card">
+            <div class="data-card">
                 <div class="card-header text-center">Hora</div>
                 <div class="card-body">
                     <span id="time" class="card-title text-center">HH:MM:SS</span>
                 </div>
             </div>
         </div>
+
         <!-- El mapa -->
         <div id="mapid"></div>
 
