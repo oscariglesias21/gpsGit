@@ -57,24 +57,6 @@
             width: 100%;
         }
 
-
-        .tooltip-text {
-            visibility: active;
-            width: auto;
-            background-color: black;
-            color: white;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px;
-            position: absolute;
-            z-index: 3;
-            bottom: 100%; /* Desplaza el tooltip encima de la barra activadora */
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: visibility 0s, opacity 0.5s ease-in-out;
-        }
-
         .barra-activadora:hover .tooltip-text {
             visibility: visible;
             opacity: 1;
@@ -88,6 +70,21 @@
             left: 50%; /* Coloca el elemento al 50% del contenedor desde la izquierda */
             transform: translateX(-50%); /* Centra el elemento con respecto a su propio ancho */
             z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+        }
+        .navbar {
+            position: relative; /* Si tu barra de navegación no tenía posición relativa, añádela */
+        }
+
+        /* Centrar la fecha y la hora en la parte superior del mapa */
+        .navbar-text {
+            position: absolute; /* Posición absoluta para sacar los elementos del flujo normal */
+            left: 50%; /* Coloca el elemento al 50% del contenedor desde la izquierda */
+            transform: translateX(-50%); /* Centra el elemento con respecto a su propio ancho */
+            top: 0; /* Posición desde la parte superior de la barra de navegación */
+            z-index: 1000; /* Asegura que los elementos están sobre el mapa */
+            display: flex;
+            align-items: center; /* Centra los elementos verticalmente dentro de la barra de navegación */
+            height: 100%; /* Toma toda la altura de la barra de navegación para el centrado vertical */
         }
 
 
@@ -124,6 +121,28 @@
             }
             .latitude, .longitude {
                 display: none; /* Oculta los elementos y su espacio */
+            }
+            .navbar-datetime {
+            position: absolute; /* Posición absoluta para sacar los elementos del flujo normal */
+            top: 10px; /* Ajusta esta propiedad para colocarla a la altura deseada */
+            left: 50%; /* Coloca el elemento al 50% del contenedor desde la izquierda */
+            transform: translateX(-50%); /* Centra el elemento con respecto a su propio ancho */
+            z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+            }
+            .navbar {
+                position: relative; /* Si tu barra de navegación no tenía posición relativa, añádela */
+            }
+
+            /* Centrar la fecha y la hora en la parte superior del mapa */
+            .navbar-text {
+                position: absolute; /* Posición absoluta para sacar los elementos del flujo normal */
+                left: 50%; /* Coloca el elemento al 50% del contenedor desde la izquierda */
+                transform: translateX(-50%); /* Centra el elemento con respecto a su propio ancho */
+                top: 0; /* Posición desde la parte superior de la barra de navegación */
+                z-index: 1000; /* Asegura que los elementos están sobre el mapa */
+                display: flex;
+                align-items: center; /* Centra los elementos verticalmente dentro de la barra de navegación */
+                height: 100%; /* Toma toda la altura de la barra de navegación para el centrado vertical */
             }
         }
 
