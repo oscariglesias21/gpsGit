@@ -43,25 +43,6 @@
             position: relative; /* Nuevo contenedor para el mapa con posición relativa */
             
         }
-
-        .floating-container {
-            position: absolute; /* Contenedor flotante que contiene todos los datos */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-sizing: border-box;
-            top: 15%;
-            z-index: 1000; 
-            display: flex;
-            flex-wrap: wrap;
-            width: calc(100% - 40px);
-            max-width: 250px;
-            background: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
-            border-radius: 8px; /* Esquinas redondeadas */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-            padding: 10px; /* Espaciado interno */
-        }
-
         /* Estilos de los contenedores de datos para que sean más pequeños y no cubran el mapa */
         .data-card {
             width: calc(50% - 10px); /* Ajusta el ancho para 2 tarjetas por fila */
@@ -75,23 +56,7 @@
             height: calc(100vh - 56px); /* Altura de la ventana menos la altura de la barra de navegación */
             width: 100%;
         }
-        .btn-toggle {
-            position: absolute;
-            top: 0;
-            right: 0;
-            z-index: 1010; /* Mayor que el de .floating-container para que esté por encima */
-            background-color: #f8f9fa; /* O el color que prefieras */
-            border-radius: 0 8px 0 8px; /* Redondear esquinas superiores derechas e inferiores izquierdas */
-        }
-        .barra-activadora {
-            position: absolute;
-            top: 50px; /* Ajusta esto según la posición exacta de la barra en tu página */
-            left: 200px; /* Ajusta esto según la posición exacta de la barra en tu página */
-            width: 50px; /* El ancho del área que activará el tooltip */
-            height: 20px; /* La altura del área que activará el tooltip */
-            cursor: pointer; /* Cambia el cursor para indicar que es interactuable */
-            z-index: 2; /* Asegúrate de que esté sobre otros elementos */
-        }
+
 
         .tooltip-text {
             visibility: active;
@@ -126,13 +91,6 @@
 
         /* Estilos para pantallas pequeñas */
         @media (max-width: 767px) {
-            .floating-container {
-                top: 5%; /* Mantener un poco de espacio en la parte superior */
-                left: 50%;
-                transform: translateX(-50%);
-                width: 60%; /* Ocupar casi todo el ancho de la pantalla para hacer las tarjetas más anchas */
-                padding: 5px; /* Mantener un relleno para la estética */
-            }
 
             .data-card {
                 margin: 2px; /* Reducir el margen alrededor de las tarjetas */
