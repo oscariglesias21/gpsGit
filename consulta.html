@@ -235,8 +235,8 @@ function openFlatpickrs() {
 
     // cambio para desconcatenar los calendarios
     document.addEventListener('DOMContentLoaded', () => {
-    const startDateTimeInput = document.getElementById('startDateTime');
-    const endDateTimeInput = document.getElementById('endDateTime');
+    const startDateTimeInput = document.getElementById('startDateTime').addEventListener('focus', openFlatpickrs);
+    const endDateTimeInput = document.getElementById('endDateTime').addEventListener('focus', openFlatpickrs);
     const submitButton = document.getElementById('submitButton');
     const errorMessage = document.getElementById('dateError');
 
