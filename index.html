@@ -33,7 +33,6 @@
             content: ' ';
             font-size: 0;
         }
-
         /* Reducir el tamaño de los ceros iniciales */
         #time span.zero {
             font-size: 0; /* Hace que los ceros sean invisibles */
@@ -43,7 +42,6 @@
             position: relative; /* Nuevo contenedor para el mapa con posición relativa */
             
         }
-        /* Estilos de los contenedores de datos para que sean más pequeños y no cubran el mapa */
         .data-card {
             width: calc(50% - 10px); /* Ajusta el ancho para 2 tarjetas por fila */
             margin-bottom: 10px;
@@ -89,37 +87,30 @@
 
         /* Estilos para pantallas pequeñas */
         @media (max-width: 767px) {
-
             .data-card {
                 margin: 2px; /* Reducir el margen alrededor de las tarjetas */
                 padding: 5px; /* Reducir el relleno dentro de las tarjetas */
             }
-
             .card-header {
                 font-size: 12px; /* Reducir aún más el tamaño de la fuente de los títulos de las tarjetas */
                 padding: 4px; /* Reducir el relleno del encabezado para ahorrar espacio */
             }
-
             .card-body {
                 padding: 4px; /* Reducir el relleno dentro del cuerpo de las tarjetas */
             }
-
             .card-title {
                 font-size: 12px; /* Reducir aún más el tamaño de la fuente del contenido de las tarjetas */
             }
-
             .card {
-                margin-bottom: 4px; /* Reducir el margen entre tarjetas */
-                border: none; /* Opcional: quitar los bordes de las tarjetas para un diseño más limpio */
-                background: none; /* Opcional: hacer que el fondo de las tarjetas sea transparente */
+                margin-bottom: 4px;
+                border: none;
+                background: none;
             }
-
-            /* Estilos para ajustar la altura del mapa y evitar que las tarjetas lo cubran demasiado */
             #mapid {
-                height: calc(100vh - 150px); /* Ajustar la altura para que las tarjetas y la barra de navegación no cubran tanto mapa */
+                height: calc(100vh - 150px); 
             }
             .latitude, .longitude {
-                display: none; /* Oculta los elementos y su espacio */
+                display: none; 
             }
         }
 
@@ -135,8 +126,19 @@
                 <img src="/image_cleanup.png" alt="Geo Tracker Logo" style="height: 60px; border-radius: 50%; margin-left: 10px;">
             </div>
             <div class="navbar-text ms-auto navbar-datetime">
-                <span id="date" class="mx-2">Fecha: YYYY-MM-DD</span>
-                <span id="time" class="mx-2">Hora: HH:MM:SS</span>
+                <div class="card data-card">
+                    <div class="card-header text-center">Fecha</div>
+                    <div class="card-body">
+                        <span id="date" class="card-title text-center">YYYY-MM-DD</span>
+                    </div>
+                </div>
+                <!-- Contenedor similar a la tarjeta de la latitud para la hora -->
+                <div class="card data-card">
+                    <div class="card-header text-center">Hora</div>
+                    <div class="card-body">
+                        <span id="time" class="card-title text-center">HH:MM:SS</span>
+                    </div>
+                </div>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
