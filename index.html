@@ -131,22 +131,21 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="navbar-nav ms-auto flex-column">
-                        <a type="button" class="btn btn-primary btn-consistent-size mb-3" href="/consulta">
-                            <b>Recorridos</b>
-                        </a>
-                        <div class="navbar-text ms-auto navbar-datetime">
-                            <div class="text-center mb-1"> <strong>Fecha:</strong></div>
-                            <span class="mx-2 mb-3"> YYYY-MM-DD</span>
-                            <div class="text-center mb-1"> <strong>Hora:</strong></div>
-                            <span class="mx-2 mb-3"> HH:MM:SS</span>
-                            <div class="text-center mb-1"> <strong>RPM:</strong></div>
-                            <span class="mx-2"> XXXX</span>
-                        </div>
+                <ul class="navbar-nav ms-auto">
+                    <a type="button" class="btn btn-primary btn-consistent-size me-2" href="/consulta">
+                        <b>Recorridos</b>
+                    </a>
+                    <li class="nav-item">
+                    <div class="navbar-text ms-auto navbar-datetime">
+                        <div class="text-center"> <strong>Fecha:</strong></div>
+                        <span id="date" class="mx-2"> YYYY-MM-DD</span>
+                        <div class="text-center"> <strong>Hora:</strong></div>
+                        <span id="time" class="mx-2"> HH:MM:SS</span>
+                        <div class="text-center"> <strong>RPM:</strong></div>
+                        <span id="time" class="mx-2"> XXXX</span>
+                    </li>
                     </div>
-                </div>
-                
+                </ul>
             </div>
         </div>
     </nav>
