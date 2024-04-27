@@ -130,23 +130,24 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-text ms-auto navbar-datetime">
-                <div class="text-center"> <strong>Fecha:</strong></div>
-                <span id="date" class="mx-2"> YYYY-MM-DD</span>
-                <div class="text-center"> <strong>Hora:</strong></div>
-                <span id="time" class="mx-2"> HH:MM:SS</span>
-                <div class="text-center"> <strong>RPM:</strong></div>
-                <span id="time" class="mx-2"> XXXX</span>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/consulta">Recorridos</a>
-                    </li>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <a type="button" class="btn btn-primary btn-consistent-size me-2" href="/consulta">
+                        <b>Recorridos</b>
+                    </a>
+                    <div class="navbar-text ms-auto navbar-datetime">
+                        <div class="text-center"> <strong>Fecha:</strong></div>
+                        <span id="date" class="mx-2"> YYYY-MM-DD</span>
+                        <div class="text-center"> <strong>Hora:</strong></div>
+                        <span id="time" class="mx-2"> HH:MM:SS</span>
+                        <div class="text-center"> <strong>RPM:</strong></div>
+                        <span id="time" class="mx-2"> XXXX</span>
+                    </div>
                 </ul>
             </div>
         </div>
     </nav>
+
     <div id="map-container">
         <div class="container">
             <!-- Contenedores flotantes para latitud, longitud, fecha y hora -->
