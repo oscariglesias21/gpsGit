@@ -42,8 +42,8 @@ app.post('/updateFromSniffer', (req, res) => {
 });
 
 app.post('/FromSniffer', (req, res) => {
-  const { Latitude, Longitude, Date, Time } = req.body;
-  io.emit('locationUpdate', { Latitude, Longitude, Date, Time });
+  const { Latitude, Longitude, Date, Time, RPM } = req.body;
+  io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM });
   res.status(200).send('OK');
 });
 
