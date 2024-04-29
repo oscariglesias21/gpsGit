@@ -26,16 +26,16 @@ dbConnection.connect((err) => {
 });
 
 app.post('/updateFromSniffer', (req, res) => {
-  const { Latitude, Longitude, Date, Time } = req.body;
-  const insertQuery = 'INSERT INTO p2GPS2 (Latitude, Longitude, Date, Time) VALUES (?, ?, ?, ?)';
-  const insertValues = [Latitude, Longitude, Date, Time];
+  const { Latitude, Longitude, Date, Time, RPM } = req.body;
+  const insertQuery = 'INSERT INTO p2GPS2 (Latitude, Longitude, Date, Time, RPM) VALUES (?, ?, ?, ?, ?)';
+  const insertValues = [Latitude, Longitude, Date, Time, RPM];
   dbConnection.query(insertQuery, insertValues, (err, results) => {
     if (err) {
       console.error('Error al insertar datos en la base de datos:', err);
       return res.status(500).send('Internal Server Error');
     }
     // Envía la actualización a clientes conectados a través de Socket.IO
-    io.emit('locationUpdate', { Latitude, Longitude, Date, Time });
+    io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM });
 
     res.status(200).send('OK');
   });
@@ -159,4 +159,3 @@ app.get('/consulta-historicos', (req, res) => {
 server.listen(port, () => {
   console.log(`Servidor HTTP en ejecución`);
 });
-          

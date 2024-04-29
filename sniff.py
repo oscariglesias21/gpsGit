@@ -14,21 +14,23 @@ def extract_gps_info(data):
     # Simula la extracción de los datos GPS del payload
     # Asegúrate de adaptar esta parte al formato específico de tus datos
     decoded_data = data.decode('utf-8','replace').strip().split(',')    
-    latitud_str, longitud_str, timestamp_str = decoded_data
+    latitud_str, longitud_str, timestamp_str, rpm_str = decoded_data
     latitud = float(latitud_str.split(":")[1])
     longitud = float(longitud_str.split(":")[1])
     timestamp_str = timestamp_str.replace("Timestamp:", "").strip()
     datetime_obj = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S.%f")
     fecha = datetime_obj.strftime("%Y-%m-%d") 
     hora = datetime_obj.strftime("%H:%M:%S")  # Formato de hora a HH:MM:SS
-
+    rpm = int(rpm_str.split(":")[1])
 
     return {
         "Latitude": latitud,
         "Longitude": longitud,
         "Date": fecha,  # Fecha ya formateada
-        "Time": hora    # Hora ya formateada
+        "Time": hora,    # Hora ya formateada
+        "RPM": rpm
     }
+
 def send_to_web_server(web_data):
     try:
         # Iterar sobre las URLs del servidor web
