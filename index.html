@@ -204,6 +204,7 @@
         console.log('Conexión a Socket.IO establecida correctamente.');
 
         socket.on('locationUpdate', (data) => {
+        console.log(data);
         clearTimeout(inactivityTimer);
             inactivityTimer = setTimeout(() => {
                 routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
@@ -217,6 +218,7 @@
             document.getElementById('longitude').innerText = data.Longitude;
             document.getElementById('date').innerText = data.Date;
             document.getElementById('time').innerText = data.Time;
+            console.log("Updating RPM:", data.RPM);
             document.getElementById('RPM').innerText = data.RPM;
 
             if (dateElement) {
