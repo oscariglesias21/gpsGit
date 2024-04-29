@@ -35,7 +35,7 @@ app.post('/updateFromSniffer', (req, res) => {
       return res.status(500).send('Internal Server Error');
     }
     // Envía la actualización a clientes conectados a través de Socket.IO
-    io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM });
+    io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM});
 
     res.status(200).send('OK');
   });
@@ -43,7 +43,7 @@ app.post('/updateFromSniffer', (req, res) => {
 
 app.post('/FromSniffer', (req, res) => {
   const { Latitude, Longitude, Date, Time, RPM } = req.body;
-  io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM });
+  io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM});
   res.status(200).send('OK');
 });
 
