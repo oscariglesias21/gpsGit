@@ -141,7 +141,7 @@
                         <div class="text-center"> <strong>Hora:</strong></div>
                         <span id="time" class="mx-2"> HH:MM:SS</span>
                         <div class="text-center"> <strong>RPM:</strong></div>
-                        <span id="time" class="mx-2"> XXXX</span>
+                        <span id="RPM" class="mx-2"> XXXX</span>
                     </div>
                 </ul>
             </div>
@@ -217,6 +217,7 @@
             document.getElementById('longitude').innerText = data.Longitude;
             document.getElementById('date').innerText = data.Date;
             document.getElementById('time').innerText = data.Time;
+            document.getElementById('RPM').innetText = data.RPM;
 
             if (dateElement) {
                 const dateString = dateElement.textContent || dateElement.innerText;
