@@ -297,11 +297,6 @@
             let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
             let lastMarkerPosition = null;
             let currentVehicle = "vehicle1";  // Default o inicializado por una selección de usuario
-
-            function navigate(vehicleId) {
-                currentVehicle = vehicleId;
-            }
-
             let inactivityTimer;
             let centrarMapa = null;
 
@@ -316,7 +311,6 @@
             console.log('Conexión a Socket.IO establecida correctamente.');
 
             socket.on('locationUpdate', (data) => {
-                if (data.vehicleId === currentVehicle) { 
                     clearTimeout(inactivityTimer);
                     inactivityTimer = setTimeout(() => {
                     routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
@@ -340,7 +334,7 @@
                 }
                 const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
                 centrarMapa = newLatLng;
-                }
+                
             if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 400) {
                 // Si el marcador se ha movido más de 400 metros, reinicia la polilínea
                 routePath.setLatLngs([]);
