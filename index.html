@@ -296,6 +296,11 @@
             let marker = L.marker([0, 0]).addTo(myMap);
             let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
             let lastMarkerPosition = null;
+            let currentVehicle = "vehicle1";  // Default o inicializado por una selección de usuario
+
+            function navigate(vehicleId) {
+                currentVehicle = vehicleId;
+            }
 
             let inactivityTimer;
             let centrarMapa = null;
@@ -311,8 +316,9 @@
             console.log('Conexión a Socket.IO establecida correctamente.');
 
             socket.on('locationUpdate', (data) => {
-            clearTimeout(inactivityTimer);
-                inactivityTimer = setTimeout(() => {
+                if (data.vehicleId === currentVehicle) { 
+                    clearTimeout(inactivityTimer);
+                    inactivityTimer = setTimeout(() => {
                     routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
                     localStorage.removeItem('routePath'); // Opcional: Limpia la ruta almacenada
                     console.log('La ruta ha sido borrada debido a la inactividad.');
@@ -326,7 +332,7 @@
                 document.getElementById('time').innerText = data.Time;
                 document.getElementById('RPM').innerText = data.RPM;
 
-
+            
                 if (dateElement) {
                     const dateString = dateElement.textContent || dateElement.innerText;
                     const formattedDate = dateString.split('T')[0]; // Extrae solo la parte de la fecha
@@ -334,7 +340,7 @@
                 }
                 const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
                 centrarMapa = newLatLng;
-            
+                }
             if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 400) {
                 // Si el marcador se ha movido más de 400 metros, reinicia la polilínea
                 routePath.setLatLngs([]);
@@ -368,7 +374,7 @@
         }
     </script>
 
-    <!-- Scripts del mapa (NO TOCAR) -->
+    <!-- Scripts del mapa  -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
