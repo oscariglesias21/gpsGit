@@ -8,109 +8,172 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        .card-header, .card-body {
-            font-size: 16px; /* Reduce el tamaño de la fuente */
-            padding: 6px 10px; /* Reduce el padding */
+        /* Estilos para que el mapa ocupe toda la pantalla */
+        html, body, .map-container {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Evita barras de desplazamiento */
         }
-        .card {
-            margin-bottom: 8px; /* Reduce el margen entre tarjetas */
+
+        /* Configuración del mapa en el contenedor */
+        #map-in-container {
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
-        #mapid {
-            height: 500px; /* Aumenta el tamaño del mapa */
+
+        /* Estilos para el sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 450px; /* Ancho del sidebar */
+            height: 100%;
+            background-color: #FFD35F; /* Color de fondo del sidebar */
+            z-index: 2;
+            transform: translateX(0%); /* Sidebar inicialmente abierto */
+            transition: transform 0.3s ease; /* Transición suave para abrir/cerrar el sidebar */
         }
-        .gps-data {
-            font-size: 28px; /* Ajusta el tamaño del título de la página */
+
+        /* Estilos para el contenido del sidebar */
+        .sidebar-content {
+            padding: 20px;
+            color: #000000; /* Color del texto en el sidebar */
+            z-index: 2;
+            text-align: center; /* Centra el contenido horizontalmente */
         }
-        /* Estilos para el botón "Regresar a Ubicación" */
-        #centrarMapaBtn {
+
+        .sidebar-content img {
+            display: block; /* Asegura que la imagen sea un bloque para poder aplicar márgenes automáticos */
+            margin: 0 auto 20px; /* Centra la imagen horizontalmente y añade margen inferior */
+            max-width: 100%; /* Ajusta el ancho máximo de la imagen */
+            height: auto; /* Permite que la altura de la imagen se ajuste automáticamente */
+        }
+
+        /* Estilos para el botón de cerrar el sidebar */
+        .close-btn {
             position: absolute;
             top: 20px;
             right: 20px;
-            z-index: 1000;
-        }
-        /* Ocultar la 'T' */
-        #date::after {
-            content: ' ';
-            font-size: 0;
-        }
-        /* Reducir el tamaño de los ceros iniciales */
-        #time span.zero {
-            font-size: 0; /* Hace que los ceros sean invisibles */
-            color: transparent; /* O hace los ceros transparentes */
-        }
-        #map-container {
-            position: relative; /* Nuevo contenedor para el mapa con posición relativa */
-            
-        }
-        .data-card {
-            width: calc(50% - 10px); /* Ajusta el ancho para 2 tarjetas por fila */
-            margin-bottom: 10px;
-            margin: 5px; /* Espaciado entre tarjetas */
-            border: 1px solid #ddd; /* Borde sutil */
+            cursor: pointer;
+            color: #000000; /* Color del texto del botón */
+            z-index: 2;
         }
 
-        /* Estilo para el mapa para asegurarte de que utilice toda la altura y anchura disponible */
-        #mapid {
-            height: calc(100vh - 56px); /* Altura de la ventana menos la altura de la barra de navegación */
-            width: 100%;
+        /* Estilos para el botón de abrir el sidebar */
+        .open-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            color: #000000; /* Color del texto del botón */
+            z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
+            background-color: #FFD35F; /* Color de fondo amarillo */
+            border: 3px solid #000000; /* Contorno negro */
+            border-radius: 10px; /* Añade bordes redondeados al botón */
+            padding: 10px 15px; /* Añade espacio interno al botón */
+            font-size: 25px; /* Tamaño de fuente */
         }
 
-        .barra-activadora:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-        .latitude, .longitude {
-                display: none; /* Oculta los elementos y su espacio */
-        }
-        .navbar-datetime {
-            position: absolute; /* Posición absoluta para sacar los elementos del flujo normal */
-            top: 10px; /* Ajusta esta propiedad para colocarla a la altura deseada */
-            left: 50%; /* Coloca el elemento al 50% del contenedor desde la izquierda */
-            transform: translateX(-50%); /* Centra el elemento con respecto a su propio ancho */
-            z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
-        }
-        .navbar {
-            position: relative; /* Si tu barra de navegación no tenía posición relativa, añádela */
+        .recorridosBtn {
+            position: absolute;
+            top: 85px;
+            right: 20px;
+            cursor: pointer;
+            color: #000000; /* Color del texto del botón */
+            z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
+            background-color: #FFD35F; /* Color de fondo amarillo */
+            border: 3px solid #000000; /* Contorno negro */
+            border-radius: 10px; /* Añade bordes redondeados al botón */
+            padding: 10px 15px; /* Añade espacio interno al botón */
+            font-size: 25px; /* Tamaño de fuente */
         }
 
-        /* Centrar la fecha y la hora en la parte superior del mapa */
-        .navbar-text {
-            position: absolute; /* Posición absoluta para sacar los elementos del flujo normal */
-            left: 50%; /* Coloca el elemento al 50% del contenedor desde la izquierda */
-            transform: translateX(-50%); /* Centra el elemento con respecto a su propio ancho */
-            top: 0; /* Posición desde la parte superior de la barra de navegación */
-            z-index: 1000; /* Asegura que los elementos están sobre el mapa */
+        .infoBtn {
+            position: absolute;
+            top: 150px;
+            right: 20px;
+            cursor: pointer;
+            color: #000000; /* Color del texto del botón */
+            z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
+            background-color: #FFD35F; /* Color de fondo amarillo */
+            border: 3px solid #000000; /* Contorno negro */
+            border-radius: 10px; /* Añade bordes redondeados al botón */
+            padding: 10px 15px; /* Añade espacio interno al botón */
+            font-size: 25px; /* Tamaño de fuente */
+        }
+
+        .centrarMapaBtn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            cursor: pointer;
+            color: #000000; /* Color del texto del botón */
+            z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
+            background-color: #FFD35F; /* Color de fondo amarillo */
+            border: 3px solid #000000; /* Contorno negro */
+            border-radius: 10px; /* Añade bordes redondeados al botón */
+            padding: 10px 15px; /* Añade espacio interno al botón */
+            font-size: 25px; /* Tamaño de fuente */
+        }
+
+        /* Estilos para el menú desplegable */
+        select.dropdown {
+            width: 80%; /* Ancho del menú desplegable */
+            margin-top: 20px; /* Ajusta el margen inferior según sea necesario */
+            margin-bottom: 5px; /* Ajusta el margen inferior según sea necesario */
+            margin-inline: auto; /* Margen superior e inferior de 20px, centrado horizontalmente */
+            padding: 10px; /* Espacio interno */
+            font-size: 18px; /* Tamaño de fuente */
+            background-color: #ffffff; /* Color de fondo */
+            border: 3px solid #000000; /* Contorno */
+            border-radius: 10px; /* Bordes redondeados */
+            cursor: pointer; /* Cursor */
+            color: #000000; /* Color de texto */
+        }
+
+        /* Estilos para los rectángulos */
+        .rectangle-container {
             display: flex;
-            align-items: center; /* Centra los elementos verticalmente dentro de la barra de navegación */
-            height: 100%; /* Toma toda la altura de la barra de navegación para el centrado vertical */
+            flex-direction: column; /* Columna */
         }
 
-        /* Estilos para pantallas pequeñas */
-        @media (max-width: 767px) {
-            .data-card {
-                margin: 2px; /* Reducir el margen alrededor de las tarjetas */
-                padding: 5px; /* Reducir el relleno dentro de las tarjetas */
+        .rectangle {
+            width: 80%; /* Ancho del rectángulo */
+            height: 50px; /* Altura del rectángulo */
+            background-color: #FFFFFF; /* Color de fondo del rectángulo */
+            border: 3px solid #000000; /* Contorno negro */
+            border-radius: 10px; /* Bordes redondeados */
+            padding: 10px; /* Espacio interno */
+            font-size: 16px; /* Tamaño de fuente */
+            margin-bottom: 1px; /* Espacio entre rectángulos */
+            display: flex;
+            align-items: center; /* Centrado vertical */
+            margin: 5px auto; /* Margen superior e inferior de 30px, centrado horizontalmente */
+        }
+
+        .rectangle i {
+            margin-right: 15px; /* Espacio entre icono y texto */
+        }
+
+        .sidebar-content p {
+            width: 80%; /* Ancho deseado */
+            margin: 0 auto; /* Centra horizontalmente */
+            margin-bottom: 30px; /* Ajusta el margen inferior según sea necesario */
+            font-size: 16px; /* Tamaño de fuente */
+        }
+
+        /*CONFIGURACIÓN: WEB RESPONSIVE*/
+        @media (max-width: 768px) {
+            /* Estilos para pantallas pequeñas */
+            .sidebar {
+                width: 100%; /* Ancho del sidebar en pantallas pequeñas */
             }
-            .card-header {
-                font-size: 12px; /* Reducir aún más el tamaño de la fuente de los títulos de las tarjetas */
-                padding: 4px; /* Reducir el relleno del encabezado para ahorrar espacio */
+            .sidebar-content img {
+                max-width: 100%; /* Ajusta el ancho máximo de la imagen en pantallas pequeñas */
             }
-            .card-body {
-                padding: 4px; /* Reducir el relleno dentro del cuerpo de las tarjetas */
-            }
-            .card-title {
-                font-size: 12px; /* Reducir aún más el tamaño de la fuente del contenido de las tarjetas */
-            }
-            .card {
-                margin-bottom: 4px;
-                border: none;
-                background: none;
-            }
-            #mapid {
-                height: calc(100vh - 150px); 
-            }
-            .latitude, .longitude {
-                display: none; 
+            select.dropdown {
+                width: 90%; /* Ancho completo del menú desplegable en pantallas pequeñas */
             }
         }
 
