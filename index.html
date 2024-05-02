@@ -169,37 +169,37 @@
 
         <!-- Botón "Regresar a Ubicación" -->
         <button id="centrarMapaBtn" class="btn btn-primary">&#x1F4CD; </button>
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-content">
-        <img src="logo_TT.png" alt="Logo" style="height: 150px; width: auto;">
-        <h4><u><strong>Rastreador GPS</strong></u></h4>
-        <select class="dropdown" onchange="navigate(this.value)">
-            <option value="item1">Vehículo:</option>
-            <option value="item2">Vehículo 1</option>
-            <option value="item3">Vehículo 2</option>
-        </select>
-        <p>Selecciona el vehículo que quieras rastrear y observa sus registros!</p>
-        <div class="rectangle-container">
-            <div class="rectangle">
-                <i class="material-icons">speed</i>                            
-                <span id="rpmDescription">Variable RPM</span>
-                <span id="rpmData" style="display: none;">XXXX</span>
-            </div>
-            <div class="rectangle">
-                <i class="material-icons">calendar_today</i>
-                <span id="dateDescription">Fecha</span>
-                <span id="dateData" style="display: none;">YYYY-MM-DD</span>
-            </div>
-            <div class="rectangle">
-                <i the="material-icons">schedule</i>
-                <span id="timeDescription">Hora</span>
-                <span id="timeData" style="display: none;">HH:MM:SS</span>
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <img src="logo_TT.png" alt="Logo" style="height: 150px; width: auto;">
+                <h4><u><strong>Rastreador GPS</strong></u></h4>
+                <select class="dropdown" onchange="navigate(this.value)">
+                    <option value="item1">Vehículo:</option>
+                    <option value="item2">Vehículo 1</option>
+                    <option value="item3">Vehículo 2</option>
+                </select>
+                <p>Selecciona el vehículo que quieras rastrear y observa sus registros!</p>
+                <div class="rectangle-container">
+                    <div class="rectangle">
+                        <i class="material-icons">speed</i>                            
+                        <span id="rpmDescription">Variable RPM</span>
+                        <span id="rpmData" style="display: none;">XXXX</span>
+                    </div>
+                    <div class="rectangle">
+                        <i class="material-icons">calendar_today</i>
+                        <span id="dateDescription">Fecha</span>
+                        <span id="dateData" style="display: none;">YYYY-MM-DD</span>
+                    </div>
+                    <div class="rectangle">
+                        <i the="material-icons">schedule</i>
+                        <span id="timeDescription">Hora</span>
+                        <span id="timeData" style="display: none;">HH:MM:SS</span>
+                    </div>
+                </div>
+                <span class="close-btn material-icons" onclick="closeSidebar()">chevron_right</span>
             </div>
         </div>
-        <span class="close-btn material-icons" onclick="closeSidebar()">chevron_right</span>
-    </div>
-</div>
 
     
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -252,6 +252,10 @@
             document.getElementById('time').innerText = data.Time;
             console.log("Updating RPM:", data.RPM);
             document.getElementById('RPM').innerText = data.RPM;
+
+            document.querySelector('.close-btn').addEventListener('click', () => {
+            document.getElementById('sidebar').style.transform = 'translateX(100%)';
+        });
 
             if (dateElement) {
                 const dateString = dateElement.textContent || dateElement.innerText;
