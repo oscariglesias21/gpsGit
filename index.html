@@ -8,6 +8,36 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+        #mapid {
+            height: 500px; /* Aumenta el tamaño del mapa */
+        }
+        /* Estilos para el botón "Regresar a Ubicación" */
+        /* Ocultar la 'T' */
+        #date::after {
+            content: ' ';
+            font-size: 0;
+        }
+        /* Reducir el tamaño de los ceros iniciales */
+        #time span.zero {
+            font-size: 0; /* Hace que los ceros sean invisibles */
+            color: transparent; /* O hace los ceros transparentes */
+        }
+        #map-container {
+            position: absolute; /* Nuevo contenedor para el mapa con posición relativa */
+            
+        }
+        /* Estilo para el mapa para asegurarte de que utilice toda la altura y anchura disponible */
+        #mapid {
+            height: calc(100vh - 56px); /* Altura de la ventana menos la altura de la barra de navegación */
+            width: 100%;
+        }
+
+        .latitude, .longitude {
+                display: none; /* Oculta los elementos y su espacio */
+        }
+
+        /*jesus*/
+        
         /* Estilos para que el mapa ocupe toda la pantalla */
         html, body, .map-container {
             height: 100%;
