@@ -164,6 +164,21 @@
             margin-bottom: 30px; /* Ajusta el margen inferior según sea necesario */
             font-size: 16px; /* Tamaño de fuente */
         }
+                /* Ocultar la 'T' */
+        #date::after {
+            content: ' ';
+            font-size: 0;
+        }
+        /* Reducir el tamaño de los ceros iniciales */
+        #time span.zero {
+            font-size: 0; /* Hace que los ceros sean invisibles */
+            color: transparent; /* O hace los ceros transparentes */
+        }
+        .latitude, .longitude {
+                display: none; /* Oculta los elementos y su espacio */
+        }
+
+
 
         /*CONFIGURACIÓN: WEB RESPONSIVE*/
         @media (max-width: 768px) {
@@ -205,6 +220,22 @@
                 <p>Selecciona el vehículo que quieras rastrear y observa sus registros!</p>
 
                 <!-- Rectángulos que muestran los registros -->
+                <div class="container">
+                    <!-- Contenedores flotantes para latitud, longitud, fecha y hora -->
+                    <div class="card data-card latitude">
+                        <div class="card-header text-center">Latitud</div>
+                        <div class="card-body">
+                            <span id="latitude" class="card-title text-center">XX.XX</span>
+                        </div>
+                    </div>
+                    <div class="card data-card longitude">
+                        <div class="card-header text-center">Longitud</div>
+                        <div class="card-body">
+                            <span id="longitude" class="card-title text-center">XX.XX</span>
+                        </div>
+                    </div>
+                </div>
+            
                 <div class="rectangle-container">
                     <div class="rectangle">
                         <i class="material-icons">speed</i>                            
