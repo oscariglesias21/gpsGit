@@ -216,7 +216,7 @@
                     <option value="item2">Vehículo 2</option>
                     <option value="item3">Vehículo 1 y 2</option>
                 </select>
-                
+
                 <p>Selecciona el vehículo que quieras rastrear y observa sus registros</p>
 
                 <!-- Rectángulos que muestran los registros -->
@@ -288,10 +288,6 @@
 
     <!-- Script de la lógica para el MARKER -->
     <script>
-        function navigate(option) {
-            currentVehicle = option; // Actualiza el vehículo actual basado en la selección del usuario
-            console.log("Vehículo seleccionado:", currentVehicle);
-        }
         document.addEventListener('DOMContentLoaded', () => {
             const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -301,9 +297,9 @@
             let marker = L.marker([0, 0]).addTo(myMap);
             let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
             let lastMarkerPosition = null;
+            let currentVehicle = "vehicle1";  // Default o inicializado por una selección de usuario
             let inactivityTimer;
             let centrarMapa = null;
-            let currentVehicle = "item1";  // Supongamos que 'item1' es el vehículo 1 por defecto
 
             // Intentar recuperar y dibujar la ruta almacenada
             const storedRoute = localStorage.getItem('routePath');
@@ -316,19 +312,6 @@
             console.log('Conexión a Socket.IO establecida correctamente.');
 
             socket.on('locationUpdate', (data) => {
-                if (data.vehicleId === 'item1') { 
-                    document.getElementById('latitude').innerText = data.Latitude;
-                    document.getElementById('longitude').innerText = data.Longitude;
-                    document.getElementById('date').innerText = data.Date;
-                    document.getElementById('time').innerText = data.Time;
-                    document.getElementById('RPM').innerText = data.RPM;
-
-                    const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
-                    myMap.setView(newLatLng);
-                    marker.setLatLng(newLatLng);
-                    routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea
-                    lastMarkerPosition = newLatLng;
-                }
                     clearTimeout(inactivityTimer);
                     inactivityTimer = setTimeout(() => {
                     routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
@@ -337,6 +320,13 @@
                 }, 20000); // 20000 milisegundos = 20 segundos
 
                 const dateElement = document.getElementById('date');
+
+                document.getElementById('latitude').innerText = data.Latitude;
+                document.getElementById('longitude').innerText = data.Longitude;
+                document.getElementById('date').innerText = data.Date;
+                document.getElementById('time').innerText = data.Time;
+                document.getElementById('RPM').innerText = data.RPM;
+
             
                 if (dateElement) {
                     const dateString = dateElement.textContent || dateElement.innerText;
@@ -357,6 +347,7 @@
                 lastMarkerPosition = newLatLng;
 
             });
+
             document.getElementById('centrarMapaBtn').addEventListener('click', () => {
                 if (centrarMapa) {
                     myMap.setView(centrarMapa); // Centra el mapa en la última ubicación conocida
@@ -365,8 +356,9 @@
                 }
                 // Guardar la ruta actual en el almacenamiento local
                 const currentRoute = routePath.getLatLngs();
-                    localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
+                localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
             });
+
         });
     </script>
 
