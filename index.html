@@ -316,7 +316,7 @@
             console.log('Conexión a Socket.IO establecida correctamente.');
 
             socket.on('locationUpdate', (data) => {
-                if (data.vehicleId === currentVehicle) { // Asegúrate de que cada dato enviado por el servidor incluya un 'vehicleId'
+                if (data.vehicleId === 'item1') { 
                     document.getElementById('latitude').innerText = data.Latitude;
                     document.getElementById('longitude').innerText = data.Longitude;
                     document.getElementById('date').innerText = data.Date;
