@@ -288,6 +288,10 @@
 
     <!-- Script de la lógica para el MARKER -->
     <script>
+        function navigate(option) {
+            currentVehicle = option; // Actualiza el vehículo actual basado en la selección del usuario
+            console.log("Vehículo seleccionado:", currentVehicle);
+        }
         document.addEventListener('DOMContentLoaded', () => {
             const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -300,11 +304,6 @@
             let inactivityTimer;
             let centrarMapa = null;
             let currentVehicle = "item1";  // Supongamos que 'item1' es el vehículo 1 por defecto
-
-            function navigate(option) {
-                currentVehicle = option; // Actualiza el vehículo actual basado en la selección del usuario
-                console.log("Vehículo seleccionado:", currentVehicle);
-            }
 
             // Intentar recuperar y dibujar la ruta almacenada
             const storedRoute = localStorage.getItem('routePath');
