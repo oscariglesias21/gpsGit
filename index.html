@@ -269,7 +269,8 @@
         <span class="infoBtn material-icons">info</span>        
 
         <!-- Botón CENTRARMAPA -->
-        <span class="centrarMapaBtn material-icons">location_on</span>
+        <span id="centrarMapaBtn" class="centrarMapaBtn material-icons">location_on</span>
+
 
     </div>
 
@@ -303,7 +304,7 @@
             function navigate(option) {
                 currentVehicle = option; // Actualiza el vehículo actual basado en la selección del usuario
                 console.log("Vehículo seleccionado:", currentVehicle);
-            s}
+            }
 
             // Intentar recuperar y dibujar la ruta almacenada
             const storedRoute = localStorage.getItem('routePath');
@@ -316,6 +317,19 @@
             console.log('Conexión a Socket.IO establecida correctamente.');
 
             socket.on('locationUpdate', (data) => {
+                if (data.vehicleId === currentVehicle) { // Asegúrate de que cada dato enviado por el servidor incluya un 'vehicleId'
+                    document.getElementById('latitude').innerText = data.Latitude;
+                    document.getElementById('longitude').innerText = data.Longitude;
+                    document.getElementById('date').innerText = data.Date;
+                    document.getElementById('time').innerText = data.Time;
+                    document.getElementById('RPM').innerText = data.RPM;
+
+                    const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
+                    myMap.setView(newLatLng);
+                    marker.setLatLng(newLatLng);
+                    routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea
+                    lastMarkerPosition = newLatLng;
+                }
                     clearTimeout(inactivityTimer);
                     inactivityTimer = setTimeout(() => {
                     routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
@@ -324,13 +338,6 @@
                 }, 20000); // 20000 milisegundos = 20 segundos
 
                 const dateElement = document.getElementById('date');
-
-                document.getElementById('latitude').innerText = data.Latitude;
-                document.getElementById('longitude').innerText = data.Longitude;
-                document.getElementById('date').innerText = data.Date;
-                document.getElementById('time').innerText = data.Time;
-                document.getElementById('RPM').innerText = data.RPM;
-
             
                 if (dateElement) {
                     const dateString = dateElement.textContent || dateElement.innerText;
@@ -362,15 +369,6 @@
                     localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
             });
         });
-    </script>
-
-    <!-- Script para ver lo seleccinado en el menu desplegado -->
-    <script>
-        // Función para cambiar la página según la opción seleccionada en el menú desplegable
-        function navigate(option) {
-            // Aquí puedes colocar la lógica para redirigir o ejecutar acciones según la opción seleccionada
-            console.log("Opción seleccionada:", option);
-        }
     </script>
 
     <!-- Scripts del mapa  -->
