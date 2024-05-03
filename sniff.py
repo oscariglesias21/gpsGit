@@ -15,7 +15,7 @@ def extract_gps_info(data):
     # Asegúrate de adaptar esta parte al formato específico de tus datos
     decoded_data = data.decode('utf-8','replace').strip().split(',')    
     id_str, latitud_str, longitud_str, timestamp_str, rpm_str = decoded_data
-    id = int(id_str.split(":")[1])
+    id = str(id_str.split(":")[1])
     latitud = float(latitud_str.split(":")[1])
     longitud = float(longitud_str.split(":")[1])
     timestamp_str = timestamp_str.replace("Timestamp:", "").strip()
