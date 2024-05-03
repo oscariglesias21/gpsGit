@@ -296,9 +296,14 @@
             let marker = L.marker([0, 0]).addTo(myMap);
             let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
             let lastMarkerPosition = null;
-            let currentVehicle = "vehicle1";  // Default o inicializado por una selección de usuario
             let inactivityTimer;
             let centrarMapa = null;
+            let currentVehicle = "item1";  // Supongamos que 'item1' es el vehículo 1 por defecto
+
+            function navigate(option) {
+                currentVehicle = option; // Actualiza el vehículo actual basado en la selección del usuario
+                console.log("Vehículo seleccionado:", currentVehicle);
+            s}
 
             // Intentar recuperar y dibujar la ruta almacenada
             const storedRoute = localStorage.getItem('routePath');
