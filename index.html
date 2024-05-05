@@ -131,32 +131,37 @@
             }
             //tacometro
             const rpmGauge = new Gauge(document.getElementById("rpmGauge")).setOptions({
-                angle: 0.15, // The span of the gauge arc; prueba ajustar este ángulo si es necesario
-                lineWidth: 0.1, // The line thickness
+                angle: 0.15, // El arco del tacómetro
+                lineWidth: 0.1, // El grosor de la línea
                 pointer: {
-                    length: 0.6, // Relative to gauge radius
-                    strokeWidth: 0.035, // The thickness
-                    color: '#000000' // Pointer color
+                    length: 0.6, // Relativo al radio del gauge
+                    strokeWidth: 0.035, // El grosor del puntero
+                    color: '#000000' // Color del puntero
                 },
-                colorStart: '#6FADCF', // Color at the start of the gauge
-                colorStop: '#8FC0DA', // Color at the end of the gauge
-                strokeColor: '#E0E0E0', // Background color of the gauge
+                limitMax: false, // Si es false, el valor máximo del gauge se actualiza si el valor supera el max actual
+                limitMin: false, // Si es true, el valor mínimo del gauge será 0
+                colorStart: '#FFC107', // Color en el inicio del gauge
+                colorStop: '#FFC107', // Color en el final del gauge
+                strokeColor: '#E0E0E0', // Color de fondo del gauge
+                generateGradient: true,
+                highDpiSupport: true,
                 staticLabels: {
-                    font: "10px sans-serif",  // Specifies font
-                    labels: [0, 2000, 4000, 6000, 8000],  // Print labels at these values
-                    color: "#000000",  // Optional: Label color
-                    fractionDigits: 0  // Optional: Numerical precision. 0=round off.
+                    font: "10px sans-serif", // Especifica el tipo de letra
+                    labels: [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000], // Establece etiquetas en estos valores
+                    color: "#000000", // Color de las etiquetas
+                    fractionDigits: 0  // Número de cifras decimales
                 },
                 staticZones: [
-                    {strokeStyle: "#F03E3E", min: 0, max: 2000}, // Red from 0 to 2000
-                    {strokeStyle: "#FFDD00", min: 2000, max: 4000}, // Yellow from 2000 to 4000
-                    {strokeStyle: "#30B32D", min: 4000, max: 6000}, // Green from 4000 to 6000
-                    {strokeStyle: "#FFDD00", min: 6000, max: 8000}, // Yellow from 6000 to 8000
+                    {strokeStyle: "#F03E3E", min: 0, max: 2000}, // Rojo de 0 a 2000
+                    {strokeStyle: "#FFDD00", min: 2000, max: 4000}, // Amarillo de 2000 a 4000
+                    {strokeStyle: "#30B32D", min: 4000, max: 6000}, // Verde de 4000 a 6000
+                    {strokeStyle: "#FFDD00", min: 6000, max: 8000} // Amarillo de 6000 a 8000
                 ],
-                generateGradient: true,
-                highDpiSupport: true
             });
-
+            rpmGauge.maxValue = 8000; // Establece el valor máximo del gauge
+            rpmGauge.setMinValue(0);  // Establece el valor mínimo
+            rpmGauge.animationSpeed = 32; // Velocidad de la animación
+            rpmGauge.set(0); // Establece un valor inicial
             //
             const socket = io();
             console.log('Conexión a Socket.IO establecida correctamente.');
