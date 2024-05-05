@@ -170,7 +170,26 @@
             margin: 20px auto;
         }        
 
-
+        .rectangle i.material-icons {
+            vertical-align: middle; /* Alinea el icono verticalmente con el texto */
+            margin-right: 8px; /* Espacio entre el icono y el texto */
+        }
+        
+        .rectangle span {
+            vertical-align: middle; /* Asegura que todo el texto está alineado verticalmente */
+            display: inline-block;
+            margin-right: 10px; /* Espacio entre el título y el valor */
+        }
+        
+        .rectangle #RPM, 
+        .rectangle #date, 
+        .rectangle #time {
+            float: right; /* Alinea los valores hacia la derecha dentro de su contenedor */
+        }
+        .rectangle {
+            overflow: hidden; /* Contiene elementos flotantes dentro del div */
+        }
+        
 
         /*CONFIGURACIÓN: WEB RESPONSIVE*/
         @media (max-width: 768px) {
