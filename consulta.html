@@ -229,7 +229,7 @@ function openFlatpickrs() {
         });
         rpmGaugeHistoric.maxValue = 8000; // valor máximo del tacómetro
         rpmGaugeHistoric.setMinValue(0);  // valor mínimo del tacómetro
-        rpmGaugeHistoric.set(0); // Establece un valor inicial
+        rpmGaugeHistoric.set(2000); // Establece un valor inicial
 
 
         document.getElementById('submitButton').addEventListener('click', (event) => {
@@ -337,6 +337,7 @@ function openFlatpickrs() {
                             marcadorDeslizable.setLatLng(latLng);
                             marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup(); 
                             myMap.setView(latLng, myMap.getZoom());
+                            rpmGaugeMap.set(puntoSeleccionado.RPM);
                         };
 
                         slider.oninput();
