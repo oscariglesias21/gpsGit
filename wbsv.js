@@ -28,6 +28,11 @@ dbConnection.connect((err) => {
 
 app.post('/updateFromSniffer', (req, res) => {
   const { Latitude, Longitude, Date, Time, RPM } = req.body;
+
+  if (!Latitude || !Longitude || !Date || !Time || RPM == null) {
+    return res.status(400).send('Bad Request: Missing fields');
+  }
+
   console.log(`Received data - Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
   const insertQuery = 'INSERT INTO p2GPS2 (Latitude, Longitude, Date, Time, RPM) VALUES (?, ?, ?, ?, ?)';
   const insertValues = [Latitude, Longitude, Date, Time, RPM];
@@ -37,8 +42,7 @@ app.post('/updateFromSniffer', (req, res) => {
       return res.status(500).send('Internal Server Error');
     }
     // Envía la actualización a clientes conectados a través de Socket.IO
-    io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM});
-
+    io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM });
     res.status(200).send('OK');
   });
 });
