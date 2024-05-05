@@ -30,9 +30,8 @@
                     <option value="item2">Vehículo 2</option>
                     <option value="item3">Vehículo 1 y 2</option>
                 </select>
-
                 <p>Selecciona el vehículo que quieras rastrear y observa sus registros</p>
-
+                
                 <!-- Rectángulos que muestran los registros -->
                 <div class="container">
                     <!-- Contenedores flotantes para latitud, longitud, fecha y hora -->
@@ -104,82 +103,8 @@
         }
     </script>
     <!-- Script de la lógica para el MARKER -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(myMap);
 
-            let marker = L.marker([0, 0]).addTo(myMap);
-            let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
-            let lastMarkerPosition = null;
-            let currentVehicle = "vehicle1";  // Default o inicializado por una selección de usuario
-            let inactivityTimer;
-            let centrarMapa = null;
-
-            // Intentar recuperar y dibujar la ruta almacenada
-            const storedRoute = localStorage.getItem('routePath');
-            if (storedRoute) {
-                const routePoints = JSON.parse(storedRoute);
-                routePath.setLatLngs(routePoints.map(p => L.latLng(p.lat, p.lng)));
-            }
-
-            const socket = io();
-            console.log('Conexión a Socket.IO establecida correctamente.');
-
-            socket.on('locationUpdate', (data) => {
-                console.log('Datos recibidos del servidor:', data);
-                const { Latitude, Longitude, Date, Time, RPM } = data;
-                console.log(`Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
-                clearTimeout(inactivityTimer);
-                inactivityTimer = setTimeout(() => {
-                routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
-                localStorage.removeItem('routePath'); // Opcional: Limpia la ruta almacenada
-                console.log('La ruta ha sido borrada debido a la inactividad.');
-                }, 20000); // 20000 milisegundos = 20 segundos
-
-                const dateElement = document.getElementById('date');
-
-                document.getElementById('latitude').innerText = data.Latitude;
-                document.getElementById('longitude').innerText = data.Longitude;
-                document.getElementById('date').innerText = data.Date;
-                document.getElementById('time').innerText = data.Time;
-                document.getElementById('RPM').innerText = data.RPM;
-
-            
-                if (dateElement) {
-                    const dateString = dateElement.textContent || dateElement.innerText;
-                    const formattedDate = dateString.split('T')[0]; // Extrae solo la parte de la fecha
-                    dateElement.textContent = formattedDate; // Establece el texto con la fecha formateada
-                }
-                const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
-                centrarMapa = newLatLng;
-                
-            if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 400) {
-                // Si el marcador se ha movido más de 400 metros, reinicia la polilínea
-                routePath.setLatLngs([]);
-                localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
-            }
-                myMap.setView(newLatLng);
-                marker.setLatLng(newLatLng);
-                routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
-                lastMarkerPosition = newLatLng;
-
-            });
-            document.getElementById('centrarMapaBtn').addEventListener('click', () => {
-                if (centrarMapa) {
-                    myMap.setView(centrarMapa); // Centra el mapa en la última ubicación conocida
-                } else {
-                    alert('Ubicación no disponible.'); // O maneja este caso como prefieras
-                }
-                // Guardar la ruta actual en el almacenamiento local
-                const currentRoute = routePath.getLatLngs();
-                    localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
-            });
-        });
-    </script>
-
+    <script src="vehiculos.js"></script>
     <!-- Script para ver lo seleccinado en el menu desplegado -->
     <script>
         // Función para cambiar la página según la opción seleccionada en el menú desplegable
