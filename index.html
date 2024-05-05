@@ -69,7 +69,7 @@
                     </div>
                         <!--Tacometro-->
                     <div class="tacometer-container">
-                        <canvas id="rpmGauge" width="220" height="160"></canvas>
+                        <canvas id="rpmGauge" width="300" height="160"></canvas>
                         <div class="gauge-label">RPM</div>
                     </div>    
                 </div>
@@ -132,7 +132,7 @@
             }
             //tacometro
             const rpmGauge = new Gauge(document.getElementById("rpmGauge")).setOptions({
-                angle: 0.25, 
+                angle: 0.20, 
                 lineWidth: 0.20,
                 radiusScale: 1,
                 pointer: {
