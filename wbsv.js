@@ -27,46 +27,32 @@ dbConnection.connect((err) => {
 });
 
 app.post('/updateFromSniffer', (req, res) => {
-  const { Id, Latitude, Longitude, Date, Time, RPM } = req.body;
-  if (Id === "199bbe") {
-    const insertQuery = 'INSERT INTO p2GPS2 (Idd, Latitude, Longitude, Date, Time, RPM) VALUES (?, ?, ?, ?, ?, ?)';
-    const insertValues = [Id, Latitude, Longitude, Date, Time, RPM];
-    dbConnection.query(insertQuery, insertValues, (err, results) => {
-      if (err) {
-        console.error('Error al insertar datos en la base de datos:', err);
-        return res.status(500).send('Internal Server Error');
-      }
-      // Send the update to connected clients via Socket.IO
-      io.emit('locationUpdate', { Id, Latitude, Longitude, Date, Time, RPM });
-      res.status(200).send('OK');
-    });
-  } else if (Id === "199bb3") {
-    const insertQuery = 'INSERT INTO p2GPS3 (Idd, Latitude, Longitude, Date, Time, RPM) VALUES (?, ?, ?, ?, ?, ?)';
-    const insertValues = [Id, Latitude, Longitude, Date, Time, RPM];
-    dbConnection.query(insertQuery, insertValues, (err, results) => {
-      if (err) {
-        console.error('Error al insertar datos en la base de datos:', err);
-        return res.status(500).send('Internal Server Error');
-      }
-      // Send the update to connected clients via Socket.IO
-      io.emit('locationUpdate1', { Id, Latitude, Longitude, Date, Time, RPM });
-      res.status(200).send('OK');
-    });
-  } else {
-    res.status(400).send('Invalid Id');
-  }
+  const { Latitude, Longitude, Date, Time, RPM } = req.body;
+  console.log(`Received data - Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
+  const insertQuery = 'INSERT INTO p2GPS2 (Latitude, Longitude, Date, Time, RPM) VALUES (?, ?, ?, ?, ?)';
+  const insertValues = [Latitude, Longitude, Date, Time, RPM];
+  dbConnection.query(insertQuery, insertValues, (err, results) => {
+    if (err) {
+      console.error('Error al insertar datos en la base de datos:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+    // Envía la actualización a clientes conectados a través de Socket.IO
+    io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM});
+
+    res.status(200).send('OK');
+  });
 });
 
-
 app.post('/FromSniffer', (req, res) => {
-  const { Id, Latitude, Longitude, Date, Time, RPM } = req.body;
-  io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM });
+  const { Latitude, Longitude, Date, Time, RPM } = req.body;
+  console.log(`Direct update - Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
+  io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM});
   res.status(200).send('OK');
 });
 
 // Servir el archivo HTML index
 app.get('/', (req, res) => {
-  fs.readFile('index.html', (error, data, data1) => {
+  fs.readFile('index.html', (error, data) => {
     if (error) {
       res.writeHead(404);
       res.write('Error: File not found');
@@ -123,8 +109,7 @@ app.get('/database-datos', (req, res) => {
       Latitude: results[0].Latitude,
       Longitude: results[0].Longitude,
       Date: results[0].Date,
-      Time: results[0].Time,
-      RPM : results[0].RPM
+      Time: results[0].Time
     };
     io.emit('locationUpdate', latestLocation);
   }
