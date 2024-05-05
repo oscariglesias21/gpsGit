@@ -148,7 +148,7 @@
                 generateGradient: true,
                 highDpiSupport: true,
                 staticLabels: {
-                    font: "12px sans-serif", // Especifica el tipo de letra
+                    font: "bold 14px sans-serif", // Especifica el tipo de letra
                     labels: [0, 2000, 4000, 6000, 8000], // Establece etiquetas en estos valores
                     color: "#000000", // Color de las etiquetas
                     fractionDigits: 0  // Número de cifras decimales
@@ -156,8 +156,8 @@
                 staticZones: [
                     {strokeStyle: "#F03E3E", min: 0, max: 2000}, // Rojo de 0 a 2000
                     {strokeStyle: "#3498DB", min: 2000, max: 4000}, // Azul claro de 2000 a 4000
-                    {strokeStyle: "#30B32D", min: 4000, max: 6000}, // Verde de 4000 a 6000
-                    {strokeStyle: "#2980B9", min: 6000, max: 8000} // Azul oscuro de 6000 a 8000
+                    {strokeStyle: "#2980B9", min: 4000, max: 6000}, // Verde de 4000 a 6000
+                    {strokeStyle: "#30B32D", min: 6000, max: 8000} // Azul oscuro de 6000 a 8000 
                 ],
             });
             rpmGauge.maxValue = 8000; // Establece el valor máximo del gauge
