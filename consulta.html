@@ -198,6 +198,7 @@ function openFlatpickrs() {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(myMap);
+        
         // Inicializar el tacómetro
         var rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeMap")).setOptions({
             angle: 0.20, 
@@ -231,6 +232,7 @@ function openFlatpickrs() {
         rpmGaugeHistoric.maxValue = 8000; // valor máximo del tacómetro
         rpmGaugeHistoric.setMinValue(0);  // valor mínimo del tacómetro
         rpmGaugeHistoric.set(2000); // Establece un valor inicial
+        console.log("rpmGaugeHistoric inicializado:", rpmGaugeHistoric);
 
 
         document.getElementById('submitButton').addEventListener('click', (event) => {
