@@ -337,7 +337,7 @@ function openFlatpickrs() {
                             marcadorDeslizable.setLatLng(latLng);
                             marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup(); 
                             myMap.setView(latLng, myMap.getZoom());
-                            rpmGaugeMap.set(puntoSeleccionado.RPM);
+                            rpmGaugeHistoric.set(puntoSeleccionado.RPM);
                         };
 
                         slider.oninput();
