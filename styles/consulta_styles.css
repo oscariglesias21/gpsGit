@@ -6,6 +6,7 @@
     max-width: 100%;
     margin: 0 auto;
     padding: 0 ; /* Reduced side padding */
+    position: relative;
 }
 .card {
     box-shadow: none; 
@@ -59,7 +60,14 @@ padding: .375rem .75rem;
     max-width: 600px; /* or any other max-width that looks good on your device */
     margin: 10px auto
 }
-
+#rpmGaugeMap {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 150px;
+    height: 150px;
+    z-index: 1000; /* Asegúrate de que está por encima de otros elementos del mapa */
+}
 @media (min-width: 768px) { 
     .container-map {
         padding: 10px;
