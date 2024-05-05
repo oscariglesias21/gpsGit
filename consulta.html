@@ -192,12 +192,29 @@ function openFlatpickrs() {
     let rutaActual;
     let decoradores = []; // Almacena las instancias de los decoradores de flechas
 
-
     document.addEventListener('DOMContentLoaded', () => {
         const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(myMap);
+        // Inicializar el tacómetro
+        var rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeHistoric")).setOptions({
+            angle: 0.15, // El arco del tacómetro
+            lineWidth: 0.44,
+            pointer: {
+                length: 0.9,
+                strokeWidth: 0.035,
+                color: '#000000'
+            },
+            colorStart: '#6FADCF',
+            colorStop: '#8FC0DA',
+            strokeColor: '#E0E0E0',
+            generateGradient: true
+        });
+        rpmGaugeHistoric.maxValue = 8000; // valor máximo del tacómetro
+        rpmGaugeHistoric.setMinValue(0);  // valor mínimo del tacómetro
+        rpmGaugeHistoric.set(0); // Establece un valor inicial
+
 
         document.getElementById('submitButton').addEventListener('click', (event) => {
             event.preventDefault(); // Previene la acción por defecto del formulario
