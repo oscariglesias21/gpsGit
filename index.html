@@ -129,29 +129,35 @@
                 const routePoints = JSON.parse(storedRoute);
                 routePath.setLatLngs(routePoints.map(p => L.latLng(p.lat, p.lng)));
             }
-
+            //tacometro
             const rpmGauge = new Gauge(document.getElementById("rpmGauge")).setOptions({
-                angle: -0.15, 
-                lineWidth: 0.44,
-                radiusScale: 1,
+                angle: 0.15, // The span of the gauge arc; prueba ajustar este ángulo si es necesario
+                lineWidth: 0.1, // The line thickness
                 pointer: {
-                    length: 0.6,
-                    strokeWidth: 0.035,
-                    color: '#000000'
+                    length: 0.6, // Relative to gauge radius
+                    strokeWidth: 0.035, // The thickness
+                    color: '#000000' // Pointer color
                 },
-                limitMax: false,
-                limitMin: false,
-                colorStart: '#6FADCF',
-                colorStop: '#8FC0DA',
-                strokeColor: '#E0E0E0',
+                colorStart: '#6FADCF', // Color at the start of the gauge
+                colorStop: '#8FC0DA', // Color at the end of the gauge
+                strokeColor: '#E0E0E0', // Background color of the gauge
+                staticLabels: {
+                    font: "10px sans-serif",  // Specifies font
+                    labels: [0, 2000, 4000, 6000, 8000],  // Print labels at these values
+                    color: "#000000",  // Optional: Label color
+                    fractionDigits: 0  // Optional: Numerical precision. 0=round off.
+                },
+                staticZones: [
+                    {strokeStyle: "#F03E3E", min: 0, max: 2000}, // Red from 0 to 2000
+                    {strokeStyle: "#FFDD00", min: 2000, max: 4000}, // Yellow from 2000 to 4000
+                    {strokeStyle: "#30B32D", min: 4000, max: 6000}, // Green from 4000 to 6000
+                    {strokeStyle: "#FFDD00", min: 6000, max: 8000}, // Yellow from 6000 to 8000
+                ],
                 generateGradient: true,
-                highDpiSupport: true,
+                highDpiSupport: true
             });
-            rpmGauge.maxValue = 8000;
-            rpmGauge.setMinValue(0);
-            rpmGauge.animationSpeed = 32;
-            rpmGauge.set(0);
 
+            //
             const socket = io();
             console.log('Conexión a Socket.IO establecida correctamente.');
 
