@@ -69,7 +69,8 @@
                     </div>
                         <!--Tacometro-->
                     <div class="tacometer-container">
-                        <canvas id="rpmGauge" width="200" height="160"></canvas>
+                        <canvas id="rpmGauge" width="300" height="160"></canvas>
+                        <div class="gauge-label">RPM</div>
                     </div>    
                 </div>
 
@@ -131,11 +132,11 @@
             }
             //tacometro
             const rpmGauge = new Gauge(document.getElementById("rpmGauge")).setOptions({
-                angle: 0.30, 
+                angle: 0.20, 
                 lineWidth: 0.20,
                 radiusScale: 1,
                 pointer: {
-                    length: 0.6, // Relativo al radio del gauge
+                    length: 0.5, // Relativo al radio del gauge
                     strokeWidth: 0.035, // El grosor del puntero
                     color: '#000000' // Color del puntero
                 },
@@ -147,7 +148,7 @@
                 generateGradient: true,
                 highDpiSupport: true,
                 staticLabels: {
-                    font: "12px sans-serif", // Especifica el tipo de letra
+                    font: "11px sans-serif", // Especifica el tipo de letra
                     labels: [0, 2000, 4000, 6000, 8000], // Establece etiquetas en estos valores
                     color: "#000000", // Color de las etiquetas
                     fractionDigits: 0  // Número de cifras decimales
