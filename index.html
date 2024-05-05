@@ -131,7 +131,7 @@
             }
             //tacometro
             const rpmGauge = new Gauge(document.getElementById("rpmGauge")).setOptions({
-                angle: 0.25, 
+                angle: 0.30, 
                 lineWidth: 0.20,
                 radiusScale: 1,
                 pointer: {
@@ -147,7 +147,7 @@
                 generateGradient: true,
                 highDpiSupport: true,
                 staticLabels: {
-                    font: "10px sans-serif", // Especifica el tipo de letra
+                    font: "12px sans-serif", // Especifica el tipo de letra
                     labels: [0, 2000, 4000, 6000, 8000], // Establece etiquetas en estos valores
                     color: "#000000", // Color de las etiquetas
                     fractionDigits: 0  // Número de cifras decimales
