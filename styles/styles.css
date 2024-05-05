@@ -165,6 +165,10 @@
         .latitude, .longitude {
                 display: none; /* Oculta los elementos y su espacio */
         }
+        .tacometer-container {
+            width: 200px;
+            margin: 20px auto;
+        }        
 
 
 
