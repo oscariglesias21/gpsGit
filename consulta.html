@@ -9,6 +9,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
    <link rel="stylesheet" type="text/css" href="consulta_styles.css">
+   <script src="https://cdn.jsdelivr.net/npm/gaugeJS/dist/gauge.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -43,14 +44,7 @@
             <h1 class="text-center my-3 small-title">Consulta de Recorridos</h1>
         </div>
     </div>
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Historial de RPM</h5>
-                <canvas id="rpmGaugeHistoric" width="400" height="300"></canvas> <!-- Tacómetro para RPM históricos -->
-            </div>
-        </div>
-    </div>    
+
 </div>
 <div class="container">
     <div class="row justify-content-center mb-3">
@@ -107,9 +101,10 @@
     </div>
 
     <div class="row">
-        <div class="col-12">
-            <div id="mapid"></div>
-        </div>
+        <div class="col-12" style="position: relative;">
+            <div id="mapid" style="height: 600px;"></div> <!-- Asegúrate de que el mapa tiene un alto definido -->
+            <canvas id="rpmGaugeMap" style="position: absolute; bottom: 20px; right: 20px; width: 150px; height: 150px;"></canvas>
+        </div>     
     </div>
 </div>
 
