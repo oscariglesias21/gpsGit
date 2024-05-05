@@ -336,11 +336,16 @@ function openFlatpickrs() {
 
                         slider.oninput = function() {
                             const puntoSeleccionado = data[this.value];
+                            console.log("Intentando establecer RPM en tacómetro:", rpmGaugeHistoric);
                             const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
                             marcadorDeslizable.setLatLng(latLng);
                             marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup(); 
                             myMap.setView(latLng, myMap.getZoom());
-                            rpmGaugeHistoric.set(puntoSeleccionado.RPM);
+                            if (rpmGaugeHistoric) {
+                                rpmGaugeHistoric.set(puntoSeleccionado.RPM);
+                            } else {
+                                console.error('rpmGaugeHistoric no está definido');
+                            }
                         };
 
                         slider.oninput();
