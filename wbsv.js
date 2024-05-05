@@ -77,7 +77,8 @@ app.get('/database', (req, res) => {
 });
 
 app.get('/database-datos', (req, res) => {
-  dbConnection.query('SELECT Latitude, Longitude, Date, Time FROM p2GPS2 ORDER BY ID DESC', (err, results) => {
+  // Agregando RPM al SELECT
+  dbConnection.query('SELECT Latitude, Longitude, Date, Time, RPM FROM p2GPS2 ORDER BY ID DESC', (err, results) => {
     if (err) {
       console.error('Error al consultar la base de datos:', err);
       return res.status(500).send('Internal Server Error');
@@ -131,19 +132,15 @@ app.get('/consulta', (req, res) => {
 
 app.get('/consulta-historicos', (req, res) => {
   const { startDateTime, endDateTime } = req.query;
-
-  // Split para formato YYYY-MM-DDTHH:MM 
   const startParts = startDateTime.split('T');
   const endParts = endDateTime.split('T');
-
-  // Separación de fecha y hora
-  const startDate = startParts[0]; //almacena fecha
-  const startTime = startParts[1]; //almacena hora
+  const startDate = startParts[0];
+  const startTime = startParts[1];
   const endDate = endParts[0];
   const endTime = endParts[1];
 
   const query = `
-      SELECT Latitude, Longitude, CONCAT(Date, ' ', Time) AS DateTime
+      SELECT Latitude, Longitude, CONCAT(Date, ' ', Time) AS DateTime, RPM
       FROM p2GPS2
       WHERE (Date > ? OR (Date = ? AND Time >= ?))
         AND (Date < ? OR (Date = ? AND Time <= ?))`;
@@ -157,6 +154,7 @@ app.get('/consulta-historicos', (req, res) => {
       res.json(results);
   });
 });
+
 
 
 server.listen(port, () => {
