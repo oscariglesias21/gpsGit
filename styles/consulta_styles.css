@@ -68,6 +68,7 @@ padding: .375rem .75rem;
     height: 160px;
     z-index: 1000; /* Asegúrate de que está por encima de otros elementos del mapa */
 }
+
 @media (min-width: 768px) { 
     .container-map {
         padding: 10px;
