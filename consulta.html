@@ -191,7 +191,6 @@ function openFlatpickrs() {
     let trayectos = []; // Almacena las polilíneas de cada trayecto
     let rutaActual;
     let decoradores = []; // Almacena las instancias de los decoradores de flechas
-    let rpmGaugeHistoric;
 
     document.addEventListener('DOMContentLoaded', () => {
         const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
@@ -200,7 +199,7 @@ function openFlatpickrs() {
         }).addTo(myMap);
         
         // Inicializar el tacómetro
-        var rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeMap")).setOptions({
+        rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeMap")).setOptions({
             angle: 0.20, 
                 lineWidth: 0.20,
                 radiusScale: 1,
