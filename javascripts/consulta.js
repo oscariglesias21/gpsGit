@@ -20,24 +20,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 strokeWidth: 0.035, // El grosor del puntero
                 color: '#000000' // Color del puntero
             },
-            limitMax: false, // Si es false, el valor máximo del gauge se actualiza si el valor supera el max actual
-            limitMin: false, // Si es true, el valor mínimo del gauge será 0
-            colorStart: '#FFC107', // Color en el inicio del gauge
-            colorStop: '#FFC107', // Color en el final del gauge
-            strokeColor: '#E0E0E0', // Color de fondo del gauge
+            limitMax: false, 
+            limitMin: false, 
+            colorStart: '#FFC107', 
+            colorStop: '#FFC107', 
+            strokeColor: '#E0E0E0', 
             generateGradient: true,
             highDpiSupport: true,
             staticLabels: {
-                font: "14px sans-serif", // Especifica el tipo de letra
-                labels: [0, 2000, 4000, 6000, 8000], // Establece etiquetas en estos valores
-                color: "#000000", // Color de las etiquetas
-                fractionDigits: 0  // Número de cifras decimales
+                font: "14px sans-serif", 
+                labels: [0, 2000, 4000, 6000, 8000], 
+                color: "#000000", 
+                fractionDigits: 0 
             },
             staticZones: [
-                {strokeStyle: "#F03E3E", min: 0, max: 2000}, // Rojo de 0 a 2000
-                {strokeStyle: "#3498DB", min: 2000, max: 4000}, // Azul claro de 2000 a 4000
-                {strokeStyle: "#2980B9", min: 4000, max: 6000}, // Verde de 4000 a 6000
-                {strokeStyle: "#30B32D", min: 6000, max: 8000} // Azul oscuro de 6000 a 8000 
+                {strokeStyle: "#F03E3E", min: 0, max: 2000}, 
+                {strokeStyle: "#3498DB", min: 2000, max: 4000}, 
+                {strokeStyle: "#2980B9", min: 4000, max: 6000},
+                {strokeStyle: "#30B32D", min: 6000, max: 8000} 
             ],
     });
     rpmGaugeHistoric.maxValue = 8000; // valor máximo del tacómetro
