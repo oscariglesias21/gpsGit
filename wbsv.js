@@ -115,7 +115,8 @@ app.get('/database-datos', (req, res) => {
       Latitude: results[0].Latitude,
       Longitude: results[0].Longitude,
       Date: results[0].Date,
-      Time: results[0].Time
+      Time: results[0].Time,
+      RPM: results[0].RPM
     };
     io.emit('locationUpdate', latestLocation);
   }
