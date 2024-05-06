@@ -181,7 +181,8 @@
                 document.getElementById('longitude').innerText = data.Longitude;
                 document.getElementById('date').innerText = data.Date;
                 document.getElementById('time').innerText = data.Time;
-                document.getElementById('RPM').innerText = data.RPM;
+                document.getElementById('RPM').innerText = data.RPM !== undefined ? data.RPM : '-';
+
 
             
                 if (dateElement) {
