@@ -5,7 +5,7 @@
 .container-map, .container {
     max-width: 100%;
     margin: 0 auto;
-    padding: 0 ; /* Reduced side padding */
+    padding: 0 ; 
     position: relative;
 }
 .card {
@@ -42,7 +42,7 @@
     clip: rect(1px, 1px, 1px, 1px);
 }
 .navbar {
-    padding: 0.5rem 1rem; /* Adjust the padding to make the navbar smaller */
+    padding: 0.5rem 1rem;
 }
 .form-inline-custom .form-control, .form-inline-custom .btn-custom {
     margin-bottom: 0;
@@ -57,7 +57,7 @@ padding: .375rem .75rem;
 #timeSlider {
     display: none;
     width: 100%;
-    max-width: 600px; /* or any other max-width that looks good on your device */
+    max-width: 600px; 
     margin: 10px auto
 }
 #rpmGaugeMap {
@@ -66,7 +66,7 @@ padding: .375rem .75rem;
     right: 20px;
     width: 300px;
     height: 160px;
-    z-index: 1000; /* Asegúrate de que está por encima de otros elementos del mapa */
+    z-index: 1000;
 }
 
 @media (min-width: 768px) { 
@@ -80,7 +80,7 @@ padding: .375rem .75rem;
         max-width: 165px;
     }
     #timeSlider {
-        max-width: 80%; /* On smaller screens, make the slider take up almost full width */
-        margin: 10px auto; /* Adjust margin to ensure some space around the slider */
+        max-width: 80%; 
+        margin: 10px auto; 
 }
 }
