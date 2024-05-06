@@ -150,7 +150,7 @@ let marcadorDeslizable; //definición de marcador deslizable
                         console.log("Intentando establecer RPM en tacómetro:", rpmGaugeHistoric);
                         const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
                         marcadorDeslizable.setLatLng(latLng);
-                        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup(); 
+                        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
                         myMap.setView(latLng, myMap.getZoom());
                         if (rpmGaugeHistoric) {
                             rpmGaugeHistoric.set(puntoSeleccionado.RPM);
