@@ -189,6 +189,9 @@
         .rectangle {
             overflow: hidden; /* Contiene elementos flotantes dentro del div */
         }
+        .gauge-label {
+            font-weight: bold;
+        }
         
 
         /*CONFIGURACIÓN: WEB RESPONSIVE*/
