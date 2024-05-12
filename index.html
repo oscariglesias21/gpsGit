@@ -26,7 +26,7 @@
                 <h4><u><strong>Rastreador GPS</strong></u></h4>
 
                 <!-- Menú desplegable -->
-                <select class="dropdown" id="vehicleSelector" onchange="navigate(this.value)">
+                <select class="dropdown" id="vehicleSelector">
                     <option value="item1">Vehículo 1</option>
                     <option value="item2">Vehículo 2</option>
                     <option value="item3">Vehículo 1 y 2</option>
@@ -259,6 +259,8 @@
                 break;
                 }
             }
+            navigate();
+            document.getElementById("vehicleSelector").addEventListener("change", navigate);
     });
     </script>
 
