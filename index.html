@@ -181,22 +181,22 @@
                 }
             });
 
-                function updateVehicleDisplay(data, marker, routePath){
+            function updateVehicleDisplay(data, marker, routePath) {
                 const { Latitude, Longitude, Date, Time, RPM } = data;
                 console.log(`Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
-                rpmGauge.set(data.RPM);
+                
                 clearTimeout(inactivityTimer);
                 inactivityTimer = setTimeout(() => {
-                routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
-                localStorage.removeItem('routePath'); // Opcional: Limpia la ruta almacenada
-                console.log('La ruta ha sido borrada debido a la inactividad.');
+                    routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
+                    localStorage.removeItem('routePath'); // Opcional: Limpia la ruta almacenada
+                    console.log('La ruta ha sido borrada debido a la inactividad.');
                 }, 20000); // 20000 milisegundos = 20 segundos
-                const dateElement = document.getElementById('date');
-
+                
                 document.getElementById('latitude').innerText = Latitude;
                 document.getElementById('longitude').innerText = Longitude;
                 document.getElementById('date').innerText = Date;
                 document.getElementById('time').innerText = Time;
+                
                 if (RPM !== undefined) {
                     document.getElementById('RPM').innerText = RPM;
                     rpmGauge.set(RPM);  // Actualizar el gauge con el valor de RPM
@@ -205,7 +205,6 @@
                     rpmGauge.set(0);  // Resetear el gauge si no hay datos de RPM
                 }
 
-            
                 if (dateElement) {
                     const dateString = dateElement.textContent || dateElement.innerText;
                     const formattedDate = dateString.split('T')[0]; // Extrae solo la parte de la fecha
@@ -214,17 +213,17 @@
                 const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
                 centrarMapa = newLatLng;
                 
-            if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 200) {
-                // Si el marcador se ha movido más de 400 metros, reinicia la polilínea
-                routePath.setLatLngs([]);
-                localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
-            }
+                if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 200) {
+                    // Si el marcador se ha movido más de 400 metros, reinicia la polilínea
+                    routePath.setLatLngs([]);
+                    localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
+                }
                 myMap.setView(newLatLng);
                 marker.setLatLng(newLatLng);
                 routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
                 lastMarkerPosition = newLatLng;
+            }
 
-            };
             document.getElementById('centrarMapaBtn').addEventListener('click', () => {
                 if (centrarMapa) {
                     myMap.setView(centrarMapa); // Centra el mapa en la última ubicación conocida
