@@ -72,6 +72,28 @@ padding: .375rem .75rem;
 #titleRpmGauge{
     z-index: 10000;
 }
+#vehicleSelector {
+    position: relative; /* Posición relativa para el pseudo-elemento */
+    width: 160px;
+    background-color: #343a40;
+    color: white;
+    border: none;
+    margin-right: 10px;
+    -webkit-appearance: none; /* Elimina la apariencia por defecto en WebKit/Blink */
+    -moz-appearance: none; /* Elimina la apariencia por defecto en Firefox */
+    appearance: none;
+}
+
+#vehicleSelector::after {
+    content: "\f107"; /* Código Unicode de FontAwesome para la flecha hacia abajo */
+    font-family: 'FontAwesome';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Asegura que el pseudo-elemento no interfiera con la funcionalidad del select */
+    color: white;
+}
 
 @media (min-width: 768px) { 
     .container-map {
