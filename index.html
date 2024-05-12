@@ -123,6 +123,7 @@
             let lastMarkerPosition2 = null;
 
             let inactivityTimer;
+            let inactivityTimer2;
             let centrarMapa = null;
 
             // Intentar recuperar y dibujar la ruta almacenada
@@ -225,14 +226,14 @@
                 routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
                 lastMarkerPosition = newLatLng;
             }
-            function updateVehicleDisplay2(data, marker2, routePath2) {
+            function updateVehicleDisplay2(data2, marker2, routePath2) {
                 const { Latitude, Longitude, Date, Time} = data2;
                 console.log(`Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}`);
 
-                clearTimeout(inactivityTimer);
-                inactivityTimer = setTimeout(() => {
+                clearTimeout(inactivityTimer2);
+                inactivityTimer2 = setTimeout(() => {
                     routePath2.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
-                    localStorage.removeItem('routePath'); // Opcional: Limpia la ruta almacenada
+                    localStorage.removeItem('routePath2'); // Opcional: Limpia la ruta almacenada
                     console.log('La ruta ha sido borrada debido a la inactividad.');
                 }, 20000); // 20000 milisegundos = 20 segundos
 
@@ -248,18 +249,18 @@
                     const formattedDate = dateString.split('T')[0]; // Extrae solo la parte de la fecha
                     dateElement.textContent = formattedDate; // Establece el texto con la fecha formateada
                 }
-                const newLatLng = new L.LatLng(data2.Latitude, data2.Longitude);
+                const newLatLng2 = new L.LatLng(data2.Latitude, data2.Longitude);
                 centrarMapa = newLatLng;
                 
-                if (lastMarkerPosition2 && lastMarkerPosition2.distanceTo(newLatLng) > 200) {
+                if (lastMarkerPosition2 && lastMarkerPosition2.distanceTo(newLatLng2) > 200) {
                     // Si el marcador se ha movido más de 400 metros, reinicia la polilínea
                     routePath.setLatLngs([]);
                     localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
                 }
-                myMap.setView(newLatLng);
-                marker2.setLatLng(newLatLng);
-                routePath2.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
-                lastMarkerPosition2 = newLatLng;
+                myMap.setView(newLatLng2);
+                marker2.setLatLng(newLatLng2);
+                routePath2.addLatLng(newLatLng2); // Añade el nuevo punto a la polilínea para trazar el recorrido
+                lastMarkerPosition2 = newLatLng2;
             }
 
 
