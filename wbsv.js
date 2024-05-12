@@ -30,29 +30,31 @@ dbConnection.connect((err) => {
 app.post('/updateFromSniffer', (req, res) => {
   const { Latitude, Longitude, Date, Time, RPM } = req.body;
 
-  if (!Latitude || !Longitude || !Date || !Time || RPM == null) {
+  // Verificar si todos los campos necesarios excepto RPM están presentes
+  if (!Latitude || !Longitude || !Date || !Time) {
     return res.status(400).send('Bad Request: Missing fields');
   }
 
-  console.log(`Received data - Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
-  const insertQuery = 'INSERT INTO p2GPS2 (Latitude, Longitude, Date, Time, RPM) VALUES (?, ?, ?, ?, ?)';
-  const insertValues = [Latitude, Longitude, Date, Time, RPM];
+  console.log(`Received data - Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM ? RPM : "Not provided"}`);
+
+  // Determinar la tabla y los campos adecuados según si RPM está presente
+  const table = RPM != null ? 'p2GPS2' : 'p2GPS3'; // p2GPS1 para datos sin RPM, p2GPS2 para datos con RPM
+  const fields = RPM != null ? '(Latitude, Longitude, Date, Time, RPM)' : '(Latitude, Longitude, Date, Time)';
+  const placeholders = RPM != null ? '(?, ?, ?, ?, ?)' : '(?, ?, ?, ?)';
+  const insertValues = RPM != null ? [Latitude, Longitude, Date, Time, RPM] : [Latitude, Longitude, Date, Time];
+
+  const insertQuery = `INSERT INTO ${table} ${fields} VALUES ${placeholders}`;
+
   dbConnection.query(insertQuery, insertValues, (err, results) => {
     if (err) {
       console.error('Error al insertar datos en la base de datos:', err);
       return res.status(500).send('Internal Server Error');
     }
-    // Envía la actualización a clientes conectados a través de Socket.IO
-    io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM });
+    // Emitir la actualización a clientes conectados a través de Socket.IO
+    const event = RPM != null ? 'locationUpdate' : 'locationUpdate1'; // Use locationUpdate1 for data without RPM
+    io.emit(event, { Latitude, Longitude, Date, Time, RPM });
     res.status(200).send('OK');
   });
-});
-
-app.post('/FromSniffer', (req, res) => {
-  const { Latitude, Longitude, Date, Time, RPM } = req.body;
-  console.log(`Direct update - Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
-  io.emit('locationUpdate', { Latitude, Longitude, Date, Time, RPM});
-  res.status(200).send('OK');
 });
 
 // Servir el archivo HTML index
@@ -160,27 +162,7 @@ app.get('/consulta-historicos', (req, res) => {
   });
 });
 
-//carro 2
-app.post('/updateFromSniffer2', (req, res) => {
-  const { Latitude, Longitude, Date, Time } = req.body;
-
-  if (!Latitude || !Longitude || !Date || !Time) { 
-    return res.status(400).send('Bad Request: Missing fields');
-  }
-
-  const insertQuery2 = 'INSERT INTO p2GPS3 (Latitude, Longitude, Date, Time) VALUES (?, ?, ?, ?)';
-  const insertValues2 = [Latitude, Longitude, Date, Time]; 
-  dbConnection.query(insertQuery2, insertValues2, (err, results) => {
-    if (err) {
-      console.error('Error al insertar datos en la base de datos:', err);
-      return res.status(500).send('Internal Server Error');
-    }
-    io.emit('locationUpdate2', { Latitude, Longitude, Date, Time }); 
-    res.status(200).send('OK');
-  });
-});
-
-
+//carro 1
 app.get('/database-datos2', (req, res) => {
   // Agregando RPM al SELECT
   dbConnection.query('SELECT Latitude, Longitude, Date, Time FROM p2GPS3 ORDER BY ID DESC', (err, results) => {

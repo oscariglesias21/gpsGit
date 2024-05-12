@@ -227,21 +227,20 @@
         // Función para cambiar la página según la opción seleccionada en el menú desplegable
         function navigate(option) {
             console.log("Opción seleccionada:", option);
-            var vehicleSelected = document.getElementById("vehicleSelector").value;
-            switch(vehicleSelected){
-                case "Vehículo 1":
+            switch(option){
+                case "item1": //locationupdate1
                     mymap.addLayer(routePath);
                     mymap.addLayer(marker);
-                    mymap.addLayer(routepath2);
-                    mymap.addLayer(marker2);
+                    mymap.removeLayer(routepath2);
+                    mymap.removeLayer(marker2);
                     break;
-                case "Vehículo 2":
+                case "item2": //locationupdate
                     mymap.addLayer(routePath2);
                     mymap.addLayer(marker2);
-                    mymap.addLayer(routepath);
-                    mymap.addLayer(marker);
+                    mymap.removeLayer(routepath);
+                    mymap.removeLayer(marker);
                     break;
-                case "Vehículo 1 y 2":
+                case "item3":
                     mymap.addLayer(routePath);
                     mymap.addLayer(marker);
                     mymap.addLayer(routepath2);
@@ -249,11 +248,10 @@
                     break;
             }
         }
-        socket.on('locationUpdate2', (data) => {
+        socket.on('locationUpdate1', (data) => { //carro sin rpm
                 console.log('Datos recibidos del servidor:', data);
                 const { Latitude, Longitude, Date, Time, RPM } = data;
                 console.log(`Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
-                rpmGauge.set(data.RPM);
                 clearTimeout(inactivityTimer);
                 inactivityTimer = setTimeout(() => {
                 routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
@@ -267,9 +265,7 @@
                 document.getElementById('longitude').innerText = data.Longitude;
                 document.getElementById('date').innerText = data.Date;
                 document.getElementById('time').innerText = data.Time;
-                document.getElementById('RPM').innerText = data.RPM !== undefined ? data.RPM : '-';
 
-            
                 if (dateElement) {
                     const dateString = dateElement.textContent || dateElement.innerText;
                     const formattedDate = dateString.split('T')[0]; // Extrae solo la parte de la fecha
