@@ -199,10 +199,10 @@
                 document.getElementById('time').innerText = Time;
                 if (RPM !== undefined) {
                     document.getElementById('RPM').innerText = RPM;
-                    gauge.set(RPM);  // Actualizar el gauge con el valor de RPM
+                    rpmGauge.set(RPM);  // Actualizar el gauge con el valor de RPM
                 } else {
                     document.getElementById('RPM').innerText = '-';
-                    gauge.set(0);  // Resetear el gauge si no hay datos de RPM
+                    rpmGauge.set(0);  // Resetear el gauge si no hay datos de RPM
                 }
 
             
