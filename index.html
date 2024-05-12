@@ -252,7 +252,7 @@
                     dateElement.textContent = formattedDate; // Establece el texto con la fecha formateada
                 }
                 const newLatLng2 = new L.LatLng(data2.Latitude, data2.Longitude);
-                centrarMapa = newLatLng;
+                centrarMapa = newLatLng2;
                 
                 if (lastMarkerPosition2 && lastMarkerPosition2.distanceTo(newLatLng2) > 200) {
                     // Si el marcador se ha movido más de 200 metros, reinicia la polilínea
