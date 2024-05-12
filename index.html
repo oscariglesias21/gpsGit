@@ -170,7 +170,18 @@
             console.log('Conexión a Socket.IO establecida correctamente.');
 
             socket.on('locationUpdate', (data) => {
-                console.log('Datos recibidos del servidor:', data);
+                if (document.getElementById("vehicleSelector").value === "item2" || document.getElementById("vehicleSelector").value === "item3") {
+                    console.log('Datos recibidos del servidor:', data);
+                    updateVehicleDisplay(data, marker, routePath);
+                }
+            });
+            socket.on('locationUpdate1', (data) => {
+                if (document.getElementById("vehicleSelector").value === "item1" || document.getElementById("vehicleSelector").value === "item3") {
+                    updateVehicleDisplay(data, marker2, routePath2);
+                }
+            });
+
+                function updateVehicleDisplay(data, marker, routePath){
                 const { Latitude, Longitude, Date, Time, RPM } = data;
                 console.log(`Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
                 rpmGauge.set(data.RPM);
@@ -180,14 +191,19 @@
                 localStorage.removeItem('routePath'); // Opcional: Limpia la ruta almacenada
                 console.log('La ruta ha sido borrada debido a la inactividad.');
                 }, 20000); // 20000 milisegundos = 20 segundos
-
                 const dateElement = document.getElementById('date');
 
-                document.getElementById('latitude').innerText = data.Latitude;
-                document.getElementById('longitude').innerText = data.Longitude;
-                document.getElementById('date').innerText = data.Date;
-                document.getElementById('time').innerText = data.Time;
-                document.getElementById('RPM').innerText = data.RPM !== undefined ? data.RPM : '-';
+                document.getElementById('latitude').innerText = Latitude;
+                document.getElementById('longitude').innerText = Longitude;
+                document.getElementById('date').innerText = Date;
+                document.getElementById('time').innerText = Time;
+                if (RPM !== undefined) {
+                    document.getElementById('RPM').innerText = RPM;
+                    gauge.set(RPM);  // Actualizar el gauge con el valor de RPM
+                } else {
+                    document.getElementById('RPM').innerText = '-';
+                    gauge.set(0);  // Resetear el gauge si no hay datos de RPM
+                }
 
             
                 if (dateElement) {
@@ -208,7 +224,7 @@
                 routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
                 lastMarkerPosition = newLatLng;
 
-            });
+            };
             document.getElementById('centrarMapaBtn').addEventListener('click', () => {
                 if (centrarMapa) {
                     myMap.setView(centrarMapa); // Centra el mapa en la última ubicación conocida
@@ -219,7 +235,7 @@
                 const currentRoute = routePath.getLatLngs();
                     localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
             });
-        });
+    });
     </script>
 
     <!-- Script para ver lo seleccinado en el menu desplegado -->
@@ -228,24 +244,24 @@
         function navigate(option) {
             console.log("Opción seleccionada:", option);
             switch(option){
-                case "item1": //locationupdate1
-                    mymap.addLayer(routePath);
-                    mymap.addLayer(marker);
-                    mymap.removeLayer(routepath2);
-                    mymap.removeLayer(marker2);
-                    break;
-                case "item2": //locationupdate
-                    mymap.addLayer(routePath2);
-                    mymap.addLayer(marker2);
-                    mymap.removeLayer(routepath);
-                    mymap.removeLayer(marker);
-                    break;
-                case "item3":
-                    mymap.addLayer(routePath);
-                    mymap.addLayer(marker);
-                    mymap.addLayer(routepath2);
-                    mymap.addLayer(marker2);
-                    break;
+        case "item1": // Vehículo 1
+            myMap.addLayer(routePath);
+            myMap.addLayer(marker);
+            myMap.removeLayer(routePath2);
+            myMap.removeLayer(marker2);
+            break;
+        case "item2": // Vehículo 2
+            myMap.addLayer(routePath2);
+            myMap.addLayer(marker2);
+            myMap.removeLayer(routePath);
+            myMap.removeLayer(marker);
+            break;
+        case "item3": // Ambos vehículos
+            myMap.addLayer(routePath);
+            myMap.addLayer(marker);
+            myMap.addLayer(routePath2);
+            myMap.addLayer(marker2);
+            break;
             }
         }
         socket.on('locationUpdate1', (data) => { //carro sin rpm
