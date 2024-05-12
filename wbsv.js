@@ -56,6 +56,13 @@ app.post('/updateFromSniffer', (req, res) => {
     res.status(200).send('OK');
   });
 });
+app.post('/FromSniffer', (req, res) => {
+  const { Latitude, Longitude, Date, Time, RPM } = req.body;
+  console.log(`Direct update - Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
+  const event = RPM != null ? 'locationUpdate' : 'locationUpdate1'; // Use locationUpdate1 for data without RPM
+  io.emit(event, { Latitude, Longitude, Date, Time, RPM });
+  res.status(200).send('OK');
+});
 
 // Servir el archivo HTML index
 app.get('/', (req, res) => {
