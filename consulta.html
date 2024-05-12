@@ -25,6 +25,13 @@
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="col-md-4">
+            <select class="dropdown" id="vehicleSelector">
+                <option value="item1">Vehículo 1</option>
+                <option value="item2">Vehículo 2</option>
+                <option value="item3">Vehículo 1 y 2</option>
+            </select>       
+        </div>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <a type="button" class="btn btn-dark btn-consistent-size me-2" href="/">
@@ -32,17 +39,7 @@
                 </a>
                 <button type="button" class="btn btn-dark btn-consistent-size" data-bs-toggle="modal" data-bs-target="#instructionsModal">
                     <b>Instrucciones de Usuario</b>
-                </button>
-
-                <div class="col-md-4">
-                    <label for="vehicleSelector" class="form-label">Seleccionar Vehículo:</label>
-                    <select class="form-select" id="vehicleSelector">
-                        <option value="vehiculo1">Vehículo 1</option>
-                        <option value="vehiculo2">Vehículo 2</option>
-                        <option value="vehiculo2">Vehículo 1 y 2</option>
-                    </select>
-                </div>
-                
+                </button>       
             </ul>
         </div>        
     </div>
