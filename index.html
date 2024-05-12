@@ -105,10 +105,11 @@
             document.getElementById("sidebar").style.transform = "translateX(100%)";
         }
     </script>
-    <!-- Script de la lógica para el MARKER -->
+
     <script>
+        let myMap;
         document.addEventListener('DOMContentLoaded', () => {
-            const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
+            myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(myMap);
