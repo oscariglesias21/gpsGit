@@ -22,7 +22,7 @@ def extract_gps_info(data):
     datetime_obj = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S.%f")
     fecha = datetime_obj.strftime("%Y-%m-%d") 
     hora = datetime_obj.strftime("%H:%M:%S")  # Formato de hora a HH:MM:SS
-    rpm = int(rpm_str.split(":")[1])
+    rpm = int(rpm_str.split(":")[1]) if rpm_str else None
 
     return {
         "Id": id,
