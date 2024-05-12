@@ -235,7 +235,6 @@
                 const currentRoute = routePath.getLatLngs();
                     localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
             });
-    });
         // Función para cambiar la página según la opción seleccionada en el menú desplegable
         function navigate(option) {
             console.log("Opción seleccionada:", option);
@@ -260,6 +259,7 @@
             break;
             }
         }
+    });
     </script>
 
 </body>
