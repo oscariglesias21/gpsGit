@@ -170,13 +170,13 @@
             const socket = io();
             console.log('Conexión a Socket.IO establecida correctamente.');
 
-            socket.on('locationUpdate', (data) => {
+            socket.on('locationUpdate', (data) => { //vehiculo 2
                 if (document.getElementById("vehicleSelector").value === "item2" || document.getElementById("vehicleSelector").value === "item3") {
                     console.log('Datos recibidos del servidor:', data);
                     updateVehicleDisplay(data, marker, routePath);
                 }
             });
-            socket.on('locationUpdate1', (data2) => {
+            socket.on('locationUpdate1', (data2) => { //vehiculo 1
                 if (document.getElementById("vehicleSelector").value === "item1" || document.getElementById("vehicleSelector").value === "item3") {
                     updateVehicleDisplay2(data2, marker2, routePath2);
                 }
@@ -279,15 +279,15 @@
                 const selectedOption = document.getElementById("vehicleSelector").value;
                 console.log("Opción seleccionada:", selectedOption);
                 if (selectedOption === "item1") {
-                    myMap.addLayer(routePath);
-                    myMap.addLayer(marker);
-                    myMap.removeLayer(routePath2);
-                    myMap.removeLayer(marker2);
-                } else if (selectedOption === "item2") {
                     myMap.addLayer(routePath2);
                     myMap.addLayer(marker2);
                     myMap.removeLayer(routePath);
                     myMap.removeLayer(marker);
+                } else if (selectedOption === "item2") {
+                    myMap.addLayer(routePath);
+                    myMap.addLayer(marker);
+                    myMap.removeLayer(routePath2);
+                    myMap.removeLayer(marker2);
                 } else if (selectedOption === "item3") {
                     myMap.addLayer(routePath);
                     myMap.addLayer(marker);
