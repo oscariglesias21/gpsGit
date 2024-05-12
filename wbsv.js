@@ -160,7 +160,39 @@ app.get('/consulta-historicos', (req, res) => {
   });
 });
 
+//carro 2
+app.post('/updateFromSniffer2', (req, res) => {
+  const { Latitude, Longitude, Date, Time, RPM } = req.body;
 
+  if (!Latitude || !Longitude || !Date || !Time || RPM == null) {
+    return res.status(400).send('Bad Request: Missing fields');
+  }
+
+  const insertQuery2 = 'INSERT INTO p2GPS3 (Latitude, Longitude, Date, Time, RPM) VALUES (?, ?, ?, ?, ?)';
+  const insertValues2 = [Latitude, Longitude, Date, Time, RPM];
+  dbConnection.query(insertQuery2, insertValues2, (err, results) => {
+    if (err) {
+      console.error('Error al insertar datos en la base de datos:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+    io.emit('locationUpdate2', { Latitude, Longitude, Date, Time, RPM });
+    res.status(200).send('OK');
+  });
+});
+
+app.get('/database-datos2', (req, res) => {
+  // Agregando RPM al SELECT
+  dbConnection.query('SELECT Latitude, Longitude, Date, Time, RPM FROM p2GPS3 ORDER BY ID DESC', (err, results) => {
+    if (err) {
+      console.error('Error al consultar la base de datos:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+    // Envío de los resultados de la consulta como respuesta JSON
+    console.log('La informacion se ha enviado correctamente');
+    res.setHeader('Content-Type', 'application/json');
+    res.json(results);
+  });
+});
 
 server.listen(port, () => {
   console.log(`Servidor HTTP en ejecución`);
