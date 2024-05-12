@@ -278,6 +278,11 @@
             function navigate() {
                 const selectedOption = document.getElementById("vehicleSelector").value;
                 console.log("Opción seleccionada:", selectedOption);
+                document.getElementById('latitude').innerText = "Cargando...";
+                document.getElementById('longitude').innerText = "Cargando...";
+                document.getElementById('date').innerText = "Cargando...";
+                document.getElementById('time').innerText = "Cargando...";
+                document.getElementById('RPM').innerText = "Cargando...";
                 if (selectedOption === "item1") {
                     myMap.addLayer(routePath2);
                     myMap.addLayer(marker2);
@@ -296,7 +301,19 @@
                 }
             }
 
-            document.getElementById("vehicleSelector").addEventListener("change", navigate);
+            document.getElementById("vehicleSelector").addEventListener("change", () => {
+                navigate();
+                // Reiniciar los datos mostrados en los contenedores
+                resetDataDisplays();
+            });
+
+            function resetDataDisplays() {
+                document.getElementById('latitude').innerText = "--";
+                document.getElementById('longitude').innerText = "--";
+                document.getElementById('date').innerText = "--";
+                document.getElementById('time').innerText = "--";
+                document.getElementById('RPM').innerText = "--";
+            }
     });
     </script>
 
