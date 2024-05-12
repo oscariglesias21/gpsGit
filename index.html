@@ -253,9 +253,9 @@
                 centrarMapa = newLatLng;
                 
                 if (lastMarkerPosition2 && lastMarkerPosition2.distanceTo(newLatLng2) > 200) {
-                    // Si el marcador se ha movido más de 400 metros, reinicia la polilínea
-                    routePath.setLatLngs([]);
-                    localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
+                    // Si el marcador se ha movido más de 200 metros, reinicia la polilínea
+                    routePath2.setLatLngs([]);
+                    localStorage.removeItem('routePath2'); // Limpia la ruta almacenada si es necesario
                 }
                 myMap.setView(newLatLng2);
                 marker2.setLatLng(newLatLng2);
