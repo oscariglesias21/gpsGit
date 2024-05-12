@@ -175,9 +175,9 @@
                     updateVehicleDisplay(data, marker, routePath);
                 }
             });
-            socket.on('locationUpdate1', (data) => {
+            socket.on('locationUpdate1', (data2) => {
                 if (document.getElementById("vehicleSelector").value === "item1" || document.getElementById("vehicleSelector").value === "item3") {
-                    updateVehicleDisplay(data, marker2, routePath2);
+                    updateVehicleDisplay2(data2, marker2, routePath2);
                 }
             });
 
@@ -224,6 +224,42 @@
                 marker.setLatLng(newLatLng);
                 routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
                 lastMarkerPosition = newLatLng;
+            }
+            function updateVehicleDisplay2(data, marker2, routePath2) {
+                const { Latitude, Longitude, Date, Time} = data2;
+                console.log(`Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}`);
+
+                clearTimeout(inactivityTimer);
+                inactivityTimer = setTimeout(() => {
+                    routePath2.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
+                    localStorage.removeItem('routePath'); // Opcional: Limpia la ruta almacenada
+                    console.log('La ruta ha sido borrada debido a la inactividad.');
+                }, 20000); // 20000 milisegundos = 20 segundos
+
+                document.getElementById('latitude').innerText = Latitude;
+                document.getElementById('longitude').innerText = Longitude;
+                document.getElementById('date').innerText = Date;
+                document.getElementById('time').innerText = Time;
+
+                // Asegúrate de que dateElement esté definido antes de usarlo
+                let dateElement = document.getElementById('date');  // Definir correctamente dateElement
+                if (dateElement) {
+                    const dateString = dateElement.textContent || dateElement.innerText;
+                    const formattedDate = dateString.split('T')[0]; // Extrae solo la parte de la fecha
+                    dateElement.textContent = formattedDate; // Establece el texto con la fecha formateada
+                }
+                const newLatLng = new L.LatLng(data2.Latitude, data2.Longitude);
+                centrarMapa = newLatLng;
+                
+                if (lastMarkerPosition2 && lastMarkerPosition2.distanceTo(newLatLng) > 200) {
+                    // Si el marcador se ha movido más de 400 metros, reinicia la polilínea
+                    routePath.setLatLngs([]);
+                    localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
+                }
+                myMap.setView(newLatLng);
+                marker2.setLatLng(newLatLng);
+                routePath2.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
+                lastMarkerPosition2 = newLatLng;
             }
 
 
