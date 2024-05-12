@@ -107,9 +107,8 @@
     </script>
 
     <script>
-        let myMap;
         document.addEventListener('DOMContentLoaded', () => {
-            myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
+            const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(myMap);
@@ -237,10 +236,6 @@
                     localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
             });
     });
-    </script>
-
-    <!-- Script para ver lo seleccinado en el menu desplegado -->
-    <script>
         // Función para cambiar la página según la opción seleccionada en el menú desplegable
         function navigate(option) {
             console.log("Opción seleccionada:", option);
