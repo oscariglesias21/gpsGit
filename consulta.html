@@ -12,38 +12,36 @@
    <script src="https://cdn.jsdelivr.net/npm/gaugeJS/dist/gauge.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg" style="background-color: #efb810;">
-    <div class="container-fluid">
-        <div style="display: flex; align-items: center;">
-            <a class="navbar-brand" href="#">
-                <span>Tracker Truck</span>
-            </a>
-            <img src="/logo_TT.png" alt="Tracker Truck Logo" style="height: 60px; width: auto; border-radius: 0%; margin-left: 5px;">
-        </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="col-md-4">
-            <select class="dropdown" id="vehicleSelector">
-                <option value="item1">Vehículo 1</option>
-                <option value="item2">Vehículo 2</option>
-                <option value="item3">Vehículo 1 y 2</option>
-            </select>       
-        </div>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <a type="button" class="btn btn-dark btn-consistent-size me-2" href="/">
-                    <b>Página Principal</b>
+    <nav class="navbar navbar-expand-lg" style="background-color: #efb810;">
+        <div class="container-fluid">
+            <div style="display: flex; align-items: center;">
+                <a class="navbar-brand" href="#">
+                    <img src="/logo_TT.png" alt="Tracker Truck Logo" style="height: 60px; width: auto; border-radius: 0%; margin-left: 5px;">
+                    <span>Tracker Truck</span>
                 </a>
-                <button type="button" class="btn btn-dark btn-consistent-size" data-bs-toggle="modal" data-bs-target="#instructionsModal">
-                    <b>Instrucciones de Usuario</b>
-                </button>       
-            </ul>
-        </div>        
-    </div>
-</nav>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <select class="form-select" id="vehicleSelector" style="background-color: #343a40; color: white;">
+                        <option value="vehiculo1">Vehículo 1</option>
+                        <option value="vehiculo2">Vehículo 2</option>
+                    </select>
+                    <a type="button" class="btn btn-dark btn-consistent-size me-2" href="/">
+                        <b>Página Principal</b>
+                    </a>
+                    <button type="button" class="btn btn-dark btn-consistent-size" data-bs-toggle="modal" data-bs-target="#instructionsModal">
+                        <b>Instrucciones de Usuario</b>
+                    </button>
+                </ul>
+            </div>        
+        </div>
+    </nav>
+    
     
 <div class="container-map">
     <div class="row">
