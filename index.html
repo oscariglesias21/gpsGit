@@ -104,6 +104,7 @@
         function closeSidebar() {
             document.getElementById("sidebar").style.transform = "translateX(100%)";
         }
+        //-------------------------------------------------------------------------------------------------------------------------------
     </script>
 
     <script>
@@ -182,7 +183,7 @@
                 }
             });
 
-            function updateVehicleDisplay(data, marker, routePath) {
+            function updateVehicleDisplay(data, marker, routePath) { //vehiculo 2
                 const { Latitude, Longitude, Date, Time, RPM } = data;
                 console.log(`Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
 
@@ -226,6 +227,7 @@
                 routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
                 lastMarkerPosition = newLatLng;
             }
+            //vehiculo 1-------------------------------------------------------------------------------
             function updateVehicleDisplay2(data2, marker2, routePath2) {
                 const { Latitude, Longitude, Date, Time} = data2;
                 console.log(`Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}`);
@@ -273,6 +275,8 @@
                 // Guardar la ruta actual en el almacenamiento local
                 const currentRoute = routePath.getLatLngs();
                     localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
+                const currentRoute2 = routePath2.getLatLngs();
+                    localStorage.setItem('routePath2', JSON.stringify(currentRoute2.map(p => ({ lat: p.lat, lng: p.lng }))));
             });
             // Función para cambiar la página según la opción seleccionada en el menú desplegable
             function navigate() {
