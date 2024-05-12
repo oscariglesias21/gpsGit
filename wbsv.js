@@ -169,7 +169,7 @@ app.get('/consulta-historicos', (req, res) => {
   });
 });
 
-//carro 1
+//carro 1 consulta
 app.get('/database-datos2', (req, res) => {
   // Agregando RPM al SELECT
   dbConnection.query('SELECT Latitude, Longitude, Date, Time FROM p2GPS3 ORDER BY ID DESC', (err, results) => {

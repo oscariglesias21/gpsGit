@@ -14,7 +14,7 @@ def extract_gps_info(data):
     # Simula la extracción de los datos GPS del payload
     # Asegúrate de adaptar esta parte al formato específico de tus datos
     decoded_data = data.decode('utf-8','replace').strip().split(',')    
-    id_str, latitud_str, longitud_str, timestamp_str, rpm_str = decoded_data
+    id_str, latitud_str, longitud_str, timestamp_str, *optional = decoded_data
     id = str(id_str.split(":")[1])
     latitud = float(latitud_str.split(":")[1])
     longitud = float(longitud_str.split(":")[1])
@@ -24,14 +24,20 @@ def extract_gps_info(data):
     hora = datetime_obj.strftime("%H:%M:%S")  # Formato de hora a HH:MM:SS
     rpm = int(rpm_str.split(":")[1])
 
-    return {
+    gps_info = {
         "Id": id,
         "Latitude": latitud,
         "Longitude": longitud,
-        "Date": fecha,  # Fecha ya formateada
-        "Time": hora,    # Hora ya formateada
-        "RPM": rpm
+        "Date": fecha,
+        "Time": hora
     }
+
+    if optional:
+        rpm_str = optional[0]
+        rpm = int(rpm_str.split(":")[1])
+        gps_info["RPM"] = rpm
+
+    return gps_info
 
 def send_to_web_server(web_data):
     try:
