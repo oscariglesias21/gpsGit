@@ -265,7 +265,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
         // Decora el último segmento después de salir del bucle forEach
         if (rutaActual2.getLatLngs().length > 0) {
-            let decorador = L.polylineDecorator(rutaActual, {
+            let decorador = L.polylineDecorator(rutaActual2, {
                 patterns: [
                     {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'red', weight: 3}})}
                 ]
