@@ -49,6 +49,19 @@ document.addEventListener('DOMContentLoaded', () => {
     rpmGaugeHistoric.set(0); // Establece un valor inicial
     console.log("rpmGaugeHistoric inicializado:", rpmGaugeHistoric);
 
+    document.getElementById("vehicleSelector").addEventListener("change", () => {
+        limpiarMapa();  // Limpia el mapa cada vez que se cambia la selección del vehículo
+        const selectedVehicle = document.getElementById("vehicleSelector").value;
+        const vehiculoSeleccionado = document.getElementById('startDateTime').value;
+        const endDateTime = document.getElementById('endDateTime').value;
+    
+        if (vehiculoSeleccionado === 'vehiculo1' && startDateTime && endDateTime) {
+            cargarDatos2(startDateTime, endDateTime, myMap);
+        } else if (selectedVehicle === 'vehiculo2' && startDateTime && endDateTime) {
+            cargarDatos(startDateTime, endDateTime, myMap);
+        }
+    });
+
 
     document.getElementById('submitButton').addEventListener('click', (event) => {
         event.preventDefault(); // Previene la acción por defecto del formulario
@@ -82,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
 let marcadorDeslizable; //definición de marcador deslizable
 let marcadorDeslizable2; //definición de marcador deslizable 2
     function cargarDatos(startDateTime, endDateTime, myMap) {
-        const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado == 'vehiculo2'){
             limpiarMapa()
         const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
@@ -308,7 +320,6 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
             document.getElementById('endTimeSpan').textContent = endTime;
     }
 }
-
 function limpiarMapa() {
     // Limpiar trayectos, marcadores y decoradores del vehículo 1
     trayectos.forEach(trayecto => trayecto.remove());
@@ -325,4 +336,14 @@ function limpiarMapa() {
     markers2 = [];
     decoradores2.forEach(decorador => decorador.remove());
     decoradores2 = [];
+
+    if (marcadorDeslizable) {
+        marcadorDeslizable.remove(); // Eliminar marcador deslizable si existe
+        marcadorDeslizable = null; // Restablecer a null para reutilización
+    }
+
+    if (marcadorDeslizable2) {
+        marcadorDeslizable2.remove(); // Eliminar marcador deslizable 2 si existe
+        marcadorDeslizable2 = null; // Restablecer a null para reutilización
+    }
 }
