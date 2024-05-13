@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById("vehicleSelector").addEventListener("change", () => {
         limpiarMapa();  // Limpia el mapa cada vez que se cambia la selección del vehículo
-        const selectedVehicle = document.getElementById("vehicleSelector").value;
-        const vehiculoSeleccionado = document.getElementById('startDateTime').value;
+        const vehiculoSeleccionado = document.getElementById("vehicleSelector").value;
+        const startDateTime = document.getElementById('startDateTime').value;
         const endDateTime = document.getElementById('endDateTime').value;
     
         if (vehiculoSeleccionado === 'vehiculo1' && startDateTime && endDateTime) {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDateTimeDisplay(startDateTime, endDateTime);
     
         // Decidir qué función llamar basándose en el vehículo seleccionado
-        const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
+        vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado === 'vehiculo1') {
             cargarDatos2(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculo2') {
