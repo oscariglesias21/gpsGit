@@ -71,21 +71,60 @@ document.addEventListener('DOMContentLoaded', () => {
     function navigate() {
         const selectedOption = document.getElementById("vehicleSelector").value;
         console.log("Opción seleccionada:", selectedOption);
-        if (selectedOption === "vehiculo1") {
-            myMap.removeLayer(rutaActual);
-            myMap.removeLayer(markers);
-            myMap.removeLayer(decorador);
-        } else if (selectedOption === "vehiculo2") {
-            myMap.addLayer(rutaActual);
-            myMap.addLayer(markers);
-        } else if (selectedOption === "vehiculos") {
-            myMap.addLayer(rutaActual);
-            myMap.addLayer(markers);
+    
+        // Limpiar las capas existentes independientemente de la opción seleccionada
+        trayectos.forEach(trayecto => {
+            if (myMap.hasLayer(trayecto)) {
+                myMap.removeLayer(trayecto);
+            }
+        });
+        trayectos = [];
+    
+        markers.forEach(marker => {
+            if (myMap.hasLayer(marker)) {
+                myMap.removeLayer(marker);
+            }
+        });
+        markers = [];
+    
+        decoradores.forEach(decorador => {
+            if (myMap.hasLayer(decorador)) {
+                myMap.removeLayer(decorador);
+            }
+        });
+        decoradores = [];
+    
+        // Ahora, añade las capas necesarias basadas en la selección
+        if (selectedOption === "vehiculo2" || selectedOption === "vehiculos") {
+            // Supongamos que rutaActual y markers2 son las capas relevantes para vehiculo2
+            if (rutaActual && !myMap.hasLayer(rutaActual)) {
+                myMap.addLayer(rutaActual);
+            }
+    
+            // Supongamos que usas markers2 para vehiculo2
+            markers2.forEach(marker => {
+                if (!myMap.hasLayer(marker)) {
+                    myMap.addLayer(marker);
+                }
+            });
+        }
+    
+        if (selectedOption === "vehiculo1" || selectedOption === "vehiculos") {
+            // Supongamos que rutaActual2 y markers son las capas relevantes para vehiculo1
+            if (rutaActual2 && !myMap.hasLayer(rutaActual2)) {
+                myMap.addLayer(rutaActual2);
+            }
+    
+            markers.forEach(marker => {
+                if (!myMap.hasLayer(marker)) {
+                    myMap.addLayer(marker);
+                }
+            });
         }
     }
-    document.getElementById("vehicleSelector").addEventListener("change", () => {
-        navigate();
-    });
+
+    document.getElementById("vehicleSelector").addEventListener("change", navigate);
+    
 });
 
 let marcadorDeslizable; //definición de marcador deslizable
