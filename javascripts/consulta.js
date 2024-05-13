@@ -71,20 +71,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedOption = document.getElementById("vehicleSelector").value;
         console.log("Opción seleccionada:", selectedOption);
         if (selectedOption === "vehiculo1") {
-            myMap.addLayer(rutaActual2);
-            myMap.addLayer(markers2);
             myMap.removeLayer(rutaActual);
             myMap.removeLayer(markers);
         } else if (selectedOption === "vehiculo2") {
             myMap.addLayer(rutaActual);
             myMap.addLayer(markers);
-            myMap.removeLayer(rutaActual2);
-            myMap.removeLayer(markers2);
         } else if (selectedOption === "vehiculos") {
             myMap.addLayer(rutaActual);
             myMap.addLayer(markers);
-            myMap.addLayer(rutaActual2);
-            myMap.addLayer(markers2);
         }
     }
     document.getElementById("vehicleSelector").addEventListener("change", () => {
