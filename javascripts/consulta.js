@@ -1,3 +1,16 @@
+var truckIcon = L.icon({
+    iconUrl: '/camion1_.png',  // Asegúrate de que esta URL sea accesible
+    iconSize: [40, 40],  // Tamaño del ícono
+    iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
+    popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+});
+
+var truckIcon2 = L.icon({
+    iconUrl: '/camion2__.png',  // Asegúrate de que esta URL sea accesible
+    iconSize: [40, 40],  // Tamaño del ícono
+    iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
+    popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+});
 let markers= []
 let markers2 = []
 let trayectos = []; // Almacena las polilíneas de cada trayecto
@@ -13,19 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
-    var truckIcon = L.icon({
-        iconUrl: '/camion1_.png',  // Asegúrate de que esta URL sea accesible
-        iconSize: [40, 40],  // Tamaño del ícono
-        iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
-        popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
-    });
-    
-    var truckIcon2 = L.icon({
-        iconUrl: '/camion2__.png',  // Asegúrate de que esta URL sea accesible
-        iconSize: [40, 40],  // Tamaño del ícono
-        iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
-        popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
-    });
     // Inicializar el tacómetro
     rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeMap")).setOptions({
         angle: 0.20, 
