@@ -8,7 +8,6 @@ require('dotenv').config({ path: path.resolve(__dirname, '/home/ubuntu/.env') })
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'javascripts')));
-app.use(express.static(path.join(__dirname, 'assets')));
 app.use(express.static(path.join(__dirname, 'styles')));
 app.use(express.json()); 
 
