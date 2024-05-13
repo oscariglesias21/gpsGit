@@ -471,4 +471,11 @@ function limpiarMapa() {
         marcadorDeslizable2.remove(); // Eliminar marcador deslizable 2 si existe
         marcadorDeslizable2 = null; // Restablecer a null para reutilización
     }
+
+    myMap.eachLayer(layer => {
+        if (layer instanceof L.Polyline || layer instanceof L.Marker || layer instanceof L.PolylineDecorator) {
+            myMap.removeLayer(layer);
+        }
+    });
+
 }
