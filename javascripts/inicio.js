@@ -10,7 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
         popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
     });
     
-
+    var truckIcon2 = L.icon({
+        iconUrl: '/camion2__.png',  // Asegúrate de que esta URL sea accesible
+        iconSize: [40, 40],  // Tamaño del ícono
+        iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
+        popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+    });
     let marker = L.marker([0, 0]).addTo(myMap);
     let marker2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
 
