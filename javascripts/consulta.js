@@ -342,7 +342,7 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
 
     // URLs para las consultas de ambos vehículos
     const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}&vehiculo=1`;
-    const link2 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}&vehiculo=2`;
+    const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}&vehiculo=2`;
 
     Promise.all([
         fetch(link1).then(response => response.json()),
