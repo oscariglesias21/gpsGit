@@ -216,7 +216,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                     decoradores2 = [];
 
                     rutaActual2 = L.polyline([], {
-                        color: 'blue',      // Cambia el color a azul o el que prefieras
+                        color: 'red',      // Cambia el color a azul o el que prefieras
                         weight: 3,          // Ajusta el grosor de la línea
                         opacity: 0.7,       // Ajusta la opacidad de la línea
                         lineJoin: 'round',  // Establece cómo se unen los segmentos de la línea ('miter' es predeterminado, 'round' o 'bevel')
@@ -254,7 +254,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
         if (rutaActual2.getLatLngs().length > 0) {
             let decorador = L.polylineDecorator(rutaActual, {
                 patterns: [
-                    {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3}})}
+                    {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'red', weight: 3}})}
                 ]
             }).addTo(myMap);
             decoradores2.push(decorador);
@@ -273,7 +273,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                         const puntoSeleccionado2 = data2[this.value];
                         const latLng2 = L.latLng(puntoSeleccionado2.Latitude, puntoSeleccionado2.Longitude);
                         marcadorDeslizable2.setLatLng(latLng2);
-                        marcadorDeslizable2.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado2.DateTime} - RPM: ${puntoSeleccionado2.RPM}`).openPopup();
+                        marcadorDeslizable2.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado2.DateTime}`).openPopup();
                         myMap.setView(latLng2, myMap.getZoom());
                     };
 
