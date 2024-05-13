@@ -144,8 +144,6 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                         const lat = parseFloat(point.Latitude); 
                         const lng = parseFloat(point.Longitude);
                         const nuevoPunto = L.latLng(lat, lng);
-                        let marker = L.marker(nuevoPunto, {icon: truckIcon2}).addTo(myMap);  // Utilizar truckIcon aquí
-                        markers.push(marker);
 
                         if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
                             if (ultimoPunto) {
@@ -178,8 +176,9 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
         }
                     //implementación de slider
                     if (!marcadorDeslizable) {
-                        marcadorDeslizable = L.marker([0, 0], {
+                        marcadorDeslizable = L.marker([0, 0],{ 
                             draggable: 'true',
+                            icon: truckIcon2
                         }).addTo(myMap);
                     }
                     const slider = document.getElementById('timeSlider');
