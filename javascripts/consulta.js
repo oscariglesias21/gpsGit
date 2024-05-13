@@ -27,8 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
-    markers = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
-    markers2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
     // Inicializar el tacómetro
     rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeMap")).setOptions({
         angle: 0.20, 
@@ -128,7 +126,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                     // Eliminar marcadores existentes y limpiar el arreglo
                     markers.forEach(marker => marker.remove());
-                    markers = [];
+                    markers = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
 
                     decoradores.forEach(decorador => decorador.remove());
                     decoradores = [];
