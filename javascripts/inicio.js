@@ -3,9 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
+    var truckIcon = L.icon({
+        iconUrl: 'assets/camion_1.jpg',  // URL de la imagen del camión
+        iconSize: [40, 40],  // Tamaño del ícono
+        iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
+        popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+    });
 
     let marker = L.marker([0, 0]).addTo(myMap);
-    let marker2 = L.marker([0, 0]).addTo(myMap);
+    let marker2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
 
     let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
     let routePath2 = L.polyline([], {color: 'blue'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
@@ -16,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let inactivityTimer;
     let inactivityTimer2;
     let centrarMapa = null;
+
 
     // Intentar recuperar y dibujar la ruta almacenada
     const storedRoute = localStorage.getItem('routePath');
