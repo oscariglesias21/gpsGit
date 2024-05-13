@@ -1,6 +1,8 @@
 let markers = [];
+let markers2 = [];
 let trayectos = []; // Almacena las polilíneas de cada trayecto
 let rutaActual;
+let rutaActual2;
 let decoradores = []; // Almacena las instancias de los decoradores de flechas
 let rpmGaugeHistoric;
 
@@ -65,6 +67,29 @@ document.addEventListener('DOMContentLoaded', () => {
         myModal.show();
         localStorage.setItem('hasSeenInstructions', 'true');
     }
+    function navigate() {
+        const selectedOption = document.getElementById("vehicleSelector").value;
+        console.log("Opción seleccionada:", selectedOption);
+        if (selectedOption === "vehiculo1") {
+            myMap.addLayer(rutaActual2);
+            myMap.addLayer(markers2);
+            myMap.removeLayer(rutaActual);
+            myMap.removeLayer(markers);
+        } else if (selectedOption === "vehiculo2") {
+            myMap.addLayer(rutaActual);
+            myMap.addLayer(markers);
+            myMap.removeLayer(rutaActual2);
+            myMap.removeLayer(markers2);
+        } else if (selectedOption === "vehiculos") {
+            myMap.addLayer(rutaActual);
+            myMap.addLayer(markers);
+            myMap.addLayer(rutaActual2);
+            myMap.addLayer(markers2);
+        }
+    }
+    document.getElementById("vehicleSelector").addEventListener("change", () => {
+        navigate();
+    });
 });
 
 let marcadorDeslizable; //definición de marcador deslizable
@@ -190,28 +215,4 @@ function updateDateTimeDisplay() {
             document.getElementById('endTimeSpan').textContent = endTime;
     }
 }
-function navigate() {
-    const selectedOption = document.getElementById("vehicleSelector").value;
-    console.log("Opción seleccionada:", selectedOption);
-    if (selectedOption === "vehiculo1") {
-        myMap.addLayer(routePath2);
-        myMap.addLayer(marker2);
-        myMap.removeLayer(routePath);
-        myMap.removeLayer(marker);
-    } else if (selectedOption === "vehiculo2") {
-        myMap.addLayer(routePath);
-        myMap.addLayer(marker);
-        myMap.removeLayer(routePath2);
-        myMap.removeLayer(marker2);
-    } else if (selectedOption === "vehiculos") {
-        myMap.addLayer(routePath);
-        myMap.addLayer(marker);
-        myMap.addLayer(routePath2);
-        myMap.addLayer(marker2);
-    }
-}
 
-document.getElementById("vehicleSelector").addEventListener("change", () => {
-    navigate();
-
-});
