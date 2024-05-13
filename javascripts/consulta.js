@@ -338,107 +338,49 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 }
 //ambos vehiculos
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
+    const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
     if (vehiculoSeleccionado == 'vehiculos'){
-        limpiarMapa()
-    console.log("Cargando datos para ambos vehículos");
+    limpiarMapa(); // Asegúrate de que limpiarMapa limpia todo lo necesario
 
-    // Preparar las URLs para las consultas de ambos vehículos
-    const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
-    const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+    // URLs para las consultas de ambos vehículos
+    const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}&vehiculo=1`;
+    const link2 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}&vehiculo=2`;
 
-    // Usar Promise.all para manejar las dos solicitudes de forma simultánea
     Promise.all([
         fetch(link1).then(response => response.json()),
         fetch(link2).then(response => response.json())
     ]).then(results => {
         const [data1, data2] = results;
-        // Procesar y mostrar los datos del primer vehículo
-        if (data1.length > 0) {
-            procesarDatosVehiculo(data1, myMap, 'blue', truckIcon2);
-        } else {
-            console.log("No hay datos para el vehículo 1 en el rango seleccionado.");
-        }
 
-        // Procesar y mostrar los datos del segundo vehículo
-        if (data2.length > 0) {
-            procesarDatosVehiculo(data2, myMap, 'red', truckIcon);
+        // Asegúrate de que hay datos para ambos vehículos
+        if (data1.length > 0 && data2.length > 0) {
+            mostrarPolilinea(data1, myMap, 'blue', truckIcon); // Vehículo 1, color azul
+            mostrarPolilinea(data2, myMap, 'red', truckIcon2); // Vehículo 2, color rojo
         } else {
-            console.log("No hay datos para el vehículo 2 en el rango seleccionado.");
-        }
-
-        // Mostrar controles de usuario si hay datos
-        if (data1.length > 0 || data2.length > 0) {
-            document.getElementById('timeSlider').style.display = 'block';
-        } else {
-            alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
-            document.getElementById('timeSlider').style.display = 'none';
+            alert("No hay datos suficientes para uno o ambos vehículos.");
         }
     }).catch(error => {
-        console.error('Error cargando datos de ambos vehículos:', error);
+        console.error('Error cargando datos:', error);
         alert("Hubo un problema al cargar los datos de ambos vehículos.");
-        document.getElementById('timeSlider').style.display = 'none';
     });
 }
-}
-// Función para procesar y mostrar los datos de cada vehículo
-function procesarDatosVehiculo(data, myMap, color, icon) {
-    let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
-    let decoradores = [];
-    let ultimoPunto = null;
-
+function mostrarPolilinea(data, myMap, color, icon) {
+    const rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
     data.forEach(point => {
-        const lat = parseFloat(point.Latitude);
+        const lat = parseFloat(point.Latitude); 
         const lng = parseFloat(point.Longitude);
         const nuevoPunto = L.latLng(lat, lng);
-        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-            // Comienza un nuevo segmento si la distancia supera los 500 metros
-            rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
-        }
         rutaActual.addLatLng(nuevoPunto);
-        ultimoPunto = nuevoPunto;
-
-        // Añadir marcadores y decoradores si es necesario
     });
 
-    // Decorar la ruta con símbolos de dirección
-    let decorador = L.polylineDecorator(rutaActual, {
-        patterns: [
-            {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: color, weight: 3}})}
-        ]
-    }).addTo(myMap);
-    decoradores.push(decorador);
-    actualizarMarcadorDeslizable(data, myMap, icon);
+    // Podemos también agregar un marcador inicial si es necesario
+    if (data.length > 0) {
+        L.marker(L.latLng(data[0].Latitude, data[0].Longitude), {icon: icon}).addTo(myMap)
+          .bindPopup(`Inicio de Ruta: ${data[0].DateTime}`).openPopup();
+    }
 }
-function actualizarMarcadorDeslizable(data1, data2, myMap, icon1, icon2, marcadorDeslizable1, marcadorDeslizable2) {
-    // Configura el slider para el tamaño del conjunto de datos más pequeño
-    const maxLength = Math.min(data1.length, data2.length);
-    const slider = document.getElementById('timeSlider');
-    slider.max = maxLength - 1;
-    slider.value = 0;
-
-    slider.oninput = function() {
-        const index = parseInt(this.value);
-        if (index < data1.length) {
-            const punto1 = data1[index];
-            const latLng1 = L.latLng(punto1.Latitude, punto1.Longitude);
-            marcadorDeslizable1.setLatLng(latLng1);
-            marcadorDeslizable1.bindPopup(`Vehículo 1 - Fecha y Hora: ${punto1.DateTime} - RPM: ${punto1.RPM}`).openPopup();
-        }
-
-        if (index < data2.length) {
-            const punto2 = data2[index];
-            const latLng2 = L.latLng(punto2.Latitude, punto2.Longitude);
-            marcadorDeslizable2.setLatLng(latLng2);
-            marcadorDeslizable2.bindPopup(`Vehículo 2 - Fecha y Hora: ${punto2.DateTime} - RPM: ${punto2.RPM}`).openPopup();
-        }
-
-        myMap.setView(latLng1 || latLng2, myMap.getZoom()); // Usa la última coordenada actualizada para centrar el mapa
-    };
-
-    slider.oninput(); // Inicializa los marcadores en la primera posición
 }
-
-
+//limpiado de mapa
 function limpiarMapa() {
     // Limpiar trayectos, marcadores y decoradores del vehículo 1
     trayectos.forEach(trayecto => trayecto.remove());
