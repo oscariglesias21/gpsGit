@@ -67,11 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const startDateTime = document.getElementById('startDateTime').value;
         const endDateTime = document.getElementById('endDateTime').value;
     
-        if (vehiculoSeleccionado === 'vehiculo1' && startDateTime && endDateTime) {
+        if (vehiculoSeleccionado === 'vehiculo1') {
             cargarDatos2(startDateTime, endDateTime, myMap);
-        } else if (vehiculoSeleccionado === 'vehiculo2' && startDateTime && endDateTime) {
+        } else if (vehiculoSeleccionado === 'vehiculo2') {
             cargarDatos(startDateTime, endDateTime, myMap);
-        } else if (vehiculoSeleccionado === 'vehiculos' && startDateTime && endDateTime)
+        } else if (vehiculoSeleccionado === 'vehiculos')
             cargarAmbosDatos(startDateTime, endDateTime, myMap);
     });
 
@@ -471,6 +471,5 @@ function limpiarMapa() {
         marcadorDeslizable2.remove(); // Eliminar marcador deslizable 2 si existe
         marcadorDeslizable2 = null; // Restablecer a null para reutilización
     }
-
 
 }
