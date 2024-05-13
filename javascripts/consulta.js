@@ -57,16 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
         if (vehiculoSeleccionado === 'vehiculo1' && startDateTime && endDateTime) {
             cargarDatos2(startDateTime, endDateTime, myMap);
-        } else if (selectedVehicle === 'vehiculo2' && startDateTime && endDateTime) {
+        } else if (vehiculoSeleccionado === 'vehiculo2' && startDateTime && endDateTime) {
             cargarDatos(startDateTime, endDateTime, myMap);
         }
     });
 
-
     document.getElementById('submitButton').addEventListener('click', (event) => {
         event.preventDefault(); // Previene la acción por defecto del formulario
-        const startDateTime = document.getElementById('startDateTime').value;
-        const endDateTime = document.getElementById('endDateTime').value;
+        startDateTime = document.getElementById('startDateTime').value;
+        endDateTime = document.getElementById('endDateTime').value;
     
         // Actualiza y muestra la fecha y hora seleccionadas
         updateDateTimeDisplay(startDateTime, endDateTime);
