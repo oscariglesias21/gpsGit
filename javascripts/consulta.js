@@ -387,12 +387,19 @@ function procesarDatosVehiculo(data, myMap, color, icon) {
     let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
     let decoradores = [];
     let markers = [];
+    let trayectos = [];
+    let ultimoPunto = null;
 
     data.forEach(point => {
         const lat = parseFloat(point.Latitude);
         const lng = parseFloat(point.Longitude);
         const nuevoPunto = L.latLng(lat, lng);
+        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
+            // Comienza un nuevo segmento si la distancia supera los 500 metros
+            rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+        }
         rutaActual.addLatLng(nuevoPunto);
+        ultimoPunto = nuevoPunto;
 
         // Añadir marcadores y decoradores si es necesario
     });
