@@ -229,18 +229,18 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                     let ultimoPunto2 = null;
                     data2.forEach(point => {
-                        const lat2 = parseFloat(point.Latitude); 
-                        const lng2 = parseFloat(point.Longitude);
-                        const nuevoPunto2 = L.latLng(lat2, lng2);
+                        const lat = parseFloat(point.Latitude); 
+                        const lng = parseFloat(point.Longitude);
+                        const nuevoPunto = L.latLng(lat, lng);
 
-                        if (ultimoPunto2 && myMap.distance(ultimoPunto2, nuevoPunto2) > 500) {
+                        if (ultimoPunto2 && myMap.distance(ultimoPunto2, nuevoPunto) > 500) {
                             if (ultimoPunto2) {
-                    let decorador2 = L.polylineDecorator(rutaActual2, {
+                    let decorador = L.polylineDecorator(rutaActual2, {
                         patterns: [
                             {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'red', weight: 3}})}
                         ]
                     }).addTo(myMap);
-                    decoradores2.push(decorador2);
+                    decoradores2.push(decorador);
                 }
                 
                 // Comienza un nuevo segmento
@@ -255,12 +255,12 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
         // Decora el último segmento después de salir del bucle forEach
         if (rutaActual2.getLatLngs().length > 0) {
-            let decorador2 = L.polylineDecorator(rutaActual, {
+            let decorador = L.polylineDecorator(rutaActual, {
                 patterns: [
                     {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'red', weight: 3}})}
                 ]
             }).addTo(myMap);
-            decoradores2.push(decorador2);
+            decoradores2.push(decorador);
         }
                     //implementación de slider
                     if (!marcadorDeslizable2) {
