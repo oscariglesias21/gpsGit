@@ -340,7 +340,9 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
     console.log("Cargando datos para ambos vehículos");
     cargarDatos(startDateTime, endDateTime, myMap);
+    console.log("Datos recibidos para vehículo 2:", data);
     cargarDatos2(startDateTime, endDateTime, myMap);
+    console.log("Datos recibidos para vehículo 1:", data2);
 }
 function limpiarMapa() {
     // Limpiar trayectos, marcadores y decoradores del vehículo 1
