@@ -338,6 +338,8 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 }
 //ambos vehiculos
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
+    if (vehiculoSeleccionado == 'vehiculos'){
+        limpiarMapa()
     console.log("Cargando datos para ambos vehículos");
 
     // Preparar las URLs para las consultas de ambos vehículos
@@ -352,7 +354,6 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
         const [data1, data2] = results;
 
         // Limpia el mapa antes de mostrar nuevos datos
-        limpiarMapa();
 
         // Procesar y mostrar los datos del primer vehículo
         if (data1.length > 0) {
@@ -381,7 +382,7 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
         document.getElementById('timeSlider').style.display = 'none';
     });
 }
-
+}
 // Función para procesar y mostrar los datos de cada vehículo
 function procesarDatosVehiculo(data, myMap, color, icon) {
     let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
