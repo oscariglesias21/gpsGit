@@ -190,3 +190,28 @@ function updateDateTimeDisplay() {
             document.getElementById('endTimeSpan').textContent = endTime;
     }
 }
+function navigate() {
+    const selectedOption = document.getElementById("vehicleSelector").value;
+    console.log("Opción seleccionada:", selectedOption);
+    if (selectedOption === "vehiculo1") {
+        myMap.addLayer(routePath2);
+        myMap.addLayer(marker2);
+        myMap.removeLayer(routePath);
+        myMap.removeLayer(marker);
+    } else if (selectedOption === "vehiculo2") {
+        myMap.addLayer(routePath);
+        myMap.addLayer(marker);
+        myMap.removeLayer(routePath2);
+        myMap.removeLayer(marker2);
+    } else if (selectedOption === "vehiculos") {
+        myMap.addLayer(routePath);
+        myMap.addLayer(marker);
+        myMap.addLayer(routePath2);
+        myMap.addLayer(marker2);
+    }
+}
+
+document.getElementById("vehicleSelector").addEventListener("change", () => {
+    navigate();
+
+});
