@@ -338,6 +338,8 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 }
 //ambos vehiculos
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
+    const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
+    if (vehiculoSeleccionado == 'vehiculos'){
     limpiarMapa(); // Asegúrate de que limpiarMapa limpia todo lo necesario
 
     // URLs para las consultas de ambos vehículos
@@ -350,20 +352,11 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
     ]).then(results => {
         const [data1, data2] = results;
 
-        // Comprobar que hay datos para ambos vehículos antes de intentar mostrar las rutas
-        if (data1.length > 0) {
+        // Asegúrate de que hay datos para ambos vehículos
+        if (data1.length > 0 && data2.length > 0) {
             mostrarPolilinea(data1, myMap, 'blue', truckIcon); // Vehículo 1, color azul
-        } else {
-            console.warn("No hay datos disponibles para el vehículo 1.");
-        }
-        
-        if (data2.length > 0) {
             mostrarPolilinea(data2, myMap, 'red', truckIcon2); // Vehículo 2, color rojo
         } else {
-            console.warn("No hay datos disponibles para el vehículo 2.");
-        }
-
-        if (data1.length === 0 && data2.length === 0) {
             alert("No hay datos suficientes para uno o ambos vehículos.");
         }
     }).catch(error => {
@@ -371,38 +364,22 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
         alert("Hubo un problema al cargar los datos de ambos vehículos.");
     });
 }
-
+}
 function mostrarPolilinea(data, myMap, color, icon) {
-    let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
-    let ultimoPunto = null;
-
-    data.forEach((point, index) => {
-        const lat = parseFloat(point.Latitude);
+    const rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+    data.forEach(point => {
+        const lat = parseFloat(point.Latitude); 
         const lng = parseFloat(point.Longitude);
         const nuevoPunto = L.latLng(lat, lng);
-
-        // Si existe un último punto y la distancia al nuevo punto es grande, iniciar una nueva polilínea
-        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) { // Ajusta 500 a un umbral apropiado
-            rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
-        }
-
         rutaActual.addLatLng(nuevoPunto);
-        ultimoPunto = nuevoPunto;
-
-        // Opcionalmente agregar marcadores al inicio de cada segmento nuevo
-        if (index === 0 || myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-            L.marker(nuevoPunto, {icon: icon}).addTo(myMap)
-              .bindPopup(`Inicio de Segmento: ${point.DateTime}`).openPopup();
-        }
     });
 
-    // Agregar marcador final, si deseado
+    // Podemos también agregar un marcador inicial si es necesario
     if (data.length > 0) {
-        L.marker(ultimoPunto, {icon: icon}).addTo(myMap)
-          .bindPopup(`Fin de Ruta: ${data[data.length - 1].DateTime}`).openPopup();
+        L.marker(L.latLng(data[0].Latitude, data[0].Longitude), {icon: icon}).addTo(myMap)
+          .bindPopup(`Inicio de Ruta: ${data[0].DateTime}`).openPopup();
     }
 }
-
 
 //limpiado de mapa
 function limpiarMapa() {
