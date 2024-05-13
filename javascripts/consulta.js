@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (vehiculoSeleccionado === 'vehiculo2' && startDateTime && endDateTime) {
             cargarDatos(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculos' && startDateTime && endDateTime)
-            cargarAmbosDatos(startDateTime, endDateTime, myMap);
+            cargarDatosSimultaneos(startDateTime, endDateTime, myMap);
     });
 
     document.getElementById('submitButton').addEventListener('click', (event) => {
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (vehiculoSeleccionado === 'vehiculo2') {
             cargarDatos(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculos'){
-            cargarAmbosDatos(startDateTime, endDateTime, myMap);
+            cargarDatosSimultaneos(startDateTime, endDateTime, myMap);
         }
     });
     
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let marcadorDeslizable; //definición de marcador deslizable
 let marcadorDeslizable2; //definición de marcador deslizable 2
-    function cargarDatos(startDateTime, endDateTime, myMap) {
+    function cargarDatos(startDateTime, endDateTime, myMap, sliderId) {
         if (vehiculoSeleccionado == 'vehiculo2'){
             limpiarMapa()
         const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
@@ -184,7 +184,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                             icon: truckIcon2
                         }).addTo(myMap);
                     }
-                    const slider = document.getElementById('timeSlider');
+                    const slider = document.getElementById(sliderId);
                     slider.max = data.length - 1;
                     slider.value = 0;
 
@@ -204,21 +204,21 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                     slider.oninput();
 
-                    document.getElementById('timeSlider').style.display = 'block'; 
+                    document.getElementById(sliderId).style.display = 'block'; 
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
-                    document.getElementById('timeSlider').style.display = 'none';
+                    document.getElementById(sliderId).style.display = 'none';
                 }
             })
             .catch(error => {
                 console.error('Error en fetch o procesando data:', error);
                 alert("Hubo un problema al cargar los datos.");
-                document.getElementById('timeSlider').style.display = 'none';
+                document.getElementById(sliderId).style.display = 'none';
             });
     }
     }
 //vehiculo 1
-    function cargarDatos2(startDateTime, endDateTime, myMap) {
+    function cargarDatos2(startDateTime, endDateTime, myMap, sliderId) {
         const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado == 'vehiculo1'){
             limpiarMapa()
@@ -295,7 +295,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                             icon: truckIcon
                         }).addTo(myMap);
                     }
-                    const slider = document.getElementById('timeSlider');
+                    const slider = document.getElementById(sliderId);
                     slider.max = data2.length - 1;
                     slider.value = 0;
 
@@ -309,16 +309,16 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                     slider.oninput();
 
-                    document.getElementById('timeSlider').style.display = 'block'; 
+                    document.getElementById(sliderId).style.display = 'block'; 
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
-                    document.getElementById('timeSlider').style.display = 'none';
+                    document.getElementById(sliderId).style.display = 'none';
                 }
             })
             .catch(error => {
                 console.error('Error en fetch o procesando data:', error);
                 alert("Hubo un problema al cargar los datos.");
-                document.getElementById('timeSlider').style.display = 'none';
+                document.getElementById(sliderId).style.display = 'none';
             });
     }
     }
@@ -337,105 +337,14 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
     }
 }
 //ambos vehiculos
-function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
-    console.log("Cargando datos para ambos vehículos");
+function cargarDatosSimultaneos(startDateTime, endDateTime, myMap) {
+    limpiarMapa();  // Asegúrate de limpiar el mapa antes de cargar nuevos datos.
 
-    // Preparar las URLs para las consultas de ambos vehículos
-    const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
-    const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
-
-    // Usar Promise.all para manejar las dos solicitudes de forma simultánea
-    Promise.all([
-        fetch(link1).then(response => response.json()),
-        fetch(link2).then(response => response.json())
-    ]).then(results => {
-        const [data1, data2] = results;
-
-        // Limpia el mapa antes de mostrar nuevos datos
-        limpiarMapa();
-
-        // Procesar y mostrar los datos del primer vehículo
-        if (data1.length > 0) {
-            procesarDatosVehiculo(data1, myMap, 'blue', truckIcon2);
-        } else {
-            console.log("No hay datos para el vehículo 1 en el rango seleccionado.");
-        }
-
-        // Procesar y mostrar los datos del segundo vehículo
-        if (data2.length > 0) {
-            procesarDatosVehiculo(data2, myMap, 'red', truckIcon);
-        } else {
-            console.log("No hay datos para el vehículo 2 en el rango seleccionado.");
-        }
-
-        // Mostrar controles de usuario si hay datos
-        if (data1.length > 0 || data2.length > 0) {
-            document.getElementById('timeSlider').style.display = 'block';
-        } else {
-            alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
-            document.getElementById('timeSlider').style.display = 'none';
-        }
-    }).catch(error => {
-        console.error('Error cargando datos de ambos vehículos:', error);
-        alert("Hubo un problema al cargar los datos de ambos vehículos.");
-        document.getElementById('timeSlider').style.display = 'none';
-    });
+    // Llamar a las funciones de carga para cada vehículo con su respectivo slider.
+    cargarDatos(startDateTime, endDateTime, myMap, 'timeSlider1');  // Asume que cargarDatos ahora acepta un argumento adicional para el ID del slider
+    cargarDatos2(startDateTime, endDateTime, myMap, 'timeSlider2'); // Asume lo mismo para cargarDatos2
 }
 
-// Función para procesar y mostrar los datos de cada vehículo
-function procesarDatosVehiculo(data, myMap, color, icon) {
-    let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
-    let decoradores = [];
-    let ultimoPunto = null;
-
-    data.forEach(point => {
-        const lat = parseFloat(point.Latitude);
-        const lng = parseFloat(point.Longitude);
-        const nuevoPunto = L.latLng(lat, lng);
-        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-            // Comienza un nuevo segmento si la distancia supera los 500 metros
-            rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
-        }
-        rutaActual.addLatLng(nuevoPunto);
-        ultimoPunto = nuevoPunto;
-
-        // Añadir marcadores y decoradores si es necesario
-    });
-
-    // Decorar la ruta con símbolos de dirección
-    let decorador = L.polylineDecorator(rutaActual, {
-        patterns: [
-            {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: color, weight: 3}})}
-        ]
-    }).addTo(myMap);
-    decoradores.push(decorador);
-    actualizarMarcadorDeslizable(data, myMap, icon);
-}
-function actualizarMarcadorDeslizable(data, myMap, icon) {
-    if (!marcadorDeslizable) {
-        marcadorDeslizable = L.marker([0, 0], {
-            draggable: true,
-            icon: icon
-        }).addTo(myMap);
-    }
-
-    const slider = document.getElementById('timeSlider');
-    slider.max = data.length - 1;
-    slider.value = 0;
-
-    slider.oninput = function() {
-        const puntoSeleccionado = data[this.value];
-        const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
-        marcadorDeslizable.setLatLng(latLng);
-        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
-        myMap.setView(latLng, myMap.getZoom());
-        if (rpmGaugeHistoric) {
-            rpmGaugeHistoric.set(puntoSeleccionado.RPM);
-        }
-    };
-
-    slider.oninput(); // Inicializa el marcador en la primera posición
-}
 
 function limpiarMapa() {
     // Limpiar trayectos, marcadores y decoradores del vehículo 1
