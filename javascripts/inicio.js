@@ -5,9 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }).addTo(myMap);
     var truckIcon = L.icon({
         iconUrl: '/camion1.png',  // URL de la imagen del camión
-        iconSize: [30, 30],  // Tamaño del ícono
+        iconSize: [25, 15],  // Tamaño del ícono
         iconAnchor: [0, 0],  // Punto del ícono que corresponderá a la coordenada del marcador
-        popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
     });
     
 
