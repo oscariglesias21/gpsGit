@@ -352,9 +352,6 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
         fetch(link2).then(response => response.json())
     ]).then(results => {
         const [data1, data2] = results;
-
-        // Limpia el mapa antes de mostrar nuevos datos
-
         // Procesar y mostrar los datos del primer vehículo
         if (data1.length > 0) {
             procesarDatosVehiculo(data1, myMap, 'blue', truckIcon2);
@@ -412,31 +409,35 @@ function procesarDatosVehiculo(data, myMap, color, icon) {
     decoradores.push(decorador);
     actualizarMarcadorDeslizable(data, myMap, icon);
 }
-function actualizarMarcadorDeslizable(data, myMap, icon) {
-    if (!marcadorDeslizable) {
-        marcadorDeslizable = L.marker([0, 0], {
-            draggable: true,
-            icon: icon
-        }).addTo(myMap);
-    }
-
+function actualizarMarcadorDeslizable(data1, data2, myMap, icon1, icon2, marcadorDeslizable1, marcadorDeslizable2) {
+    // Configura el slider para el tamaño del conjunto de datos más pequeño
+    const maxLength = Math.min(data1.length, data2.length);
     const slider = document.getElementById('timeSlider');
-    slider.max = data.length - 1;
+    slider.max = maxLength - 1;
     slider.value = 0;
 
     slider.oninput = function() {
-        const puntoSeleccionado = data[this.value];
-        const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
-        marcadorDeslizable.setLatLng(latLng);
-        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
-        myMap.setView(latLng, myMap.getZoom());
-        if (rpmGaugeHistoric) {
-            rpmGaugeHistoric.set(puntoSeleccionado.RPM);
+        const index = parseInt(this.value);
+        if (index < data1.length) {
+            const punto1 = data1[index];
+            const latLng1 = L.latLng(punto1.Latitude, punto1.Longitude);
+            marcadorDeslizable1.setLatLng(latLng1);
+            marcadorDeslizable1.bindPopup(`Vehículo 1 - Fecha y Hora: ${punto1.DateTime} - RPM: ${punto1.RPM}`).openPopup();
         }
+
+        if (index < data2.length) {
+            const punto2 = data2[index];
+            const latLng2 = L.latLng(punto2.Latitude, punto2.Longitude);
+            marcadorDeslizable2.setLatLng(latLng2);
+            marcadorDeslizable2.bindPopup(`Vehículo 2 - Fecha y Hora: ${punto2.DateTime} - RPM: ${punto2.RPM}`).openPopup();
+        }
+
+        myMap.setView(latLng1 || latLng2, myMap.getZoom()); // Usa la última coordenada actualizada para centrar el mapa
     };
 
-    slider.oninput(); // Inicializa el marcador en la primera posición
+    slider.oninput(); // Inicializa los marcadores en la primera posición
 }
+
 
 function limpiarMapa() {
     // Limpiar trayectos, marcadores y decoradores del vehículo 1
