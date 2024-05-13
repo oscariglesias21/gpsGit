@@ -69,6 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let marcadorDeslizable; //definición de marcador deslizable
     function cargarDatos(startDateTime, endDateTime, myMap) {
+        const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
+        if (vehiculoSeleccionado == 'vehiculo2'){
         const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
         fetch(link)
             .then(response => {
@@ -172,6 +174,7 @@ let marcadorDeslizable; //definición de marcador deslizable
                 alert("Hubo un problema al cargar los datos.");
                 document.getElementById('timeSlider').style.display = 'none';
             });
+    }
     }
 function updateDateTimeDisplay() {
     const startDateTimeStr = document.getElementById('startDateTime').value;
