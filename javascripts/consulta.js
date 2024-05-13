@@ -3,7 +3,8 @@ let markers2 = [];
 let trayectos = []; // Almacena las polilíneas de cada trayecto
 let rutaActual;
 let rutaActual2;
-let decoradores = []; // Almacena las instancias de los decoradores de flechas
+let decoradores = [];
+let decoradores2 = []; // Almacena las instancias de los decoradores de flechas
 let rpmGaugeHistoric;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -73,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedOption === "vehiculo1") {
             myMap.removeLayer(rutaActual);
             myMap.removeLayer(markers);
+            myMap.removeLayer(decoradores);
         } else if (selectedOption === "vehiculo2") {
             myMap.addLayer(rutaActual);
             myMap.addLayer(markers);
