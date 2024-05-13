@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedOption === "vehiculo1") {
             myMap.removeLayer(rutaActual);
             myMap.removeLayer(markers);
-            myMap.removeLayer(decoradores);
+            myMap.removeLayer(decorador);
         } else if (selectedOption === "vehiculo2") {
             myMap.addLayer(rutaActual);
             myMap.addLayer(markers);
