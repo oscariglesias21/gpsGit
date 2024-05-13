@@ -12,8 +12,8 @@ var truckIcon2 = L.icon({
     iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
     popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
 });
-let markers = [];
-let markers2 = [];
+let markers = ([],{icon: truckIcon}).addTo(map);
+let markers2 = ([],{icon: truckIcon2}).addTo(map);
 let trayectos = []; // Almacena las polilíneas de cada trayecto
 let trayectos2 = [];
 let rutaActual;
