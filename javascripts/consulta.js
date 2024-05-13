@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault(); // Previene la acción por defecto del formulario
         const startDateTime = document.getElementById('startDateTime').value;
         const endDateTime = document.getElementById('endDateTime').value;
-        limpiarMapa();
     
         // Actualiza y muestra la fecha y hora seleccionadas
         updateDateTimeDisplay(startDateTime, endDateTime);
@@ -83,9 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
 let marcadorDeslizable; //definición de marcador deslizable
 let marcadorDeslizable2; //definición de marcador deslizable 2
     function cargarDatos(startDateTime, endDateTime, myMap) {
-        limpiarMapa();
         const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado == 'vehiculo2'){
+            limpiarMapa()
         const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
         fetch(link)
             .then(response => {
@@ -193,9 +192,9 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
     }
 //vehiculo 1
     function cargarDatos2(startDateTime, endDateTime, myMap) {
-        limpiarMapa();
         const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado == 'vehiculo1'){
+            limpiarMapa()
         const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
         fetch(link2)
             .then(response => {
