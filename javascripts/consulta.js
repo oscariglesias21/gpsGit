@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cargarDatos2(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculo2') {
             cargarDatos(startDateTime, endDateTime, myMap);
-        } else if (vehiculoSeleccionado === 'vehiculos' && startDateTime && endDateTime){
+        } else if (vehiculoSeleccionado === 'vehiculos'){
             cargarDatos(startDateTime, endDateTime, myMap)
             cargarDatos2(startDateTime, endDateTime, myMap);
         }
