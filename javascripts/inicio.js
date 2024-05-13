@@ -4,13 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
     var truckIcon = L.icon({
-        iconUrl: '/camion1.jpg',  // URL de la imagen del camión
+        iconUrl: '/camion1.png',  // URL de la imagen del camión
         iconSize: [30, 30],  // Tamaño del ícono
         iconAnchor: [0, 0],  // Punto del ícono que corresponderá a la coordenada del marcador
         popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
     });
+    var truckIcon2 = L.icon({
+        iconUrl2: '/camion2.jpg',  // URL de la imagen del camión
+        iconSize2: [30, 30],  // Tamaño del ícono
+        iconAnchor2: [0, 0],  // Punto del ícono que corresponderá a la coordenada del marcador
+        popupAnchor2: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+    });
 
-    let marker = L.marker([0, 0]).addTo(myMap);
+    let marker = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
     let marker2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
 
     let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
