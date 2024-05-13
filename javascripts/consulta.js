@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault(); // Previene la acción por defecto del formulario
         const startDateTime = document.getElementById('startDateTime').value;
         const endDateTime = document.getElementById('endDateTime').value;
+        limpiarMapa();
     
         // Actualiza y muestra la fecha y hora seleccionadas
         updateDateTimeDisplay(startDateTime, endDateTime);
@@ -82,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let marcadorDeslizable; //definición de marcador deslizable
 let marcadorDeslizable2; //definición de marcador deslizable 2
     function cargarDatos(startDateTime, endDateTime, myMap) {
+        limpiarMapa();
         const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado == 'vehiculo2'){
         const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
@@ -191,6 +193,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
     }
 //vehiculo 1
     function cargarDatos2(startDateTime, endDateTime, myMap) {
+        limpiarMapa();
         const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado == 'vehiculo1'){
         const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
@@ -226,18 +229,18 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                     let ultimoPunto2 = null;
                     data2.forEach(point => {
-                        const lat = parseFloat(point.Latitude); 
-                        const lng = parseFloat(point.Longitude);
-                        const nuevoPunto = L.latLng(lat, lng);
+                        const lat2 = parseFloat(point.Latitude); 
+                        const lng2 = parseFloat(point.Longitude);
+                        const nuevoPunto2 = L.latLng(lat2, lng2);
 
-                        if (ultimoPunto2 && myMap.distance(ultimoPunto2, nuevoPunto) > 500) {
+                        if (ultimoPunto2 && myMap.distance(ultimoPunto2, nuevoPunto2) > 500) {
                             if (ultimoPunto2) {
-                    let decorador = L.polylineDecorator(rutaActual2, {
+                    let decorador2 = L.polylineDecorator(rutaActual2, {
                         patterns: [
                             {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'red', weight: 3}})}
                         ]
                     }).addTo(myMap);
-                    decoradores2.push(decorador);
+                    decoradores2.push(decorador2);
                 }
                 
                 // Comienza un nuevo segmento
@@ -252,12 +255,12 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
         // Decora el último segmento después de salir del bucle forEach
         if (rutaActual2.getLatLngs().length > 0) {
-            let decorador = L.polylineDecorator(rutaActual, {
+            let decorador2 = L.polylineDecorator(rutaActual, {
                 patterns: [
                     {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'red', weight: 3}})}
                 ]
             }).addTo(myMap);
-            decoradores2.push(decorador);
+            decoradores2.push(decorador2);
         }
                     //implementación de slider
                     if (!marcadorDeslizable2) {
@@ -307,3 +310,20 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
     }
 }
 
+function limpiarMapa() {
+    // Limpiar trayectos, marcadores y decoradores del vehículo 1
+    trayectos.forEach(trayecto => trayecto.remove());
+    trayectos = [];
+    markers.forEach(marker => marker.remove());
+    markers = [];
+    decoradores.forEach(decorador => decorador.remove());
+    decoradores = [];
+
+    // Limpiar trayectos, marcadores y decoradores del vehículo 2
+    trayectos2.forEach(trayecto => trayecto.remove());
+    trayectos2 = [];
+    markers2.forEach(marker => marker.remove());
+    markers2 = [];
+    decoradores2.forEach(decorador => decorador.remove());
+    decoradores2 = [];
+}
