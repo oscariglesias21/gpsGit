@@ -12,7 +12,8 @@ var truckIcon2 = L.icon({
     iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
     popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
 });
-
+let markers= []
+let markers2 = []
 let trayectos = []; // Almacena las polilíneas de cada trayecto
 let trayectos2 = [];
 let rutaActual;
@@ -26,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
-    let markers = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
-    let markers2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
+    markers = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
+    markers2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
     // Inicializar el tacómetro
     rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeMap")).setOptions({
         angle: 0.20, 
