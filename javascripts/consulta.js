@@ -54,19 +54,19 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault(); // Previene la acción por defecto del formulario
         const startDateTime = document.getElementById('startDateTime').value;
         const endDateTime = document.getElementById('endDateTime').value;
-
+    
         // Actualiza y muestra la fecha y hora seleccionadas
         updateDateTimeDisplay(startDateTime, endDateTime);
-
-        if (vehiculoSeleccionado == 'vehiculo2'){
-        cargarDatos(startDateTime, endDateTime, myMap);
+    
+        // Decidir qué función llamar basándose en el vehículo seleccionado
+        const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
+        if (vehiculoSeleccionado === 'vehiculo1') {
+            cargarDatos2(startDateTime, endDateTime, myMap);
+        } else if (vehiculoSeleccionado === 'vehiculo2') {
+            cargarDatos(startDateTime, endDateTime, myMap);
         }
-        else{
-            if(vehiculoSeleccionado == 'vehiculo1'){
-                cargarDatos2(startDateTime, endDateTime, myMap);
-            }
-
-            }
+    });
+    
 
     });
     if (!localStorage.getItem('hasSeenInstructions')) {
@@ -77,8 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         myModal.show();
         localStorage.setItem('hasSeenInstructions', 'true');
     }
-
-});
 
 
 let marcadorDeslizable; //definición de marcador deslizable
