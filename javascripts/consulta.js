@@ -386,8 +386,6 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
 function procesarDatosVehiculo(data, myMap, color, icon) {
     let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
     let decoradores = [];
-    let markers = [];
-    let trayectos = [];
     let ultimoPunto = null;
 
     data.forEach(point => {
@@ -411,6 +409,32 @@ function procesarDatosVehiculo(data, myMap, color, icon) {
         ]
     }).addTo(myMap);
     decoradores.push(decorador);
+    actualizarMarcadorDeslizable(data, myMap, icon);
+}
+function actualizarMarcadorDeslizable(data, myMap, icon) {
+    if (!marcadorDeslizable) {
+        marcadorDeslizable = L.marker([0, 0], {
+            draggable: true,
+            icon: icon
+        }).addTo(myMap);
+    }
+
+    const slider = document.getElementById('timeSlider');
+    slider.max = data.length - 1;
+    slider.value = 0;
+
+    slider.oninput = function() {
+        const puntoSeleccionado = data[this.value];
+        const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
+        marcadorDeslizable.setLatLng(latLng);
+        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
+        myMap.setView(latLng, myMap.getZoom());
+        if (rpmGaugeHistoric) {
+            rpmGaugeHistoric.set(puntoSeleccionado.RPM);
+        }
+    };
+
+    slider.oninput(); // Inicializa el marcador en la primera posición
 }
 
 function limpiarMapa() {
