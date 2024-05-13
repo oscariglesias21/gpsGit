@@ -183,7 +183,30 @@ app.get('/database-datos2', (req, res) => {
     res.json(results);
   });
 });
+app.get('/consulta-historicos2', (req, res) => {
+  const { startDateTime, endDateTime } = req.query;
+  const startParts = startDateTime.split('T');
+  const endParts = endDateTime.split('T');
+  const startDate = startParts[0];
+  const startTime = startParts[1];
+  const endDate = endParts[0];
+  const endTime = endParts[1];
 
+  const query = `
+      SELECT Latitude, Longitude, CONCAT(Date, ' ', Time) AS DateTime
+      FROM p2GPS3
+      WHERE (Date > ? OR (Date = ? AND Time >= ?))
+        AND (Date < ? OR (Date = ? AND Time <= ?))`;
+
+  dbConnection.query(query, [startDate, startDate, startTime, endDate, endDate, endTime], (error, results) => {
+      if (error) {
+          console.error('Error en consulta:', error);
+          res.status(500).send('Server Error');
+          return;
+      }
+      res.json(results);
+  });
+});
 server.listen(port, () => {
   console.log(`Servidor HTTP en ejecución`);
 });

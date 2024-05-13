@@ -1,6 +1,7 @@
 let markers = [];
 let markers2 = [];
 let trayectos = []; // Almacena las polilíneas de cada trayecto
+let trayectos2 = [];
 let rutaActual;
 let rutaActual2;
 let decoradores = [];
@@ -57,8 +58,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Actualiza y muestra la fecha y hora seleccionadas
         updateDateTimeDisplay(startDateTime, endDateTime);
 
-        // Carga los datos para el intervalo de tiempo seleccionado
+        if (vehiculoSeleccionado == 'vehiculo2'){
         cargarDatos(startDateTime, endDateTime, myMap);
+        }
+        else{
+            if(vehiculoSeleccionado == 'vehiculo1'){
+                cargarDatos2(startDateTime, endDateTime, myMap);
+            }
+
+            }
+
     });
     if (!localStorage.getItem('hasSeenInstructions')) {
         console.log('Mostrando modal');
@@ -68,66 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
         myModal.show();
         localStorage.setItem('hasSeenInstructions', 'true');
     }
-    function navigate() {
-        const selectedOption = document.getElementById("vehicleSelector").value;
-        console.log("Opción seleccionada:", selectedOption);
-    
-        // Limpiar las capas existentes independientemente de la opción seleccionada
-        trayectos.forEach(trayecto => {
-            if (myMap.hasLayer(trayecto)) {
-                myMap.removeLayer(trayecto);
-            }
-        });
-        trayectos = [];
-    
-        markers.forEach(marker => {
-            if (myMap.hasLayer(marker)) {
-                myMap.removeLayer(marker);
-            }
-        });
-        markers = [];
-    
-        decoradores.forEach(decorador => {
-            if (myMap.hasLayer(decorador)) {
-                myMap.removeLayer(decorador);
-            }
-        });
-        decoradores = [];
-    
-        // Ahora, añade las capas necesarias basadas en la selección
-        if (selectedOption === "vehiculo2" || selectedOption === "vehiculos") {
-            // Supongamos que rutaActual y markers2 son las capas relevantes para vehiculo2
-            if (rutaActual && !myMap.hasLayer(rutaActual)) {
-                myMap.addLayer(rutaActual);
-            }
-    
-            // Supongamos que usas markers2 para vehiculo2
-            markers2.forEach(marker => {
-                if (!myMap.hasLayer(marker)) {
-                    myMap.addLayer(marker);
-                }
-            });
-        }
-    
-        if (selectedOption === "vehiculo1" || selectedOption === "vehiculos") {
-            // Supongamos que rutaActual2 y markers son las capas relevantes para vehiculo1
-            if (rutaActual2 && !myMap.hasLayer(rutaActual2)) {
-                myMap.addLayer(rutaActual2);
-            }
-    
-            markers.forEach(marker => {
-                if (!myMap.hasLayer(marker)) {
-                    myMap.addLayer(marker);
-                }
-            });
-        }
-    }
 
-    document.getElementById("vehicleSelector").addEventListener("change", navigate);
-    
 });
 
+
 let marcadorDeslizable; //definición de marcador deslizable
+let marcadorDeslizable2; //definición de marcador deslizable 2
     function cargarDatos(startDateTime, endDateTime, myMap) {
         const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado == 'vehiculo2'){
@@ -236,7 +191,110 @@ let marcadorDeslizable; //definición de marcador deslizable
             });
     }
     }
-function updateDateTimeDisplay() {
+//vehiculo 1
+    function cargarDatos2(startDateTime, endDateTime, myMap) {
+        const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
+        if (vehiculoSeleccionado == 'vehiculo1'){
+        const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
+        fetch(link2)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data2 => {
+                console.log(data2);
+                if (data2.length > 0) {
+                    // Eliminar trayectos existentes y limpiar el arreglo
+                    trayectos2.forEach(trayecto => trayecto.remove());
+                    trayectos2 = [];
+
+                    // Eliminar marcadores existentes y limpiar el arreglo
+                    markers2.forEach(marker => marker.remove());
+                    markers2 = [];
+
+                    decoradores2.forEach(decorador => decorador.remove());
+                    decoradores2 = [];
+
+                    rutaActual2 = L.polyline([], {
+                        color: 'blue',      // Cambia el color a azul o el que prefieras
+                        weight: 3,          // Ajusta el grosor de la línea
+                        opacity: 0.7,       // Ajusta la opacidad de la línea
+                        lineJoin: 'round',  // Establece cómo se unen los segmentos de la línea ('miter' es predeterminado, 'round' o 'bevel')
+                    }).addTo(myMap);
+
+                    trayectos2.push(rutaActual2);
+
+                    let ultimoPunto2 = null;
+                    data2.forEach(point => {
+                        const lat = parseFloat(point.Latitude); 
+                        const lng = parseFloat(point.Longitude);
+                        const nuevoPunto = L.latLng(lat, lng);
+
+                        if (ultimoPunto2 && myMap.distance(ultimoPunto2, nuevoPunto) > 500) {
+                            if (ultimoPunto2) {
+                    let decorador = L.polylineDecorator(rutaActual2, {
+                        patterns: [
+                            {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'red', weight: 3}})}
+                        ]
+                    }).addTo(myMap);
+                    decoradores2.push(decorador);
+                }
+                
+                // Comienza un nuevo segmento
+                rutaActual2 = L.polyline([], { color: 'red', weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+                trayectos2.push(rutaActual2);
+            }
+
+            // Añade el nuevo punto al segmento actual
+            rutaActual2.addLatLng(nuevoPunto);
+            ultimoPunto2 = nuevoPunto;
+        });
+
+        // Decora el último segmento después de salir del bucle forEach
+        if (rutaActual2.getLatLngs().length > 0) {
+            let decorador = L.polylineDecorator(rutaActual, {
+                patterns: [
+                    {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3}})}
+                ]
+            }).addTo(myMap);
+            decoradores2.push(decorador);
+        }
+                    //implementación de slider
+                    if (!marcadorDeslizable2) {
+                        marcadorDeslizable2 = L.marker([0, 0], {
+                            draggable: 'true',
+                        }).addTo(myMap);
+                    }
+                    const slider = document.getElementById('timeSlider');
+                    slider.max = data2.length - 1;
+                    slider.value = 0;
+
+                    slider.oninput = function() {
+                        const puntoSeleccionado2 = data2[this.value];
+                        const latLng2 = L.latLng(puntoSeleccionado2.Latitude, puntoSeleccionado2.Longitude);
+                        marcadorDeslizable2.setLatLng(latLng2);
+                        marcadorDeslizable2.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado2.DateTime} - RPM: ${puntoSeleccionado2.RPM}`).openPopup();
+                        myMap.setView(latLng2, myMap.getZoom());
+                    };
+
+                    slider.oninput();
+
+                    document.getElementById('timeSlider').style.display = 'block'; 
+                } else {
+                    alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
+                    document.getElementById('timeSlider').style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error en fetch o procesando data:', error);
+                alert("Hubo un problema al cargar los datos.");
+                document.getElementById('timeSlider').style.display = 'none';
+            });
+    }
+    }
+    function updateDateTimeDisplay() {
     const startDateTimeStr = document.getElementById('startDateTime').value;
     const endDateTimeStr = document.getElementById('endDateTime').value;
 
