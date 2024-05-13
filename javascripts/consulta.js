@@ -71,6 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
             cargarDatos2(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculo2' && startDateTime && endDateTime) {
             cargarDatos(startDateTime, endDateTime, myMap);
+        } else if (vehiculoSeleccionado === 'vehiculos' && startDateTime && endDateTime){
+            cargarDatos(startDateTime, endDateTime, myMap)
+            cargarDatos2(startDateTime, endDateTime, myMap);
         }
     });
 
@@ -88,6 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
             cargarDatos2(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculo2') {
             cargarDatos(startDateTime, endDateTime, myMap);
+        } else if (vehiculoSeleccionado === 'vehiculos' && startDateTime && endDateTime){
+            cargarDatos(startDateTime, endDateTime, myMap)
+            cargarDatos2(startDateTime, endDateTime, myMap);
         }
     });
     
