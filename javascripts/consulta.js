@@ -325,7 +325,11 @@ function limpiarMapa() {
     trayectos = [];
     markers.forEach(marker => marker.remove());
     markers = [];
-    decoradores.forEach(decorador => decorador.remove());
+    decoradores.forEach(decorador => {
+        if (decorador.remove) {
+            decorador.remove();
+        }
+    });
     decoradores = [];
 
     // Limpiar trayectos, marcadores y decoradores del vehículo 2
@@ -333,7 +337,11 @@ function limpiarMapa() {
     trayectos2 = [];
     markers2.forEach(marker => marker.remove());
     markers2 = [];
-    decoradores2.forEach(decorador => decorador.remove());
+    decoradores2.forEach(decorador => {
+        if (decorador.remove) {
+            decorador.remove();
+        }
+    });
     decoradores2 = [];
 
     if (marcadorDeslizable) {
