@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
     var truckIcon = L.icon({
-        iconUrl: '/camion_1.jpg',  // URL de la imagen del camión
+        iconUrl: '/camion1.jpg',  // URL de la imagen del camión
         iconSize: [40, 40],  // Tamaño del ícono
         iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
         popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
