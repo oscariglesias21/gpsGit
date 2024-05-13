@@ -289,6 +289,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                     if (!marcadorDeslizable2) {
                         marcadorDeslizable2 = L.marker([0, 0], {
                             draggable: 'true',
+                            icon: truckIcon
                         }).addTo(myMap);
                     }
                     const slider = document.getElementById('timeSlider');
