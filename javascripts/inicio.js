@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
         popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
     });
-    let marker = L.marker([0, 0]).addTo(myMap);
+    let marker = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
     let marker2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
 
     let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo

@@ -1,5 +1,18 @@
-let markers = [];
-let markers2 = [];
+var truckIcon = L.icon({
+    iconUrl: '/camion1_.png',  // Asegúrate de que esta URL sea accesible
+    iconSize: [40, 40],  // Tamaño del ícono
+    iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
+    popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+});
+
+var truckIcon2 = L.icon({
+    iconUrl: '/camion2__.png',  // Asegúrate de que esta URL sea accesible
+    iconSize: [40, 40],  // Tamaño del ícono
+    iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
+    popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+});
+let markers = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
+let markers2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
 let trayectos = []; // Almacena las polilíneas de cada trayecto
 let trayectos2 = [];
 let rutaActual;
