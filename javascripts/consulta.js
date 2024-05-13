@@ -339,9 +339,73 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 //ambos vehiculos
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
     console.log("Cargando datos para ambos vehículos");
-    cargarDatos(startDateTime, endDateTime, myMap);
 
+    // Preparar las URLs para las consultas de ambos vehículos
+    const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+    const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+
+    // Usar Promise.all para manejar las dos solicitudes de forma simultánea
+    Promise.all([
+        fetch(link1).then(response => response.json()),
+        fetch(link2).then(response => response.json())
+    ]).then(results => {
+        const [data1, data2] = results;
+
+        // Limpia el mapa antes de mostrar nuevos datos
+        limpiarMapa();
+
+        // Procesar y mostrar los datos del primer vehículo
+        if (data1.length > 0) {
+            procesarDatosVehiculo(data1, myMap, 'blue', truckIcon2);
+        } else {
+            console.log("No hay datos para el vehículo 1 en el rango seleccionado.");
+        }
+
+        // Procesar y mostrar los datos del segundo vehículo
+        if (data2.length > 0) {
+            procesarDatosVehiculo(data2, myMap, 'red', truckIcon);
+        } else {
+            console.log("No hay datos para el vehículo 2 en el rango seleccionado.");
+        }
+
+        // Mostrar controles de usuario si hay datos
+        if (data1.length > 0 || data2.length > 0) {
+            document.getElementById('timeSlider').style.display = 'block';
+        } else {
+            alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
+            document.getElementById('timeSlider').style.display = 'none';
+        }
+    }).catch(error => {
+        console.error('Error cargando datos de ambos vehículos:', error);
+        alert("Hubo un problema al cargar los datos de ambos vehículos.");
+        document.getElementById('timeSlider').style.display = 'none';
+    });
 }
+
+// Función para procesar y mostrar los datos de cada vehículo
+function procesarDatosVehiculo(data, myMap, color, icon) {
+    let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+    let decoradores = [];
+    let markers = [];
+
+    data.forEach(point => {
+        const lat = parseFloat(point.Latitude);
+        const lng = parseFloat(point.Longitude);
+        const nuevoPunto = L.latLng(lat, lng);
+        rutaActual.addLatLng(nuevoPunto);
+
+        // Añadir marcadores y decoradores si es necesario
+    });
+
+    // Decorar la ruta con símbolos de dirección
+    let decorador = L.polylineDecorator(rutaActual, {
+        patterns: [
+            {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: color, weight: 3}})}
+        ]
+    }).addTo(myMap);
+    decoradores.push(decorador);
+}
+
 function limpiarMapa() {
     // Limpiar trayectos, marcadores y decoradores del vehículo 1
     trayectos.forEach(trayecto => trayecto.remove());
