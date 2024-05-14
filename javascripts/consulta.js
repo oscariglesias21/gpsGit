@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let marcadorDeslizable; //definición de marcador deslizable
 let marcadorDeslizable2; //definición de marcador deslizable 2
-    function cargarDatos(startDateTime, endDateTime, myMap, sliderId) {
+    function cargarDatos(startDateTime, endDateTime, myMap) {
         if (vehiculoSeleccionado == 'vehiculo2'){
             limpiarMapa()
         const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
@@ -184,7 +184,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                             icon: truckIcon2
                         }).addTo(myMap);
                     }
-                    const slider = document.getElementById(sliderId);
+                    const slider = document.getElementById('timeslider');
                     slider.max = data.length - 1;
                     slider.value = 0;
 
@@ -204,21 +204,21 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                     slider.oninput();
 
-                    document.getElementById(sliderId).style.display = 'block'; 
+                    document.getElementById('timeslider').style.display = 'block'; 
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
-                    document.getElementById(sliderId).style.display = 'none';
+                    document.getElementById('timeslider').style.display = 'none';
                 }
             })
             .catch(error => {
                 console.error('Error en fetch o procesando data:', error);
                 alert("Hubo un problema al cargar los datos.");
-                document.getElementById(sliderId).style.display = 'none';
+                document.getElementById('timeslider').style.display = 'none';
             });
     }
     }
 //vehiculo 1
-    function cargarDatos2(startDateTime, endDateTime, myMap, sliderId) {
+    function cargarDatos2(startDateTime, endDateTime, myMap) {
         const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado == 'vehiculo1'){
             limpiarMapa()
@@ -295,7 +295,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                             icon: truckIcon
                         }).addTo(myMap);
                     }
-                    const slider = document.getElementById(sliderId);
+                    const slider = document.getElementById('timeslider2');
                     slider.max = data2.length - 1;
                     slider.value = 0;
 
@@ -309,16 +309,16 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                     slider.oninput();
 
-                    document.getElementById(sliderId).style.display = 'block'; 
+                    document.getElementById('timeslider2').style.display = 'block'; 
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
-                    document.getElementById(sliderId).style.display = 'none';
+                    document.getElementById('timeslider2').style.display = 'none';
                 }
             })
             .catch(error => {
                 console.error('Error en fetch o procesando data:', error);
                 alert("Hubo un problema al cargar los datos.");
-                document.getElementById(sliderId).style.display = 'none';
+                document.getElementById('timeslider2').style.display = 'none';
             });
     }
     }
@@ -341,8 +341,8 @@ function cargarDatosSimultaneos(startDateTime, endDateTime, myMap) {
     limpiarMapa();  // Asegúrate de limpiar el mapa antes de cargar nuevos datos.
 
     // Llamar a las funciones de carga para cada vehículo con su respectivo slider.
-    cargarDatos(startDateTime, endDateTime, myMap, 'timeSlider');  // Asume que cargarDatos ahora acepta un argumento adicional para el ID del slider
-    cargarDatos2(startDateTime, endDateTime, myMap, 'timeSlider2'); // Asume lo mismo para cargarDatos2
+    cargarDatos(startDateTime, endDateTime, myMap);  // Asume que cargarDatos ahora acepta un argumento adicional para el ID del slider
+    cargarDatos2(startDateTime, endDateTime, myMap); // Asume lo mismo para cargarDatos2
 }
 
 
