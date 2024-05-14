@@ -335,6 +335,7 @@ function limpiarMapa() {
         slider.style.display = 'none'; // Ocultar el slider
     });
 }
+//AMBOS VEHICULOS------------------------------------------------------------------------------------------------------------------------
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
     limpiarMapa()
     if (!startDateTime || !endDateTime) {
@@ -434,5 +435,4 @@ function mostrarRuta(data, myMap, color, icon, sliderId) {
         }).addTo(myMap);
         decoradores.push(decorador);
     }
-
 }
