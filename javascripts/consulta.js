@@ -341,7 +341,7 @@ function cargarDatosSimultaneos(startDateTime, endDateTime, myMap) {
     limpiarMapa();  // Asegúrate de limpiar el mapa antes de cargar nuevos datos.
 
     // Llamar a las funciones de carga para cada vehículo con su respectivo slider.
-    cargarDatos(startDateTime, endDateTime, myMap, 'timeSlider1');  // Asume que cargarDatos ahora acepta un argumento adicional para el ID del slider
+    cargarDatos(startDateTime, endDateTime, myMap, 'timeSlider');  // Asume que cargarDatos ahora acepta un argumento adicional para el ID del slider
     cargarDatos2(startDateTime, endDateTime, myMap, 'timeSlider2'); // Asume lo mismo para cargarDatos2
 }
 
