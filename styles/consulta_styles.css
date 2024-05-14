@@ -58,7 +58,8 @@ padding: .375rem .75rem;
 #timeSlider {
     width: 100%;
     max-width: 400px; 
-    margin: 10px auto
+    margin: 10px auto;
+    display: none;
 }
 #timeSlider2 {
     width: 100%;

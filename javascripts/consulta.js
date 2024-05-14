@@ -331,6 +331,7 @@ function limpiarMapa() {
     }
 }
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
+    limpiarMapa()
     if (!startDateTime || !endDateTime) {
         console.error("Las fechas de inicio y fin no están definidas");
         return;
