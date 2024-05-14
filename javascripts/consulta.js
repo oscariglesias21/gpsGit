@@ -394,6 +394,7 @@ function mostrarRuta(data, myMap, color, icon, sliderId) {
     let slider = document.getElementById(sliderId);
     let marcadorDeslizable;
     let ultimoPunto = null; // Guarda el último punto para comparar distancias
+    let decoradores = [];
 
     slider.max = data.length - 1;
     slider.value = 0;
@@ -402,6 +403,7 @@ function mostrarRuta(data, myMap, color, icon, sliderId) {
         const latLng = L.latLng(point.Latitude, point.Longitude);
 
         if (ultimoPunto && myMap.distance(ultimoPunto, latLng) > 500) {
+            decoraRuta(rutaActual);
             // Comienza un nuevo segmento si la distancia es mayor a 500 metros
             rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7 }).addTo(myMap);
         }
@@ -424,4 +426,13 @@ function mostrarRuta(data, myMap, color, icon, sliderId) {
     };
 
     slider.oninput(); // Inicializa el marcador y la vista al cargar los datos
+    function decoraRuta(ruta) {
+        let decorador = L.polylineDecorator(ruta, {
+            patterns: [
+                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: color, weight: 3}})}
+            ]
+        }).addTo(myMap);
+        decoradores.push(decorador);
+    }
+
 }
