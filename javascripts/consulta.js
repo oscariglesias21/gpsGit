@@ -425,19 +425,24 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
 }
 
 function mostrarRuta(data, myMap, color, icon, sliderId) {
-    let ruta = L.polyline([], { color: color, weight: 3, opacity: 0.7 }).addTo(myMap);
+    let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7 }).addTo(myMap);
     let slider = document.getElementById(sliderId);
-    let marcadorDeslizable; // Marcador deslizable local para cada llamada a la función
+    let marcadorDeslizable;
     let ultimoPunto = null; // Guarda el último punto para comparar distancias
-    let decoradores = []; // Almacena los decoradores para poder gestionarlos después
-
 
     slider.max = data.length - 1;
     slider.value = 0;
 
     data.forEach(point => {
         const latLng = L.latLng(point.Latitude, point.Longitude);
-        ruta.addLatLng(latLng);
+
+        if (ultimoPunto && myMap.distance(ultimoPunto, latLng) > 500) {
+            // Comienza un nuevo segmento si la distancia es mayor a 500 metros
+            rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7 }).addTo(myMap);
+        }
+
+        rutaActual.addLatLng(latLng);
+        ultimoPunto = latLng; // Actualiza el último punto
     });
 
     slider.oninput = function() {
@@ -453,7 +458,7 @@ function mostrarRuta(data, myMap, color, icon, sliderId) {
         marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${selectedPoint.DateTime} - RPM: ${selectedPoint.RPM}`).openPopup();
     };
 
-    slider.oninput(); // Asegúrate de inicializar el marcador y la vista cuando cargues los datos
+    slider.oninput(); // Inicializa el marcador y la vista al cargar los datos
 }
 
 
