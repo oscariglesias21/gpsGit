@@ -295,7 +295,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                             icon: truckIcon
                         }).addTo(myMap);
                     }
-                    const slider = document.getElementById('timeSlider');
+                    const slider = document.getElementById('timeSlider2');
                     slider.max = data2.length - 1;
                     slider.value = 0;
 
@@ -309,16 +309,16 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                     slider.oninput();
 
-                    document.getElementById('timeSlider').style.display = 'block'; 
+                    document.getElementById('timeSlider2').style.display = 'block'; 
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
-                    document.getElementById('timeSlider').style.display = 'none';
+                    document.getElementById('timeSlider2').style.display = 'none';
                 }
             })
             .catch(error => {
                 console.error('Error en fetch o procesando data:', error);
                 alert("Hubo un problema al cargar los datos.");
-                document.getElementById('timeSlider').style.display = 'none';
+                document.getElementById('timeSlider2').style.display = 'none';
             });
     }
     }
