@@ -329,6 +329,11 @@ function limpiarMapa() {
         marcadorDeslizable2.remove(); // Eliminar marcador deslizable 2 si existe
         marcadorDeslizable2 = null; // Restablecer a null para reutilización
     }
+    const sliders = document.querySelectorAll('.timeSlider'); // Asumiendo que todos los sliders tienen esta clase
+    sliders.forEach(slider => {
+        slider.value = 0; // Resetear el valor del slider
+        slider.style.display = 'none'; // Ocultar el slider
+    });
 }
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
     limpiarMapa()
