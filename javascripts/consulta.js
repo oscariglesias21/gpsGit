@@ -427,16 +427,18 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
 function mostrarRuta(data, myMap, color, icon, sliderId) {
     let ruta = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
     let slider = document.getElementById(sliderId);
+
+    // Asegúrate de que el marcador deslizable se inicializa aquí
     let marcadorDeslizable = L.marker([0, 0], {icon: icon}).addTo(myMap);
+    marcadorDeslizable.addTo(myMap);  // Asegúrate de que se añade al mapa
+
     let ultimoPunto = null; // Guarda el último punto para comparar distancias
     let decoradores = []; // Almacena los decoradores para poder gestionarlos después
 
     data.forEach((point, index) => {
         const latLng = L.latLng(point.Latitude, point.Longitude);
 
-        // Si hay un último punto y la distancia es mayor a 500 metros, inicia una nueva polilínea
         if (ultimoPunto && myMap.distance(ultimoPunto, latLng) > 500) {
-            // Añade un decorador a la ruta actual antes de empezar una nueva
             let decorador = L.polylineDecorator(ruta, {
                 patterns: [
                     {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: color, weight: 3}})}
@@ -444,14 +446,12 @@ function mostrarRuta(data, myMap, color, icon, sliderId) {
             }).addTo(myMap);
             decoradores.push(decorador);
 
-            // Comienza una nueva polilínea
             ruta = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
         }
 
         ruta.addLatLng(latLng);
-        ultimoPunto = latLng; // Actualiza el último punto
+        ultimoPunto = latLng;
 
-        // Asegúrate de añadir un decorador al último segmento de la ruta cuando se termina el bucle
         if (index === data.length - 1) {
             let decoradorFinal = L.polylineDecorator(ruta, {
                 patterns: [
@@ -466,9 +466,11 @@ function mostrarRuta(data, myMap, color, icon, sliderId) {
         const selectedPoint = data[this.value];
         const latLng = L.latLng(selectedPoint.Latitude, selectedPoint.Longitude);
         myMap.setView(latLng, 13);
-        marcadorDeslizable.setLatLng(latLng);
+        marcadorDeslizable.setLatLng(latLng);  // Actualiza la posición del marcador
         marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${selectedPoint.DateTime} - RPM: ${selectedPoint.RPM}`).openPopup();
     };
+
+    slider.oninput();  // Llama a oninput inmediatamente para establecer la posición inicial
 }
 
 
