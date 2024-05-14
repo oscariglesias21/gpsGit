@@ -428,6 +428,8 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
 function mostrarRuta(data, myMap, color, icon, sliderId) {
     let ruta = L.polyline([], { color: color, weight: 3, opacity: 0.7 }).addTo(myMap);
     let slider = document.getElementById(sliderId);
+    let marcadorDeslizable; // Marcador deslizable local para cada llamada a la función
+
     slider.max = data.length - 1;
     slider.value = 0;
 
@@ -440,11 +442,17 @@ function mostrarRuta(data, myMap, color, icon, sliderId) {
         const selectedPoint = data[this.value];
         const latLng = L.latLng(selectedPoint.Latitude, selectedPoint.Longitude);
         myMap.setView(latLng, 13);
-        if (marcadorDeslizable) {
+
+        if (!marcadorDeslizable) {
+            marcadorDeslizable = L.marker(latLng, {icon: icon}).addTo(myMap);
+        } else {
             marcadorDeslizable.setLatLng(latLng);
-            marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${selectedPoint.DateTime} - RPM: ${selectedPoint.RPM}`).openPopup();
         }
+        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${selectedPoint.DateTime} - RPM: ${selectedPoint.RPM}`).openPopup();
     };
+
+    slider.oninput(); // Asegúrate de inicializar el marcador y la vista cuando cargues los datos
 }
+
 
 
