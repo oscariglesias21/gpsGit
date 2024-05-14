@@ -67,11 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const startDateTime = document.getElementById('startDateTime').value;
         const endDateTime = document.getElementById('endDateTime').value;
     
-        if (vehiculoSeleccionado === 'vehiculo1' && startDateTime && endDateTime) {
+        if (vehiculoSeleccionado === 'vehiculo1') {
             cargarDatos2(startDateTime, endDateTime, myMap);
-        } else if (vehiculoSeleccionado === 'vehiculo2' && startDateTime && endDateTime) {
+        } else if (vehiculoSeleccionado === 'vehiculo2') {
             cargarDatos(startDateTime, endDateTime, myMap);
-        } else if (vehiculoSeleccionado === 'vehiculos' && startDateTime && endDateTime)
+        } else if (vehiculoSeleccionado === 'vehiculos')
             cargarAmbosDatos(startDateTime, endDateTime, myMap);
     });
 
@@ -373,10 +373,52 @@ function limpiarMapa() {
     }
 }
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
-    const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
-    if (vehiculoSeleccionado == 'vehiculos'){
-        limpiarMapa()
-        cargarDatos(startDateTime, endDateTime, myMap, 'timeSlider');
-        cargarDatos2(startDateTime, endDateTime, myMap, 'timeSlider2');
+    const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+    const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+
+    Promise.all([
+        fetch(link1).then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();
+        }),
+        fetch(link2).then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();
+        })
+    ]).then(data => {
+        const [data1, data2] = data;
+        if (data1.length > 0 && data2.length > 0) {
+            limpiarMapa();
+            mostrarRuta(data1, myMap, 'blue', truckIcon, 'timeSlider');
+            mostrarRuta(data2, myMap, 'red', truckIcon2, 'timeSlider2');
+        } else {
+            console.log("No hay datos suficientes para uno o ambos vehículos.");
+        }
+    }).catch(error => {
+        console.error("Error al cargar datos de los vehículos:", error);
+    });
 }
+
+function mostrarRuta(data, myMap, color, icon, sliderId) {
+    let ruta = L.polyline([], { color: color, weight: 3, opacity: 0.7 }).addTo(myMap);
+    data.forEach(point => {
+        const latLng = L.latLng(point.Latitude, point.Longitude);
+        ruta.addLatLng(latLng);
+    });
+
+    // Configura el slider si se proporciona un ID
+    if (sliderId) {
+        const slider = document.getElementById(sliderId);
+        slider.max = data.length - 1;
+        slider.value = 0;
+        slider.oninput = () => {
+            const selectedPoint = data[slider.value];
+            let marker = L.marker([selectedPoint.Latitude, selectedPoint.Longitude], {icon: icon}).addTo(myMap);
+            marker.bindPopup(`Fecha y Hora: ${selectedPoint.DateTime}`).openPopup();
+        };
+    }
 }
