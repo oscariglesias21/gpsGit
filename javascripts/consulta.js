@@ -426,63 +426,25 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
 }
 
 function mostrarRuta(data, myMap, color, icon, sliderId) {
-    let ruta = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+    let ruta = L.polyline([], { color: color, weight: 3, opacity: 0.7 }).addTo(myMap);
     let slider = document.getElementById(sliderId);
-    let decoradores = [];
-    let ultimoPunto = null;
-    const DISTANCIA_MAXIMA = 500; // Máxima distancia en metros para considerar segmentos continuos
-
     slider.max = data.length - 1;
     slider.value = 0;
 
     data.forEach(point => {
         const latLng = L.latLng(point.Latitude, point.Longitude);
-
-        if (ultimoPunto && myMap.distance(ultimoPunto, latLng) > DISTANCIA_MAXIMA) {
-            // Si la distancia entre el último punto y el nuevo punto es demasiado grande, comienza un nuevo segmento de trayecto
-            ruta = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
-            // También añade decoradores al segmento anterior si es necesario
-            let decorador = L.polylineDecorator(ultimoPunto.ruta, {
-                patterns: [
-                    {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {fillOpacity: 0.7, color: color, weight: 3}})}
-                ]
-            }).addTo(myMap);
-            decoradores.push(decorador);
-        }
-
         ruta.addLatLng(latLng);
-        ultimoPunto = {latLng: latLng, ruta: ruta}; // Actualiza el último punto con la nueva ubicación y ruta actual
     });
 
-    // Añadir decorador al último segmento
-    let finalDecorator = L.polylineDecorator(ruta, {
-        patterns: [
-            {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {fillOpacity: 0.7, color: color, weight: 3}})}
-        ]
-    }).addTo(myMap);
-    decoradores.push(finalDecorator);
-
-    // Configurar la interacción con el slider
     slider.oninput = function() {
         const selectedPoint = data[this.value];
-        const selectedLatLng = L.latLng(selectedPoint.Latitude, selectedPoint.Longitude);
-        myMap.setView(selectedLatLng, 13);
-
-        // Asegurarse de que el marcador se mueva con el slider
-        if (!marcadorDeslizable) {
-            marcadorDeslizable = L.marker(selectedLatLng, {
-                icon: icon,
-                draggable: 'true'
-            }).addTo(myMap);
-        } else {
-            marcadorDeslizable.setLatLng(selectedLatLng);
+        const latLng = L.latLng(selectedPoint.Latitude, selectedPoint.Longitude);
+        myMap.setView(latLng, 13);
+        if (marcadorDeslizable) {
+            marcadorDeslizable.setLatLng(latLng);
+            marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${selectedPoint.DateTime} - RPM: ${selectedPoint.RPM}`).openPopup();
         }
-        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${selectedPoint.DateTime} - RPM: ${selectedPoint.RPM}`).openPopup();
     };
-
-    // Inicializar el slider
-    slider.oninput();
 }
-
 
 
