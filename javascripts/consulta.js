@@ -373,6 +373,8 @@ function limpiarMapa() {
     }
 }
 function cargarDatosVehiculo(startDateTime, endDateTime, myMap, url, color, icon, sliderId) {
+    const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
+    if (vehiculoSeleccionado == 'vehiculos'){
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -393,7 +395,7 @@ function cargarDatosVehiculo(startDateTime, endDateTime, myMap, url, color, icon
             document.getElementById(sliderId).style.display = 'none';
         });
 }
-
+}
 function mostrarRuta(data, myMap, color, icon, sliderId) {
     let ruta = L.polyline([], { color: color, weight: 3, opacity: 0.7 }).addTo(myMap);
     let slider = document.getElementById(sliderId);
@@ -416,6 +418,8 @@ function mostrarRuta(data, myMap, color, icon, sliderId) {
     };
 }
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
+    const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
+    if (vehiculoSeleccionado == 'vehiculos'){
     const url1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
     const url2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
     limpiarMapa(); // Asegúrate de que el mapa esté limpio antes de cargar nuevos datos
@@ -428,5 +432,6 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
     }).catch(error => {
         console.error("Error al cargar datos simultáneos:", error);
     });
+}
 }
 
