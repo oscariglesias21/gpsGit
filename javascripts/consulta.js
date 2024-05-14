@@ -372,11 +372,11 @@ function limpiarMapa() {
         marcadorDeslizable2 = null; // Restablecer a null para reutilización
     }
 }
-function cargarAmbosDatos() {
+function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
     const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
     if (vehiculoSeleccionado == 'vehiculos'){
         limpiarMapa()
-    cargarDatos();
-    cargarDatos2();
+        cargarDatos(startDateTime, endDateTime, myMap, 'timeSlider');
+        cargarDatos2(startDateTime, endDateTime, myMap, 'timeSlider2');
 }
 }
