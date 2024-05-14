@@ -59,13 +59,13 @@ padding: .375rem .75rem;
     width: 100%;
     max-width: 400px; 
     margin: 10px auto;
-    display: block;
+    display: none;
 }
 #timeSlider2 {
     width: 100%;
     max-width: 400px; 
     margin: 10px auto;
-    display: block;
+    display: none;
 }
 
 #vehicleSelector {
