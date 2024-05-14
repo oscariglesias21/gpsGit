@@ -336,6 +336,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
             document.getElementById('endTimeSpan').textContent = endTime;
     }
 }
+
 function limpiarMapa() {
     // Limpiar trayectos, marcadores y decoradores del vehículo 1
     trayectos.forEach(trayecto => trayecto.remove());
@@ -370,4 +371,12 @@ function limpiarMapa() {
         marcadorDeslizable2.remove(); // Eliminar marcador deslizable 2 si existe
         marcadorDeslizable2 = null; // Restablecer a null para reutilización
     }
+}
+function cargarAmbosDatos() {
+    const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
+    if (vehiculoSeleccionado == 'vehiculos'){
+        limpiarMapa()
+    cargarDatos();
+    cargarDatos2();
+}
 }
