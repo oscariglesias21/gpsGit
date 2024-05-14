@@ -56,7 +56,6 @@
 padding: .375rem .75rem; 
 }
 #timeSlider {
-    display: none;
     width: 100%;
     max-width: 500px; 
     margin: 10px auto

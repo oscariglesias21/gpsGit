@@ -308,7 +308,6 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                     };
 
                     slider.oninput();
-
                     document.getElementById('timeSlider2').style.display = 'block'; 
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
