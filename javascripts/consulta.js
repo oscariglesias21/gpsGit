@@ -19,47 +19,12 @@ let rutaActual;
 let rutaActual2;
 let decoradores = [];
 let decoradores2 = []; // Almacena las instancias de los decoradores de flechas
-let rpmGaugeHistoric;
 
 document.addEventListener('DOMContentLoaded', () => {
     const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
-    // Inicializar el tacómetro
-    rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeMap")).setOptions({
-        angle: 0.20, 
-            lineWidth: 0.20,
-            radiusScale: 1,
-            pointer: {
-                length: 0.5, // Relativo al radio del gauge
-                strokeWidth: 0.035, // El grosor del puntero
-                color: '#000000' // Color del puntero
-            },
-            limitMax: false, 
-            limitMin: false, 
-            colorStart: '#FFC107', 
-            colorStop: '#FFC107', 
-            strokeColor: '#E0E0E0', 
-            generateGradient: true,
-            highDpiSupport: true,
-            staticLabels: {
-                font: "14px sans-serif", 
-                labels: [0, 2000, 4000, 6000, 8000], 
-                color: "#000000", 
-                fractionDigits: 0 
-            },
-            staticZones: [
-                {strokeStyle: "#F03E3E", min: 0, max: 2000}, 
-                {strokeStyle: "#3498DB", min: 2000, max: 4000}, 
-                {strokeStyle: "#2980B9", min: 4000, max: 6000},
-                {strokeStyle: "#30B32D", min: 6000, max: 8000} 
-            ],
-    });
-    rpmGaugeHistoric.maxValue = 8000; // valor máximo del tacómetro
-    rpmGaugeHistoric.setMinValue(0);  // valor mínimo del tacómetro
-    rpmGaugeHistoric.set(0); // Establece un valor inicial
-    console.log("rpmGaugeHistoric inicializado:", rpmGaugeHistoric);
 
     document.getElementById("vehicleSelector").addEventListener("change", () => {
         limpiarMapa();  // Limpia el mapa cada vez que se cambia la selección del vehículo
@@ -190,16 +155,10 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                     slider.oninput = function() {
                         const puntoSeleccionado = data[this.value];
-                        console.log("Intentando establecer RPM en tacómetro:", rpmGaugeHistoric);
                         const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
                         marcadorDeslizable.setLatLng(latLng);
                         marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
                         myMap.setView(latLng, myMap.getZoom());
-                        if (rpmGaugeHistoric) {
-                            rpmGaugeHistoric.set(puntoSeleccionado.RPM);
-                        } else {
-                            console.error('rpmGaugeHistoric no está definido');
-                        }
                     };
 
                     slider.oninput();
@@ -460,6 +419,3 @@ function mostrarRuta(data, myMap, color, icon, sliderId) {
 
     slider.oninput(); // Inicializa el marcador y la vista al cargar los datos
 }
-
-
-
