@@ -64,19 +64,10 @@ padding: .375rem .75rem;
 #timeSlider2 {
     width: 100%;
     max-width: 400px; 
-    margin: 10px auto
+    margin: 10px auto;
+    display: none;
 }
-#rpmGaugeMap {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 300px;
-    height: 160px;
-    z-index: 1000;
-}
-#titleRpmGauge{
-    z-index: 10000;
-}
+
 #vehicleSelector {
     position: relative; /* Posición relativa para el pseudo-elemento */
     width: 160px;
@@ -110,8 +101,4 @@ padding: .375rem .75rem;
     .form-inline-custom .form-control {
         max-width: 165px;
     }
-    #timeSlider {
-        max-width: 80%; 
-        margin: 10px auto; 
-}
 }
