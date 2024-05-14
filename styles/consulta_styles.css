@@ -101,4 +101,16 @@ padding: .375rem .75rem;
     .form-inline-custom .form-control {
         max-width: 165px;
     }
+    #timeSlider {
+        width: 100%;
+        max-width: 400px; 
+        margin: 10px auto;
+        display: none;
+    }
+    #timeSlider2 {
+        width: 100%;
+        max-width: 400px; 
+        margin: 10px auto;
+        display: none;
+    }
 }
