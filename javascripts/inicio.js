@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let marker = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
     let marker2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
 
-    let routePath = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
-    let routePath2 = L.polyline([], {color: 'blue'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
+    let routePath = L.polyline([], {color: 'blue'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
+    let routePath2 = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
 
     let lastMarkerPosition = null;
     let lastMarkerPosition2 = null;
