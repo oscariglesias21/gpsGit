@@ -372,53 +372,61 @@ function limpiarMapa() {
         marcadorDeslizable2 = null; // Restablecer a null para reutilización
     }
 }
-function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
-    const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
-    const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
-
-    Promise.all([
-        fetch(link1).then(res => {
-            if (!res.ok) {
-                throw new Error(`HTTP error! Status: ${res.status}`);
+function cargarDatosVehiculo(startDateTime, endDateTime, myMap, url, color, icon, sliderId) {
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-            return res.json();
-        }),
-        fetch(link2).then(res => {
-            if (!res.ok) {
-                throw new Error(`HTTP error! Status: ${res.status}`);
-            }
-            return res.json();
+            return response.json();
         })
-    ]).then(data => {
-        const [data1, data2] = data;
-        if (data1.length > 0 && data2.length > 0) {
-            limpiarMapa();
-            mostrarRuta(data1, myMap, 'blue', 'timeSlider');
-            mostrarRuta(data2, myMap, 'red', 'timeSlider2');
-        } else {
-            console.log("No hay datos suficientes para uno o ambos vehículos.");
-        }
-    }).catch(error => {
-        console.error("Error al cargar datos de los vehículos:", error);
-    });
+        .then(data => {
+            if (data.length > 0) {
+                mostrarRuta(data, myMap, color, icon, sliderId);
+            } else {
+                console.log("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
+                document.getElementById(sliderId).style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Error en fetch o procesando data:', error);
+            document.getElementById(sliderId).style.display = 'none';
+        });
 }
 
 function mostrarRuta(data, myMap, color, icon, sliderId) {
     let ruta = L.polyline([], { color: color, weight: 3, opacity: 0.7 }).addTo(myMap);
+    let slider = document.getElementById(sliderId);
+    slider.max = data.length - 1;
+    slider.value = 0;
+
     data.forEach(point => {
         const latLng = L.latLng(point.Latitude, point.Longitude);
         ruta.addLatLng(latLng);
     });
 
-    // Configura el slider si se proporciona un ID
-    if (sliderId) {
-        const slider = document.getElementById(sliderId);
-        slider.max = data.length - 1;
-        slider.value = 0;
-        slider.oninput = () => {
-            const selectedPoint = data[slider.value];
-            let marker = L.marker([selectedPoint.Latitude, selectedPoint.Longitude], {icon: icon}).addTo(myMap);
-            marker.bindPopup(`Fecha y Hora: ${selectedPoint.DateTime}`).openPopup();
-        };
-    }
+    slider.oninput = function() {
+        const selectedPoint = data[this.value];
+        const latLng = L.latLng(selectedPoint.Latitude, selectedPoint.Longitude);
+        myMap.setView(latLng, 13);
+        if (marcadorDeslizable) {
+            marcadorDeslizable.setLatLng(latLng);
+            marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${selectedPoint.DateTime} - RPM: ${selectedPoint.RPM}`).openPopup();
+        }
+    };
 }
+function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
+    const url1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+    const url2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+    limpiarMapa(); // Asegúrate de que el mapa esté limpio antes de cargar nuevos datos
+
+    Promise.all([
+        cargarDatosVehiculo(startDateTime, endDateTime, myMap, url1, 'blue', truckIcon, 'timeSlider'),
+        cargarDatosVehiculo(startDateTime, endDateTime, myMap, url2, 'red', truckIcon2, 'timeSlider2')
+    ]).then(() => {
+        console.log("Datos cargados para ambos vehículos");
+    }).catch(error => {
+        console.error("Error al cargar datos simultáneos:", error);
+    });
+}
+
