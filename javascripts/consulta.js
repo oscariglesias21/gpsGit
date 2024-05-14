@@ -393,8 +393,8 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
         const [data1, data2] = data;
         if (data1.length > 0 && data2.length > 0) {
             limpiarMapa();
-            mostrarRuta(data1, myMap, 'blue', truckIcon, 'timeSlider');
-            mostrarRuta(data2, myMap, 'red', truckIcon2, 'timeSlider2');
+            mostrarRuta(data1, myMap, 'blue', 'timeSlider');
+            mostrarRuta(data2, myMap, 'red', 'timeSlider2');
         } else {
             console.log("No hay datos suficientes para uno o ambos vehículos.");
         }
