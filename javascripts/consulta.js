@@ -341,13 +341,13 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
         {
             url: `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`,
             color: 'blue',
-            icon: truckIcon,
+            icon: truckIcon2,
             sliderId: 'timeSlider'
         },
         {
             url: `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`,
             color: 'red',
-            icon: truckIcon2,
+            icon: truckIcon,
             sliderId: 'timeSlider2'
         }
     ];
