@@ -192,21 +192,6 @@
         .gauge-label {
             font-weight: bold;
         }
-        .open-btn, .recorridosBtn {
-            position: absolute;
-            left: 10px; /* Ajusta la posición a la izquierda */
-            top: 10px;
-            background-color: rgba(255, 225, 0, 0.995);
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            text-align: center;
-        }
-
-        .recorridosBtn {
-            top: 10px; /* Ajusta la posición para que no se superpongan los botones */
-        }        
 
         /*CONFIGURACIÓN: WEB RESPONSIVE*/
         @media (max-width: 768px) {
