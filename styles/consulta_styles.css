@@ -57,7 +57,12 @@ padding: .375rem .75rem;
 }
 #timeSlider {
     width: 100%;
-    max-width: 500px; 
+    max-width: 400px; 
+    margin: 10px auto
+}
+#timeSlider2 {
+    width: 100%;
+    max-width: 400px; 
     margin: 10px auto
 }
 #rpmGaugeMap {
