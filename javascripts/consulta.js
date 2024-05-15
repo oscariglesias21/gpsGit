@@ -1,15 +1,27 @@
-// Definición global de los marcadores deslizables y otros arreglos necesarios
-let marcadorDeslizable1 = null;
-let marcadorDeslizable2 = null;
-let trayectos = [];
+var truckIcon = L.icon({
+    iconUrl: '/camion1_.png', 
+    iconSize: [40, 40],  // Tamaño del ícono
+    iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
+    popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+});
+
+var truckIcon2 = L.icon({
+    iconUrl: '/camion2__.png', 
+    iconSize: [40, 40],  // Tamaño del ícono
+    iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
+    popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+});
+let markers= []
+let markers2 = []
+let trayectos = []; // Almacena las polilíneas de cada trayecto
 let trayectos2 = [];
-let markers = [];
-let markers2 = [];
-let decoradores = [];
-let decoradores2 = [];
 let rutaActual;
 let rutaActual2;
+let decoradores = [];
+let decoradores2 = []; // Almacena las instancias de los decoradores de flechas
 let rpmGaugeHistoric;
+let marcadorDeslizable1 = null;
+let marcadorDeslizable2 = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
