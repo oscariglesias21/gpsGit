@@ -1,24 +1,14 @@
-var truckIcon = L.icon({
-    iconUrl: '/camion1_.png', 
-    iconSize: [40, 40],  // Tamaño del ícono
-    iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
-    popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
-});
-
-var truckIcon2 = L.icon({
-    iconUrl: '/camion2__.png', 
-    iconSize: [40, 40],  // Tamaño del ícono
-    iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
-    popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
-});
-let markers= []
-let markers2 = []
+// Definición global de los marcadores deslizables y otros arreglos necesarios
+let marcadorDeslizable1 = null;
+let marcadorDeslizable2 = null;
 let trayectos = []; // Almacena las polilíneas de cada trayecto
 let trayectos2 = [];
+let markers = [];
+let markers2 = [];
+let decoradores = [];
+let decoradores2 = [];
 let rutaActual;
 let rutaActual2;
-let decoradores = [];
-let decoradores2 = []; // Almacena las instancias de los decoradores de flechas
 let rpmGaugeHistoric;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -29,32 +19,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el tacómetro
     rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeMap")).setOptions({
         angle: 0.20, 
-            lineWidth: 0.20,
-            radiusScale: 1,
-            pointer: {
-                length: 0.5, // Relativo al radio del gauge
-                strokeWidth: 0.035, // El grosor del puntero
-                color: '#000000' // Color del puntero
-            },
-            limitMax: false, 
-            limitMin: false, 
-            colorStart: '#FFC107', 
-            colorStop: '#FFC107', 
-            strokeColor: '#E0E0E0', 
-            generateGradient: true,
-            highDpiSupport: true,
-            staticLabels: {
-                font: "14px sans-serif", 
-                labels: [0, 2000, 4000, 6000, 8000], 
-                color: "#000000", 
-                fractionDigits: 0 
-            },
-            staticZones: [
-                {strokeStyle: "#F03E3E", min: 0, max: 2000}, 
-                {strokeStyle: "#3498DB", min: 2000, max: 4000}, 
-                {strokeStyle: "#2980B9", min: 4000, max: 6000},
-                {strokeStyle: "#30B32D", min: 6000, max: 8000} 
-            ],
+        lineWidth: 0.20,
+        radiusScale: 1,
+        pointer: {
+            length: 0.5, // Relativo al radio del gauge
+            strokeWidth: 0.035, // El grosor del puntero
+            color: '#000000' // Color del puntero
+        },
+        limitMax: false, 
+        limitMin: false, 
+        colorStart: '#FFC107', 
+        colorStop: '#FFC107', 
+        strokeColor: '#E0E0E0', 
+        generateGradient: true,
+        highDpiSupport: true,
+        staticLabels: {
+            font: "14px sans-serif", 
+            labels: [0, 2000, 4000, 6000, 8000], 
+            color: "#000000", 
+            fractionDigits: 0 
+        },
+        staticZones: [
+            {strokeStyle: "#F03E3E", min: 0, max: 2000}, 
+            {strokeStyle: "#3498DB", min: 2000, max: 4000}, 
+            {strokeStyle: "#2980B9", min: 4000, max: 6000},
+            {strokeStyle: "#30B32D", min: 6000, max: 8000} 
+        ],
     });
     rpmGaugeHistoric.maxValue = 8000; // valor máximo del tacómetro
     rpmGaugeHistoric.setMinValue(0);  // valor mínimo del tacómetro
@@ -71,20 +61,21 @@ document.addEventListener('DOMContentLoaded', () => {
             cargarDatos2(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculo2' && startDateTime && endDateTime) {
             cargarDatos(startDateTime, endDateTime, myMap);
-        } else if (vehiculoSeleccionado === 'vehiculos' && startDateTime && endDateTime)
+        } else if (vehiculoSeleccionado === 'vehiculos' && startDateTime && endDateTime) {
             cargarAmbosDatos(startDateTime, endDateTime, myMap);
+        }
     });
 
     document.getElementById('submitButton').addEventListener('click', (event) => {
         event.preventDefault(); // Previene la acción por defecto del formulario
-        startDateTime = document.getElementById('startDateTime').value;
-        endDateTime = document.getElementById('endDateTime').value;
+        const startDateTime = document.getElementById('startDateTime').value;
+        const endDateTime = document.getElementById('endDateTime').value;
     
         // Actualiza y muestra la fecha y hora seleccionadas
         updateDateTimeDisplay(startDateTime, endDateTime);
     
         // Decidir qué función llamar basándose en el vehículo seleccionado
-        vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
+        const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado === 'vehiculo1') {
             cargarDatos2(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculo2') {
@@ -93,9 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cargarAmbosDatos(startDateTime, endDateTime, myMap);
         }
     });
-    
 
-    });
     if (!localStorage.getItem('hasSeenInstructions')) {
         console.log('Mostrando modal');
         var myModal = new bootstrap.Modal(document.getElementById('instructionsModal'), {
@@ -104,13 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
         myModal.show();
         localStorage.setItem('hasSeenInstructions', 'true');
     }
+});
 
-
-let marcadorDeslizable; //definición de marcador deslizable
-let marcadorDeslizable2; //definición de marcador deslizable 2
-    function cargarDatos(startDateTime, endDateTime, myMap) {
-        if (vehiculoSeleccionado == 'vehiculo2'){
-            limpiarMapa()
+function cargarDatos(startDateTime, endDateTime, myMap) {
+    if (vehiculoSeleccionado == 'vehiculo2'){
+        limpiarMapa()
         const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
         fetch(link)
             .then(response => {
@@ -134,10 +121,10 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                     decoradores = [];
 
                     rutaActual = L.polyline([], {
-                        color: 'blue',      // Cambia el color a azul o el que prefieras
-                        weight: 3,          // Ajusta el grosor de la línea
-                        opacity: 0.7,       // Ajusta la opacidad de la línea
-                        lineJoin: 'round',  // Establece cómo se unen los segmentos de la línea ('miter' es predeterminado, 'round' o 'bevel')
+                        color: 'blue',      
+                        weight: 3,          
+                        opacity: 0.7,       
+                        lineJoin: 'round',  
                     }).addTo(myMap);
 
                     trayectos.push(rutaActual);
@@ -150,37 +137,32 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                         if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
                             if (ultimoPunto) {
-                    let decorador = L.polylineDecorator(rutaActual, {
-                        patterns: [
-                            {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3}})}
-                        ]
-                    }).addTo(myMap);
-                    decoradores.push(decorador);
-                }
-                
-                // Comienza un nuevo segmento
-                rutaActual = L.polyline([], { color: 'blue', weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
-                trayectos.push(rutaActual);
-            }
+                                let decorador = L.polylineDecorator(rutaActual, {
+                                    patterns: [
+                                        {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3}})}
+                                    ]
+                                }).addTo(myMap);
+                                decoradores.push(decorador);
+                            }
+                            rutaActual = L.polyline([], { color: 'blue', weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+                            trayectos.push(rutaActual);
+                        }
+                        rutaActual.addLatLng(nuevoPunto);
+                        ultimoPunto = nuevoPunto;
+                    });
 
-            // Añade el nuevo punto al segmento actual
-            rutaActual.addLatLng(nuevoPunto);
-            ultimoPunto = nuevoPunto;
-        });
+                    if (rutaActual.getLatLngs().length > 0) {
+                        let decorador = L.polylineDecorator(rutaActual, {
+                            patterns: [
+                                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3}})}
+                            ]
+                        }).addTo(myMap);
+                        decoradores.push(decorador);
+                    }
 
-        // Decora el último segmento después de salir del bucle forEach
-        if (rutaActual.getLatLngs().length > 0) {
-            let decorador = L.polylineDecorator(rutaActual, {
-                patterns: [
-                    {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3}})}
-                ]
-            }).addTo(myMap);
-            decoradores.push(decorador);
-        }
-                    //implementación de slider
-                    if (!marcadorDeslizable) {
-                        marcadorDeslizable = L.marker([0, 0],{ 
-                            draggable: 'true',
+                    if (!marcadorDeslizable1) {
+                        marcadorDeslizable1 = L.marker([0, 0],{ 
+                            draggable: true,
                             icon: truckIcon2
                         }).addTo(myMap);
                     }
@@ -190,20 +172,16 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                     slider.oninput = function() {
                         const puntoSeleccionado = data[this.value];
-                        console.log("Intentando establecer RPM en tacómetro:", rpmGaugeHistoric);
                         const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
-                        marcadorDeslizable.setLatLng(latLng);
-                        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
+                        marcadorDeslizable1.setLatLng(latLng);
+                        marcadorDeslizable1.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
                         myMap.setView(latLng, myMap.getZoom());
                         if (rpmGaugeHistoric) {
                             rpmGaugeHistoric.set(puntoSeleccionado.RPM);
-                        } else {
-                            console.error('rpmGaugeHistoric no está definido');
                         }
                     };
 
                     slider.oninput();
-
                     document.getElementById('timeSlider').style.display = 'block'; 
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
@@ -216,12 +194,12 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                 document.getElementById('timeSlider').style.display = 'none';
             });
     }
-    }
-//vehiculo 1
-    function cargarDatos2(startDateTime, endDateTime, myMap) {
-        const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
-        if (vehiculoSeleccionado == 'vehiculo1'){
-            limpiarMapa()
+}
+
+function cargarDatos2(startDateTime, endDateTime, myMap) {
+    const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
+    if (vehiculoSeleccionado == 'vehiculo1'){
+        limpiarMapa()
         const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
         fetch(link2)
             .then(response => {
@@ -233,22 +211,18 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
             .then(data2 => {
                 console.log(data2);
                 if (data2.length > 0) {
-                    // Eliminar trayectos existentes y limpiar el arreglo
                     trayectos2.forEach(trayecto => trayecto.remove());
                     trayectos2 = [];
-
-                    // Eliminar marcadores existentes y limpiar el arreglo
                     markers2.forEach(marker => marker.remove());
                     markers2 = [];
-
                     decoradores2.forEach(decorador => decorador.remove());
                     decoradores2 = [];
 
                     rutaActual2 = L.polyline([], {
-                        color: 'red',      // Cambia el color a azul o el que prefieras
-                        weight: 3,          // Ajusta el grosor de la línea
-                        opacity: 0.7,       // Ajusta la opacidad de la línea
-                        lineJoin: 'round',  // Establece cómo se unen los segmentos de la línea ('miter' es predeterminado, 'round' o 'bevel')
+                        color: 'red',      
+                        weight: 3,          
+                        opacity: 0.7,       
+                        lineJoin: 'round',  
                     }).addTo(myMap);
 
                     trayectos2.push(rutaActual2);
@@ -261,37 +235,32 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                         if (ultimoPunto2 && myMap.distance(ultimoPunto2, nuevoPunto) > 500) {
                             if (ultimoPunto2) {
-                    let decorador = L.polylineDecorator(rutaActual2, {
-                        patterns: [
-                            {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'red', weight: 3}})}
-                        ]
-                    }).addTo(myMap);
-                    decoradores2.push(decorador);
-                }
-                
-                // Comienza un nuevo segmento
-                rutaActual2 = L.polyline([], { color: 'red', weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
-                trayectos2.push(rutaActual2);
-            }
+                                let decorador = L.polylineDecorator(rutaActual2, {
+                                    patterns: [
+                                        {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'red', weight: 3}})}
+                                    ]
+                                }).addTo(myMap);
+                                decoradores2.push(decorador);
+                            }
+                            rutaActual2 = L.polyline([], { color: 'red', weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+                            trayectos2.push(rutaActual2);
+                        }
+                        rutaActual2.addLatLng(nuevoPunto);
+                        ultimoPunto2 = nuevoPunto;
+                    });
 
-            // Añade el nuevo punto al segmento actual
-            rutaActual2.addLatLng(nuevoPunto);
-            ultimoPunto2 = nuevoPunto;
-        });
+                    if (rutaActual2.getLatLngs().length > 0) {
+                        let decorador = L.polylineDecorator(rutaActual2, {
+                            patterns: [
+                                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'red', weight: 3}})}
+                            ]
+                        }).addTo(myMap);
+                        decoradores2.push(decorador);
+                    }
 
-        // Decora el último segmento después de salir del bucle forEach
-        if (rutaActual2.getLatLngs().length > 0) {
-            let decorador = L.polylineDecorator(rutaActual2, {
-                patterns: [
-                    {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'red', weight: 3}})}
-                ]
-            }).addTo(myMap);
-            decoradores2.push(decorador);
-        }
-                    //implementación de slider
                     if (!marcadorDeslizable2) {
                         marcadorDeslizable2 = L.marker([0, 0], {
-                            draggable: 'true',
+                            draggable: true,
                             icon: truckIcon
                         }).addTo(myMap);
                     }
@@ -308,7 +277,6 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                     };
 
                     slider.oninput();
-
                     document.getElementById('timeSlider').style.display = 'block'; 
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
@@ -321,22 +289,23 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                 document.getElementById('timeSlider').style.display = 'none';
             });
     }
-    }
-    function updateDateTimeDisplay() {
+}
+
+function updateDateTimeDisplay(startDateTime, endDateTime) {
     const startDateTimeStr = document.getElementById('startDateTime').value;
     const endDateTimeStr = document.getElementById('endDateTime').value;
 
     if (startDateTimeStr && endDateTimeStr) {
-            const [startDate, startTime] = startDateTimeStr.split(' ');
-            const [endDate, endTime] = endDateTimeStr.split(' ');
+        const [startDate, startTime] = startDateTimeStr.split(' ');
+        const [endDate, endTime] = endDateTimeStr.split(' ');
 
-            document.getElementById('startDateSpan').textContent = startDate;
-            document.getElementById('startTimeSpan').textContent = startTime;
-            document.getElementById('endDateSpan').textContent = endDate;
-            document.getElementById('endTimeSpan').textContent = endTime;
+        document.getElementById('startDateSpan').textContent = startDate;
+        document.getElementById('startTimeSpan').textContent = startTime;
+        document.getElementById('endDateSpan').textContent = endDate;
+        document.getElementById('endTimeSpan').textContent = endTime;
     }
 }
-//ambos vehiculos
+
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
     console.log("Cargando datos para ambos vehículos");
 
@@ -403,7 +372,7 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
 }
 
 function actualizarMarcadorDeslizable(data, myMap, icon, isVehiculo1) {
-    let marcadorDeslizable = isVehiculo1 ? marcadorDeslizable : marcadorDeslizable2;
+    let marcadorDeslizable = isVehiculo1 ? marcadorDeslizable1 : marcadorDeslizable2;
 
     if (!marcadorDeslizable) {
         marcadorDeslizable = L.marker([0, 0], {
@@ -430,7 +399,7 @@ function actualizarMarcadorDeslizable(data, myMap, icon, isVehiculo1) {
     slider.oninput(); 
 
     if (isVehiculo1) {
-        marcadorDeslizable = marcadorDeslizable;
+        marcadorDeslizable1 = marcadorDeslizable;
     } else {
         marcadorDeslizable2 = marcadorDeslizable;
     }
@@ -459,9 +428,9 @@ function limpiarMapa() {
     });
     decoradores2 = [];
 
-    if (marcadorDeslizable) {
-        marcadorDeslizable.remove();
-        marcadorDeslizable = null;
+    if (marcadorDeslizable1) {
+        marcadorDeslizable1.remove();
+        marcadorDeslizable1 = null;
     }
 
     if (marcadorDeslizable2) {
