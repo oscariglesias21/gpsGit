@@ -383,7 +383,7 @@ function actualizarSlider(data, myMap) {
         }
         if (marcadorDeslizable2) {
             marcadorDeslizable2.setLatLng(latLng);
-            marcadorDeslizable2.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}}`).openPopup();
+            marcadorDeslizable2.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup();
         }
         myMap.setView(latLng, myMap.getZoom()); // Centra el mapa en el marcador
         if (rpmGaugeHistoric) {
