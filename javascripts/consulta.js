@@ -20,6 +20,7 @@ let rutaActual2;
 let decoradores = [];
 let decoradores2 = []; // Almacena las instancias de los decoradores de flechas
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const myMap = L.map('mapid').setView([11.02115114, -74.84057200], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -32,11 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const startDateTime = document.getElementById('startDateTime').value;
         const endDateTime = document.getElementById('endDateTime').value;
     
-        if (vehiculoSeleccionado === 'vehiculo1') {
+        if (vehiculoSeleccionado === 'vehiculo1' && startDateTime && endDateTime) {
             cargarDatos2(startDateTime, endDateTime, myMap);
-        } else if (vehiculoSeleccionado === 'vehiculo2') {
+        } else if (vehiculoSeleccionado === 'vehiculo2' && startDateTime && endDateTime) {
             cargarDatos(startDateTime, endDateTime, myMap);
-        } else if (vehiculoSeleccionado === 'vehiculos')
+        } else if (vehiculoSeleccionado === 'vehiculos' && startDateTime && endDateTime)
             cargarAmbosDatos(startDateTime, endDateTime, myMap);
     });
 
@@ -155,6 +156,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 
                     slider.oninput = function() {
                         const puntoSeleccionado = data[this.value];
+                        console.log("Intentando establecer RPM en tacómetro:", rpmGaugeHistoric);
                         const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
                         marcadorDeslizable.setLatLng(latLng);
                         marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
@@ -254,7 +256,7 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                             icon: truckIcon
                         }).addTo(myMap);
                     }
-                    const slider = document.getElementById('timeSlider2');
+                    const slider = document.getElementById('timeSlider');
                     slider.max = data2.length - 1;
                     slider.value = 0;
 
@@ -267,16 +269,17 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
                     };
 
                     slider.oninput();
-                    document.getElementById('timeSlider2').style.display = 'block'; 
+
+                    document.getElementById('timeSlider').style.display = 'block'; 
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
-                    document.getElementById('timeSlider2').style.display = 'none';
+                    document.getElementById('timeSlider').style.display = 'none';
                 }
             })
             .catch(error => {
                 console.error('Error en fetch o procesando data:', error);
                 alert("Hubo un problema al cargar los datos.");
-                document.getElementById('timeSlider2').style.display = 'none';
+                document.getElementById('timeSlider').style.display = 'none';
             });
     }
     }
@@ -293,6 +296,103 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
             document.getElementById('endDateSpan').textContent = endDate;
             document.getElementById('endTimeSpan').textContent = endTime;
     }
+}
+//ambos vehiculos
+function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
+    console.log("Cargando datos para ambos vehículos");
+
+    // Preparar las URLs para las consultas de ambos vehículos
+    const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+    const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+
+    // Usar Promise.all para manejar las dos solicitudes de forma simultánea
+    Promise.all([
+        fetch(link1).then(response => response.json()),
+        fetch(link2).then(response => response.json())
+    ]).then(results => {
+        const [data1, data2] = results;
+
+        // Limpia el mapa antes de mostrar nuevos datos
+        limpiarMapa();
+
+        // Procesar y mostrar los datos del primer vehículo
+        if (data1.length > 0) {
+            procesarDatosVehiculo(data1, myMap, 'blue', truckIcon2);
+        } else {
+            console.log("No hay datos para el vehículo 1 en el rango seleccionado.");
+        }
+
+        // Procesar y mostrar los datos del segundo vehículo
+        if (data2.length > 0) {
+            procesarDatosVehiculo(data2, myMap, 'red', truckIcon);
+        } else {
+            console.log("No hay datos para el vehículo 2 en el rango seleccionado.");
+        }
+
+        // Mostrar controles de usuario si hay datos
+        if (data1.length > 0 || data2.length > 0) {
+            document.getElementById('timeSlider').style.display = 'block';
+        } else {
+            alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
+            document.getElementById('timeSlider').style.display = 'none';
+        }
+    }).catch(error => {
+        console.error('Error cargando datos de ambos vehículos:', error);
+        alert("Hubo un problema al cargar los datos de ambos vehículos.");
+        document.getElementById('timeSlider').style.display = 'none';
+    });
+}
+
+// Función para procesar y mostrar los datos de cada vehículo
+function procesarDatosVehiculo(data, myMap, color, icon) {
+    let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+    let decoradores = [];
+    let ultimoPunto = null;
+
+    data.forEach(point => {
+        const lat = parseFloat(point.Latitude);
+        const lng = parseFloat(point.Longitude);
+        const nuevoPunto = L.latLng(lat, lng);
+        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
+            // Comienza un nuevo segmento si la distancia supera los 500 metros
+            rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+        }
+        rutaActual.addLatLng(nuevoPunto);
+        ultimoPunto = nuevoPunto;
+
+        // Añadir marcadores y decoradores si es necesario
+    });
+
+    // Decorar la ruta con símbolos de dirección
+    let decorador = L.polylineDecorator(rutaActual, {
+        patterns: [
+            {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: color, weight: 3}})}
+        ]
+    }).addTo(myMap);
+    decoradores.push(decorador);
+    actualizarMarcadorDeslizable(data, myMap, icon);
+}
+function actualizarMarcadorDeslizable(data, myMap, icon) {
+    if (!marcadorDeslizable) {
+        marcadorDeslizable = L.marker([0, 0], {
+            draggable: true,
+            icon: icon
+        }).addTo(myMap);
+    }
+
+    const slider = document.getElementById('timeSlider');
+    slider.max = data.length - 1;
+    slider.value = 0;
+
+    slider.oninput = function() {
+        const puntoSeleccionado = data[this.value];
+        const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
+        marcadorDeslizable.setLatLng(latLng);
+        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
+        myMap.setView(latLng, myMap.getZoom());
+    };
+
+    slider.oninput(); // Inicializa el marcador en la primera posición
 }
 
 function limpiarMapa() {
@@ -328,111 +428,5 @@ function limpiarMapa() {
     if (marcadorDeslizable2) {
         marcadorDeslizable2.remove(); // Eliminar marcador deslizable 2 si existe
         marcadorDeslizable2 = null; // Restablecer a null para reutilización
-    }
-    const sliders = document.querySelectorAll('.timeSlider'); // Asumiendo que todos los sliders tienen esta clase
-    sliders.forEach(slider => {
-        slider.value = 0; // Resetear el valor del slider
-        slider.style.display = 'none'; // Ocultar el slider
-    });
-}
-//AMBOS VEHICULOS------------------------------------------------------------------------------------------------------------------------
-function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
-    limpiarMapa()
-    if (!startDateTime || !endDateTime) {
-        console.error("Las fechas de inicio y fin no están definidas");
-        return;
-    }
-
-    const config = [
-        {
-            url: `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`,
-            color: 'blue',
-            icon: truckIcon2,
-            sliderId: 'timeSlider'
-        },
-        {
-            url: `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`,
-            color: 'red',
-            icon: truckIcon,
-            sliderId: 'timeSlider2'
-        }
-    ];
-
-    // Prepara las promesas para cada configuración de vehículo
-    const requests = config.map(cfg => {
-        return fetch(cfg.url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.length > 0) {
-                    mostrarRuta(data, myMap, cfg.color, cfg.icon, cfg.sliderId);
-                } else {
-                    console.log("No hay datos de ruta disponibles para la ventana de tiempo seleccionada en " + cfg.sliderId);
-                    document.getElementById(cfg.sliderId).style.display = 'none';
-                }
-            })
-            .catch(error => {
-                console.error('Error en fetch o procesando data para ' + cfg.sliderId + ':', error);
-                document.getElementById(cfg.sliderId).style.display = 'none';
-            });
-    });
-
-    Promise.all(requests)
-        .then(() => {
-            console.log("Todos los datos de vehículos han sido cargados correctamente.");
-        })
-        .catch(error => {
-            console.error("Error al cargar datos simultáneos:", error);
-        });
-}
-
-function mostrarRuta(data, myMap, color, icon, sliderId) {
-    let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7 }).addTo(myMap);
-    let slider = document.getElementById(sliderId);
-    let marcadorDeslizable;
-    let ultimoPunto = null; // Guarda el último punto para comparar distancias
-    let decoradores = [];
-
-    slider.max = data.length - 1;
-    slider.value = 0;
-
-    data.forEach(point => {
-        const latLng = L.latLng(point.Latitude, point.Longitude);
-
-        if (ultimoPunto && myMap.distance(ultimoPunto, latLng) > 500) {
-            decoraRuta(rutaActual);
-            // Comienza un nuevo segmento si la distancia es mayor a 500 metros
-            rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7 }).addTo(myMap);
-        }
-
-        rutaActual.addLatLng(latLng);
-        ultimoPunto = latLng; // Actualiza el último punto
-    });
-
-    slider.oninput = function() {
-        const selectedPoint = data[this.value];
-        const latLng = L.latLng(selectedPoint.Latitude, selectedPoint.Longitude);
-        myMap.setView(latLng, 13);
-
-        if (!marcadorDeslizable) {
-            marcadorDeslizable = L.marker(latLng, {icon: icon}).addTo(myMap);
-        } else {
-            marcadorDeslizable.setLatLng(latLng);
-        }
-        marcadorDeslizable.bindPopup(`Fecha y Hora de Paso: ${selectedPoint.DateTime} - RPM: ${selectedPoint.RPM}`).openPopup();
-    };
-
-    slider.oninput(); // Inicializa el marcador y la vista al cargar los datos
-    function decoraRuta(ruta) {
-        let decorador = L.polylineDecorator(ruta, {
-            patterns: [
-                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: color, weight: 3}})}
-            ]
-        }).addTo(myMap);
-        decoradores.push(decorador);
     }
 }
