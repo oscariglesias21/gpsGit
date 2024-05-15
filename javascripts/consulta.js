@@ -340,35 +340,29 @@ let marcadorDeslizable2; //definición de marcador deslizable 2
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
     console.log("Cargando datos para ambos vehículos");
 
-    // Preparar las URLs para las consultas de ambos vehículos
     const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
     const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
 
-    // Usar Promise.all para manejar las dos solicitudes de forma simultánea
     Promise.all([
         fetch(link1).then(response => response.json()),
         fetch(link2).then(response => response.json())
     ]).then(results => {
         const [data1, data2] = results;
 
-        // Limpia el mapa antes de mostrar nuevos datos
         limpiarMapa();
 
-        // Procesar y mostrar los datos del primer vehículo
         if (data1.length > 0) {
-            procesarDatosVehiculo(data1, myMap, 'blue', truckIcon2);
+            procesarDatosVehiculo(data1, myMap, 'blue', truckIcon2, true);
         } else {
             console.log("No hay datos para el vehículo 1 en el rango seleccionado.");
         }
 
-        // Procesar y mostrar los datos del segundo vehículo
         if (data2.length > 0) {
-            procesarDatosVehiculo(data2, myMap, 'red', truckIcon);
+            procesarDatosVehiculo(data2, myMap, 'red', truckIcon, false);
         } else {
             console.log("No hay datos para el vehículo 2 en el rango seleccionado.");
         }
 
-        // Mostrar controles de usuario si hay datos
         if (data1.length > 0 || data2.length > 0) {
             document.getElementById('timeSlider').style.display = 'block';
         } else {
@@ -382,8 +376,7 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
     });
 }
 
-// Función para procesar y mostrar los datos de cada vehículo
-function procesarDatosVehiculo(data, myMap, color, icon) {
+function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
     let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
     let decoradores = [];
     let ultimoPunto = null;
@@ -393,25 +386,25 @@ function procesarDatosVehiculo(data, myMap, color, icon) {
         const lng = parseFloat(point.Longitude);
         const nuevoPunto = L.latLng(lat, lng);
         if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-            // Comienza un nuevo segmento si la distancia supera los 500 metros
             rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
         }
         rutaActual.addLatLng(nuevoPunto);
         ultimoPunto = nuevoPunto;
-
-        // Añadir marcadores y decoradores si es necesario
     });
 
-    // Decorar la ruta con símbolos de dirección
     let decorador = L.polylineDecorator(rutaActual, {
         patterns: [
             {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: color, weight: 3}})}
         ]
     }).addTo(myMap);
     decoradores.push(decorador);
-    actualizarMarcadorDeslizable(data, myMap, icon);
+
+    actualizarMarcadorDeslizable(data, myMap, icon, isVehiculo1);
 }
-function actualizarMarcadorDeslizable(data, myMap, icon) {
+
+function actualizarMarcadorDeslizable(data, myMap, icon, isVehiculo1) {
+    let marcadorDeslizable = isVehiculo1 ? marcadorDeslizable : marcadorDeslizable2;
+
     if (!marcadorDeslizable) {
         marcadorDeslizable = L.marker([0, 0], {
             draggable: true,
@@ -434,11 +427,16 @@ function actualizarMarcadorDeslizable(data, myMap, icon) {
         }
     };
 
-    slider.oninput(); // Inicializa el marcador en la primera posición
+    slider.oninput(); 
+
+    if (isVehiculo1) {
+        marcadorDeslizable = marcadorDeslizable;
+    } else {
+        marcadorDeslizable2 = marcadorDeslizable;
+    }
 }
 
 function limpiarMapa() {
-    // Limpiar trayectos, marcadores y decoradores del vehículo 1
     trayectos.forEach(trayecto => trayecto.remove());
     trayectos = [];
     markers.forEach(marker => marker.remove());
@@ -450,7 +448,6 @@ function limpiarMapa() {
     });
     decoradores = [];
 
-    // Limpiar trayectos, marcadores y decoradores del vehículo 2
     trayectos2.forEach(trayecto => trayecto.remove());
     trayectos2 = [];
     markers2.forEach(marker => marker.remove());
@@ -463,12 +460,12 @@ function limpiarMapa() {
     decoradores2 = [];
 
     if (marcadorDeslizable) {
-        marcadorDeslizable.remove(); // Eliminar marcador deslizable si existe
-        marcadorDeslizable = null; // Restablecer a null para reutilización
+        marcadorDeslizable.remove();
+        marcadorDeslizable = null;
     }
 
     if (marcadorDeslizable2) {
-        marcadorDeslizable2.remove(); // Eliminar marcador deslizable 2 si existe
-        marcadorDeslizable2 = null; // Restablecer a null para reutilización
+        marcadorDeslizable2.remove();
+        marcadorDeslizable2 = null;
     }
 }
