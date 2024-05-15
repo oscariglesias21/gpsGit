@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function cargarDatos(startDateTime, endDateTime, myMap) {
     const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
-    if (vehiculoSeleccionado == 'vehiculo2'){
-        limpiarMapa()
+    if (vehiculoSeleccionado == 'vehiculo2') {
+        limpiarMapa();
         const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
         fetch(link)
             .then(response => {
@@ -192,8 +192,8 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
 
 function cargarDatos2(startDateTime, endDateTime, myMap) {
     const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
-    if (vehiculoSeleccionado == 'vehiculo1'){
-        limpiarMapa()
+    if (vehiculoSeleccionado == 'vehiculo1') {
+        limpiarMapa();
         const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
         fetch(link2)
             .then(response => {
@@ -271,6 +271,7 @@ function cargarDatos2(startDateTime, endDateTime, myMap) {
             });
     }
 }
+
 
 function updateDateTimeDisplay(startDateTime, endDateTime) {
     const startDateTimeStr = document.getElementById('startDateTime').value;
@@ -371,6 +372,7 @@ function actualizarSlider(data, myMap) {
     const slider = document.getElementById('timeSlider');
     slider.max = data.length - 1;
     slider.value = 0;
+    slider.style.display = 'block';  // Asegura que el slider esté visible
 
     slider.oninput = function() {
         const puntoSeleccionado = data[this.value];
@@ -383,7 +385,7 @@ function actualizarSlider(data, myMap) {
             marcadorDeslizable2.setLatLng(latLng);
             marcadorDeslizable2.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
         }
-        myMap.setView(latLng, myMap.getZoom());
+        myMap.setView(latLng, myMap.getZoom()); // Centra el mapa en el marcador
         if (rpmGaugeHistoric) {
             rpmGaugeHistoric.set(puntoSeleccionado.RPM);
         }
@@ -391,6 +393,7 @@ function actualizarSlider(data, myMap) {
 
     slider.oninput();
 }
+
 
 function actualizarSliderAmbos(data1, data2, myMap) {
     const slider = document.getElementById('timeSlider');
