@@ -106,6 +106,16 @@ document.addEventListener('DOMContentLoaded', () => {
         myModal.show();
         localStorage.setItem('hasSeenInstructions', 'true');
     }
+    function borrarV1V2(){
+        const selectedOption = document.getElementById("vehicleSelector").value;
+        if (selectedOption == 'vehiculos'){
+            myMap.removeLayer(rutaActual);
+            myMap.removeLayer(rutaActual2);
+            myMap.removeLayer(marcadorDeslizable1);
+            myMap.removeLayer(marcadorDeslizable2);
+        }
+
+    }
 });
 
 function cargarDatos(startDateTime, endDateTime, myMap) {
@@ -289,7 +299,7 @@ function updateDateTimeDisplay(startDateTime, endDateTime) {
 }
 
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
-    limpiarMapa();  // Limpia el mapa al inicio
+    borrarV1V2()  // Limpia el mapa al inicio
     console.log("Cargando datos para ambos vehículos");
 
     const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
