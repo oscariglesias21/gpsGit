@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const endDateTime = document.getElementById('endDateTime').value;
     
         if (vehiculoSeleccionado === 'vehiculo1' && startDateTime && endDateTime) {
+            borrarV1V2();
             cargarDatos2(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculo2' && startDateTime && endDateTime) {
             cargarDatos(startDateTime, endDateTime, myMap);
