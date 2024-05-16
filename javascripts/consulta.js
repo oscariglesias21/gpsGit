@@ -109,9 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function cargarDatos(startDateTime, endDateTime, myMap) {
+    limpiarMapa();
     const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
     if (vehiculoSeleccionado == 'vehiculo2') {
-        limpiarMapa();
         const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
         fetch(link)
             .then(response => {
@@ -194,7 +194,6 @@ function cargarDatos2(startDateTime, endDateTime, myMap) {
     limpiarMapa();  // Limpia el mapa al inicio
     const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
     if (vehiculoSeleccionado == 'vehiculo1') {
-        limpiarMapa();
         const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
         fetch(link2)
             .then(response => {
@@ -301,8 +300,6 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
         fetch(link2).then(response => response.json())
     ]).then(results => {
         const [data1, data2] = results;
-
-        limpiarMapa();
 
         if (data1.length > 0) {
             procesarDatosVehiculo(data1, myMap, 'blue', truckIcon2, true);
@@ -428,6 +425,7 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 }
 
 function limpiarMapa() {
+    // Limpiar elementos del vehículo 1
     trayectos.forEach(trayecto => trayecto.remove());
     trayectos = [];
     markers.forEach(marker => marker.remove());
@@ -439,6 +437,7 @@ function limpiarMapa() {
     });
     decoradores = [];
 
+    // Limpiar elementos del vehículo 2
     trayectos2.forEach(trayecto => trayecto.remove());
     trayectos2 = [];
     markers2.forEach(marker => marker.remove());
@@ -450,11 +449,11 @@ function limpiarMapa() {
     });
     decoradores2 = [];
 
+    // Eliminar marcadores deslizables si existen
     if (marcadorDeslizable1) {
         marcadorDeslizable1.remove();
         marcadorDeslizable1 = null;
     }
-
     if (marcadorDeslizable2) {
         marcadorDeslizable2.remove();
         marcadorDeslizable2 = null;
