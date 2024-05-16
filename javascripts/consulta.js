@@ -201,7 +201,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
 }
 
 function cargarDatos2(startDateTime, endDateTime, myMap) {
-    limpiarMapa();  // Limpia el mapa al inicio
+    borrarV1V2()  // Limpia el mapa al inicio
     const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
     if (vehiculoSeleccionado == 'vehiculo1') {
         const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
@@ -299,7 +299,6 @@ function updateDateTimeDisplay(startDateTime, endDateTime) {
 }
 
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
-    borrarV1V2()  // Limpia el mapa al inicio
     console.log("Cargando datos para ambos vehículos");
 
     const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
