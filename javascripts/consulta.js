@@ -458,4 +458,9 @@ function limpiarMapa() {
         marcadorDeslizable2.remove();
         marcadorDeslizable2 = null;
     }
+
+    // Asegurar que el slider esté oculto al limpiar el mapa
+    const slider = document.getElementById('timeSlider');
+    slider.style.display = 'none';
 }
+
