@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function borrarV1V2(){
         const selectedOption = document.getElementById("vehicleSelector").value;
-        if (selectedOption == 'vehiculos'){
+        if (selectedOption == 'vehiculo2'){
             myMap.removeLayer(rutaActual);
             myMap.removeLayer(rutaActual2);
             myMap.removeLayer(marcadorDeslizable1);
@@ -201,7 +201,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
 }
 
 function cargarDatos2(startDateTime, endDateTime, myMap) {
-    borrarV1V2()  // Limpia el mapa al inicio
+    borrarV1V2();
     const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
     if (vehiculoSeleccionado == 'vehiculo1') {
         const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
