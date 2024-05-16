@@ -426,6 +426,10 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 
 function limpiarMapa() {
     // Limpiar elementos del vehículo 1
+    if (rutaActual) {
+        rutaActual.remove();
+        rutaActual = null;
+    }
     trayectos.forEach(trayecto => trayecto.remove());
     trayectos = [];
     markers.forEach(marker => marker.remove());
@@ -438,6 +442,10 @@ function limpiarMapa() {
     decoradores = [];
 
     // Limpiar elementos del vehículo 2
+    if (rutaActual2) {
+        rutaActual2.remove();
+        rutaActual2 = null;
+    }
     trayectos2.forEach(trayecto => trayecto.remove());
     trayectos2 = [];
     markers2.forEach(marker => marker.remove());
