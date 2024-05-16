@@ -407,7 +407,6 @@ function actualizarSliderAmbos(data1, data2, myMap) {
             if (marcadorDeslizable1) {
                 marcadorDeslizable1.setLatLng(latLng1);
                 marcadorDeslizable1.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado1.DateTime} - RPM: ${puntoSeleccionado1.RPM}`).openPopup();
-                myMap.setView(latLng1, myMap.getZoom());
             }
         }
         if (index < data2.length) {
@@ -416,7 +415,6 @@ function actualizarSliderAmbos(data1, data2, myMap) {
             if (marcadorDeslizable2) {
                 marcadorDeslizable2.setLatLng(latLng2);
                 marcadorDeslizable2.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado2.DateTime} - RPM: ${puntoSeleccionado2.RPM}`).openPopup();
-                myMap.setView(latLng2, myMap.getZoom());
             }
         }
     };
