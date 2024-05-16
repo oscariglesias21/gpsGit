@@ -457,6 +457,34 @@ function limpiarMapa() {
     });
     decoradores2 = [];
 
+    // Limpiar elementos de vehiculo 1 y 2
+    if (rutaActual && rutaActual2){
+        rutaActual.remove();
+        rutaActual2.remove();
+        rutaActual = null;
+        rutaActual2 = null;
+    }
+    trayectos.forEach(trayecto => trayecto.remove());
+    trayectos = [];
+    markers.forEach(marker => marker.remove());
+    markers = [];
+    decoradores.forEach(decorador => {
+        if (decorador.remove) {
+            decorador.remove();
+        }
+    });
+    decoradores = [];
+    trayectos2.forEach(trayecto => trayecto.remove());
+    trayectos2 = [];
+    markers2.forEach(marker => marker.remove());
+    markers2 = [];
+    decoradores2.forEach(decorador => {
+        if (decorador.remove) {
+            decorador.remove();
+        }
+    });
+    decoradores2 = [];
+
     // Eliminar marcadores deslizables si existen
     if (marcadorDeslizable1) {
         marcadorDeslizable1.remove();
