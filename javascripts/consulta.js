@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function borrarV1V2(){
         const selectedOption = document.getElementById("vehicleSelector").value;
-        if (selectedOption == 'vehiculo2'){
+        if (selectedOption == 'vehiculo1'){
             myMap.removeLayer(rutaActual);
             myMap.removeLayer(rutaActual2);
             myMap.removeLayer(marcadorDeslizable1);
