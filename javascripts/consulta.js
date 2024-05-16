@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('submitButton').addEventListener('click', (event) => {
         event.preventDefault(); // Previene la acción por defecto del formulario
+        limpiarMapa();
         const startDateTime = document.getElementById('startDateTime').value;
         const endDateTime = document.getElementById('endDateTime').value;
     
@@ -423,19 +424,28 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 
     slider.oninput();
 }
-
 function limpiarMapa() {
+    console.log("Limpieza de mapa iniciada");
+
     // Limpiar elementos del vehículo 1
     if (rutaActual) {
+        console.log("Eliminando rutaActual");
         rutaActual.remove();
         rutaActual = null;
     }
-    trayectos.forEach(trayecto => trayecto.remove());
+    trayectos.forEach(trayecto => {
+        console.log("Eliminando trayecto");
+        trayecto.remove();
+    });
     trayectos = [];
-    markers.forEach(marker => marker.remove());
+    markers.forEach(marker => {
+        console.log("Eliminando marker");
+        marker.remove();
+    });
     markers = [];
     decoradores.forEach(decorador => {
         if (decorador.remove) {
+            console.log("Eliminando decorador");
             decorador.remove();
         }
     });
@@ -443,43 +453,23 @@ function limpiarMapa() {
 
     // Limpiar elementos del vehículo 2
     if (rutaActual2) {
+        console.log("Eliminando rutaActual2");
         rutaActual2.remove();
         rutaActual2 = null;
     }
-    trayectos2.forEach(trayecto => trayecto.remove());
+    trayectos2.forEach(trayecto => {
+        console.log("Eliminando trayecto2");
+        trayecto.remove();
+    });
     trayectos2 = [];
-    markers2.forEach(marker => marker.remove());
+    markers2.forEach(marker => {
+        console.log("Eliminando marker2");
+        marker.remove();
+    });
     markers2 = [];
     decoradores2.forEach(decorador => {
         if (decorador.remove) {
-            decorador.remove();
-        }
-    });
-    decoradores2 = [];
-
-    // Limpiar elementos de vehiculo 1 y 2
-    if (rutaActual && rutaActual2){
-        rutaActual.remove();
-        rutaActual2.remove();
-        rutaActual = null;
-        rutaActual2 = null;
-    }
-    trayectos.forEach(trayecto => trayecto.remove());
-    trayectos = [];
-    markers.forEach(marker => marker.remove());
-    markers = [];
-    decoradores.forEach(decorador => {
-        if (decorador.remove) {
-            decorador.remove();
-        }
-    });
-    decoradores = [];
-    trayectos2.forEach(trayecto => trayecto.remove());
-    trayectos2 = [];
-    markers2.forEach(marker => marker.remove());
-    markers2 = [];
-    decoradores2.forEach(decorador => {
-        if (decorador.remove) {
+            console.log("Eliminando decorador2");
             decorador.remove();
         }
     });
@@ -487,10 +477,12 @@ function limpiarMapa() {
 
     // Eliminar marcadores deslizables si existen
     if (marcadorDeslizable1) {
+        console.log("Eliminando marcadorDeslizable1");
         marcadorDeslizable1.remove();
         marcadorDeslizable1 = null;
     }
     if (marcadorDeslizable2) {
+        console.log("Eliminando marcadorDeslizable2");
         marcadorDeslizable2.remove();
         marcadorDeslizable2 = null;
     }
@@ -498,5 +490,8 @@ function limpiarMapa() {
     // Asegurar que el slider esté oculto al limpiar el mapa
     const slider = document.getElementById('timeSlider');
     slider.style.display = 'none';
+
+    console.log("Limpieza de mapa completada");
 }
+
 
