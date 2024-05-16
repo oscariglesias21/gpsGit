@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const endDateTime = document.getElementById('endDateTime').value;
     
         if (vehiculoSeleccionado === 'vehiculo1' && startDateTime && endDateTime) {
-            borrarV1V2();
             cargarDatos2(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculo2' && startDateTime && endDateTime) {
             cargarDatos(startDateTime, endDateTime, myMap);
@@ -91,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Decidir qué función llamar basándose en el vehículo seleccionado
         const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado === 'vehiculo1') {
-            borrarV1V2();
             cargarDatos2(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculo2') {
             cargarDatos(startDateTime, endDateTime, myMap);
@@ -107,16 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         myModal.show();
         localStorage.setItem('hasSeenInstructions', 'true');
-    }
-    function borrarV1V2(){
-        const selectedOption = document.getElementById("vehicleSelector").value;
-        if (selectedOption == 'vehiculo1'){
-            myMap.removeLayer(rutaActual);
-            myMap.removeLayer(rutaActual2);
-            myMap.removeLayer(marcadorDeslizable1);
-            myMap.removeLayer(marcadorDeslizable2);
-        }
-
     }
 });
 
@@ -203,6 +191,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
 }
 
 function cargarDatos2(startDateTime, endDateTime, myMap) {
+    limpiarMapa();
     const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
     if (vehiculoSeleccionado == 'vehiculo1') {
         const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
@@ -300,6 +289,7 @@ function updateDateTimeDisplay(startDateTime, endDateTime) {
 }
 
 function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
+    limpiarMapa();
     console.log("Cargando datos para ambos vehículos");
 
     const link1 = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
