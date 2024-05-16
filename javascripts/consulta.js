@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Decidir qué función llamar basándose en el vehículo seleccionado
         const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
         if (vehiculoSeleccionado === 'vehiculo1') {
+            borrarV1V2();
             cargarDatos2(startDateTime, endDateTime, myMap);
         } else if (vehiculoSeleccionado === 'vehiculo2') {
             cargarDatos(startDateTime, endDateTime, myMap);
@@ -201,7 +202,6 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
 }
 
 function cargarDatos2(startDateTime, endDateTime, myMap) {
-    borrarV1V2();
     const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
     if (vehiculoSeleccionado == 'vehiculo1') {
         const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
