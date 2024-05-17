@@ -224,7 +224,7 @@ select.dropdown {
     /* Ajustes específicos para el gauge en pantallas pequeñas */
     .tacometer-container {
         width: 180px; /* Ajusta el ancho para pantallas pequeñas */
-        margin-top: 20px; /* Añade margen superior para mejor visualización */
+        margin-top: 30px; /* Añade margen superior para mejor visualización */
     }
 
     #rpmGauge {
