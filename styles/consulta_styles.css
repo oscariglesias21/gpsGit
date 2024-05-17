@@ -75,10 +75,10 @@ padding: .375rem .75rem;
     right: 20px;
     width: 300px;
     height: 120px;
-    z-index: 1000;
+    z-index: 100;
 }
 #titleRpmGauge{
-    z-index: 1000;
+    z-index: 100;
 }
 #vehicleSelector {
     position: relative; /* Posición relativa para el pseudo-elemento */
