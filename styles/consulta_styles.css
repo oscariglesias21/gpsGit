@@ -84,7 +84,17 @@
     max-width: 400px; 
     margin: 10px auto;
 }
-
+#gaugeContainer {
+    position: absolute;
+    bottom: 20px;
+    right: 20px; /* Ajustar este valor para mover el tacómetro más a la derecha */
+    width: 300px;
+    height: 180px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 #rpmGaugeMap {
     position: absolute;
     bottom: 20px;
@@ -127,7 +137,7 @@
         width: 200px; /* Ajustar el ancho para dispositivos móviles */
         height: 120px; /* Ajustar la altura para dispositivos móviles */
         bottom: 10px; /* Ajustar la posición desde abajo */
-        right: 10px; /* Ajustar la posición desde la derecha */
+        right: 15px; /* Ajustar la posición desde la derecha en pantallas móviles */
     }
 
     #titleRpmGauge {
