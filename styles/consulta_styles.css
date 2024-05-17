@@ -86,8 +86,8 @@
 }
 #gaugeContainer {
     position: absolute;
-    bottom: 10px;
-    right: 5px; /* Ajustar este valor para mover el tacómetro más a la derecha */
+    bottom: 20px;
+    right: 10px; /* Disminuir este valor para mover el tacómetro más a la derecha */
     width: 300px;
     height: 180px;
     z-index: 1000;
@@ -95,17 +95,20 @@
     flex-direction: column;
     align-items: center;
 }
-#rpmGaugeMap {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 300px;
-    height: 120px;
-    z-index: 1000;
+
+#titleRpmGauge {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
 }
 
-#titleRpmGauge{
-    z-index: 1000;
+/* Estilos para el gauge */
+#rpmGaugeMap {
+    width: 100%;
+    height: auto;
 }
 
 #vehicleSelector {
@@ -134,10 +137,10 @@
 /* Media query para dispositivos móviles */
 @media (max-width: 768px) {
     #gaugeContainer {
-        width: 300px; /* Ajustar el ancho para dispositivos móviles */
+        width: 200px; /* Ajustar el ancho para dispositivos móviles */
         height: 120px; /* Ajustar la altura para dispositivos móviles */
-        bottom: 5px; /* Ajustar la posición desde abajo */
-        right: 5px; /* Ajustar la posición desde la derecha */
+        bottom: 10px; /* Ajustar la posición desde abajo */
+        right: 5px; /* Ajustar la posición desde la derecha en pantallas móviles */
     }
 
     #titleRpmGauge {
