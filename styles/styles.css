@@ -172,6 +172,14 @@ select.dropdown {
     width: 250px; /* Ajusta el ancho del tacómetro */
     margin: 10px auto; /* Ajusta el margen */
     text-align: center; /* Centra el tacómetro */
+    position: relative; /* Añade posición relativa */
+}
+
+#rpmGauge {
+    width: 100%;
+    height: auto; /* Ajusta la altura automáticamente */
+    display: block; /* Asegura que el canvas sea un bloque */
+    margin: 0 auto; /* Centra el canvas */
 }
 
 .rectangle i.material-icons {
@@ -222,5 +230,7 @@ select.dropdown {
     #rpmGauge {
         width: 100%;
         height: auto; /* Ajusta la altura automáticamente */
+        display: block; /* Asegura que el canvas sea un bloque */
+        margin: 0 auto; /* Centra el canvas */
     }
 }
