@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         highDpiSupport: true,
         staticLabels: {
             font: "14px sans-serif", 
-            labels: [0, 2000, 4000, 6000, 8000], 
+            labels: [0, 2000, 4000, 6000], 
             color: "#000000", 
             fractionDigits: 0 
         },
