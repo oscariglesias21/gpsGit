@@ -137,7 +137,7 @@
         width: 200px; /* Ajustar el ancho para dispositivos móviles */
         height: 120px; /* Ajustar la altura para dispositivos móviles */
         bottom: 10px; /* Ajustar la posición desde abajo */
-        right: 15px; /* Ajustar la posición desde la derecha en pantallas móviles */
+        right: 10px; /* Ajustar la posición desde la derecha */
     }
 
     #titleRpmGauge {
