@@ -399,7 +399,6 @@ function actualizarSlider(data, myMap) {
     slider.oninput = function() {
         const puntoSeleccionado = data[this.value];
         const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
-        RPM = puntoSeleccionado.RPM !== undefined ? puntoSeleccionado.RPM : '-';
         if (marcadorDeslizable1) {
             marcadorDeslizable1.setLatLng(latLng);
             marcadorDeslizable1.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
@@ -425,22 +424,32 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 
     slider.oninput = function() {
         const index = this.value;
+
         if (index < data1.length) {
             const puntoSeleccionado1 = data1[index];
             const latLng1 = L.latLng(puntoSeleccionado1.Latitude, puntoSeleccionado1.Longitude);
-            RPM1 = puntoSeleccionado1.RPM !== undefined ? puntoSeleccionado1.RPM : '-';
+            const rpm1 = puntoSeleccionado1.RPM !== undefined ? puntoSeleccionado1.RPM : '-';
+
             if (marcadorDeslizable1) {
                 marcadorDeslizable1.setLatLng(latLng1);
-                marcadorDeslizable1.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado1.DateTime} - RPM: ${puntoSeleccionado1.RPM1}`).openPopup();
+                marcadorDeslizable1.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado1.DateTime} - RPM: ${rpm1}`).openPopup();
                 myMap.setView(latLng1, myMap.getZoom());
             }
+
+            if (rpmGaugeHistoric && rpm1 !== '-') {
+                rpmGaugeHistoric.set(rpm1);
+            } else if (rpmGaugeHistoric && rpm1 === '-') {
+                rpmGaugeHistoric.set(0);
+            }
         }
+
         if (index < data2.length) {
             const puntoSeleccionado2 = data2[index];
             const latLng2 = L.latLng(puntoSeleccionado2.Latitude, puntoSeleccionado2.Longitude);
+
             if (marcadorDeslizable2) {
                 marcadorDeslizable2.setLatLng(latLng2);
-                marcadorDeslizable2.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado2.DateTime} - RPM: ${puntoSeleccionado2.RPM}`).openPopup();
+                marcadorDeslizable2.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado2.DateTime}`).openPopup();
                 myMap.setView(latLng2, myMap.getZoom());
             }
         }
@@ -448,6 +457,7 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 
     slider.oninput();
 }
+
 function limpiarMapa() {
     console.log("Limpieza de mapa iniciada");
 
