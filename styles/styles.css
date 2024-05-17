@@ -171,6 +171,7 @@ select.dropdown {
 .tacometer-container {
     width: 250px; /* Ajusta el ancho del tacómetro */
     margin: 10px auto; /* Ajusta el margen */
+    text-align: center; /* Centra el tacómetro */
 }
 
 .rectangle i.material-icons {
@@ -196,9 +197,9 @@ select.dropdown {
 
 .gauge-label {
     font-weight: bold;
+    margin-top: 10px; /* Añade margen superior para separarlo del tacómetro */
 }
 
-/*CONFIGURACIÓN: WEB RESPONSIVE*/
 /*CONFIGURACIÓN: WEB RESPONSIVE*/
 @media (max-width: 768px) {
     /* Estilos para pantallas pequeñas */
