@@ -350,7 +350,16 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
         const lng = parseFloat(point.Longitude);
         const nuevoPunto = L.latLng(lat, lng);
 
-        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 200) {
+        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
+            // Añadir decorador a la polilínea actual antes de crear una nueva
+            let decorador = L.polylineDecorator(rutaActual, {
+                patterns: [
+                    { offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({ pixelSize: 10, pathOptions: { opacity: 0.7, color: color, weight: 3 } }) }
+                ]
+            }).addTo(myMap);
+            decoradoresTemp.push(decorador);
+
+            // Crear una nueva polilínea
             rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
             if (isVehiculo1) {
                 trayectos.push(rutaActual);
@@ -363,13 +372,15 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
         ultimoPunto = nuevoPunto;
     });
 
+    // Añadir decorador a la última polilínea
     let decorador = L.polylineDecorator(rutaActual, {
         patterns: [
             { offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({ pixelSize: 10, pathOptions: { opacity: 0.7, color: color, weight: 3 } }) }
         ]
     }).addTo(myMap);
-    console.log(`Decorador creado para el vehículo ${isVehiculo1 ? '1' : '2'}`, decorador);
     decoradoresTemp.push(decorador);
+
+    console.log(`Decorador creado para el vehículo ${isVehiculo1 ? '1' : '2'}`, decorador);
 
     if (isVehiculo1) {
         decoradoresTemp.forEach(decorador => decoradores.push(decorador));
