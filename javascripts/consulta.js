@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeMap")).setOptions({
         angle: 0.20, 
         lineWidth: 0.15,
-        radiusScale: 0.7,
+        radiusScale: 0.8,
         pointer: {
             length: 0.5, // Relativo al radio del gauge
             strokeWidth: 0.02, // El grosor del puntero
