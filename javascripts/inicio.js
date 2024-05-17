@@ -125,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
             routePath.setLatLngs([]);
             localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
         }
-        myMap.setView(newLatLng);
         marker.setLatLng(newLatLng);
         routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
         lastMarkerPosition = newLatLng;
@@ -162,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
             routePath2.setLatLngs([]);
             localStorage.removeItem('routePath2'); // Limpia la ruta almacenada si es necesario
         }
-        myMap.setView(newLatLng2);
         marker2.setLatLng(newLatLng2);
         routePath2.addLatLng(newLatLng2); // Añade el nuevo punto a la polilínea para trazar el recorrido
         lastMarkerPosition2 = newLatLng2;
