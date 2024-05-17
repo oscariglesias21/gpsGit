@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             {strokeStyle: "#F03E3E", min: 4000, max: 6000}, 
         ],
     });
-    rpmGauge.maxValue = 8000;
+    rpmGauge.maxValue = 6000;
     rpmGauge.setMinValue(0); 
     rpmGauge.animationSpeed = 80;
     rpmGauge.set(0); 
