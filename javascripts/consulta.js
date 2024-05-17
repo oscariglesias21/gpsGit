@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function cargarDatos(startDateTime, endDateTime, myMap) {
     limpiarMapa();
     const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
-    if (vehiculoSeleccionado == 'vehiculo2') {
+    if (vehiculoSeleccionado === 'vehiculo2') {
         const link = `/consulta-historicos?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
         fetch(link)
             .then(response => {
@@ -124,6 +124,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
             .then(data => {
                 console.log(data);
                 if (data.length > 0) {
+                    // Asegúrate de que los arrays se vacíen antes de agregar nuevos elementos
                     trayectos.forEach(trayecto => trayecto.remove());
                     trayectos = [];
                     markers.forEach(marker => marker.remove());
@@ -191,10 +192,11 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
     }
 }
 
+
 function cargarDatos2(startDateTime, endDateTime, myMap) {
     limpiarMapa();
     const vehiculoSeleccionado = document.getElementById('vehicleSelector').value;
-    if (vehiculoSeleccionado == 'vehiculo1') {
+    if (vehiculoSeleccionado === 'vehiculo1') {
         const link2 = `/consulta-historicos2?startDateTime=${startDateTime}&endDateTime=${endDateTime}`; 
         fetch(link2)
             .then(response => {
@@ -328,30 +330,48 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
     });
 }
 
+
 function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
-    let rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+    let rutaActual;
     let decoradores = [];
+
+    if (isVehiculo1) {
+        rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+        trayectos.push(rutaActual);
+    } else {
+        rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+        trayectos2.push(rutaActual);
+    }
+
     let ultimoPunto = null;
 
     data.forEach(point => {
         const lat = parseFloat(point.Latitude);
         const lng = parseFloat(point.Longitude);
         const nuevoPunto = L.latLng(lat, lng);
+
         if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
             rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
+            if (isVehiculo1) {
+                trayectos.push(rutaActual);
+            } else {
+                trayectos2.push(rutaActual);
+            }
         }
+
         rutaActual.addLatLng(nuevoPunto);
         ultimoPunto = nuevoPunto;
     });
 
     let decorador = L.polylineDecorator(rutaActual, {
         patterns: [
-            {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: color, weight: 3}})}
+            { offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({ pixelSize: 10, pathOptions: { opacity: 0.7, color: color, weight: 3 } }) }
         ]
     }).addTo(myMap);
     decoradores.push(decorador);
 
     if (isVehiculo1) {
+        decoradores.forEach(decorador => decoradores.push(decorador));
         if (!marcadorDeslizable1) {
             marcadorDeslizable1 = L.marker([0, 0], {
                 draggable: true,
@@ -359,6 +379,7 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
             }).addTo(myMap);
         }
     } else {
+        decoradores.forEach(decorador => decoradores2.push(decorador));
         if (!marcadorDeslizable2) {
             marcadorDeslizable2 = L.marker([0, 0], {
                 draggable: true,
@@ -367,6 +388,7 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
         }
     }
 }
+
 
 function actualizarSlider(data, myMap) {
     const slider = document.getElementById('timeSlider');
@@ -493,5 +515,3 @@ function limpiarMapa() {
 
     console.log("Limpieza de mapa completada");
 }
-
-
