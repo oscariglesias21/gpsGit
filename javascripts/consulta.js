@@ -351,7 +351,6 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
         const nuevoPunto = L.latLng(lat, lng);
 
         if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
-            // Añadir decorador a la polilínea actual antes de crear una nueva
             let decorador = L.polylineDecorator(rutaActual, {
                 patterns: [
                     { offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({ pixelSize: 10, pathOptions: { opacity: 0.7, color: color, weight: 3 } }) }
@@ -359,7 +358,6 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
             }).addTo(myMap);
             decoradoresTemp.push(decorador);
 
-            // Crear una nueva polilínea
             rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
             if (isVehiculo1) {
                 trayectos.push(rutaActual);
@@ -372,15 +370,13 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
         ultimoPunto = nuevoPunto;
     });
 
-    // Añadir decorador a la última polilínea
     let decorador = L.polylineDecorator(rutaActual, {
         patterns: [
             { offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({ pixelSize: 10, pathOptions: { opacity: 0.7, color: color, weight: 3 } }) }
         ]
     }).addTo(myMap);
-    decoradoresTemp.push(decorador);
-
     console.log(`Decorador creado para el vehículo ${isVehiculo1 ? '1' : '2'}`, decorador);
+    decoradoresTemp.push(decorador);
 
     if (isVehiculo1) {
         decoradoresTemp.forEach(decorador => decoradores.push(decorador));
@@ -403,6 +399,7 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
 
 
 
+
 function actualizarSlider(data, myMap) {
     const slider = document.getElementById('timeSlider');
     slider.max = data.length - 1;
@@ -412,23 +409,23 @@ function actualizarSlider(data, myMap) {
     slider.oninput = function() {
         const puntoSeleccionado = data[this.value];
         const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
+        const rpm = puntoSeleccionado.RPM !== undefined ? puntoSeleccionado.RPM : '-';
+
         if (marcadorDeslizable1) {
             marcadorDeslizable1.setLatLng(latLng);
-            marcadorDeslizable1.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${puntoSeleccionado.RPM}`).openPopup();
+            marcadorDeslizable1.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${rpm}`, { permanent: true }).openTooltip();
         }
         if (marcadorDeslizable2) {
             marcadorDeslizable2.setLatLng(latLng);
-            marcadorDeslizable2.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`).openPopup();
+            marcadorDeslizable2.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`, { permanent: true }).openTooltip();
         }
-        myMap.setView(latLng, myMap.getZoom()); // Centra el mapa en el marcador
         if (rpmGaugeHistoric) {
-            rpmGaugeHistoric.set(puntoSeleccionado.RPM);
+            rpmGaugeHistoric.set(rpm === '-' ? 0 : rpm);
         }
     };
 
     slider.oninput();
 }
-
 
 function actualizarSliderAmbos(data1, data2, myMap) {
     const slider = document.getElementById('timeSlider');
@@ -445,8 +442,7 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 
             if (marcadorDeslizable1) {
                 marcadorDeslizable1.setLatLng(latLng1);
-                marcadorDeslizable1.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado1.DateTime} - RPM: ${rpm1}`).openPopup();
-                myMap.setView(latLng1, myMap.getZoom());
+                marcadorDeslizable1.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado1.DateTime} - RPM: ${rpm1}`, { permanent: true }).openTooltip();
             }
 
             if (rpmGaugeHistoric && rpm1 !== '-') {
@@ -462,8 +458,7 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 
             if (marcadorDeslizable2) {
                 marcadorDeslizable2.setLatLng(latLng2);
-                marcadorDeslizable2.bindPopup(`Fecha y Hora de Paso: ${puntoSeleccionado2.DateTime}`).openPopup();
-                myMap.setView(latLng2, myMap.getZoom());
+                marcadorDeslizable2.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado2.DateTime}`, { permanent: true }).openTooltip();
             }
         }
     };
