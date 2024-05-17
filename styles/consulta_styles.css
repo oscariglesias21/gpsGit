@@ -69,17 +69,22 @@ padding: .375rem .75rem;
     max-width: 400px; 
     margin: 10px auto
 }
-#rpmGaugeMap {
+#rpmGaugeContainer {
     position: absolute;
     bottom: 20px;
     right: 20px;
     width: 300px;
-    height: 160px;
+    height: 180px; /* Aumentar la altura para incluir el título */
     z-index: 1000;
+    text-align: center; /* Centrar el contenido dentro del contenedor */
 }
-#titleRpmGauge{
-    z-index: 10000;
+
+#titleRpmGauge {
+    font-size: 1em; /* Tamaño de la fuente del título */
+    margin-bottom: 5px; /* Espacio entre el título y el gauge */
+    z-index: 10000; /* Asegurar que el título esté por encima del gauge */
 }
+
 #vehicleSelector {
     position: relative; /* Posición relativa para el pseudo-elemento */
     width: 160px;
