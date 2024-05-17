@@ -199,6 +199,7 @@ select.dropdown {
 }
 
 /*CONFIGURACIÓN: WEB RESPONSIVE*/
+/*CONFIGURACIÓN: WEB RESPONSIVE*/
 @media (max-width: 768px) {
     /* Estilos para pantallas pequeñas */
     .sidebar {
@@ -214,6 +215,7 @@ select.dropdown {
     /* Ajustes específicos para el gauge en pantallas pequeñas */
     .tacometer-container {
         width: 180px; /* Ajusta el ancho para pantallas pequeñas */
+        margin-top: 20px; /* Añade margen superior para mejor visualización */
     }
 
     #rpmGauge {
