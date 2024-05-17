@@ -53,13 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
             fractionDigits: 0 
         },
         staticZones: [
-            {strokeStyle: "#F03E3E", min: 0, max: 2000}, 
+            {strokeStyle: "#30B32D", min: 0, max: 2000}, 
             {strokeStyle: "#3498DB", min: 2000, max: 4000}, 
-            {strokeStyle: "#2980B9", min: 4000, max: 6000},
-            {strokeStyle: "#30B32D", min: 6000, max: 8000} 
+            {strokeStyle: "#F03E3E", min: 4000, max: 6000},
         ],
     });
-    rpmGaugeHistoric.maxValue = 8000; // valor máximo del tacómetro
+    rpmGaugeHistoric.maxValue = 6000; // valor máximo del tacómetro
     rpmGaugeHistoric.setMinValue(0);  // valor mínimo del tacómetro
     rpmGaugeHistoric.set(0); // Establece un valor inicial
     console.log("rpmGaugeHistoric inicializado:", rpmGaugeHistoric);
