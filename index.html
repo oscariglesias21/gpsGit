@@ -64,7 +64,7 @@
                         <i class="material-icons">schedule</i>
                         <span id="timeDescription">Hora:</span> <span id="time">HH:MM:SS</span>
                     </div>
-                        <!--Tacometro-->
+                    <!-- Tacómetro -->
                     <div class="tacometer-container">
                         <canvas id="rpmGauge" width="300" height="160"></canvas>
                         <div class="gauge-label" style="font-weight: bold;">Tacómetro RPM</div>
@@ -76,7 +76,15 @@
                 <span class="close-btn material-icons" onclick="closeSidebar()">chevron_right</span>
             </div>
         </div>
-            <!-- Scripts del mapa  -->
+        <!-- Botón HOME -->
+        <span class="open-btn material-icons" onclick="openSidebar()">local_shipping</span>
+        <!-- Botón RECORRIDOS -->
+        <a href="/consulta" class="recorridosBtn material-icons">fork_right</a>      
+        <!-- Botón CENTRARMAPA -->
+        <span id="centrarMapaBtn" class="centrarMapaBtn material-icons">location_on</span>
+    </div>
+
+    <!-- Scripts del mapa  -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -88,14 +96,6 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="inicio.js"></script>
 
-        <!-- Botón HOME -->
-        <span class="open-btn material-icons" onclick="openSidebar()">local_shipping</span>
-        <!-- Botón RECORRIDOS -->
-        <a href="/consulta" class="recorridosBtn material-icons">fork_right</a>      
-        <!-- Botón CENTRARMAPA -->
-        <span id="centrarMapaBtn" class="centrarMapaBtn material-icons">location_on</span>
-    </div>
-
     <!-- Script para abrir/cerrar el sidebar (NO TOCAR) -->
     <script>
         // Función para abrir el sidebar
@@ -106,7 +106,6 @@
         function closeSidebar() {
             document.getElementById("sidebar").style.transform = "translateX(100%)";
         }
-        //-------------------------------------------------------------------------------------------------------------------------------
     </script>
 </body>
 </html>
