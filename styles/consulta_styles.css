@@ -45,10 +45,10 @@
 }
 .date-time-info {
     position: absolute;
-    width: 1px;
-    height: 1px;
+    width: 0.8px;
+    height: 0.8px;
     overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
+    clip: rect(0-8px, 0.8px, 0.8px, 0.8px);
 }
 .navbar {
     padding: 0.5rem 1rem;
