@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
     //tacometro
     const rpmGauge = new Gauge(document.getElementById("rpmGauge")).setOptions({
         angle: 0.20, 
-        lineWidth: 0.20,
-        radiusScale: 1,
+        lineWidth: 0.15,
+        radiusScale: 0.8,
         pointer: {
-            length: 0.5, 
-            strokeWidth: 0.035, // grosor del puntero
+            length: 0.5, // Relativo al radio del gauge
+            strokeWidth: 0.02, // El grosor del puntero
             color: '#000000' // Color del puntero
         },
         limitMax: false,
@@ -55,15 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
         highDpiSupport: true,
         staticLabels: {
             font: "14px sans-serif", 
-            labels: [0, 2000, 4000, 6000, 8000], 
+            labels: [0, 2000, 4000, 6000], 
             color: "#000000", 
             fractionDigits: 0 
         },
         staticZones: [
-            {strokeStyle: "#F03E3E", min: 0, max: 2000}, 
+            {strokeStyle: "#30B32D", min: 0, max: 2000}, 
             {strokeStyle: "#3498DB", min: 2000, max: 4000}, 
-            {strokeStyle: "#2980B9", min: 4000, max: 6000}, 
-            {strokeStyle: "#30B32D", min: 6000, max: 8000} 
+            {strokeStyle: "#F03E3E", min: 4000, max: 6000}, 
         ],
     });
     rpmGauge.maxValue = 8000;
