@@ -19,6 +19,13 @@
 .form-label{
     margin-bottom: 0.5rem;
 }
+.subtitle {
+    font-size: 1.5em;
+    color: #555;
+    text-align: center;
+    margin-top: 10px;
+    font-family: 'Arial', sans-serif;
+}
 .form-inline-custom {
     display: flex;
     gap: 10px;
