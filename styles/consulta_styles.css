@@ -134,7 +134,7 @@
 /* Media query para dispositivos móviles */
 @media (max-width: 768px) {
     #gaugeContainer {
-        width: 200px; /* Ajustar el ancho para dispositivos móviles */
+        width: 100px; /* Ajustar el ancho para dispositivos móviles */
         height: 120px; /* Ajustar la altura para dispositivos móviles */
         bottom: 10px; /* Ajustar la posición desde abajo */
         right: 5px; /* Ajustar la posición desde la derecha */
