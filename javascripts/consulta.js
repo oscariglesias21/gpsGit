@@ -433,17 +433,6 @@ function actualizarSliderAmbos(data1, data2, myMap) {
     slider.max = Math.max(data1.length, data2.length) - 1;
     slider.value = 0;
 
-    // Recopilar todas las coordenadas de ambos vehículos
-    let allCoordinates = [];
-
-    data1.forEach(point => {
-        allCoordinates.push([point.Latitude, point.Longitude]);
-    });
-
-    data2.forEach(point => {
-        allCoordinates.push([point.Latitude, point.Longitude]);
-    });
-
     slider.oninput = function() {
         const index = this.value;
 
@@ -455,6 +444,7 @@ function actualizarSliderAmbos(data1, data2, myMap) {
             if (marcadorDeslizable1) {
                 marcadorDeslizable1.setLatLng(latLng1);
                 marcadorDeslizable1.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado1.DateTime} - RPM: ${rpm1}`, { permanent: true }).openTooltip();
+                myMap.setView(latLng1, 10);
             }
 
             if (rpmGaugeHistoric && rpm1 !== '-') {
@@ -471,11 +461,9 @@ function actualizarSliderAmbos(data1, data2, myMap) {
             if (marcadorDeslizable2) {
                 marcadorDeslizable2.setLatLng(latLng2);
                 marcadorDeslizable2.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado2.DateTime}`, { permanent: true }).openTooltip();
+                myMap.setView(latLng2, 10);
             }
         }
-
-        // Ajustar la vista del mapa para incluir todos los puntos de ambos vehículos
-        myMap.fitBounds(allCoordinates);
     };
 
     slider.oninput();
