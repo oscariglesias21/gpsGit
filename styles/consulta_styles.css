@@ -20,7 +20,7 @@
     margin-bottom: 0.5rem;
 }
 .subtitle {
-    font-size: 0.8em;
+    font-size: 0.9em;
     color: #494949;
     text-align: center;
     margin-top: 10px;
@@ -38,7 +38,7 @@
     padding: .375rem .75rem; 
 }
 .small-title{
-    font-size: 24px;
+    font-size: 20px;
 }
 #startDateSpan, #startTimeSpan, #endDateSpan, #endTimeSpan {
     display: none;
