@@ -444,6 +444,7 @@ function actualizarSliderAmbos(data1, data2, myMap) {
             if (marcadorDeslizable1) {
                 marcadorDeslizable1.setLatLng(latLng1);
                 marcadorDeslizable1.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado1.DateTime} - RPM: ${rpm1}`, { permanent: true }).openTooltip();
+                myMap.setView(latLng1, 13);
             }
 
             if (rpmGaugeHistoric && rpm1 !== '-') {
@@ -460,6 +461,7 @@ function actualizarSliderAmbos(data1, data2, myMap) {
             if (marcadorDeslizable2) {
                 marcadorDeslizable2.setLatLng(latLng2);
                 marcadorDeslizable2.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado2.DateTime}`, { permanent: true }).openTooltip();
+                myMap.setView(latLng2, 13);
             }
         }
     };
