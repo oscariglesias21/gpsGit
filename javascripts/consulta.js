@@ -147,7 +147,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                         const lng = parseFloat(point.Longitude);
                         const nuevoPunto = L.latLng(lat, lng);
 
-                        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
+                        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 200) {
                             if (ultimoPunto) {
                                 let decorador = L.polylineDecorator(rutaActual, {
                                     patterns: [
@@ -230,7 +230,7 @@ function cargarDatos2(startDateTime, endDateTime, myMap) {
                         const lng = parseFloat(point.Longitude);
                         const nuevoPunto = L.latLng(lat, lng);
 
-                        if (ultimoPunto2 && myMap.distance(ultimoPunto2, nuevoPunto) > 500) {
+                        if (ultimoPunto2 && myMap.distance(ultimoPunto2, nuevoPunto) > 200) {
                             if (ultimoPunto2) {
                                 let decorador = L.polylineDecorator(rutaActual2, {
                                     patterns: [
@@ -350,7 +350,7 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
         const lng = parseFloat(point.Longitude);
         const nuevoPunto = L.latLng(lat, lng);
 
-        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
+        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 200) {
             rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
             if (isVehiculo1) {
                 trayectos.push(rutaActual);
@@ -368,6 +368,7 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
             { offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({ pixelSize: 10, pathOptions: { opacity: 0.7, color: color, weight: 3 } }) }
         ]
     }).addTo(myMap);
+    console.log(`Decorador creado para el vehículo ${isVehiculo1 ? '1' : '2'}`, decorador);
     decoradoresTemp.push(decorador);
 
     if (isVehiculo1) {
@@ -388,6 +389,7 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
         }
     }
 }
+
 
 
 function actualizarSlider(data, myMap) {
