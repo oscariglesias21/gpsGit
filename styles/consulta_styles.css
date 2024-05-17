@@ -116,14 +116,15 @@ padding: .375rem .75rem;
     #timeSlider {
         max-width: 80%; 
         margin: 10px auto; 
-        #gaugeContainer {
+
+        #rpmGaugeMap {
             width: 200px; /* Ajustar el ancho para dispositivos móviles */
             height: 120px; /* Ajustar la altura para dispositivos móviles */
             bottom: 10px; /* Ajustar la posición desde abajo */
-            right: 10px; /* Ajustar la posición desde la derecha */
+            right: 60px; /* Ajustar la posición desde la derecha */
         }
     
-        #rpmGaugeMap {
+        #titleRpmGauge {
             font-size: 14px; /* Reducir el tamaño de la fuente para dispositivos móviles */
         }
     }
