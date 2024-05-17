@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
     //tacometro
     const rpmGauge = new Gauge(document.getElementById("rpmGauge")).setOptions({
         angle: 0.20, 
-        lineWidth: 0.15,
-        radiusScale: 0.8,
+        lineWidth: 0.20,
+        radiusScale: 1,
         pointer: {
-            length: 0.5, // Relativo al radio del gauge
-            strokeWidth: 0.02, // El grosor del puntero
+            length: 0.5, 
+            strokeWidth: 0.035, // grosor del puntero
             color: '#000000' // Color del puntero
         },
         limitMax: false,
