@@ -126,4 +126,10 @@ padding: .375rem .75rem;
     #titleRpmGauge {
             font-size: 14px; /* Reducir el tamaño de la fuente para dispositivos móviles */
         }
+    #timeSlider {
+        display: none;
+        width: 80%;
+        max-width: 200px; 
+        margin: 10px auto
+    }
     }
