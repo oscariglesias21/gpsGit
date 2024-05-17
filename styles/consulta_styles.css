@@ -20,11 +20,11 @@
     margin-bottom: 0.5rem;
 }
 .subtitle {
-    font-size: 1.5em;
+    font-size: 0.5em;
     color: #555;
     text-align: center;
     margin-top: 10px;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 .form-inline-custom {
     display: flex;
