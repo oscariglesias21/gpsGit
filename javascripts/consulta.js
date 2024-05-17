@@ -33,9 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
     rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeMap")).setOptions({
         angle: 0.20, 
         lineWidth: 0.15,
-        radiusScale: 0.8,
+        radiusScale: 0.7,
         pointer: {
-            length: 0.6, // Relativo al radio del gauge
+            length: 0.5, // Relativo al radio del gauge
             strokeWidth: 0.02, // El grosor del puntero
             color: '#000000' // Color del puntero
         },
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         generateGradient: true,
         highDpiSupport: true,
         staticLabels: {
-            font: "14px sans-serif", 
+            font: "12px sans-serif", 
             labels: [0, 2000, 4000, 6000], 
             color: "#000000", 
             fractionDigits: 0 
