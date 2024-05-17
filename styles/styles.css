@@ -26,7 +26,7 @@ html, body, .map-container {
 
 /* Estilos para el contenido del sidebar */
 .sidebar-content {
-    padding: 10px;
+    padding: 20px;
     color: #000000; /* Color del texto en el sidebar */
     z-index: 2;
     text-align: center; /* Centra el contenido horizontalmente */
@@ -108,12 +108,12 @@ html, body, .map-container {
 
 /* Estilos para el menú desplegable */
 select.dropdown {
-    width: 70%; /* Ancho del menú desplegable */
+    width: 80%; /* Ancho del menú desplegable */
     margin-top: 10px; /* Ajusta el margen inferior según sea necesario */
-    margin-bottom: 5px; /* Ajusta el margen inferior según sea necesario */
+    margin-bottom: 10px; /* Ajusta el margen inferior según sea necesario */
     margin-inline: auto; /* Margen superior e inferior de 20px, centrado horizontalmente */
-    padding: 8px; /* Espacio interno */
-    font-size: 16px; /* Tamaño de fuente */
+    padding: 10px; /* Espacio interno */
+    font-size: 18px; /* Tamaño de fuente */
     background-color: #ffffff; /* Color de fondo */
     border: 2px solid #000000; /* Contorno */
     border-radius: 8px; /* Bordes redondeados */
@@ -128,14 +128,14 @@ select.dropdown {
 }
 
 .rectangle {
-    width: 80%; /* Ancho del rectángulo */
-    height: 40px; /* Altura del rectángulo */
+    width: 85%; /* Ancho del rectángulo */
+    height: 50px; /* Altura del rectángulo */
     background-color: #FFFFFF; /* Color de fondo del rectángulo */
     border: 2px solid #000000; /* Contorno negro */
     border-radius: 8px; /* Bordes redondeados */
-    padding: 8px; /* Espacio interno */
-    font-size: 14px; /* Tamaño de fuente */
-    margin-bottom: 5px; /* Espacio entre rectángulos */
+    padding: 10px; /* Espacio interno */
+    font-size: 16px; /* Tamaño de fuente */
+    margin-bottom: 10px; /* Espacio entre rectángulos */
     display: flex;
     align-items: center; /* Centrado vertical */
     margin: 5px auto; /* Margen superior e inferior de 30px, centrado horizontalmente */
@@ -146,10 +146,10 @@ select.dropdown {
 }
 
 .sidebar-content p {
-    width: 80%; /* Ancho deseado */
+    width: 85%; /* Ancho deseado */
     margin: 0 auto; /* Centra horizontalmente */
-    margin-bottom: 15px; /* Ajusta el margen inferior según sea necesario */
-    font-size: 14px; /* Tamaño de fuente */
+    margin-bottom: 20px; /* Ajusta el margen inferior según sea necesario */
+    font-size: 16px; /* Tamaño de fuente */
 }
 
 /* Ocultar la 'T' */
