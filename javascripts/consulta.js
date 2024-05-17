@@ -350,7 +350,7 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
         const lng = parseFloat(point.Longitude);
         const nuevoPunto = L.latLng(lat, lng);
 
-        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 500) {
+        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 200) {
             let decorador = L.polylineDecorator(rutaActual, {
                 patterns: [
                     { offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({ pixelSize: 10, pathOptions: { opacity: 0.7, color: color, weight: 3 } }) }
@@ -419,6 +419,7 @@ function actualizarSlider(data, myMap) {
             marcadorDeslizable2.setLatLng(latLng);
             marcadorDeslizable2.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`, { permanent: true }).openTooltip();
         }
+        myMap.setView(latLng, myMap.getZoom());
         if (rpmGaugeHistoric) {
             rpmGaugeHistoric.set(rpm === '-' ? 0 : rpm);
         }
