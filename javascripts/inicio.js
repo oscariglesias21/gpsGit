@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         generateGradient: true,
         highDpiSupport: true,
         staticLabels: {
-            font: "14px sans-serif", 
+            font: "12px sans-serif", 
             labels: [0, 2000, 4000, 6000], 
             color: "#000000", 
             fractionDigits: 0 
