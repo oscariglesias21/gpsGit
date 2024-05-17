@@ -32,10 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el tacómetro
     rpmGaugeHistoric = new Gauge(document.getElementById("rpmGaugeMap")).setOptions({
         angle: 0.20, 
-        lineWidth: 0.10,
-        radiusScale: 0.5,
+        lineWidth: 0.15,
+        radiusScale: 0.8,
         pointer: {
-            length: 0.4, // Relativo al radio del gauge
+            length: 0.6, // Relativo al radio del gauge
             strokeWidth: 0.02, // El grosor del puntero
             color: '#000000' // Color del puntero
         },
