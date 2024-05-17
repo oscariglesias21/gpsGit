@@ -26,7 +26,7 @@ html, body, .map-container {
 
 /* Estilos para el contenido del sidebar */
 .sidebar-content {
-    padding: 20px;
+    padding: 10px;
     color: #000000; /* Color del texto en el sidebar */
     z-index: 2;
     text-align: center; /* Centra el contenido horizontalmente */
@@ -34,7 +34,7 @@ html, body, .map-container {
 
 .sidebar-content img {
     display: block; /* Asegura que la imagen sea un bloque para poder aplicar márgenes automáticos */
-    margin: 0 auto 20px; /* Centra la imagen horizontalmente y añade margen inferior */
+    margin: 0 auto 10px; /* Centra la imagen horizontalmente y añade margen inferior */
     max-width: 100%; /* Ajusta el ancho máximo de la imagen */
     height: auto; /* Permite que la altura de la imagen se ajuste automáticamente */
 }
@@ -42,8 +42,8 @@ html, body, .map-container {
 /* Estilos para el botón de cerrar el sidebar */
 .close-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 10px;
     cursor: pointer;
     color: #000000; /* Color del texto del botón */
     z-index: 2;
@@ -52,71 +52,71 @@ html, body, .map-container {
 /* Estilos para el botón de abrir el sidebar */
 .open-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 10px;
     cursor: pointer;
     color: #000000; /* Color del texto del botón */
     z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
     background-color: #FFD35F; /* Color de fondo amarillo */
-    border: 3px solid #000000; /* Contorno negro */
-    border-radius: 10px; /* Añade bordes redondeados al botón */
-    padding: 10px 15px; /* Añade espacio interno al botón */
-    font-size: 25px; /* Tamaño de fuente */
+    border: 2px solid #000000; /* Contorno negro */
+    border-radius: 8px; /* Añade bordes redondeados al botón */
+    padding: 5px 10px; /* Añade espacio interno al botón */
+    font-size: 20px; /* Tamaño de fuente */
 }
 
 .recorridosBtn {
     position: absolute;
-    top: 85px;
-    right: 20px;
+    top: 60px;
+    right: 10px;
     cursor: pointer;
     color: #000000; /* Color del texto del botón */
     z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
     background-color: #FFD35F; /* Color de fondo amarillo */
-    border: 3px solid #000000; /* Contorno negro */
-    border-radius: 10px; /* Añade bordes redondeados al botón */
-    padding: 10px 15px; /* Añade espacio interno al botón */
-    font-size: 25px; /* Tamaño de fuente */
+    border: 2px solid #000000; /* Contorno negro */
+    border-radius: 8px; /* Añade bordes redondeados al botón */
+    padding: 5px 10px; /* Añade espacio interno al botón */
+    font-size: 20px; /* Tamaño de fuente */
 }
 
 .infoBtn {
     position: absolute;
-    top: 150px;
-    right: 20px;
+    top: 110px;
+    right: 10px;
     cursor: pointer;
     color: #000000; /* Color del texto del botón */
     z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
     background-color: #FFD35F; /* Color de fondo amarillo */
-    border: 3px solid #000000; /* Contorno negro */
-    border-radius: 10px; /* Añade bordes redondeados al botón */
-    padding: 10px 15px; /* Añade espacio interno al botón */
-    font-size: 25px; /* Tamaño de fuente */
+    border: 2px solid #000000; /* Contorno negro */
+    border-radius: 8px; /* Añade bordes redondeados al botón */
+    padding: 5px 10px; /* Añade espacio interno al botón */
+    font-size: 20px; /* Tamaño de fuente */
 }
 
 .centrarMapaBtn {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
+    bottom: 10px;
+    left: 10px;
     cursor: pointer;
     color: #000000; /* Color del texto del botón */
     z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
     background-color: #FFD35F; /* Color de fondo amarillo */
-    border: 3px solid #000000; /* Contorno negro */
-    border-radius: 10px; /* Añade bordes redondeados al botón */
-    padding: 10px 15px; /* Añade espacio interno al botón */
-    font-size: 25px; /* Tamaño de fuente */
+    border: 2px solid #000000; /* Contorno negro */
+    border-radius: 8px; /* Añade bordes redondeados al botón */
+    padding: 5px 10px; /* Añade espacio interno al botón */
+    font-size: 20px; /* Tamaño de fuente */
 }
 
 /* Estilos para el menú desplegable */
 select.dropdown {
-    width: 80%; /* Ancho del menú desplegable */
-    margin-top: 20px; /* Ajusta el margen inferior según sea necesario */
+    width: 70%; /* Ancho del menú desplegable */
+    margin-top: 10px; /* Ajusta el margen inferior según sea necesario */
     margin-bottom: 5px; /* Ajusta el margen inferior según sea necesario */
     margin-inline: auto; /* Margen superior e inferior de 20px, centrado horizontalmente */
-    padding: 10px; /* Espacio interno */
-    font-size: 18px; /* Tamaño de fuente */
+    padding: 8px; /* Espacio interno */
+    font-size: 16px; /* Tamaño de fuente */
     background-color: #ffffff; /* Color de fondo */
-    border: 3px solid #000000; /* Contorno */
-    border-radius: 10px; /* Bordes redondeados */
+    border: 2px solid #000000; /* Contorno */
+    border-radius: 8px; /* Bordes redondeados */
     cursor: pointer; /* Cursor */
     color: #000000; /* Color de texto */
 }
@@ -129,27 +129,27 @@ select.dropdown {
 
 .rectangle {
     width: 80%; /* Ancho del rectángulo */
-    height: 50px; /* Altura del rectángulo */
+    height: 40px; /* Altura del rectángulo */
     background-color: #FFFFFF; /* Color de fondo del rectángulo */
-    border: 3px solid #000000; /* Contorno negro */
-    border-radius: 10px; /* Bordes redondeados */
-    padding: 10px; /* Espacio interno */
-    font-size: 16px; /* Tamaño de fuente */
-    margin-bottom: 1px; /* Espacio entre rectángulos */
+    border: 2px solid #000000; /* Contorno negro */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 8px; /* Espacio interno */
+    font-size: 14px; /* Tamaño de fuente */
+    margin-bottom: 5px; /* Espacio entre rectángulos */
     display: flex;
     align-items: center; /* Centrado vertical */
     margin: 5px auto; /* Margen superior e inferior de 30px, centrado horizontalmente */
 }
 
 .rectangle i {
-    margin-right: 15px; /* Espacio entre icono y texto */
+    margin-right: 10px; /* Espacio entre icono y texto */
 }
 
 .sidebar-content p {
     width: 80%; /* Ancho deseado */
     margin: 0 auto; /* Centra horizontalmente */
-    margin-bottom: 30px; /* Ajusta el margen inferior según sea necesario */
-    font-size: 16px; /* Tamaño de fuente */
+    margin-bottom: 15px; /* Ajusta el margen inferior según sea necesario */
+    font-size: 14px; /* Tamaño de fuente */
 }
 
 /* Ocultar la 'T' */
@@ -169,19 +169,19 @@ select.dropdown {
 }
 
 .tacometer-container {
-    width: 300px;
-    margin: 20px auto;
+    width: 250px; /* Ajusta el ancho del tacómetro */
+    margin: 10px auto; /* Ajusta el margen */
 }
 
 .rectangle i.material-icons {
     vertical-align: middle; /* Alinea el icono verticalmente con el texto */
-    margin-right: 8px; /* Espacio entre el icono y el texto */
+    margin-right: 5px; /* Espacio entre el icono y el texto */
 }
 
 .rectangle span {
     vertical-align: middle; /* Asegura que todo el texto está alineado verticalmente */
     display: inline-block;
-    margin-right: 10px; /* Espacio entre el título y el valor */
+    margin-right: 5px; /* Espacio entre el título y el valor */
 }
 
 .rectangle #RPM, 
@@ -205,15 +205,15 @@ select.dropdown {
         width: 100%; /* Ancho del sidebar en pantallas pequeñas */
     }
     .sidebar-content img {
-        max-width: 100%; /* Ajusta el ancho máximo de la imagen en pantallas pequeñas */
+        max-width: 80%; /* Ajusta el ancho máximo de la imagen en pantallas pequeñas */
     }
     select.dropdown {
-        width: 90%; /* Ancho completo del menú desplegable en pantallas pequeñas */
+        width: 80%; /* Ancho completo del menú desplegable en pantallas pequeñas */
     }
 
     /* Ajustes específicos para el gauge en pantallas pequeñas */
     .tacometer-container {
-        width: 200px; /* Ajusta el ancho para pantallas pequeñas */
+        width: 180px; /* Ajusta el ancho para pantallas pequeñas */
     }
 
     #rpmGauge {
