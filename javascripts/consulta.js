@@ -333,7 +333,7 @@ function cargarAmbosDatos(startDateTime, endDateTime, myMap) {
 
 function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
     let rutaActual;
-    let decoradores = [];
+    let decoradoresTemp = [];
 
     if (isVehiculo1) {
         rutaActual = L.polyline([], { color: color, weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
@@ -368,10 +368,10 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
             { offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({ pixelSize: 10, pathOptions: { opacity: 0.7, color: color, weight: 3 } }) }
         ]
     }).addTo(myMap);
-    decoradores.push(decorador);
+    decoradoresTemp.push(decorador);
 
     if (isVehiculo1) {
-        decoradores.forEach(decorador => decoradores.push(decorador));
+        decoradoresTemp.forEach(decorador => decoradores.push(decorador));
         if (!marcadorDeslizable1) {
             marcadorDeslizable1 = L.marker([0, 0], {
                 draggable: true,
@@ -379,7 +379,7 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
             }).addTo(myMap);
         }
     } else {
-        decoradores.forEach(decorador => decoradores2.push(decorador));
+        decoradoresTemp.forEach(decorador => decoradores2.push(decorador));
         if (!marcadorDeslizable2) {
             marcadorDeslizable2 = L.marker([0, 0], {
                 draggable: true,
