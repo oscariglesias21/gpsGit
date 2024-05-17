@@ -19,7 +19,7 @@
             <a class="navbar-brand" href="#">
                 <span>Tracker Truck</span>
             </a>
-            <img src="/logo_TT.png" alt="Tracker Truck Logo" style="height: 60px; width: auto; border-radius: 0%; margin-left: 5px;">
+            <img src="/logo_TT.png" alt="Tracker Truck Logo" style="height: 50px; width: auto; border-radius: 0%; margin-left: 5px;">
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -41,21 +41,20 @@
                 </button>
             </ul>
         </div>  
-        </div>        
-    </div>
+    </div>        
 </nav>
     
 <div class="container-map">
     <div class="row">
         <div class="col-12">
-            <h1 class="text-center my-3 small-title">Consulta de Recorridos</h1>
+            <h1 class="text-center my-1 small-title">Consulta de Recorridos</h1>
             <h2 class="subtitle">¡Selecciona el rango de fechas y el vehículo que deseas consultar y visualiza sus trayectos históricos!</h2>
         </div>
     </div>
-
 </div>
+
 <div class="container">
-    <div class="row justify-content-center mb-3">
+    <div class="row justify-content-center mb-1">
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
@@ -72,7 +71,6 @@
                         <span id="endDateSpan"></span> <span id="endTimeSpan"></span>
                         <div class="col-md-4 d-flex align-items-end"> 
                             <button type="submit" id="submitButton" class="btn btn-custom btn-sm w-100" style="background-color: #efb810; color: white;">Mostrar en mapa</button>
-
                         </div>
                     </div>
                 </div>
@@ -80,6 +78,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="instructionsModal" tabindex="-1" aria-labelledby="instructionsModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -100,7 +99,7 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
 <div class="container">
     <div class="row justify-content-center my-3">
@@ -167,9 +166,7 @@ function openFlatpickrs() {
     endFlatpickr.open();
 }
 
-
-    // cambio para desconcatenar los calendarios
-    document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const startDateTimeInput = document.getElementById('startDateTime');
     const endDateTimeInput = document.getElementById('endDateTime');
     const submitButton = document.getElementById('submitButton');
@@ -198,3 +195,6 @@ function openFlatpickrs() {
     });
 });
 </script>
+
+</body>
+</html>
