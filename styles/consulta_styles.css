@@ -21,10 +21,11 @@
 }
 .subtitle {
     font-size: 1.0em;
-    color: #555;
+    color: #494949;
     text-align: center;
     margin-top: 10px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Kanit', sans-serif;
+    font-style: italic;
 }
 .form-inline-custom {
     display: flex;
