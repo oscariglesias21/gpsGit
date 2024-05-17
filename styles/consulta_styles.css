@@ -89,7 +89,6 @@
     bottom: 20px;
     right: 10px; /* Disminuir este valor para mover el tacómetro más a la derecha */
     width: 300px;
-    height: auto;
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -102,7 +101,7 @@
     color: black;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 5px; /* Espacio entre el título y el gauge */
 }
 
 /* Estilos para el gauge */
@@ -110,6 +109,7 @@
     width: 100%;
     height: auto;
 }
+
 
 #vehicleSelector {
     position: relative; /* Posición relativa para el pseudo-elemento */
@@ -138,7 +138,7 @@
 @media (max-width: 768px) {
     #gaugeContainer {
         width: 200px; /* Ajustar el ancho para dispositivos móviles */
-        bottom: 15px; /* Ajustar la posición desde abajo */
+        bottom: 10px; /* Ajustar la posición desde abajo */
         right: 5px; /* Ajustar la posición desde la derecha en pantallas móviles */
     }
 
