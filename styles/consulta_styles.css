@@ -2,6 +2,7 @@
     height: 65vh; 
     width: 100vw;
 }
+
 .container-map, .container {
     max-width: 100%;
     margin: 0 auto;
@@ -9,16 +10,20 @@
     position: relative;
     z-index: 0;
 }
+
 .card {
     box-shadow: none; 
     border: none; 
 }
+
 .card-body{
     padding: 10px;
 }
+
 .form-label{
     margin-bottom: 0.5rem;
 }
+
 .subtitle {
     font-size: 0.9em;
     color: #494949;
@@ -27,6 +32,7 @@
     font-family: 'Kanit', sans-serif;
     font-style: italic;
 }
+
 .form-inline-custom {
     display: flex;
     gap: 10px;
@@ -34,15 +40,19 @@
     align-items: center; 
     justify-content: center; 
 }
+
 .btn-custom {
     padding: .375rem .75rem; 
 }
+
 .small-title{
     font-size: 20px;
 }
+
 #startDateSpan, #startTimeSpan, #endDateSpan, #endTimeSpan {
     display: none;
 }
+
 .date-time-info {
     position: absolute;
     width: 0.8px;
@@ -50,25 +60,31 @@
     overflow: hidden;
     clip: rect(0-8px, 0.8px, 0.8px, 0.8px);
 }
+
 .navbar {
     padding: 0.5rem 1rem;
 }
+
 .form-inline-custom .form-control, .form-inline-custom .btn-custom {
     margin-bottom: 0;
 }
+
 .row1{
     display: flex;
     justify-content: space-between;
 }
+
 .btn-consistent-size {
-padding: .375rem .75rem; 
+    padding: .375rem .75rem; 
 }
+
 #timeSlider {
     display: none;
     width: 100%;
     max-width: 400px; 
-    margin: 10px auto
+    margin: 10px auto;
 }
+
 #rpmGaugeMap {
     position: absolute;
     bottom: 20px;
@@ -77,9 +93,11 @@ padding: .375rem .75rem;
     height: 120px;
     z-index: 1000;
 }
+
 #titleRpmGauge{
     z-index: 1000;
 }
+
 #vehicleSelector {
     position: relative; /* Posición relativa para el pseudo-elemento */
     width: 160px;
@@ -103,33 +121,22 @@ padding: .375rem .75rem;
     color: white;
 }
 
-@media (min-width: 768px) { 
-    #rpmGaugeMap {
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+    #gaugeContainer {
         width: 200px; /* Ajustar el ancho para dispositivos móviles */
         height: 120px; /* Ajustar la altura para dispositivos móviles */
         bottom: 10px; /* Ajustar la posición desde abajo */
-        right: 60px; /* Ajustar la posición desde la derecha */
+        right: 10px; /* Ajustar la posición desde la derecha */
     }
-    .container-map {
-        padding: 10px;
-    }
-    .navbar-nav {
-        flex-direction: column;
-    }
-    .form-inline-custom .form-control {
-        max-width: 165px;
-    }
-    #timeSlider {
-        max-width: 80%; 
-        margin: 10px auto; 
-    }
+
     #titleRpmGauge {
-            font-size: 14px; /* Reducir el tamaño de la fuente para dispositivos móviles */
-        }
+        font-size: 14px; /* Reducir el tamaño de la fuente para dispositivos móviles */
+    }
+
     #timeSlider {
-        display: none;
-        width: 80%;
-        max-width: 200px; 
-        margin: 10px auto
+        width: 90%; /* Asegurar que el slider se ajuste en dispositivos móviles */
+        max-width: 100%; /* Permitir que el slider ocupe todo el ancho disponible */
+        margin: 10px auto; /* Centrar el slider en dispositivos móviles */
     }
-    }
+}
