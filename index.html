@@ -38,7 +38,6 @@
                     </button>
                 </div>
                 
-                
                 <!-- Botón CERRAR SIDEBAR con la palabra "Mapa" -->
                 <div class="close-btn-container" onclick="closeSidebar('infoSidebar')">
                     <span class="close-btn-text">Mapa</span>
@@ -46,10 +45,10 @@
                 </div>
             </div>
         </div>
-                <!-- Sidebar de Recorridos -->
-                <div class="sidebar" id="routesSidebar" style="display: none;">
-                    <div class="sidebar-content">
-                        <img src="/yellowLogo.png" alt="Logo" style="height: 100px; width: auto;">
+        <!-- Sidebar de Recorridos -->
+        <div class="sidebar" id="routesSidebar" style="display: none;">
+            <div class="sidebar-content">
+                <img src="/yellowLogo.png" alt="Logo" style="height: 100px; width: auto;">
                 <h4><u><strong>Rastreador GPS</strong></u></h4>
 
                 <!-- Menú desplegable -->
@@ -98,12 +97,12 @@
                     </div>    
                     
                 </div>
-                                <!-- Botón CERRAR SIDEBAR con la palabra "Mapa" -->
-                                <div class="close-btn-container" onclick="closeSidebar('routesSidebar')">
-                                    <span class="close-btn-text">Mapa</span>
-                                <span class="close-btn material-icons" onclick="closeSidebar()">chevron_right</span>
-                                    <span class="close-btn material-icons">chevron_right</span>
-                                </div>
+                <!-- Botón CERRAR SIDEBAR con la palabra "Mapa" -->
+                <div class="close-btn-container" onclick="closeSidebar('routesSidebar')">
+                    <span class="close-btn-text">Mapa</span>
+                    <span class="close-btn material-icons" onclick="closeSidebar()">chevron_right</span>
+                    <span class="close-btn material-icons">chevron_right</span>
+                </div>
             </div>
         </div>
     </div>
@@ -144,17 +143,11 @@
             const sidebar = document.getElementById(sidebarId);
             sidebar.style.transform = 'translateX(100%)';
         }
+
         // Mostrar el sidebar de información al cargar la página
         document.addEventListener('DOMContentLoaded', () => {
             showSidebar('infoSidebar');
         });
-        // Configuración de Leaflet para mover los botones de zoom
-        var map = L.map('map-in-container').setView([11.0132044, -74.8210294], 15); // Coordenadas de Barranquilla y zoom ajustado
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        // Mover los controles de zoom a la parte inferior derecha
-        map.zoomControl.setPosition('bottomright');
     </script>
 </body>
 </html>
