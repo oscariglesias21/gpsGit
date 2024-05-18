@@ -60,11 +60,6 @@ html, body, .map-container {
     margin-right: 0; /* Reduce el espacio entre el texto y el icono */
 }
 
-/* Estilo para los enlaces */
-a {
-    text-decoration: none;
-    color: inherit;
-}
 
 /* BOTONES DEL CONTAINER: MAPA ----------------------------------------------------- */
 .rastreador, .recorridosBtn, .centrarMapaBtn, .infoBtn {
