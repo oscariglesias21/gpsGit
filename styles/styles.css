@@ -270,8 +270,14 @@ select.dropdown {
 }
 
 .tacometer-container {
+    position: absolute;
+    bottom: 20px;
+    right: 10px; /* Disminuir este valor para mover el tacómetro más a la derecha */
     width: 300px;
-    margin: 20px auto;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .gauge-label {
