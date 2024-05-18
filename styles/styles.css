@@ -133,29 +133,30 @@ a{
 /* Estilo para el contenedor de botones */
 .button-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Cambiar a columna para apilar los botones verticalmente */
     align-items: center;
-    gap: 10px;
+    gap: 20px; /* Ajustar el espacio entre los botones */
     margin-top: 20px;
 }
 
 /* Estilo para los botones del sidebar de información */
-/* Example default button styles */
 .info-sidebar-button {
-    width: 80%;
+    width: 80%; /* Ancho fijo para los botones */
+    max-width: 300px; /* Ancho máximo para los botones */
+    height: 100px; /* Altura fija para los botones */
     padding: 20px 10px; /* Aumentar el padding vertical para incrementar la altura */
     background-color: #000000;
     color: #FFFFFF;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     font-family: 'Inter', sans-serif; /* Fuente Inter */
-    font-size: 16px;
+    font-size: 18px;
     display: flex; /* Utilizar flexbox para alinear el contenido */
     flex-direction: column; /* Alinear el contenido en columna */
     align-items: center; /* Centrar horizontalmente */
     justify-content: center; /* Centrar verticalmente */
-    gap: 10px; /* Espacio entre el icono, título y subtítulo */
+    gap: 6px; /* Espacio entre el icono, título y subtítulo */
 }
 
 /* Remove unwanted focus outline */
@@ -178,8 +179,6 @@ a{
     background-color: #777777;
 }
 
-
-
 .info-sidebar-button .material-icons {
     font-size: 24px; /* Tamaño del icono */
 }
@@ -188,7 +187,6 @@ a{
     font-size: 14px; /* Tamaño del subtítulo */
     margin-top: 10px; /* Margen superior para espacio adicional */
 }
-
 /* Estilos para el menú desplegable */
 select.dropdown {
     width: 80%; /* Ancho del menú desplegable */
