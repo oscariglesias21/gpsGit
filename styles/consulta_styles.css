@@ -149,6 +149,7 @@ html, body, .map-container {
     font-family: 'Montserrat', sans-serif;
     font-size: 20px; /* Reducir el tamaño de la fuente */
     font-weight: bold; /* Aplicar negrita */
+    text-decoration: underline;
 }
 
 #startDateSpan, #startTimeSpan, #endDateSpan, #endTimeSpan {
