@@ -304,8 +304,16 @@ select.dropdown {
         max-width: 300px; /* Ancho máximo para evitar desbordamientos */
         margin: 20px auto;
     }
+
     #rpmGauge {
         width: 100%;
         height: auto; /* Ajusta la altura automáticamente */
+    }
+
+    /* Ajustes específicos para las cajas de información en pantallas pequeñas */
+    .rectangle {
+        width: 90%; /* Ajusta el ancho en pantallas pequeñas */
+        height: 35px; /* Ajusta la altura en pantallas pequeñas */
+        font-size: 12px; /* Ajusta el tamaño de fuente en pantallas pequeñas */
     }
 }
