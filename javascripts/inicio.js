@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const rpmGaugeElement = document.getElementById("rpmGauge");
+    console.log('RPM Gauge element:', rpmGaugeElement); 
     if (rpmGaugeElement) {
         const rpmGauge = new Gauge(rpmGaugeElement);
         rpmGauge.setOptions({
