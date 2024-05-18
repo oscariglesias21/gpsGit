@@ -269,8 +269,11 @@ select.dropdown {
     overflow: hidden; /* Contiene elementos flotantes dentro del div */
 }
 
-.tacometer-container {
-    width: 200px; /* Ajusta el ancho para pantallas pequeñas */
+#rpmGauge {
+    width: 300px; /* O el tamaño que necesites */
+    height: 160px; /* O el tamaño que necesites */
+    border: 1px solid blue; /* Temporal para depuración */
+    background-color: #f0f0f0; /* Temporal para depuración */
 }
 
 .gauge-label {
