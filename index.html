@@ -127,12 +127,10 @@
     <!-- Script para abrir/cerrar el sidebar (NO TOCAR) -->
     <script>
         // Función para abrir el sidebar
-	
         function showSidebar(sidebarId) {
             const sidebars = document.querySelectorAll('.sidebar');
             sidebars.forEach(sidebar => {
                 if (sidebar.id === sidebarId) {
-            document.getElementById("sidebar").style.transform = "translateX(0)";
                     sidebar.style.transform = 'translateX(0)';
                     sidebar.style.display = 'block';
                 } else {
@@ -144,11 +142,10 @@
         // Función para cerrar el sidebar
         function closeSidebar(sidebarId) {
             const sidebar = document.getElementById(sidebarId);
-            document.getElementById("sidebar").style.transform = "translateX(100%)";
             sidebar.style.transform = 'translateX(100%)';
         }
-                // Mostrar el sidebar de información al cargar la página
-                document.addEventListener('DOMContentLoaded', () => {
+        // Mostrar el sidebar de información al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
             showSidebar('infoSidebar');
         });
         // Configuración de Leaflet para mover los botones de zoom
