@@ -1,5 +1,6 @@
 /* Color oficial de TrackerTruck */
 
+
 /* Estilos generales */
 html, body, .map-container {
     height: 100%;
@@ -58,6 +59,12 @@ html, body, .map-container {
     font-family: 'Inter', sans-serif;
     font-size: 16px;
     margin-right: 0; /* Reduce el espacio entre el texto y el icono */
+}
+
+.close-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    margin-left: 5px; /* Espacio entre el texto y el icono */
 }
 
 /* Estilo para los enlaces */
