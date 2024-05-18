@@ -258,9 +258,10 @@ select.dropdown {
 }
 
 .tacometer-container {
-    width: 250px; /* Ajusta el ancho del tacómetro */
-    margin: 10px auto; /* Ajusta el margen */
-    text-align: center; /* Centra el tacómetro */
+    width: 100%; /* Ajusta el ancho del contenedor */
+    max-width: 300px; /* Ajusta el ancho máximo del contenedor */
+    margin: 20px auto; /* Centra el contenedor horizontalmente */
+    text-align: center; /* Centra el contenido */
     position: relative; /* Añade posición relativa */
 }
 
