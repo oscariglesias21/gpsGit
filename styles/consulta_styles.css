@@ -276,5 +276,6 @@ html, body, .map-container {
         margin-top: 5px; /* Ajustar el margen superior */
         margin-bottom: 5px; /* Ajustar el margen inferior */
         width: 90%;
+        margin: 5px auto;
     }
 }
