@@ -1,3 +1,177 @@
+/* Estilos generales */
+html, body, .map-container {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* Evita barras de desplazamiento */
+    font-family: 'Roboto', sans-serif; /* Fuente para el cuerpo del texto */
+}
+
+#map-in-container {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* Estilos para el sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 450px; /* Ancho del sidebar */
+    height: 100%;
+    background-color: #FFD35F; /* Color de fondo del sidebar */
+    z-index: 2;
+    transform: translateX(0%); /* Sidebar inicialmente abierto */
+    transition: transform 0.3s ease; /* Transición suave para abrir/cerrar el sidebar */
+}
+
+/* Estilos para el contenido del sidebar */
+.sidebar-content {
+    padding: 20px;
+    color: #000000; /* Color del texto en el sidebar */
+    z-index: 2;
+    text-align: center; /* Centra el contenido horizontalmente */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el contenido horizontalmente */
+    justify-content: center; /* Centra el contenido verticalmente */
+    font-family: 'Roboto', sans-serif; /* Fuente para el contenido del sidebar */
+}
+
+.tacometer-container {
+    width: 300px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#rpmGauge {
+    width: 100%; /* Ajusta el ancho al 100% del contenedor */
+    height: auto; /* Ajusta la altura automáticamente */
+    display: block; /* Asegúrate de que el canvas sea un bloque */
+}
+
+select.dropdown {
+    width: 80%; /* Ancho del menú desplegable */
+    margin-top: 20px; /* Ajusta el margen inferior según sea necesario */
+    margin-bottom: 5px; /* Ajusta el margen inferior según sea necesario */
+    margin-inline: auto; /* Margen superior e inferior de 20px, centrado horizontalmente */
+    padding: 10px; /* Espacio interno */
+    font-size: 18px; /* Tamaño de fuente */
+    background-color: #ffffff; /* Color de fondo */
+    border: 3px solid #000000; /* Contorno */
+    border-radius: 10px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor */
+    color: #000000; /* Color de texto */
+    font-family: 'Roboto', sans-serif; /* Fuente para el menú desplegable */
+}
+
+/* Estilos para los rectángulos */
+.rectangle-container {
+    display: flex;
+    flex-direction: column; /* Columna */
+}
+
+.rectangle {
+    width: 80%; /* Ancho del rectángulo */
+    height: 40px; /* Altura del rectángulo ajustada */
+    background-color: #FFFFFF; /* Color de fondo del rectángulo */
+    border: 3px solid #000000; /* Contorno negro */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px; /* Espacio interno */
+    font-size: 14px; /* Tamaño de fuente ajustado */
+    margin-bottom: 10px; /* Espacio entre rectángulos ajustado */
+    display: flex;
+    align-items: center; /* Centrado vertical */
+    margin: 5px auto; /* Margen superior e inferior de 30px, centrado horizontalmente */
+    font-family: 'Roboto', sans-serif; /* Fuente para las cajas de información */
+}
+
+.rectangle i {
+    margin-right: 10px; /* Espacio entre icono y texto */
+}
+
+.sidebar-content p {
+    width: 80%; /* Ancho deseado */
+    margin: 0 auto; /* Centra horizontalmente */
+    margin-bottom: 20px; /* Ajusta el margen inferior según sea necesario */
+    font-size: 16px; /* Tamaño de fuente */
+    font-family: 'Roboto', sans-serif; /* Fuente para el texto general */
+}
+
+/* Ocultar la 'T' */
+#date::after {
+    content: ' ';
+    font-size: 0;
+}
+
+/* Reducir el tamaño de los ceros iniciales */
+#time span.zero {
+    font-size: 0; /* Hace que los ceros sean invisibles */
+    color: transparent; /* O hace los ceros transparentes */
+}
+
+.latitude, .longitude {
+    display: none; /* Oculta los elementos y su espacio */
+}
+
+.rectangle i.material-icons {
+    vertical-align: middle; /* Alinea el icono verticalmente con el texto */
+    margin-right: 8px; /* Espacio entre el icono y el texto */
+}
+
+.rectangle span {
+    vertical-align: middle; /* Asegura que todo el texto está alineado verticalmente */
+    display: inline-block;
+    margin-right: 10px; /* Espacio entre el título y el valor */
+}
+
+.rectangle #RPM, 
+.rectangle #date, 
+.rectangle #time {
+    float: right; /* Alinea los valores hacia la derecha dentro de su contenedor */
+}
+
+.rectangle {
+    overflow: hidden; /* Contiene elementos flotantes dentro del div */
+}
+
+.gauge-label {
+    font-weight: bold;
+}
+
+/*CONFIGURACIÓN: WEB RESPONSIVE*/
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%; /* Ancho del sidebar en pantallas pequeñas */
+    }
+    .sidebar-content img {
+        max-width: 100%; /* Ajusta el ancho máximo de la imagen en pantallas pequeñas */
+    }
+    select.dropdown {
+        width: 90%; /* Ancho completo del menú desplegable en pantallas pequeñas */
+    }
+
+    .tacometer-container {
+        width: 100%; /* Ajusta el ancho para pantallas pequeñas */
+        max-width: 300px; /* Ancho máximo para evitar desbordamientos */
+        margin: 20px auto;
+    }
+
+    #rpmGauge {
+        width: 100%;
+        height: auto; /* Ajusta la altura automáticamente */
+    }
+
+    .rectangle {
+        width: 90%; /* Ajusta el ancho en pantallas pequeñas */
+        height: 35px; /* Ajusta la altura en pantallas pequeñas */
+        font-size: 12px; /* Ajusta el tamaño de fuente en pantallas pequeñas */
+    }
+}
+
+/* Estilos personalizados */
 #mapid {
     height: 65vh; 
     width: 100vw;
@@ -45,7 +219,7 @@
 }
 
 .small-title {
-    font-family: 'Freeman', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 20px; /* Reducir el tamaño de la fuente */
     font-weight: bold; /* Aplicar negrita */
 }
