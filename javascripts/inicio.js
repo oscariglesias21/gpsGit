@@ -1,41 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(myMap);
-    var truckIcon = L.icon({
-        iconUrl: '/camion1_.png',  // Asegúrate de que esta URL sea accesible
-        iconSize: [40, 40],  // Tamaño del ícono
-        iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
-        popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
-    });
-    
-    var truckIcon2 = L.icon({
-        iconUrl: '/camion2__.png',  // Asegúrate de que esta URL sea accesible
-        iconSize: [40, 40],  // Tamaño del ícono
-        iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
-        popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
-    });
-    let marker = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
-    let marker2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
-
-    let routePath = L.polyline([], {color: 'blue'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
-    let routePath2 = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
-
-    let lastMarkerPosition = null;
-    let lastMarkerPosition2 = null;
-
-    let inactivityTimer;
-    let inactivityTimer2;
-    let centrarMapa = null;
-
-    // Intentar recuperar y dibujar la ruta almacenada
-    const storedRoute = localStorage.getItem('routePath');
-    if (storedRoute) {
-        const routePoints = JSON.parse(storedRoute);
-        routePath.setLatLngs(routePoints.map(p => L.latLng(p.lat, p.lng)));
-    }
-
     const rpmGaugeElement = document.getElementById("rpmGauge");
     if (rpmGaugeElement) {
         const rpmGauge = new Gauge(rpmGaugeElement);
@@ -73,6 +36,42 @@ document.addEventListener('DOMContentLoaded', () => {
         rpmGauge.set(0);
     } else {
         console.error('Canvas element not found!');
+    }
+    const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(myMap);
+    var truckIcon = L.icon({
+        iconUrl: '/camion1_.png',  // Asegúrate de que esta URL sea accesible
+        iconSize: [40, 40],  // Tamaño del ícono
+        iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
+        popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+    });
+    
+    var truckIcon2 = L.icon({
+        iconUrl: '/camion2__.png',  // Asegúrate de que esta URL sea accesible
+        iconSize: [40, 40],  // Tamaño del ícono
+        iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
+        popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+    });
+    let marker = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
+    let marker2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
+
+    let routePath = L.polyline([], {color: 'blue'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
+    let routePath2 = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
+
+    let lastMarkerPosition = null;
+    let lastMarkerPosition2 = null;
+
+    let inactivityTimer;
+    let inactivityTimer2;
+    let centrarMapa = null;
+
+    // Intentar recuperar y dibujar la ruta almacenada
+    const storedRoute = localStorage.getItem('routePath');
+    if (storedRoute) {
+        const routePoints = JSON.parse(storedRoute);
+        routePath.setLatLngs(routePoints.map(p => L.latLng(p.lat, p.lng)));
     }
     const socket = io();
     console.log('Conexión a Socket.IO establecida correctamente.');
