@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const rpmGaugeElement = document.getElementById("rpmGauge");
     console.log('RPM Gauge element:', rpmGaugeElement); 
     if (rpmGaugeElement) {
+        rpmGaugeElement.width = 300;
+        rpmGaugeElement.height = 160;
         const rpmGauge = new Gauge(rpmGaugeElement);
         rpmGauge.setOptions({
             angle: 0.20,
