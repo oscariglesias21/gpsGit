@@ -258,11 +258,8 @@ select.dropdown {
 }
 
 .tacometer-container {
-    width: 100%; /* Ajusta el ancho del contenedor */
-    max-width: 300px; /* Ajusta el ancho máximo del contenedor */
-    margin: 20px auto; /* Centra el contenedor horizontalmente */
-    text-align: center; /* Centra el contenido */
-    position: relative; /* Añade posición relativa */
+    width: 300px; /* Ajusta el ancho del tacómetro */
+    margin: 20px auto; /* Ajusta el margen */
 }
 
 #rpmGauge {
@@ -271,6 +268,7 @@ select.dropdown {
     display: block; /* Asegura que el canvas sea un bloque */
     margin: 0 auto; /* Centra el canvas */
 }
+
 
 .rectangle i.material-icons {
     vertical-align: middle; /* Alinea el icono verticalmente con el texto */

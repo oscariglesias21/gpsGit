@@ -38,37 +38,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     //tacometro
     const rpmGauge = new Gauge(document.getElementById("rpmGauge")).setOptions({
-        angle: 0.20, 
-        lineWidth: 0.20,
+        angle: 0.2,
+        lineWidth: 0.2,
         radiusScale: 1,
         pointer: {
-            length: 0.5, 
-            strokeWidth: 0.035, // grosor del puntero
-            color: '#000000' // Color del puntero
+            length: 0.5,
+            strokeWidth: 0.035,
+            color: '#000000'
         },
         limitMax: false,
         limitMin: false,
-        colorStart: '#FFC107', 
-        colorStop: '#FFC107', 
-        strokeColor: '#E0E0E0', 
+        colorStart: '#FFC107',
+        colorStop: '#FFC107',
+        strokeColor: '#E0E0E0',
         generateGradient: true,
         highDpiSupport: true,
         staticLabels: {
-            font: "12px sans-serif", 
-            labels: [0, 2000, 4000, 6000], 
-            color: "#000000", 
-            fractionDigits: 0 
+            font: "12px sans-serif",
+            labels: [0, 2000, 4000, 6000],
+            color: "#000000",
+            fractionDigits: 0
         },
         staticZones: [
-            {strokeStyle: "#30B32D", min: 0, max: 2000}, 
-            {strokeStyle: "#3498DB", min: 2000, max: 4000}, 
-            {strokeStyle: "#F03E3E", min: 4000, max: 6000}, 
+            { strokeStyle: "#30B32D", min: 0, max: 2000 },
+            { strokeStyle: "#3498DB", min: 2000, max: 4000 },
+            { strokeStyle: "#F03E3E", min: 4000, max: 6000 }
         ],
     });
     rpmGauge.maxValue = 6000;
-    rpmGauge.setMinValue(0); 
-    rpmGauge.animationSpeed = 80;
-    rpmGauge.set(0); 
+    rpmGauge.setMinValue(0);
+    rpmGauge.animationSpeed = 32;
+    rpmGauge.set(0);
     //
     const socket = io();
     console.log('Conexión a Socket.IO establecida correctamente.');
