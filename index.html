@@ -12,38 +12,47 @@
     <script src="https://cdn.jsdelivr.net/npm/gaugeJS/dist/gauge.min.js"></script>
 </head>
 <body>
+    <!-- Map container -->
     <div class="map-container">
+        <!-- Mapa -->
         <div id="map-in-container"></div>    
 
+        <!-- Sidebar información -->
         <div class="sidebar" id="infoSidebar">
             <div class="sidebar-content">
+                <!-- Logo -->
                 <img src="yellowLogo.png" alt="Logo" style="height: 100px; width: auto;">
                 <p class="intro-text">Con <strong>TrackerTruck</strong> podrás observar el recorrido de tus vehículos en tiempo real!</p>
+                <!-- Contenedor de botones -->
                 <div class="button-container">
                     <button class="info-sidebar-button" onclick="showSidebar('routesSidebar')">
-                        <span class="material-icons">local_shipping</span>
+                        <span class="material-icons">local_shipping</span> <!-- Icono de rastreador -->
                         <span>Rastreador</span>
                         <span class="subtitle">Aquí podrás ver en tiempo real tus vehículos.</span>
                     </button>
                     <a href="/consulta" class="button-container">
                         <button class="info-sidebar-button">
-                            <span class="material-icons">fork_right</span>
+                            <span class="material-icons">fork_right</span> <!-- Icono de recorridos -->
                             <span>Recorridos</span>
                             <span class="subtitle">Consulta el historial de recorridos de tus vehículos.</span>
                         </button>
                     </a>
                 </div>
+                
+                <!-- Botón CERRAR SIDEBAR con la palabra "Mapa" -->
                 <div class="close-btn-container" onclick="closeSidebar('infoSidebar')">
                     <span class="close-btn-text">Mapa</span>
                     <span class="close-btn material-icons">chevron_right</span>
                 </div>
             </div>
         </div>
+        <!-- Sidebar de Recorridos -->
         <div class="sidebar" id="routesSidebar" style="display: none;">
             <div class="sidebar-content">
                 <img src="/yellowLogo.png" alt="Logo" style="height: 70px; width: auto;">
                 <h4><u><strong>Rastreador GPS</strong></u></h4>
 
+                <!-- Menú desplegable -->
                 <select class="dropdown" id="vehicleSelector">
                     <option value="item1">Vehículo 1</option>
                     <option value="item2">Vehículo 2</option>
@@ -52,7 +61,9 @@
 
                 <p>¡Selecciona el vehículo que quieras rastrear y observa sus registros!</p>
 
+                <!-- Rectángulos que muestran los registros -->
                 <div class="container">
+                    <!-- Contenedores flotantes para latitud, longitud, fecha y hora -->
                     <div class="card data-card latitude">
                         <div class="card-header text-center">Latitud</div>
                         <div class="card-body">
@@ -80,11 +91,14 @@
                         <i class="material-icons">schedule</i>
                         <span id="timeDescription">Hora:</span> <span id="time">HH:MM:SS</span>
                     </div>
+                    <!-- Tacómetro -->
                     <div class="tacometer-container">
                         <canvas id="rpmGauge" width="300" height="160" style="border: 1px solid blue;"></canvas>
                         <div class="gauge-label" style="font-weight: bold;">Tacómetro RPM</div>
                     </div>
+                    
                 </div>
+                <!-- Botón CERRAR SIDEBAR con la palabra "Mapa" -->
                 <div class="close-btn-container" onclick="closeSidebar('routesSidebar')">
                     <span class="close-btn-text">Mapa</span>
                     <span class="close-btn material-icons" onclick="closeSidebar()">chevron_right</span>
@@ -92,7 +106,12 @@
             </div>
         </div>
     </div>
-
+    <span class="infoBtn material-icons" onclick="showSidebar('infoSidebar')">info</span>
+    <span class="rastreador material-icons" onclick="showSidebar('routesSidebar')">local_shipping</span>
+    <a href="/consulta" class="recorridosBtn material-icons">fork_right</a> <!-- Ajustado para la ruta /consulta -->
+    <span id="centrarMapaBtn" class="centrarMapaBtn material-icons" onclick="centerMap()">location_on</span>
+    
+    <!-- Scripts del mapa  -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -103,56 +122,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="inicio.js"></script>
-
-    <span class="infoBtn material-icons" onclick="showSidebar('infoSidebar')">info</span>
-    <span class="rastreador material-icons" onclick="showSidebar('routesSidebar')">local_shipping</span>
-    <a href="/consulta" class="recorridosBtn material-icons">fork_right</a>
-    <span id="centrarMapaBtn" class="centrarMapaBtn material-icons" onclick="centerMap()">location_on</span>
-
+    
+    <!-- Script para abrir/cerrar el sidebar (NO TOCAR) -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Initializing RPM Gauge');
-            const rpmGaugeElement = document.getElementById("rpmGauge");
-            if (rpmGaugeElement) {
-                console.log('RPM Gauge element found:', rpmGaugeElement);
-                const rpmGauge = new Gauge(rpmGaugeElement).setOptions({
-                    angle: 0.20,
-                    lineWidth: 0.20,
-                    radiusScale: 1,
-                    pointer: {
-                        length: 0.5,
-                        strokeWidth: 0.035,
-                        color: '#000000'
-                    },
-                    limitMax: false,
-                    limitMin: false,
-                    colorStart: '#FFC107',
-                    colorStop: '#FFC107',
-                    strokeColor: '#E0E0E0',
-                    generateGradient: true,
-                    highDpiSupport: true,
-                    staticLabels: {
-                        font: "14px sans-serif",
-                        labels: [0, 2000, 4000, 6000],
-                        color: "#000000",
-                        fractionDigits: 0
-                    },
-                    staticZones: [
-                        {strokeStyle: "#30B32D", min: 0, max: 2000},
-                        {strokeStyle: "#3498DB", min: 2000, max: 4000},
-                        {strokeStyle: "#F03E3E", min: 4000, max: 6000},
-                    ],
-                });
-                rpmGauge.maxValue = 6000;
-                rpmGauge.setMinValue(0);
-                rpmGauge.animationSpeed = 80;
-                rpmGauge.set(0);
-                console.log('RPM Gauge initialized');
-            } else {
-                console.error('Canvas element not found!');
-            }
-        });
-
+        // Función para abrir el sidebar
         function showSidebar(sidebarId) {
             const sidebars = document.querySelectorAll('.sidebar');
             sidebars.forEach(sidebar => {
@@ -166,11 +139,13 @@
             });
         }
 
+        // Función para cerrar el sidebar
         function closeSidebar(sidebarId) {
             const sidebar = document.getElementById(sidebarId);
             sidebar.style.transform = 'translateX(100%)';
         }
 
+        // Mostrar el sidebar de información al cargar la página
         document.addEventListener('DOMContentLoaded', () => {
             showSidebar('infoSidebar');
         });
