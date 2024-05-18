@@ -92,36 +92,6 @@ html, body, .map-container {
     font-weight: bold;
 }
 
-/*CONFIGURACIÓN: WEB RESPONSIVE*/
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%; /* Ancho del sidebar en pantallas pequeñas */
-    }
-    .sidebar-content img {
-        max-width: 100%; /* Ajusta el ancho máximo de la imagen en pantallas pequeñas */
-    }
-    select.dropdown {
-        width: 90%; /* Ancho completo del menú desplegable en pantallas pequeñas */
-    }
-
-    .tacometer-container {
-        width: 100%; /* Ajusta el ancho para pantallas pequeñas */
-        max-width: 300px; /* Ancho máximo para evitar desbordamientos */
-        margin: 20px auto;
-    }
-
-    #rpmGauge {
-        width: 100%;
-        height: auto; /* Ajusta la altura automáticamente */
-    }
-
-    .rectangle {
-        width: 90%; /* Ajusta el ancho en pantallas pequeñas */
-        height: 35px; /* Ajusta la altura en pantallas pequeñas */
-        font-size: 12px; /* Ajusta el tamaño de fuente en pantallas pequeñas */
-    }
-}
-
 /* Estilos personalizados */
 #mapid {
     height: 65vh; 
@@ -268,6 +238,42 @@ html, body, .map-container {
 
 /* Media query para dispositivos móviles */
 @media (max-width: 768px) {
+    html, body, .map-container {
+        height: auto; /* Ajusta la altura para permitir el desplazamiento */
+        overflow: auto; /* Permitir desplazamiento en móviles */
+    }
+    
+    .sidebar {
+        width: 100%; /* Ancho del sidebar en pantallas pequeñas */
+        height: auto; /* Ajusta la altura para permitir el desplazamiento */
+    }
+
+    .sidebar-content img {
+        max-width: 100%; /* Ajusta el ancho máximo de la imagen en pantallas pequeñas */
+    }
+
+    select.dropdown {
+        width: 90%; /* Ancho completo del menú desplegable en pantallas pequeñas */
+    }
+
+    .tacometer-container {
+        width: 100%; /* Ajusta el ancho para pantallas pequeñas */
+        max-width: 300px; /* Ancho máximo para evitar desbordamientos */
+        margin: 20px auto;
+    }
+
+    #rpmGauge {
+        width: 100%;
+        height: auto; /* Ajusta la altura automáticamente */
+    }
+
+    .rectangle {
+        width: 90%; /* Ajusta el ancho en pantallas pequeñas */
+        height: 35px; /* Ajusta la altura en pantallas pequeñas */
+        font-size: 12px; /* Ajusta el tamaño de fuente en pantallas pequeñas */
+    }
+
+    /* Asegurar que el gauge esté bien centrado en pantallas móviles */
     #gaugeContainer {
         width: 200px; /* Ajustar el ancho para dispositivos móviles */
         bottom: 10px; /* Ajustar la posición desde abajo */
@@ -283,17 +289,4 @@ html, body, .map-container {
         max-width: 100%; /* Permitir que el slider ocupe todo el ancho disponible */
         margin: 5px auto; /* Reducir el margen */
     }
-    .subtitle {
-        font-size: 0.8em; /* Ajustar el tamaño de la fuente para mejor legibilidad */
-        color: #343a40; /* Color oscuro para mejor contraste */
-        text-align: center;
-        margin-top: 10px; /* Un poco más de espacio superior */
-        margin-bottom: 10px; /* Añadir margen inferior para espaciado */
-        font-family: 'Montserrat', sans-serif; /* Fuente más atractiva */
-        font-weight: 500; /* Semi-negrita para dar énfasis */
-        letter-spacing: 0.5px; /* Espacio entre letras para mejor legibilidad */
-        text-transform: uppercase; /* Texto en mayúsculas para estilo */
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidad */
-    }
-    
 }
