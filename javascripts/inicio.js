@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         highDpiSupport: true,
         staticLabels: {
             font: "14px sans-serif", 
-            labels: [0, 2000, 4000, 6000, 8000], 
+            labels: [0, 2000, 4000, 6000], 
             color: "#000000", 
             fractionDigits: 0 
         },
@@ -62,10 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
             {strokeStyle: "#F03E3E", min: 0, max: 2000}, 
             {strokeStyle: "#3498DB", min: 2000, max: 4000}, 
             {strokeStyle: "#2980B9", min: 4000, max: 6000}, 
-            {strokeStyle: "#30B32D", min: 6000, max: 8000} 
         ],
     });
-    rpmGauge.maxValue = 8000;
+    rpmGauge.maxValue = 6000;
     rpmGauge.setMinValue(0); 
     rpmGauge.animationSpeed = 80;
     rpmGauge.set(0);
@@ -214,13 +213,3 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('RPM').innerText = "--";
     }
 });
-
-function closeSidebar(sidebarId) {
-    document.getElementById(sidebarId).style.transform = "translateX(100%)";
-}
-
-function showSidebar(sidebarId) {
-    document.getElementById('infoSidebar').style.transform = "translateX(100%)";
-    document.getElementById('routesSidebar').style.transform = "translateX(100%)";
-    document.getElementById(sidebarId).style.transform = "translateX(0)";
-}
