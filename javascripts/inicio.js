@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rpmGaugeElement = document.getElementById("rpmGauge");
     console.log('RPM Gauge element:', rpmGaugeElement); 
     if (rpmGaugeElement) {
+        // Inicialización del gauge
         rpmGaugeElement.width = 300;
         rpmGaugeElement.height = 140;
         const rpmGauge = new Gauge(rpmGaugeElement);
@@ -37,70 +38,85 @@ document.addEventListener('DOMContentLoaded', () => {
         rpmGauge.setMinValue(0);
         rpmGauge.animationSpeed = 80;
         rpmGauge.set(0);
+
+        // Guardar el rpmGauge en una variable global
+        window.rpmGauge = rpmGauge;
     } else {
         console.error('Canvas element not found!');
     }
+
+    // Inicialización del mapa de Leaflet y otros componentes
     const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
+
+    // Iconos de los camiones
     var truckIcon = L.icon({
-        iconUrl: '/camion1_.png',  // Asegúrate de que esta URL sea accesible
-        iconSize: [40, 40],  // Tamaño del ícono
-        iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
-        popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+        iconUrl: '/camion1_.png',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [0, -20]
     });
-    
+
     var truckIcon2 = L.icon({
-        iconUrl: '/camion2__.png',  // Asegúrate de que esta URL sea accesible
-        iconSize: [40, 40],  // Tamaño del ícono
-        iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
-        popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
+        iconUrl: '/camion2__.png',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [0, -20]
     });
+
+    // Marcadores de los camiones
     let marker = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
     let marker2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
 
-    let routePath = L.polyline([], {color: 'blue'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
-    let routePath2 = L.polyline([], {color: 'red'}).addTo(myMap); // Crea una polilínea vacía con el color rojo
+    // Rutas de los camiones
+    let routePath = L.polyline([], {color: 'blue'}).addTo(myMap);
+    let routePath2 = L.polyline([], {color: 'red'}).addTo(myMap);
 
+    // Variables de posición y temporizador
     let lastMarkerPosition = null;
     let lastMarkerPosition2 = null;
-
     let inactivityTimer;
     let inactivityTimer2;
     let centrarMapa = null;
 
-    // Intentar recuperar y dibujar la ruta almacenada
+    // Recuperar y dibujar la ruta almacenada
     const storedRoute = localStorage.getItem('routePath');
     if (storedRoute) {
         const routePoints = JSON.parse(storedRoute);
         routePath.setLatLngs(routePoints.map(p => L.latLng(p.lat, p.lng)));
     }
+
+    // Conexión al servidor mediante Socket.IO
     const socket = io();
     console.log('Conexión a Socket.IO establecida correctamente.');
 
-    socket.on('locationUpdate', (data) => { //vehiculo 2
+    // Escuchar actualizaciones de ubicación de los vehículos
+    socket.on('locationUpdate', (data) => {
         if (document.getElementById("vehicleSelector").value === "item2" || document.getElementById("vehicleSelector").value === "item3") {
             console.log('Datos recibidos del servidor:', data);
             updateVehicleDisplay(data, marker, routePath);
         }
     });
-    socket.on('locationUpdate1', (data2) => { //vehiculo 1
+
+    socket.on('locationUpdate1', (data2) => {
         if (document.getElementById("vehicleSelector").value === "item1" || document.getElementById("vehicleSelector").value === "item3") {
             updateVehicleDisplay2(data2, marker2, routePath2);
         }
     });
 
-    function updateVehicleDisplay(data, marker, routePath) { //vehiculo 2
+    // Actualización de la visualización del vehículo 2
+    function updateVehicleDisplay(data, marker, routePath) {
         const { Latitude, Longitude, Date, Time, RPM } = data;
         console.log(`Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
 
         clearTimeout(inactivityTimer);
         inactivityTimer = setTimeout(() => {
-            routePath.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
-            localStorage.removeItem('routePath'); // Opcional: Limpia la ruta almacenada
+            routePath.setLatLngs([]);
+            localStorage.removeItem('routePath');
             console.log('La ruta ha sido borrada debido a la inactividad.');
-        }, 20000); // 20000 milisegundos = 20 segundos
+        }, 20000);
 
         document.getElementById('latitude').innerText = Latitude;
         document.getElementById('longitude').innerText = Longitude;
@@ -109,71 +125,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (RPM !== undefined) {
             document.getElementById('RPM').innerText = RPM;
-            rpmGauge.set(RPM);  // Actualizar el gauge con el valor de RPM
+            window.rpmGauge.set(RPM);
         } else {
             document.getElementById('RPM').innerText = '-';
-            rpmGauge.set(0);  // Resetear el gauge si no hay datos de RPM
+            window.rpmGauge.set(0);
         }
 
-        let dateElement = document.getElementById('date');  // Definir correctamente dateElement
+        let dateElement = document.getElementById('date');
         if (dateElement) {
             const dateString = dateElement.textContent || dateElement.innerText;
-            const formattedDate = dateString.split('T')[0]; // Extrae solo la parte de la fecha
-            dateElement.textContent = formattedDate; // Establece el texto con la fecha formateada
+            const formattedDate = dateString.split('T')[0];
+            dateElement.textContent = formattedDate;
         }
         const newLatLng = new L.LatLng(data.Latitude, data.Longitude);
         centrarMapa = newLatLng;
-        
+
         if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 200) {
             routePath.setLatLngs([]);
-            localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
+            localStorage.removeItem('routePath');
         }
         myMap.setView(newLatLng);
         marker.setLatLng(newLatLng);
-        routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
+        routePath.addLatLng(newLatLng);
         lastMarkerPosition = newLatLng;
     }
 
-    function updateVehicleDisplay2(data2, marker2, routePath2) { //vehiculo 1
-        const { Latitude, Longitude, Date, Time} = data2;
+    // Actualización de la visualización del vehículo 1
+    function updateVehicleDisplay2(data2, marker2, routePath2) {
+        const { Latitude, Longitude, Date, Time } = data2;
         console.log(`Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}`);
 
         clearTimeout(inactivityTimer2);
         inactivityTimer2 = setTimeout(() => {
-            routePath2.setLatLngs([]); // Borra la línea si no se han recibido datos durante 1 minuto
-            localStorage.removeItem('routePath2'); // Opcional: Limpia la ruta almacenada
+            routePath2.setLatLngs([]);
+            localStorage.removeItem('routePath2');
             console.log('La ruta ha sido borrada debido a la inactividad.');
-        }, 20000); // 20000 milisegundos = 20 segundos
+        }, 20000);
 
         document.getElementById('latitude').innerText = Latitude;
         document.getElementById('longitude').innerText = Longitude;
         document.getElementById('date').innerText = Date;
         document.getElementById('time').innerText = Time;
 
-        let dateElement = document.getElementById('date');  // Definir correctamente dateElement
+        let dateElement = document.getElementById('date');
         if (dateElement) {
             const dateString = dateElement.textContent || dateElement.innerText;
-            const formattedDate = dateString.split('T')[0]; // Extrae solo la parte de la fecha
-            dateElement.textContent = formattedDate; // Establece el texto con la fecha formateada
+            const formattedDate = dateString.split('T')[0];
+            dateElement.textContent = formattedDate;
         }
         const newLatLng2 = new L.LatLng(data2.Latitude, data2.Longitude);
         centrarMapa = newLatLng2;
-        
+
         if (lastMarkerPosition2 && lastMarkerPosition2.distanceTo(newLatLng2) > 200) {
             routePath2.setLatLngs([]);
-            localStorage.removeItem('routePath2'); // Limpia la ruta almacenada si es necesario
+            localStorage.removeItem('routePath2');
         }
         myMap.setView(newLatLng2);
         marker2.setLatLng(newLatLng2);
-        routePath2.addLatLng(newLatLng2); // Añade el nuevo punto a la polilínea para trazar el recorrido
+        routePath2.addLatLng(newLatLng2);
         lastMarkerPosition2 = newLatLng2;
     }
 
+    // Función para centrar el mapa en la última ubicación conocida
     document.getElementById('centrarMapaBtn').addEventListener('click', () => {
         if (centrarMapa) {
-            myMap.setView(centrarMapa); // Centra el mapa en la última ubicación conocida
+            myMap.setView(centrarMapa);
         } else {
-            alert('Ubicación no disponible.'); // O maneja este caso como prefieras
+            alert('Ubicación no disponible.');
         }
         const currentRoute = routePath.getLatLngs();
         localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
@@ -181,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('routePath2', JSON.stringify(currentRoute2.map(p => ({ lat: p.lat, lng: p.lng }))));
     });
 
+    // Función para cambiar la visualización según el vehículo seleccionado
     function navigate() {
         const selectedOption = document.getElementById("vehicleSelector").value;
         console.log("Opción seleccionada:", selectedOption);
@@ -212,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resetDataDisplays();
     });
 
+    // Función para resetear las visualizaciones de datos
     function resetDataDisplays() {
         document.getElementById('latitude').innerText = "--";
         document.getElementById('longitude').innerText = "--";
