@@ -227,8 +227,16 @@ select.dropdown {
 }
 
 .tacometer-container {
-    width: 300px;
-    margin: 20px auto;
+    border: 1px solid red; /* Temporary border for debugging */
+    width: 300px; /* Ensure this matches the canvas width */
+    height: auto; /* This allows it to grow as needed */
+    margin: 20px auto; /* Centers the container horizontally */
+}
+
+#rpmGauge {
+    border: 1px solid blue; /* Temporary border for debugging */
+    width: 100%; /* Ensures the canvas scales with the container */
+    height: auto; /* Ensures the canvas maintains its aspect ratio */
 }
 
 .rectangle i.material-icons {
