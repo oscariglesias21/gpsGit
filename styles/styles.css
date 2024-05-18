@@ -248,21 +248,6 @@ select.dropdown {
     display: none; /* Oculta los elementos y su espacio */
 }
 
-.tacometer-container {
-    width: 300px; /* Ensure this matches the canvas width */
-    height: auto; /* Allow the height to adjust as needed */
-    margin: 20px auto; /* Center the container horizontally */
-    border: 1px solid red; /* Temporary border for debugging */
-    background-color: lightgray; /* Temporary background for debugging */
-}
-
-#rpmGauge {
-    width: 100%;
-    height: auto;
-    border: 1px solid blue; /* Temporary border for debugging */
-}
-
-
 .rectangle i.material-icons {
     vertical-align: middle; /* Alinea el icono verticalmente con el texto */
     margin-right: 8px; /* Espacio entre el icono y el texto */
