@@ -48,7 +48,7 @@
         <!-- Sidebar de Recorridos -->
         <div class="sidebar" id="routesSidebar" style="display: none;">
             <div class="sidebar-content">
-                <img src="/yellowLogo.png" alt="Logo" style="height: 80px; width: auto;">
+                <img src="/yellowLogo.png" alt="Logo" style="height: 100px; width: auto;">
                 <h4><u><strong>Rastreador GPS</strong></u></h4>
 
                 <!-- Menú desplegable -->
@@ -121,7 +121,7 @@
     <!-- Botones en la esquina superior izquierda -->
     <span class="infoBtn material-icons" onclick="showSidebar('infoSidebar')">info</span>
     <span class="rastreador material-icons" onclick="showSidebar('routesSidebar')">local_shipping</span>
-    <a href="javascript:void(0)" class="recorridosBtn material-icons" onclick="showSidebar('routesSidebar')">fork_right</a>
+    <a href="/consulta" class="recorridosBtn material-icons">fork_right</a> <!-- Ajustado para la ruta /consulta -->
     <span id="centrarMapaBtn" class="centrarMapaBtn material-icons" onclick="centerMap()">location_on</span>
     <!-- Script para abrir/cerrar el sidebar (NO TOCAR) -->
     <script>
@@ -151,3 +151,4 @@
     </script>
 </body>
 </html>
+
