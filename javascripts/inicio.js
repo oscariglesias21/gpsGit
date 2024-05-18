@@ -37,13 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const rpmGaugeElement = document.getElementById("rpmGauge");
-    console.log('Canvas element:', rpmGaugeElement);
-    console.log('Canvas dimensions:', rpmGaugeElement.width, rpmGaugeElement.height);
-
     if (rpmGaugeElement) {
         const rpmGauge = new Gauge(rpmGaugeElement);
-        console.log('Gauge object created:', rpmGauge);
-        
         rpmGauge.setOptions({
             angle: 0.20,
             lineWidth: 0.20,
@@ -67,16 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 fractionDigits: 0
             },
             staticZones: [
-                {strokeStyle: "#F03E3E", min: 0, max: 2000},
+                {strokeStyle: "#30B32D", min: 0, max: 2000},
                 {strokeStyle: "#3498DB", min: 2000, max: 4000},
-                {strokeStyle: "#2980B9", min: 4000, max: 6000},
+                {strokeStyle: "#F03E3E", min: 4000, max: 6000},
             ],
         });
         rpmGauge.maxValue = 6000;
         rpmGauge.setMinValue(0);
         rpmGauge.animationSpeed = 80;
         rpmGauge.set(0);
-        console.log('Gauge initialized:', rpmGauge);
     } else {
         console.error('Canvas element not found!');
     }
