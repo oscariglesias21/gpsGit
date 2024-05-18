@@ -12,32 +12,6 @@ html, body, .map-container {
     z-index: 0;
 }
 
-/* Estilos para el sidebar */
-.sidebar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 450px; /* Ancho del sidebar */
-    height: 100%;
-    background-color: #FFD35F; /* Color de fondo del sidebar */
-    z-index: 2;
-    transform: translateX(0%); /* Sidebar inicialmente abierto */
-    transition: transform 0.3s ease; /* Transición suave para abrir/cerrar el sidebar */
-}
-
-/* Estilos para el contenido del sidebar */
-.sidebar-content {
-    padding: 20px;
-    color: #000000; /* Color del texto en el sidebar */
-    z-index: 2;
-    text-align: center; /* Centra el contenido horizontalmente */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centra el contenido horizontalmente */
-    justify-content: center; /* Centra el contenido verticalmente */
-    font-family: 'Roboto', sans-serif; /* Fuente para el contenido del sidebar */
-}
-
 .tacometer-container {
     width: 300px;
     margin: 20px auto;
@@ -50,21 +24,6 @@ html, body, .map-container {
     width: 100%; /* Ajusta el ancho al 100% del contenedor */
     height: auto; /* Ajusta la altura automáticamente */
     display: block; /* Asegúrate de que el canvas sea un bloque */
-}
-
-select.dropdown {
-    width: 80%; /* Ancho del menú desplegable */
-    margin-top: 20px; /* Ajusta el margen inferior según sea necesario */
-    margin-bottom: 5px; /* Ajusta el margen inferior según sea necesario */
-    margin-inline: auto; /* Margen superior e inferior de 20px, centrado horizontalmente */
-    padding: 10px; /* Espacio interno */
-    font-size: 18px; /* Tamaño de fuente */
-    background-color: #ffffff; /* Color de fondo */
-    border: 3px solid #000000; /* Contorno */
-    border-radius: 10px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor */
-    color: #000000; /* Color de texto */
-    font-family: 'Roboto', sans-serif; /* Fuente para el menú desplegable */
 }
 
 /* Estilos para los rectángulos */
@@ -90,14 +49,6 @@ select.dropdown {
 
 .rectangle i {
     margin-right: 10px; /* Espacio entre icono y texto */
-}
-
-.sidebar-content p {
-    width: 80%; /* Ancho deseado */
-    margin: 0 auto; /* Centra horizontalmente */
-    margin-bottom: 20px; /* Ajusta el margen inferior según sea necesario */
-    font-size: 16px; /* Tamaño de fuente */
-    font-family: 'Roboto', sans-serif; /* Fuente para el texto general */
 }
 
 /* Ocultar la 'T' */
