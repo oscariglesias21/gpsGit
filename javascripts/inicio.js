@@ -144,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
             routePath.setLatLngs([]);
             localStorage.removeItem('routePath');
         }
-        myMap.setView(newLatLng);
         marker.setLatLng(newLatLng);
         routePath.addLatLng(newLatLng);
         lastMarkerPosition = newLatLng;
@@ -180,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
             routePath2.setLatLngs([]);
             localStorage.removeItem('routePath2');
         }
-        myMap.setView(newLatLng2);
         marker2.setLatLng(newLatLng2);
         routePath2.addLatLng(newLatLng2);
         lastMarkerPosition2 = newLatLng2;
