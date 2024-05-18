@@ -269,6 +269,12 @@ select.dropdown {
     overflow: hidden; /* Contiene elementos flotantes dentro del div */
 }
 
+#rpmGauge {
+    width: 300px; /* O el tamaño que necesites */
+    height: 160px; /* O el tamaño que necesites */
+    border: 1px solid blue; /* Esto es temporal para asegurarte de que el elemento sea visible */
+    background-color: #f0f0f0; /* Color de fondo para asegurarte de que el canvas sea visible */
+}
 .gauge-label {
     font-weight: bold;
 }
