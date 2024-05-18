@@ -242,19 +242,6 @@ html, body, .map-container {
         height: auto; /* Ajusta la altura para permitir el desplazamiento */
         overflow: auto; /* Permitir desplazamiento en móviles */
     }
-    
-    .sidebar {
-        width: 100%; /* Ancho del sidebar en pantallas pequeñas */
-        height: auto; /* Ajusta la altura para permitir el desplazamiento */
-    }
-
-    .sidebar-content img {
-        max-width: 100%; /* Ajusta el ancho máximo de la imagen en pantallas pequeñas */
-    }
-
-    select.dropdown {
-        width: 90%; /* Ancho completo del menú desplegable en pantallas pequeñas */
-    }
 
     .tacometer-container {
         width: 100%; /* Ajusta el ancho para pantallas pequeñas */
@@ -267,11 +254,6 @@ html, body, .map-container {
         height: auto; /* Ajusta la altura automáticamente */
     }
 
-    .rectangle {
-        width: 90%; /* Ajusta el ancho en pantallas pequeñas */
-        height: 35px; /* Ajusta la altura en pantallas pequeñas */
-        font-size: 12px; /* Ajusta el tamaño de fuente en pantallas pequeñas */
-    }
 
     /* Asegurar que el gauge esté bien centrado en pantallas móviles */
     #gaugeContainer {
