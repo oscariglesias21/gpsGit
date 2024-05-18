@@ -30,7 +30,6 @@
     text-align: center;
     margin-top: 5px; /* Reducir el margen superior */
     font-family: 'Freeman', sans-serif;
-    font-style: italic;
 }
 
 .form-inline-custom {
@@ -46,7 +45,9 @@
 }
 
 .small-title {
-    font-size: 18px; /* Reducir el tamaño de la fuente */
+    font-family: 'Freeman', sans-serif;
+    font-size: 20px; /* Reducir el tamaño de la fuente */
+    font-style: 'bold';
 }
 
 #startDateSpan, #startTimeSpan, #endDateSpan, #endTimeSpan {
