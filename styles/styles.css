@@ -234,7 +234,7 @@ select.dropdown {
 }
 
 #rpmGauge {
-    border: 1px solid blue; /* Temporary border for debugging */
+     /* Temporary border for debugging */
     width: 100%; /* Ensures the canvas scales with the container */
     height: auto; /* Ensures the canvas maintains its aspect ratio */
 }
