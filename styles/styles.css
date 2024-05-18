@@ -137,6 +137,7 @@ html, body, .map-container {
 }
 
 /* Estilo para los botones del sidebar de información */
+/* Example default button styles */
 .info-sidebar-button {
     width: 80%;
     padding: 20px 10px; /* Aumentar el padding vertical para incrementar la altura */
@@ -153,6 +154,27 @@ html, body, .map-container {
     justify-content: center; /* Centrar verticalmente */
     gap: 10px; /* Espacio entre el icono, título y subtítulo */
 }
+
+/* Remove unwanted focus outline */
+.info-sidebar-button:focus {
+    outline: none;
+}
+
+/* Adjust hover state */
+.info-sidebar-button:hover {
+    background-color: #333333;
+}
+
+/* Adjust focus state */
+.info-sidebar-button:focus {
+    background-color: #555555;
+}
+
+/* Adjust active state */
+.info-sidebar-button:active {
+    background-color: #777777;
+}
+
 
 
 .info-sidebar-button .material-icons {
