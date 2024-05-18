@@ -36,7 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         routePath.setLatLngs(routePoints.map(p => L.latLng(p.lat, p.lng)));
     }
 
-    const rpmGauge = new Gauge(document.getElementById("rpmGauge")).setOptions({
+    const rpmGauge = new Gauge(document.getElementById("rpmGauge"));
+    rpmGauge.setOptions({
         angle: 0.20, 
         lineWidth: 0.20,
         radiusScale: 1,
