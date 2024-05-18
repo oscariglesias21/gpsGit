@@ -105,21 +105,38 @@ html, body, .map-container {
     position: fixed;
     top: 0;
     right: 0;
-    width: 450px;
+    width: 450px; /* Ancho del sidebar */
     height: 100%;
-    background-color: #FBB613;
+    background-color: #FFD35F; /* Color de fondo del sidebar */
     z-index: 2;
-    transform: translateX(100%);
-    transition: transform 1s ease; /* Aumentar la duración de la transición a 1 segundo */
+    transform: translateX(0%); /* Sidebar inicialmente abierto */
+    transition: transform 0.3s ease; /* Transición suave para abrir/cerrar el sidebar */
 }
 
+/* Estilos para el contenido del sidebar */
 .sidebar-content {
     padding: 20px;
-    color: #000000;
-    text-align: center;
-    font-family: 'Inter', sans-serif; /* Fuente Inter */
+    color: #000000; /* Color del texto en el sidebar */
+    z-index: 2;
+    text-align: center; /* Centra el contenido horizontalmente */
 }
 
+.tacometer-container {
+    width: 300px;
+    margin: 20px auto;
+    border: 1px solid red; /* Temporal para depuración */
+    background-color: lightgray; /* Temporal para depuración */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#rpmGauge {
+    width: 300px; /* O el tamaño que necesites */
+    height: 160px; /* O el tamaño que necesites */
+    border: 1px solid blue; /* Temporal para depuración */
+    background-color: #f0f0f0; /* Temporal para depuración */
+}
 /* Estilo para el texto de introducción */
 .intro-text {
     font-family: 'Inter', sans-serif; /* Fuente Inter */
@@ -225,12 +242,6 @@ select.dropdown {
     margin-right: 15px; /* Espacio entre icono y texto */
 }
 
-.sidebar-content p {
-    width: 80%; /* Ancho deseado */
-    margin: 0 auto; /* Centra horizontalmente */
-    margin-bottom: 30px; /* Ajusta el margen inferior según sea necesario */
-    font-size: 16px; /* Tamaño de fuente */
-}
 
 /* Ocultar la 'T' */
 #date::after {
@@ -267,17 +278,6 @@ select.dropdown {
 
 .rectangle {
     overflow: hidden; /* Contiene elementos flotantes dentro del div */
-}
-
-.tacometer-container {
-    position: absolute;
-    bottom: 20px;
-    right: 10px; /* Disminuir este valor para mover el tacómetro más a la derecha */
-    width: 300px;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .gauge-label {
