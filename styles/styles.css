@@ -127,7 +127,7 @@ a{
 .intro-text {
     font-family: 'Inter', sans-serif; /* Fuente Inter */
     margin-bottom: 20px;
-    font-size: 14px; /* Ajusta este valor para cambiar el tamaño de la letra */
+    font-size: 20px; /* Ajusta este valor para cambiar el tamaño de la letra */
 }
 
 /* Estilo para el contenedor de botones */
@@ -187,7 +187,6 @@ a{
     cursor: pointer;
     font-family: 'Inter', sans-serif; /* Fuente Inter */
     font-size: 20px;
-    text-decoration: underline;
     display: flex;
     flex-direction: column;
     align-items: center;
