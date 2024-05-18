@@ -36,40 +36,50 @@ document.addEventListener('DOMContentLoaded', () => {
         routePath.setLatLngs(routePoints.map(p => L.latLng(p.lat, p.lng)));
     }
 
-    const rpmGauge = new Gauge(document.getElementById("rpmGauge"));
-    rpmGauge.setOptions({
-        angle: 0.20, 
-        lineWidth: 0.20,
-        radiusScale: 1,
-        pointer: {
-            length: 0.5, 
-            strokeWidth: 0.035, // grosor del puntero
-            color: '#000000' // Color del puntero
-        },
-        limitMax: false,
-        limitMin: false,
-        colorStart: '#FFC107', 
-        colorStop: '#FFC107', 
-        strokeColor: '#E0E0E0', 
-        generateGradient: true,
-        highDpiSupport: true,
-        staticLabels: {
-            font: "14px sans-serif", 
-            labels: [0, 2000, 4000, 6000], 
-            color: "#000000", 
-            fractionDigits: 0 
-        },
-        staticZones: [
-            {strokeStyle: "#F03E3E", min: 0, max: 2000}, 
-            {strokeStyle: "#3498DB", min: 2000, max: 4000}, 
-            {strokeStyle: "#2980B9", min: 4000, max: 6000}, 
-        ],
-    });
-    rpmGauge.maxValue = 6000;
-    rpmGauge.setMinValue(0); 
-    rpmGauge.animationSpeed = 80;
-    rpmGauge.set(0);
+    const rpmGaugeElement = document.getElementById("rpmGauge");
+    console.log('Canvas element:', rpmGaugeElement);
+    console.log('Canvas dimensions:', rpmGaugeElement.width, rpmGaugeElement.height);
 
+    if (rpmGaugeElement) {
+        const rpmGauge = new Gauge(rpmGaugeElement);
+        console.log('Gauge object created:', rpmGauge);
+        
+        rpmGauge.setOptions({
+            angle: 0.20,
+            lineWidth: 0.20,
+            radiusScale: 1,
+            pointer: {
+                length: 0.5,
+                strokeWidth: 0.035,
+                color: '#000000'
+            },
+            limitMax: false,
+            limitMin: false,
+            colorStart: '#FFC107',
+            colorStop: '#FFC107',
+            strokeColor: '#E0E0E0',
+            generateGradient: true,
+            highDpiSupport: true,
+            staticLabels: {
+                font: "14px sans-serif",
+                labels: [0, 2000, 4000, 6000],
+                color: "#000000",
+                fractionDigits: 0
+            },
+            staticZones: [
+                {strokeStyle: "#F03E3E", min: 0, max: 2000},
+                {strokeStyle: "#3498DB", min: 2000, max: 4000},
+                {strokeStyle: "#2980B9", min: 4000, max: 6000},
+            ],
+        });
+        rpmGauge.maxValue = 6000;
+        rpmGauge.setMinValue(0);
+        rpmGauge.animationSpeed = 80;
+        rpmGauge.set(0);
+        console.log('Gauge initialized:', rpmGauge);
+    } else {
+        console.error('Canvas element not found!');
+    }
     const socket = io();
     console.log('Conexión a Socket.IO establecida correctamente.');
 
