@@ -150,7 +150,7 @@ html, body, .map-container {
 }
 
 .subtitle {
-    font-size: 1em; /* Ajustar el tamaño de la fuente para mejor legibilidad */
+    font-size: 0.8em; /* Ajustar el tamaño de la fuente para mejor legibilidad */
     color: #343a40; /* Color oscuro para mejor contraste */
     text-align: center;
     margin-top: 10px; /* Un poco más de espacio superior */
