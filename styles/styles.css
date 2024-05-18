@@ -1,11 +1,10 @@
-/* Estilos para que el mapa ocupe toda la pantalla */
+/* Estilos generales */
 html, body, .map-container {
     height: 100%;
     margin: 0;
     overflow: hidden; /* Evita barras de desplazamiento */
 }
 
-/* Configuración del mapa en el contenedor */
 #map-in-container {
     width: 100%;
     height: 100%;
@@ -19,10 +18,10 @@ html, body, .map-container {
     right: 0;
     width: 450px; /* Ancho del sidebar */
     height: 100%;
-    background-color: #FBB613; /* Color de fondo del sidebar */
+    background-color: #FFD35F; /* Color de fondo del sidebar */
     z-index: 2;
     transform: translateX(0%); /* Sidebar inicialmente abierto */
-    transition: transform 1s ease; /* Transición suave para abrir/cerrar el sidebar */
+    transition: transform 0.3s ease; /* Transición suave para abrir/cerrar el sidebar */
 }
 
 /* Estilos para el contenido del sidebar */
@@ -35,7 +34,7 @@ html, body, .map-container {
 
 .sidebar-content img {
     display: block; /* Asegura que la imagen sea un bloque para poder aplicar márgenes automáticos */
-    margin: 20px auto 20px; /* Centra la imagen horizontalmente y añade margen inferior */
+    margin: 0 auto 20px; /* Centra la imagen horizontalmente y añade margen inferior */
     max-width: 100%; /* Ajusta el ancho máximo de la imagen */
     height: auto; /* Permite que la altura de la imagen se ajuste automáticamente */
 }
@@ -43,8 +42,8 @@ html, body, .map-container {
 /* Estilos para el botón de cerrar el sidebar */
 .close-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
     cursor: pointer;
     color: #000000; /* Color del texto del botón */
     z-index: 2;
@@ -53,154 +52,58 @@ html, body, .map-container {
 /* Estilos para el botón de abrir el sidebar */
 .open-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
     cursor: pointer;
     color: #000000; /* Color del texto del botón */
     z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
     background-color: #FFD35F; /* Color de fondo amarillo */
-    border: 2px solid #000000; /* Contorno negro */
-    border-radius: 8px; /* Añade bordes redondeados al botón */
-    padding: 5px 10px; /* Añade espacio interno al botón */
-    font-size: 20px; /* Tamaño de fuente */
-}
-
-.recorridosBtn {
-    position: absolute;
-    top: 60px;
-    right: 10px;
-    cursor: pointer;
-    color: #000000; /* Color del texto del botón */
-    z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
-    background-color: #FFD35F; /* Color de fondo amarillo */
-    border: 2px solid #000000; /* Contorno negro */
-    border-radius: 8px; /* Añade bordes redondeados al botón */
-    padding: 5px 10px; /* Añade espacio interno al botón */
-    font-size: 20px; /* Tamaño de fuente */
-}
-
-/* Botones en la esquina superior izquierda */
-.infoBtn {
-    top: 20px;
-    left: 20px;
-}
-
-/* Estilos para el botón de cerrar el sidebar */
-.close-btn-container {
-    position: absolute;
-    top: 20px;
-    right: 15px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: #000000;
-    z-index: 2;
-}
-
-.close-btn-text {
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    margin-right: 0; /* Reduce el espacio entre el texto y el icono */
-}
-
-/* Estilo para los enlaces */
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.rastreador, .recorridosBtn, .centrarMapaBtn, .infoBtn {
-    position: absolute;
-    cursor: pointer;
-    color: #000000; /* Color del texto del botón */
-    z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
-    background-color: #FBB613; /* Color de fondo amarillo */
-    border: 2px solid #000000; /* Contorno negro */
-    border-radius: 50%; /* Bordes redondeados */
-    padding: 10px; /* Añade espacio interno al botón */
-    width: 50px; /* Ancho del botón */
-    height: 50px; /* Altura del botón */
+    border: 3px solid #000000; /* Contorno negro */
+    border-radius: 10px; /* Añade bordes redondeados al botón */
+    padding: 10px 15px; /* Añade espacio interno al botón */
     font-size: 25px; /* Tamaño de fuente */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.rastreador {
-    top: 85px;
-    left: 20px;
 }
 
 .recorridosBtn {
+    position: absolute;
+    top: 85px;
+    right: 20px;
+    cursor: pointer;
+    color: #000000; /* Color del texto del botón */
+    z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
+    background-color: #FFD35F; /* Color de fondo amarillo */
+    border: 3px solid #000000; /* Contorno negro */
+    border-radius: 10px; /* Añade bordes redondeados al botón */
+    padding: 10px 15px; /* Añade espacio interno al botón */
+    font-size: 25px; /* Tamaño de fuente */
+}
+
+.infoBtn {
+    position: absolute;
     top: 150px;
-    left: 20px;
+    right: 20px;
+    cursor: pointer;
+    color: #000000; /* Color del texto del botón */
+    z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
+    background-color: #FFD35F; /* Color de fondo amarillo */
+    border: 3px solid #000000; /* Contorno negro */
+    border-radius: 10px; /* Añade bordes redondeados al botón */
+    padding: 10px 15px; /* Añade espacio interno al botón */
+    font-size: 25px; /* Tamaño de fuente */
 }
 
 .centrarMapaBtn {
+    position: absolute;
     bottom: 20px;
     left: 20px;
-}
-
-.sidebar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 450px;
-    height: 100%;
-    background-color: #FBB613;
-    z-index: 2;
-    transform: translateX(100%);
-    transition: transform 1s ease; /* Aumentar la duración de la transición a 1 segundo */
-}
-
-.sidebar-content {
-    padding: 20px;
-    color: #000000;
-    text-align: center;
-    font-family: 'Inter', sans-serif; /* Fuente Inter */
-}
-
-/* Estilo para el texto de introducción */
-.intro-text {
-    font-family: 'Inter', sans-serif; /* Fuente Inter */
-    margin-bottom: 20px;
-    font-size: 20px; /* Ajusta este valor para cambiar el tamaño de la letra */
-}
-
-/* Estilo para el contenedor de botones */
-.button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-/* Estilo para los botones del sidebar de información */
-.info-sidebar-button {
-    width: 80%;
-    padding: 20px 10px; /* Aumentar el padding vertical para incrementar la altura */
-    background-color: #000000;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 5px;
     cursor: pointer;
-    font-family: 'Inter', sans-serif; /* Fuente Inter */
-    font-size: 16px;
-    display: flex; /* Utilizar flexbox para alinear el contenido */
-    flex-direction: column; /* Alinear el contenido en columna */
-    align-items: center; /* Centrar horizontalmente */
-    justify-content: center; /* Centrar verticalmente */
-    gap: 10px; /* Espacio entre el icono, título y subtítulo */
-}
-
-.info-sidebar-button .material-icons {
-    font-size: 24px; /* Tamaño del icono */
-}
-
-.info-sidebar-button .subtitle {
-    font-size: 14px; /* Tamaño del subtítulo */
-    margin-top: 10px; /* Margen superior para espacio adicional */
+    color: #000000; /* Color del texto del botón */
+    z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
+    background-color: #FFD35F; /* Color de fondo amarillo */
+    border: 3px solid #000000; /* Contorno negro */
+    border-radius: 10px; /* Añade bordes redondeados al botón */
+    padding: 10px 15px; /* Añade espacio interno al botón */
+    font-size: 25px; /* Tamaño de fuente */
 }
 
 /* Estilos para el menú desplegable */
@@ -226,20 +129,20 @@ select.dropdown {
 
 .rectangle {
     width: 80%; /* Ancho del rectángulo */
-    height: 40px; /* Altura ajustada del rectángulo */
+    height: 50px; /* Altura del rectángulo */
     background-color: #FFFFFF; /* Color de fondo del rectángulo */
     border: 3px solid #000000; /* Contorno negro */
     border-radius: 10px; /* Bordes redondeados */
-    padding: 5px; /* Espacio interno ajustado */
-    font-size: 14px; /* Tamaño de fuente ajustado */
-    margin-bottom: 10px; /* Espacio entre rectángulos */
+    padding: 10px; /* Espacio interno */
+    font-size: 16px; /* Tamaño de fuente */
+    margin-bottom: 1px; /* Espacio entre rectángulos */
     display: flex;
     align-items: center; /* Centrado vertical */
-    margin: 5px auto; /* Margen superior e inferior de 5px, centrado horizontalmente */
+    margin: 5px auto; /* Margen superior e inferior de 30px, centrado horizontalmente */
 }
 
 .rectangle i {
-    margin-right: 10px; /* Espacio entre icono y texto */
+    margin-right: 15px; /* Espacio entre icono y texto */
 }
 
 .sidebar-content p {
@@ -266,14 +169,8 @@ select.dropdown {
 }
 
 .tacometer-container {
-    width: 300px; /* Ajusta el ancho del tacómetro */
-    margin: 20px auto; /* Ajusta el margen */
-    text-align: center; /* Centra el contenido */
-}
-
-#rpmGauge {
-    width: 100%;
-    height: auto; /* Ajusta la altura automáticamente */
+    width: 300px;
+    margin: 20px auto;
 }
 
 .rectangle i.material-icons {
@@ -299,14 +196,6 @@ select.dropdown {
 
 .gauge-label {
     font-weight: bold;
-    margin-top: 10px; /* Añade margen superior para separarlo del tacómetro */
-}
-
-/* Mover los botones de zoom de Leaflet a la parte inferior derecha */
-.leaflet-control-zoom {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
 }
 
 /*CONFIGURACIÓN: WEB RESPONSIVE*/
@@ -316,22 +205,19 @@ select.dropdown {
         width: 100%; /* Ancho del sidebar en pantallas pequeñas */
     }
     .sidebar-content img {
-        max-width: 80%; /* Ajusta el ancho máximo de la imagen en pantallas pequeñas */
+        max-width: 100%; /* Ajusta el ancho máximo de la imagen en pantallas pequeñas */
     }
     select.dropdown {
-        width: 80%; /* Ancho completo del menú desplegable en pantallas pequeñas */
+        width: 90%; /* Ancho completo del menú desplegable en pantallas pequeñas */
     }
 
     /* Ajustes específicos para el gauge en pantallas pequeñas */
     .tacometer-container {
-        width: 180px; /* Ajusta el ancho para pantallas pequeñas */
-        margin-top: 30px; /* Añade margen superior para mejor visualización */
+        width: 200px; /* Ajusta el ancho para pantallas pequeñas */
     }
 
     #rpmGauge {
         width: 100%;
         height: auto; /* Ajusta la altura automáticamente */
-        display: block; /* Asegura que el canvas sea un bloque */
-        margin: 0 auto; /* Centra el canvas */
     }
 }
