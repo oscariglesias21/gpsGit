@@ -29,14 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let inactivityTimer2;
     let centrarMapa = null;
 
-
     // Intentar recuperar y dibujar la ruta almacenada
     const storedRoute = localStorage.getItem('routePath');
     if (storedRoute) {
         const routePoints = JSON.parse(storedRoute);
         routePath.setLatLngs(routePoints.map(p => L.latLng(p.lat, p.lng)));
     }
-    //tacometro
+
     const rpmGauge = new Gauge(document.getElementById("rpmGauge")).setOptions({
         angle: 0.20, 
         lineWidth: 0.20,
@@ -55,21 +54,22 @@ document.addEventListener('DOMContentLoaded', () => {
         highDpiSupport: true,
         staticLabels: {
             font: "14px sans-serif", 
-            labels: [0, 2000, 4000, 6000], 
+            labels: [0, 2000, 4000, 6000, 8000], 
             color: "#000000", 
             fractionDigits: 0 
         },
         staticZones: [
-            {strokeStyle: "#30B32D", min: 0, max: 2000}, 
+            {strokeStyle: "#F03E3E", min: 0, max: 2000}, 
             {strokeStyle: "#3498DB", min: 2000, max: 4000}, 
-            {strokeStyle: "#F03E3E", min: 4000, max: 6000}, 
+            {strokeStyle: "#2980B9", min: 4000, max: 6000}, 
+            {strokeStyle: "#30B32D", min: 6000, max: 8000} 
         ],
     });
-    rpmGauge.maxValue = 6000;
+    rpmGauge.maxValue = 8000;
     rpmGauge.setMinValue(0); 
     rpmGauge.animationSpeed = 80;
-    rpmGauge.set(0); 
-    //
+    rpmGauge.set(0);
+
     const socket = io();
     console.log('Conexión a Socket.IO establecida correctamente.');
 
@@ -109,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
             rpmGauge.set(0);  // Resetear el gauge si no hay datos de RPM
         }
 
-        // Asegúrate de que dateElement esté definido antes de usarlo
         let dateElement = document.getElementById('date');  // Definir correctamente dateElement
         if (dateElement) {
             const dateString = dateElement.textContent || dateElement.innerText;
@@ -120,16 +119,16 @@ document.addEventListener('DOMContentLoaded', () => {
         centrarMapa = newLatLng;
         
         if (lastMarkerPosition && lastMarkerPosition.distanceTo(newLatLng) > 200) {
-            // Si el marcador se ha movido más de 400 metros, reinicia la polilínea
             routePath.setLatLngs([]);
             localStorage.removeItem('routePath'); // Limpia la ruta almacenada si es necesario
         }
+        myMap.setView(newLatLng);
         marker.setLatLng(newLatLng);
         routePath.addLatLng(newLatLng); // Añade el nuevo punto a la polilínea para trazar el recorrido
         lastMarkerPosition = newLatLng;
     }
-    //vehiculo 1-------------------------------------------------------------------------------
-    function updateVehicleDisplay2(data2, marker2, routePath2) {
+
+    function updateVehicleDisplay2(data2, marker2, routePath2) { //vehiculo 1
         const { Latitude, Longitude, Date, Time} = data2;
         console.log(`Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}`);
 
@@ -145,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('date').innerText = Date;
         document.getElementById('time').innerText = Time;
 
-        // Asegúrate de que dateElement esté definido antes de usarlo
         let dateElement = document.getElementById('date');  // Definir correctamente dateElement
         if (dateElement) {
             const dateString = dateElement.textContent || dateElement.innerText;
@@ -156,15 +154,14 @@ document.addEventListener('DOMContentLoaded', () => {
         centrarMapa = newLatLng2;
         
         if (lastMarkerPosition2 && lastMarkerPosition2.distanceTo(newLatLng2) > 200) {
-            // Si el marcador se ha movido más de 200 metros, reinicia la polilínea
             routePath2.setLatLngs([]);
             localStorage.removeItem('routePath2'); // Limpia la ruta almacenada si es necesario
         }
+        myMap.setView(newLatLng2);
         marker2.setLatLng(newLatLng2);
         routePath2.addLatLng(newLatLng2); // Añade el nuevo punto a la polilínea para trazar el recorrido
         lastMarkerPosition2 = newLatLng2;
     }
-
 
     document.getElementById('centrarMapaBtn').addEventListener('click', () => {
         if (centrarMapa) {
@@ -172,13 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             alert('Ubicación no disponible.'); // O maneja este caso como prefieras
         }
-        // Guardar la ruta actual en el almacenamiento local
         const currentRoute = routePath.getLatLngs();
-            localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
+        localStorage.setItem('routePath', JSON.stringify(currentRoute.map(p => ({ lat: p.lat, lng: p.lng }))));
         const currentRoute2 = routePath2.getLatLngs();
-            localStorage.setItem('routePath2', JSON.stringify(currentRoute2.map(p => ({ lat: p.lat, lng: p.lng }))));
+        localStorage.setItem('routePath2', JSON.stringify(currentRoute2.map(p => ({ lat: p.lat, lng: p.lng }))));
     });
-    // Función para cambiar la página según la opción seleccionada en el menú desplegable
+
     function navigate() {
         const selectedOption = document.getElementById("vehicleSelector").value;
         console.log("Opción seleccionada:", selectedOption);
@@ -207,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById("vehicleSelector").addEventListener("change", () => {
         navigate();
-        // Reiniciar los datos mostrados en los contenedores
         resetDataDisplays();
     });
 
@@ -219,3 +214,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('RPM').innerText = "--";
     }
 });
+
+function closeSidebar(sidebarId) {
+    document.getElementById(sidebarId).style.transform = "translateX(100%)";
+}
+
+function showSidebar(sidebarId) {
+    document.getElementById('infoSidebar').style.transform = "translateX(100%)";
+    document.getElementById('routesSidebar').style.transform = "translateX(100%)";
+    document.getElementById(sidebarId).style.transform = "translateX(0)";
+}
