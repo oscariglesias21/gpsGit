@@ -246,7 +246,7 @@ html, body, .map-container {
     z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
     background-color: #FBB613; /* Color de fondo amarillo */
     border: 2px solid #000000; /* Contorno negro */
-    border-radius: 50%; /* Bordes redondeados */
+    border-radius: 50%; /* Borde redondeados */
     padding: 10px; /* Añade espacio interno al botón */
     width: 50px; /* Ancho del botón */
     height: 50px; /* Altura del botón */
