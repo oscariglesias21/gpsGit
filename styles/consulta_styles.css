@@ -125,7 +125,7 @@ html, body, .map-container {
     text-align: center;
     margin-top: 10px; /* Un poco más de espacio superior */
     margin-bottom: 10px; /* Añadir margen inferior para espaciado */
-    font-family: 'Montserrat', sans-serif; /* Fuente más atractiva */
+    font-family: 'Inter', sans-serif; /* Fuente más atractiva */
     font-weight: 500; /* Semi-negrita para dar énfasis */
     letter-spacing: 0.5px; /* Espacio entre letras para mejor legibilidad */
     text-transform: uppercase; /* Texto en mayúsculas para estilo */
