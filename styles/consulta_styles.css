@@ -266,7 +266,10 @@ html, body, .map-container {
     top: 400px;
     left: 20px;
 }
-
+a{
+    text-decoration: none;
+    color: inherit;
+}
 
 /* Media query para dispositivos móviles */
 @media (max-width: 768px) {
