@@ -258,12 +258,12 @@ html, body, .map-container {
 
 /* Botones en la esquina superior izquierda */
 .homeBtn {
-    top: 345px;
+    top: 200px;
     right: 20px;
 }
 
 .infoBtn {
-    top: 400px;
+    top: 245px;
     right: 20px;
 }
 a{
