@@ -239,6 +239,34 @@ html, body, .map-container {
     pointer-events: none; /* Asegura que el pseudo-elemento no interfiera con la funcionalidad del select */
     color: white;
 }
+.homeBtn, .infoBtn {
+    position: absolute;
+    cursor: pointer;
+    color: #000000; /* Color del texto del botón */
+    z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
+    background-color: #FBB613; /* Color de fondo amarillo */
+    border: 2px solid #000000; /* Contorno negro */
+    border-radius: 50%; /* Bordes redondeados */
+    padding: 10px; /* Añade espacio interno al botón */
+    width: 50px; /* Ancho del botón */
+    height: 50px; /* Altura del botón */
+    font-size: 25px; /* Tamaño de fuente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Botones en la esquina superior izquierda */
+.homeBtn {
+    top: 20px;
+    left: 20px;
+}
+
+.infoBtn {
+    top: 85px;
+    left: 20px;
+}
+
 
 /* Media query para dispositivos móviles */
 @media (max-width: 768px) {
