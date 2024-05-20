@@ -124,7 +124,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 console.log(data);
                 if (data.length > 0) {
                     // Asegúrate de que los arrays se vacíen antes de agregar nuevos elementos
-                    procesarDatosVehiculo(data, myMap, 'red', truckIcon2, false);
+                    procesarDatosVehiculo(data, myMap, 'blue', truckIcon2, false);
                     actualizarSlider(data, myMap);
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
