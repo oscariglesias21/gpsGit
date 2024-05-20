@@ -38,7 +38,7 @@ app.post('/updateFromSniffer', (req, res) => {
   console.log(`Received data - Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM ? RPM : "Not provided"}`);
 
   // Determinar la tabla y los campos adecuados según si RPM está presente
-  const table = RPM != null ? 'p2GPS2' : 'p2GPS3'; // p2GPS1 para datos sin RPM, p2GPS2 para datos con RPM
+  const table = RPM != null ? 'p2GPS2' : 'p2GPS3'; // p2GPS2 para datos sin RPM, p2GPS3 para datos con RPM
   const fields = RPM != null ? '(Latitude, Longitude, Date, Time, RPM)' : '(Latitude, Longitude, Date, Time)';
   const placeholders = RPM != null ? '(?, ?, ?, ?, ?)' : '(?, ?, ?, ?)';
   const insertValues = RPM != null ? [Latitude, Longitude, Date, Time, RPM] : [Latitude, Longitude, Date, Time];
