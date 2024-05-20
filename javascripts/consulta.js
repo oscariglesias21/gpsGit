@@ -123,7 +123,6 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
             .then(data => {
                 console.log(data);
                 if (data.length > 0) {
-                    // Asegúrate de que los arrays se vacíen antes de agregar nuevos elementos
                     trayectos.forEach(trayecto => trayecto.remove());
                     trayectos = [];
                     markers.forEach(marker => marker.remove());
@@ -374,31 +373,29 @@ function actualizarSlider(data, myMap) {
 
 function actualizarSliderAmbos(data1, data2, myMap) {
     const slider = document.getElementById('timeSlider');
-    slider.max = Math.max(data1.length, data2.length) - 1;
+    
+    // Combinar y ordenar los datos por DateTime
+    const combinedData = data1.concat(data2).sort((a, b) => new Date(a.DateTime) - new Date(b.DateTime));
+    
+    // Establecer el máximo valor del slider basado en el conjunto de datos combinado
+    slider.max = combinedData.length - 1;
     slider.value = 0;
 
-    // Recopilar todas las coordenadas de ambos vehículos
-    let allCoordinates = [];
-
-    data1.forEach(point => {
-        allCoordinates.push([point.Latitude, point.Longitude]);
-    });
-
-    data2.forEach(point => {
-        allCoordinates.push([point.Latitude, point.Longitude]);
-    });
+    // Recopilar todas las coordenadas de ambos vehículos para ajustar la vista del mapa
+    let allCoordinates = combinedData.map(point => [point.Latitude, point.Longitude]);
 
     slider.oninput = function() {
         const index = this.value;
+        const currentPoint = combinedData[index];
 
-        if (index < data1.length) {
-            const puntoSeleccionado1 = data1[index];
-            const latLng1 = L.latLng(puntoSeleccionado1.Latitude, puntoSeleccionado1.Longitude);
-            const rpm1 = puntoSeleccionado1.RPM !== undefined ? puntoSeleccionado1.RPM : '-';
+        // Actualizar el marcador y la información del vehículo correspondiente
+        if (data1.includes(currentPoint)) {
+            const latLng1 = L.latLng(currentPoint.Latitude, currentPoint.Longitude);
+            const rpm1 = currentPoint.RPM !== undefined ? currentPoint.RPM : '-';
 
             if (marcadorDeslizable1) {
                 marcadorDeslizable1.setLatLng(latLng1);
-                marcadorDeslizable1.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado1.DateTime} - RPM: ${rpm1}`, { permanent: true }).openTooltip();
+                marcadorDeslizable1.bindTooltip(`Fecha y Hora de Paso: ${currentPoint.DateTime} - RPM: ${rpm1}`, { permanent: true }).openTooltip();
             }
 
             if (rpmGaugeHistoric && rpm1 !== '-') {
@@ -408,13 +405,12 @@ function actualizarSliderAmbos(data1, data2, myMap) {
             }
         }
 
-        if (index < data2.length) {
-            const puntoSeleccionado2 = data2[index];
-            const latLng2 = L.latLng(puntoSeleccionado2.Latitude, puntoSeleccionado2.Longitude);
+        if (data2.includes(currentPoint)) {
+            const latLng2 = L.latLng(currentPoint.Latitude, currentPoint.Longitude);
 
             if (marcadorDeslizable2) {
                 marcadorDeslizable2.setLatLng(latLng2);
-                marcadorDeslizable2.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado2.DateTime}`, { permanent: true }).openTooltip();
+                marcadorDeslizable2.bindTooltip(`Fecha y Hora de Paso: ${currentPoint.DateTime}`, { permanent: true }).openTooltip();
             }
         }
 
@@ -424,6 +420,7 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 
     slider.oninput();
 }
+
 
 function limpiarMapa() {
     console.log("Limpieza de mapa iniciada");

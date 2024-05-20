@@ -51,7 +51,7 @@ app.post('/updateFromSniffer', (req, res) => {
       return res.status(500).send('Internal Server Error');
     }
     // Emitir la actualización a clientes conectados a través de Socket.IO
-    const event = RPM != null ? 'locationUpdate' : 'locationUpdate1'; // Use locationUpdate1 for data without RPM
+    const event = RPM != null ? 'locationUpdate' : 'locationUpdate1'; 
     io.emit(event, { Latitude, Longitude, Date, Time, RPM });
     res.status(200).send('OK');
   });
@@ -59,7 +59,7 @@ app.post('/updateFromSniffer', (req, res) => {
 app.post('/FromSniffer', (req, res) => {
   const { Latitude, Longitude, Date, Time, RPM } = req.body;
   console.log(`Direct update - Fecha: ${Date}, Hora: ${Time}, Latitud: ${Latitude}, Longitud: ${Longitude}, RPM: ${RPM}`);
-  const event = RPM != null ? 'locationUpdate' : 'locationUpdate1'; // Use locationUpdate1 for data without RPM
+  const event = RPM != null ? 'locationUpdate' : 'locationUpdate1'; 
   io.emit(event, { Latitude, Longitude, Date, Time, RPM });
   res.status(200).send('OK');
 });
