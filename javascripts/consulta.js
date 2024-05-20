@@ -344,9 +344,6 @@ function procesarDatosVehiculo(data, myMap, color, icon, isVehiculo1) {
     }
 }
 
-
-
-
 function actualizarSlider(data, myMap) {
     const slider = document.getElementById('timeSlider');
     slider.max = data.length - 1;
