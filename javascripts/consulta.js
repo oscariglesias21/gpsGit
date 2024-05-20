@@ -124,59 +124,7 @@ function cargarDatos(startDateTime, endDateTime, myMap) {
                 console.log(data);
                 if (data.length > 0) {
                     // Asegúrate de que los arrays se vacíen antes de agregar nuevos elementos
-                    trayectos.forEach(trayecto => trayecto.remove());
-                    trayectos = [];
-                    markers.forEach(marker => marker.remove());
-                    markers = [];
-                    decoradores.forEach(decorador => decorador.remove());
-                    decoradores = [];
-
-                    rutaActual = L.polyline([], {
-                        color: 'blue',      
-                        weight: 3,          
-                        opacity: 0.7,       
-                        lineJoin: 'round',  
-                    }).addTo(myMap);
-
-                    trayectos.push(rutaActual);
-
-                    let ultimoPunto = null;
-                    data.forEach(point => {
-                        const lat = parseFloat(point.Latitude); 
-                        const lng = parseFloat(point.Longitude);
-                        const nuevoPunto = L.latLng(lat, lng);
-
-                        if (ultimoPunto && myMap.distance(ultimoPunto, nuevoPunto) > 200) {
-                            if (ultimoPunto) {
-                                let decorador = L.polylineDecorator(rutaActual, {
-                                    patterns: [
-                                        {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3}})}
-                                    ]
-                                }).addTo(myMap);
-                                decoradores.push(decorador);
-                            }
-                            rutaActual = L.polyline([], { color: 'blue', weight: 3, opacity: 0.7, lineJoin: 'round' }).addTo(myMap);
-                            trayectos.push(rutaActual);
-                        }
-                        rutaActual.addLatLng(nuevoPunto);
-                        ultimoPunto = nuevoPunto;
-                    });
-
-                    if (rutaActual.getLatLngs().length > 0) {
-                        let decorador = L.polylineDecorator(rutaActual, {
-                            patterns: [
-                                {offset: '5%', repeat: '50px', symbol: L.Symbol.arrowHead({pixelSize: 10, pathOptions: {opacity: 0.7, color: 'blue', weight: 3}})}
-                            ]
-                        }).addTo(myMap);
-                        decoradores.push(decorador);
-                    }
-
-                    if (!marcadorDeslizable1) {
-                        marcadorDeslizable1 = L.marker([0, 0],{ 
-                            draggable: true,
-                            icon: truckIcon2
-                        }).addTo(myMap);
-                    }
+                    procesarDatosVehiculo(data, myMap, 'red', truckIcon2, false);
                     actualizarSlider(data, myMap);
                 } else {
                     alert("No hay datos de ruta disponibles para la ventana de tiempo seleccionada.");
