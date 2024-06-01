@@ -349,6 +349,9 @@ function actualizarSlider(data, myMap) {
     slider.value = 0;
     slider.style.display = 'block';  // Asegura que el slider esté visible
 
+    const fechaHoraPaso = document.getElementById('fechaHoraPaso');
+    const rpmInfo = document.getElementById('rpmInfo');
+
     slider.oninput = function() {
         const puntoSeleccionado = data[this.value];
         const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
@@ -356,13 +359,16 @@ function actualizarSlider(data, myMap) {
 
         if (marcadorDeslizable1) {
             marcadorDeslizable1.setLatLng(latLng);
-            marcadorDeslizable1.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime} - RPM: ${rpm}`, { permanent: true }).openTooltip();
         }
         if (marcadorDeslizable2) {
             marcadorDeslizable2.setLatLng(latLng);
-            marcadorDeslizable2.bindTooltip(`Fecha y Hora de Paso: ${puntoSeleccionado.DateTime}`, { permanent: true }).openTooltip();
         }
         myMap.setView(latLng, myMap.getZoom());
+
+        // Actualiza el contenido del elemento HTML
+        fechaHoraPaso.textContent = puntoSeleccionado.DateTime;
+        rpmInfo.textContent = rpm;
+
         if (rpmGaugeHistoric) {
             rpmGaugeHistoric.set(rpm === '-' ? 0 : rpm);
         }
@@ -373,16 +379,17 @@ function actualizarSlider(data, myMap) {
 
 function actualizarSliderAmbos(data1, data2, myMap) {
     const slider = document.getElementById('timeSlider');
-    
-    // Combinar y ordenar los datos por DateTime
+
     const combinedData = data1.concat(data2).sort((a, b) => new Date(a.DateTime) - new Date(b.DateTime));
-    
-    // Establecer el máximo valor del slider basado en el conjunto de datos combinado
+
     slider.max = combinedData.length - 1;
     slider.value = 0;
 
     // Recopilar todas las coordenadas de ambos vehículos para ajustar la vista del mapa
     let allCoordinates = combinedData.map(point => [point.Latitude, point.Longitude]);
+
+    const fechaHoraPaso = document.getElementById('fechaHoraPaso');
+    const rpmInfo = document.getElementById('rpmInfo');
 
     slider.oninput = function() {
         const index = this.value;
@@ -395,7 +402,6 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 
             if (marcadorDeslizable1) {
                 marcadorDeslizable1.setLatLng(latLng1);
-                marcadorDeslizable1.bindTooltip(`Fecha y Hora de Paso: ${currentPoint.DateTime} - RPM: ${rpm1}`, { permanent: true }).openTooltip();
             }
 
             if (rpmGaugeHistoric && rpm1 !== '-') {
@@ -410,9 +416,12 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 
             if (marcadorDeslizable2) {
                 marcadorDeslizable2.setLatLng(latLng2);
-                marcadorDeslizable2.bindTooltip(`Fecha y Hora de Paso: ${currentPoint.DateTime}`, { permanent: true }).openTooltip();
             }
         }
+
+        // Actualiza el contenido del elemento HTML
+        fechaHoraPaso.textContent = currentPoint.DateTime;
+        rpmInfo.textContent = currentPoint.RPM !== undefined ? currentPoint.RPM : '-';
 
         // Ajustar la vista del mapa para incluir todos los puntos de ambos vehículos
         myMap.fitBounds(allCoordinates);
@@ -420,6 +429,7 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 
     slider.oninput();
 }
+
 
 
 function limpiarMapa() {
