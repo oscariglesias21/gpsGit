@@ -349,13 +349,16 @@ function actualizarSlider(data, myMap) {
     slider.value = 0;
     slider.style.display = 'block';  // Asegura que el slider esté visible
 
-    const fechaHoraPaso = document.getElementById('fechaHoraPaso');
+    const fechaPaso = document.getElementById('fechaPaso');
+    const horaPaso = document.getElementById('horaPaso');
     const rpmInfo = document.getElementById('rpmInfo');
 
     slider.oninput = function() {
         const puntoSeleccionado = data[this.value];
         const latLng = L.latLng(puntoSeleccionado.Latitude, puntoSeleccionado.Longitude);
         const rpm = puntoSeleccionado.RPM !== undefined ? puntoSeleccionado.RPM : '-';
+
+        const [fecha, hora] = puntoSeleccionado.DateTime.split(' ');
 
         if (marcadorDeslizable1) {
             marcadorDeslizable1.setLatLng(latLng);
@@ -366,7 +369,8 @@ function actualizarSlider(data, myMap) {
         myMap.setView(latLng, myMap.getZoom());
 
         // Actualiza el contenido del elemento HTML
-        fechaHoraPaso.textContent = puntoSeleccionado.DateTime;
+        fechaPaso.textContent = fecha;
+        horaPaso.textContent = hora;
         rpmInfo.textContent = rpm;
 
         if (rpmGaugeHistoric) {
@@ -388,12 +392,15 @@ function actualizarSliderAmbos(data1, data2, myMap) {
     // Recopilar todas las coordenadas de ambos vehículos para ajustar la vista del mapa
     let allCoordinates = combinedData.map(point => [point.Latitude, point.Longitude]);
 
-    const fechaHoraPaso = document.getElementById('fechaHoraPaso');
+    const fechaPaso = document.getElementById('fechaPaso');
+    const horaPaso = document.getElementById('horaPaso');
     const rpmInfo = document.getElementById('rpmInfo');
 
     slider.oninput = function() {
         const index = this.value;
         const currentPoint = combinedData[index];
+
+        const [fecha, hora] = currentPoint.DateTime.split(' ');
 
         // Actualizar el marcador y la información del vehículo correspondiente
         if (data1.includes(currentPoint)) {
@@ -420,7 +427,8 @@ function actualizarSliderAmbos(data1, data2, myMap) {
         }
 
         // Actualiza el contenido del elemento HTML
-        fechaHoraPaso.textContent = currentPoint.DateTime;
+        fechaPaso.textContent = fecha;
+        horaPaso.textContent = hora;
         rpmInfo.textContent = currentPoint.RPM !== undefined ? currentPoint.RPM : '-';
 
         // Ajustar la vista del mapa para incluir todos los puntos de ambos vehículos
@@ -429,7 +437,6 @@ function actualizarSliderAmbos(data1, data2, myMap) {
 
     slider.oninput();
 }
-
 
 
 function limpiarMapa() {
