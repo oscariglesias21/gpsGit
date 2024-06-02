@@ -2,8 +2,8 @@
 html, body, .map-container {
     height: 100%;
     margin: 0;
-    overflow: hidden; /* Evita barras de desplazamiento */
-    font-family: 'Roboto', sans-serif; /* Fuente para el cuerpo del texto */
+    overflow: hidden; 
+    font-family: 'Roboto', sans-serif; 
 }
 
 #map-in-container {
@@ -21,37 +21,37 @@ html, body, .map-container {
 }
 
 #rpmGauge {
-    width: 100%; /* Ajusta el ancho al 100% del contenedor */
-    height: auto; /* Ajusta la altura automáticamente */
-    display: block; /* Asegúrate de que el canvas sea un bloque */
+    width: 100%; 
+    height: auto; 
+    display: block;
 }
 
 /* Estilos para los rectángulos */
 .rectangle-container {
     display: flex;
-    flex-direction: column; /* Columna */
+    flex-direction: column;
 }
 
 .rectangle {
-    width: 80%; /* Ancho del rectángulo */
-    height: 40px; /* Altura del rectángulo ajustada */
-    background-color: #FFFFFF; /* Color de fondo del rectángulo */
-    border: 3px solid #000000; /* Contorno negro */
-    border-radius: 10px; /* Bordes redondeados */
-    padding: 10px; /* Espacio interno */
-    font-size: 14px; /* Tamaño de fuente ajustado */
-    margin-bottom: 10px; /* Espacio entre rectángulos ajustado */
+    width: 80%; 
+    height: 40px; 
+    background-color: #FFFFFF;
+    border: 3px solid #000000; 
+    border-radius: 10px; 
+    padding: 10px;
+    font-size: 14px; 
+    margin-bottom: 10px; 
     display: flex;
-    align-items: center; /* Centrado vertical */
-    margin: 5px auto; /* Margen superior e inferior de 30px, centrado horizontalmente */
-    font-family: 'Roboto', sans-serif; /* Fuente para las cajas de información */
+    align-items: center;
+    margin: 5px auto; 
+    font-family: 'Roboto', sans-serif; 
 }
 
 .rectangle i {
-    margin-right: 10px; /* Espacio entre icono y texto */
+    margin-right: 10px;
 }
 
-/* Ocultar la 'T' */
+
 #date::after {
     content: ' ';
     font-size: 0;
@@ -59,23 +59,23 @@ html, body, .map-container {
 
 /* Reducir el tamaño de los ceros iniciales */
 #time span.zero {
-    font-size: 0; /* Hace que los ceros sean invisibles */
-    color: transparent; /* O hace los ceros transparentes */
+    font-size: 0; 
+    color: transparent; 
 }
 
 .latitude, .longitude {
-    display: none; /* Oculta los elementos y su espacio */
+    display: none; 
 }
 
 .rectangle i.material-icons {
-    vertical-align: middle; /* Alinea el icono verticalmente con el texto */
-    margin-right: 8px; /* Espacio entre el icono y el texto */
+    vertical-align: middle; 
+    margin-right: 8px; 
 }
 
 .rectangle span {
-    vertical-align: middle; /* Asegura que todo el texto está alineado verticalmente */
+    vertical-align: middle; 
     display: inline-block;
-    margin-right: 10px; /* Espacio entre el título y el valor */
+    margin-right: 10px;
 }
 
 .rectangle #RPM, 
@@ -120,14 +120,14 @@ html, body, .map-container {
 }
 
 .subtitle {
-    font-size: 0.8em; /* Ajustar el tamaño de la fuente para mejor legibilidad */
-    color: #343a40; /* Color oscuro para mejor contraste */
+    font-size: 0.8em;
+    color: #343a40; 
     text-align: center;
-    margin-top: 10px; /* Un poco más de espacio superior */
-    margin-bottom: 10px; /* Añadir margen inferior para espaciado */
-    font-family: 'Inter', sans-serif; /* Fuente más atractiva */
-    font-weight: 500; /* Semi-negrita para dar énfasis */
-    letter-spacing: 0.5px; /* Espacio entre letras para mejor legibilidad */
+    margin-top: 10px; 
+    margin-bottom: 10px; 
+    font-family: 'Inter', sans-serif; 
+    font-weight: 500; 
+    letter-spacing: 0.5px; 
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidad */
 }
 
@@ -196,7 +196,7 @@ html, body, .map-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.867); /* Fondo blanco semi-transparente */
+    background-color: rgba(255, 255, 255, 0.867); 
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
     padding: 10px; /* Espacio interno */
@@ -223,34 +223,34 @@ html, body, .map-container {
     background-color: #343a40;
     color: white;
     border: none;
-    margin-right: 5px; /* Reducir el margen derecho */
-    -webkit-appearance: none; /* Elimina la apariencia por defecto en WebKit/Blink */
-    -moz-appearance: none; /* Elimina la apariencia por defecto en Firefox */
+    margin-right: 5px;
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
     appearance: none;
 }
 
 #vehicleSelector::after {
-    content: "\f107"; /* Código Unicode de FontAwesome para la flecha hacia abajo */
+    content: "\f107"; 
     font-family: 'FontAwesome';
     position: absolute;
     right: 5px; /* Reducir la distancia desde la derecha */
     top: 50%;
     transform: translateY(-50%);
-    pointer-events: none; /* Asegura que el pseudo-elemento no interfiera con la funcionalidad del select */
+    pointer-events: none; 
     color: white;
 }
 .homeBtn, .infoBtn {
     position: absolute;
     cursor: pointer;
-    color: #000000; /* Color del texto del botón */
-    z-index: 1; /* Asegura que esté sobre el mapa y debajo del sidebar */
-    background-color: #FBB613; /* Color de fondo amarillo */
-    border: 2px solid #000000; /* Contorno negro */
-    border-radius: 50%; /* Borde redondeados */
-    padding: 10px; /* Añade espacio interno al botón */
-    width: 50px; /* Ancho del botón */
-    height: 50px; /* Altura del botón */
-    font-size: 25px; /* Tamaño de fuente */
+    color: #000000; 
+    z-index: 1; 
+    background-color: #FBB613; 
+    border: 2px solid #000000; 
+    border-radius: 50%; 
+    padding: 10px;
+    width: 50px; 
+    height: 50px; 
+    font-size: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -276,13 +276,13 @@ a{
 /* Media query para dispositivos móviles */
 @media (max-width: 768px) {
     html, body, .map-container {
-        height: auto; /* Ajusta la altura para permitir el desplazamiento */
-        overflow: auto; /* Permitir desplazamiento en móviles */
+        height: auto; 
+        overflow: auto; 
     }
 
     .tacometer-container {
-        width: 100%; /* Ajusta el ancho para pantallas pequeñas */
-        max-width: 300px; /* Ancho máximo para evitar desbordamientos */
+        width: 100%; 
+        max-width: 300px;
         margin: 20px auto;
     }
 
@@ -292,26 +292,26 @@ a{
     }
 
 
-    /* Asegurar que el gauge esté bien centrado en pantallas móviles */
+ 
     #gaugeContainer {
-        width: 200px; /* Ajustar el ancho para dispositivos móviles */
+        width: 200px;
         bottom: 10px; /* Ajustar la posición desde abajo */
-        right: 5px; /* Ajustar la posición desde la derecha en pantallas móviles */
+        right: 5px; 
     }
 
     #titleRpmGauge {
-        font-size: 14px; /* Reducir el tamaño de la fuente para dispositivos móviles */
+        font-size: 14px; 
     }
 
     #timeSlider {
-        width: 90%; /* Asegurar que el slider se ajuste en dispositivos móviles */
-        max-width: 100%; /* Permitir que el slider ocupe todo el ancho disponible */
-        margin: 5px auto; /* Reducir el margen */
+        width: 90%;
+        max-width: 100%; 
+        margin: 5px auto; 
     }
     .subtitle {
-        font-size: 0.55em; /* Reducir el tamaño de la fuente para dispositivos móviles */
-        margin-top: 5px; /* Ajustar el margen superior */
-        margin-bottom: 5px; /* Ajustar el margen inferior */
+        font-size: 0.55em; 
+        margin-top: 5px; 
+        margin-bottom: 5px; 
         width: 95%;
         margin: 5px auto;
     }
