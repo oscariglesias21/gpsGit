@@ -32,7 +32,7 @@ def extract_gps_info(data):
 
     if optional and optional[0]:
         rpm_str = optional[0].strip()
-        if ":" in rpm_str:  # Asegurarse de que el formato incluya los dos puntos
+        if ":" in rpm_str:
             rpm = int(rpm_str.split(":")[1])
             gps_info["RPM"] = rpm
 
