@@ -331,3 +331,12 @@ select.dropdown {
         font-size: 12px; /* Ajusta el tamaño de fuente en pantallas pequeñas */
     }
 }
+/* Ocultar el contenedor de tacómetro RPM */
+.tacometer-container {
+    display: none;
+}
+
+/* Ocultar el rectángulo que muestra el valor RPM */
+.rectangle#rpmDescription {
+    display: none;
+}
