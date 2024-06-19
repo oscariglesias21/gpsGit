@@ -193,7 +193,7 @@ html, body, .map-container {
     right: 10px; /* Disminuir este valor para mover el tacómetro más a la derecha */
     width: 300px;
     z-index: 1000;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.867); 
