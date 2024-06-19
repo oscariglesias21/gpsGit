@@ -143,12 +143,9 @@
 <script>
 // Inicialización de Flatpickr para la fecha de inicio
 var startFlatpickr = flatpickr("#startDateTime", {
-    enableTime: true,
-    dateFormat: "Y-m-dTH:i",
+    dateFormat: "Y-m-d",
     altInput: true,
-    altFormat: "Y-m-d H:i",
-    time_24hr: false,
-    minuteIncrement: 15,
+    altFormat: "Y-m-d",
     altInputClass: "form-control form-control-sm",
     onChange: function(selectedDates) {
         // Cuando se selecciona una nueva fecha de inicio, actualiza la fecha mínima del calendario de fecha de fin
@@ -158,20 +155,19 @@ var startFlatpickr = flatpickr("#startDateTime", {
 
 // Inicialización de Flatpickr para la fecha de fin
 var endFlatpickr = flatpickr("#endDateTime", {
-    enableTime: true,
-    dateFormat: "Y-m-dTH:i",
+    dateFormat: "Y-m-d",
     altInput: true,
-    altFormat: "Y-m-d H:i",
-    time_24hr: false,
-    minuteIncrement: 15,
+    altFormat: "Y-m-d",
     altInputClass: "form-control form-control-sm",
     // Se puede especificar una fecha mínima inicial si es necesario, por ejemplo, la fecha actual
     minDate: "today"
 });
+
 function openFlatpickrs() {
     startFlatpickr.open();
     endFlatpickr.open();
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const startDateTimeInput = document.getElementById('startDateTime');
