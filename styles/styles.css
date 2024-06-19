@@ -337,6 +337,6 @@ select.dropdown {
 }
 
 /* Ocultar el rectángulo que muestra el valor RPM */
-.rectangle#rpmDescription {
+#rpmDescription {
     display: none;
 }
