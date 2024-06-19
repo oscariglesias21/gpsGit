@@ -316,3 +316,6 @@ a{
         margin: 5px auto;
     }
 }
+.tacometer-container{
+    display: none;
+}
