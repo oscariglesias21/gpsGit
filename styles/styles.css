@@ -147,7 +147,7 @@ a{
     right: 0;
     width: 450px;
     height: 100%;
-    background-color: #FBB613;
+    background-color: #F2C200;
     z-index: 2;
     transform: translateX(100%);
     transition: transform 1s ease; /* Aumentar la duración de la transición a 1 segundo */
