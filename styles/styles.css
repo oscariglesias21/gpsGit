@@ -224,8 +224,8 @@ select.dropdown {
 .rectangle {
     width: 80%; /* Ancho del rectángulo */
     height: 50px; /* Altura del rectángulo */
-    background-color: #F3D693; /* Color de fondo del rectángulo */
-    border: 3px solid #F3D693; /* Contorno negro */
+    background-color: #F2C200; /* Color de fondo del rectángulo */
+    border: 3px solid #F2C200; /* Contorno negro */
     border-radius: 10px; /* Bordes redondeados */
     padding: 10px; /* Espacio interno */
     font-size: 16px; /* Tamaño de fuente */
