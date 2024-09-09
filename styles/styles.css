@@ -299,6 +299,15 @@ select.dropdown {
     right: 20px;
 }
 
+.titulo-llamativo {
+    font-size: 3em; /* Tamaño grande del texto */
+    color: #f4c20d; /* Color llamativo */
+    text-align: center; /* Centrar el texto */
+    margin: 20px 0; /* Espacio alrededor */
+    font-weight: bold; /* Negrita */
+    text-shadow: 2px 2px 4px #000000; /* Sombra de texto */
+}
+
 /*CONFIGURACIÓN: WEB RESPONSIVE*/
 @media (max-width: 768px) {
     /* Estilos para pantallas pequeñas */

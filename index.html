@@ -10,6 +10,16 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/gaugeJS/dist/gauge.min.js"></script>
+    <style>
+        .titulo-llamativo {
+            font-size: 3em; /* Tamaño grande del texto */
+            color: #f4c20d; /* Color llamativo */
+            text-align: center; /* Centrar el texto */
+            margin: 20px 0; /* Espacio alrededor */
+            font-weight: bold; /* Negrita */
+            text-shadow: 2px 2px 4px #000000; /* Sombra de texto */
+        }
+    </style>
 </head>
 <body>
     <!-- Map container -->
@@ -20,8 +30,8 @@
         <!-- Sidebar información -->
         <div class="sidebar" id="infoSidebar">
             <div class="sidebar-content">
-                <!-- Logo -->
-                <img src="rutaprueba.png" alt="Logo" style="height: 150px; width: auto;">
+                <!-- Título llamativo -->
+                <h1 class="titulo-llamativo">RutaFacil</h1>
                 <p class="intro-text">Con <strong>RutaFacil</strong> podrás rastrear los buses y observar sus rutas!</p>
                 <!-- Contenedor de botones -->
                 <div class="button-container">
@@ -51,7 +61,8 @@
         <!-- Sidebar de Recorridos -->
         <div class="sidebar" id="routesSidebar">
             <div class="sidebar-content">
-                <img src="/rutaprueba.png" alt="Logo" style="height: 200px; width: auto;">
+                <!-- Título llamativo -->
+                <h1 class="titulo-llamativo">RutaFacil</h1>
                 <h4><u><strong>Rastreador GPS</strong></u></h4>
 
                 <!-- Menú desplegable -->
