@@ -301,12 +301,17 @@ select.dropdown {
 
 .titulo-llamativo {
     font-size: 3em; /* Tamaño grande del texto */
-    color: #0a0903; /* Color llamativo */
+    color: #f4c20d; /* Color llamativo del texto (amarillo) */
     text-align: center; /* Centrar el texto */
     margin: 20px 0; /* Espacio alrededor */
     font-weight: bold; /* Negrita */
     text-shadow: 2px 2px 4px #000000; /* Sombra de texto */
+    background-color: #000000; /* Fondo negro */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 10px; /* Bordes redondeados opcionales */
+    display: inline-block; /* Hace que el fondo se ajuste al tamaño del texto */
 }
+
 
 /*CONFIGURACIÓN: WEB RESPONSIVE*/
 @media (max-width: 768px) {
