@@ -147,7 +147,7 @@ a{
     right: 0;
     width: 450px;
     height: 100%;
-    background-color: #F2C200;
+    background-color: #f7f6f3;
     z-index: 2;
     transform: translateX(100%);
     transition: transform 1s ease; /* Aumentar la duración de la transición a 1 segundo */
@@ -225,7 +225,7 @@ select.dropdown {
     width: 80%; /* Ancho del rectángulo */
     height: 50px; /* Altura del rectángulo */
     background-color: #F2C200; /* Color de fondo del rectángulo */
-    border: 3px solid #F2C200; /* Contorno negro */
+    border: 3px solid #000000; /* Contorno negro */
     border-radius: 10px; /* Bordes redondeados */
     padding: 10px; /* Espacio interno */
     font-size: 16px; /* Tamaño de fuente */
