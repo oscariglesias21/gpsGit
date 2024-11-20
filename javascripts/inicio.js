@@ -15,17 +15,40 @@ function reserveSeat(event) {
     if (selectedColectivo === "item1" && availableSeats.colectivo1 > 0) {
         availableSeats.colectivo1--;
         document.getElementById('availableSeats').innerText = availableSeats.colectivo1;
-        alert('¡Cupo reservado para Colectivo 1!');
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Reserva Exitosa',
+            text: '¡Cupo reservado para Colectivo 1!',
+            confirmButtonText: 'Aceptar'
+        });
     } else if (selectedColectivo === "item2" && availableSeats.colectivo2 > 0) {
         availableSeats.colectivo2--;
         document.getElementById('availableSeats').innerText = availableSeats.colectivo2;
-        alert('¡Cupo reservado para Colectivo 2!');
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Reserva Exitosa',
+            text: '¡Cupo reservado para Colectivo 2!',
+            confirmButtonText: 'Aceptar'
+        });
     } else if (selectedColectivo === "item3") {
-        alert('Por favor, selecciona un colectivo específico para reservar.');
+        Swal.fire({
+            icon: 'info',
+            title: 'Información',
+            text: 'Por favor, selecciona un colectivo específico para reservar.',
+            confirmButtonText: 'Entendido'
+        });
     } else {
-        alert('Lo sentimos, no hay cupos disponibles para el colectivo seleccionado.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Cupo No Disponible',
+            text: 'Lo sentimos, no hay cupos disponibles para el colectivo seleccionado.',
+            confirmButtonText: 'Aceptar'
+        });
     }
 }
+
 
 // Actualizar la visualización de los cupos según el colectivo seleccionado
 function updateAvailableSeatsDisplay() {
