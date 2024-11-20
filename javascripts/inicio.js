@@ -104,9 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
 
-    // Resto del código se mantiene igual...
-});
-
 
     // Iconos de los camiones
     var truckIcon = L.icon({
