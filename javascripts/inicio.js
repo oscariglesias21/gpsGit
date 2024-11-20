@@ -83,6 +83,15 @@ function updateAvailableSeatsDisplay() {
 document.addEventListener('DOMContentLoaded', () => {
     fetchAvailableSeats(); // Sincronizar los cupos disponibles al cargar
     updateAvailableSeatsDisplay(); // Actualizar la interfaz
+
+    // Registrar el evento "Reservar cupo" de manera única
+    const reserveButton = document.getElementById('reserveSeatBtn');
+    reserveButton.removeEventListener('click', reserveSeat); // Asegurarte de que no existan duplicados
+    reserveButton.addEventListener('click', reserveSeat); // Registrar solo una vez
+
+    // Escuchar cambios en el selector de colectivos
+    document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
+
     const rpmGaugeElement = document.getElementById("rpmGauge");
     console.log('RPM Gauge element:', rpmGaugeElement); 
     if (rpmGaugeElement) {
@@ -128,17 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Canvas element not found!');
     }
-
-    // Inicializar el contador de cupos disponibles en la interfaz
-    fetchAvailableSeats();
-
-    // Registrar el evento "Reservar cupo" de manera segura
-    const reserveButton = document.getElementById('reserveSeatBtn');
-    reserveButton.removeEventListener('click', reserveSeat); // Asegurarse de que no haya eventos duplicados
-    reserveButton.addEventListener('click', reserveSeat); // Registrar el evento de manera única
-
-    // Escuchar cambios en el selector de colectivos
-    document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
 
     // Inicialización del mapa de Leaflet y otros componentes
     const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
