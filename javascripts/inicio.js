@@ -85,6 +85,37 @@ function updateAvailableSeatsDisplay() {
         document.getElementById('availableSeats').innerText = `C1: ${availableSeats.item1 || 0}, C2: ${availableSeats.item2 || 0}`;
     }
 }
+function checkAndResetSeats() {
+    const allZero = availableSeats.item1 === 0 && availableSeats.item2 === 0;
+
+    if (allZero) {
+        console.log('Cupos en cero. Reiniciando automáticamente...');
+        resetSeats();
+    }
+}
+function resetSeats() {
+    fetch('/reset-seats', { method: 'POST' })
+        .then(response => {
+            if (response.ok) {
+                console.log('Cupos reiniciados automáticamente.');
+                fetchAvailableSeats(); // Actualizar los datos tras el reinicio
+            } else {
+                console.error('Error al reiniciar los cupos automáticamente.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al intentar reiniciar los cupos:', error);
+        });
+}
+
+// Verificar periódicamente los cupos
+function startMonitoringSeats() {
+    setInterval(() => {
+        fetchAvailableSeats(); // Sincronizar los datos actuales
+        checkAndResetSeats(); // Verificar si es necesario reiniciar
+    }, 5000); // Ejecutar cada 5 segundos (ajustable)
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
     if (isInitialized) return; // Prevenir inicialización múltiple
@@ -101,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Escuchar cambios en el selector de colectivos
     document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
+    startMonitoringSeats();
 
     // Ejemplo de inicialización adicional de componentes si es necesario
     console.log('Componentes inicializados correctamente.');
