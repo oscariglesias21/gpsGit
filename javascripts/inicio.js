@@ -1,3 +1,17 @@
+// Inicializar la cantidad de cupos disponibles
+let availableSeats = 10;
+
+// Función para reservar un cupo
+function reserveSeat() {
+    if (availableSeats > 0) {
+        availableSeats--; // Reducir el contador de cupos
+        document.getElementById('availableSeats').innerText = availableSeats; // Actualizar el texto
+        alert('¡Cupo reservado con éxito!');
+    } else {
+        alert('Lo sentimos, no hay cupos disponibles.');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const rpmGaugeElement = document.getElementById("rpmGauge");
     console.log('RPM Gauge element:', rpmGaugeElement); 
@@ -44,6 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Canvas element not found!');
     }
+
+    // Inicializar el contador de cupos disponibles en la interfaz
+    document.getElementById('availableSeats').innerText = availableSeats;
+
+    // Escuchar el clic del botón "Reservar cupo"
+    document.getElementById('reserveSeatBtn').addEventListener('click', reserveSeat);
 
     // Inicialización del mapa de Leaflet y otros componentes
     const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
