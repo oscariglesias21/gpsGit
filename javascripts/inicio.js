@@ -15,10 +15,10 @@ function fetchAvailableSeats() {
 // Función para reservar un cupo según el colectivo seleccionado
 function reserveSeat(event) {
     event.stopPropagation(); // Detener propagación del evento
+    console.log('Evento clic en Reservar ejecutado'); // Verifica si se ejecuta más de una vez
 
     const selectedColectivo = document.getElementById('vehicleSelector').value;
 
-    // Validar que el colectivo seleccionado sea válido
     if (!["item1", "item2"].includes(selectedColectivo)) {
         Swal.fire({
             icon: 'info',
@@ -29,7 +29,6 @@ function reserveSeat(event) {
         return;
     }
 
-    // Hacer la solicitud al servidor para reservar el cupo
     fetch('/reserve-seat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -37,6 +36,7 @@ function reserveSeat(event) {
     })
         .then(response => {
             if (response.ok) {
+                console.log('Reserva exitosa'); // Verifica si llega la respuesta del servidor correctamente
                 Swal.fire({
                     icon: 'success',
                     title: 'Reserva Exitosa',
@@ -44,8 +44,7 @@ function reserveSeat(event) {
                     confirmButtonText: 'Aceptar'
                 });
 
-                // Actualizar los cupos disponibles después de la reserva
-                fetchAvailableSeats();
+                fetchAvailableSeats(); // Actualizar los cupos disponibles
             } else {
                 response.text().then(text => {
                     Swal.fire({
@@ -67,6 +66,7 @@ function reserveSeat(event) {
             });
         });
 }
+
 
 function updateAvailableSeatsDisplay() {
     const selectedColectivo = document.getElementById('vehicleSelector').value;
