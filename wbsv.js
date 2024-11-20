@@ -14,8 +14,8 @@ app.use(express.json());
 
 // Mantener los cupos disponibles en el servidor
 let availableSeats = {
-  colectivo1: 10,
-  colectivo2: 10
+  item1: 10,
+  item2: 10
 };
 
 const dbConnection = mysql.createConnection({
