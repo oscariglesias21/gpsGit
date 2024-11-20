@@ -14,15 +14,16 @@ function fetchAvailableSeats() {
 
 // Función para reservar un cupo según el colectivo seleccionado
 function reserveSeat(event) {
-    event.stopPropagation();
+    event.stopPropagation(); // Asegura que el evento se detiene correctamente
 
     const selectedColectivo = document.getElementById('vehicleSelector').value;
 
-    if (selectedColectivo === "item3") {
+    // Validar que el colectivo sea válido
+    if (!["item1", "item2"].includes(selectedColectivo)) {
         Swal.fire({
             icon: 'info',
             title: 'Información',
-            text: 'Por favor, selecciona un colectivo específico para reservar.',
+            text: 'Por favor, selecciona un colectivo válido.',
             confirmButtonText: 'Entendido'
         });
         return;
@@ -42,7 +43,7 @@ function reserveSeat(event) {
                     confirmButtonText: 'Aceptar'
                 });
 
-                // Volver a sincronizar los cupos con el servidor
+                // Actualizar los cupos disponibles después de la reserva
                 fetchAvailableSeats();
             } else {
                 Swal.fire({
@@ -63,6 +64,7 @@ function reserveSeat(event) {
             });
         });
 }
+
 
 
 // Actualizar la visualización de los cupos según el colectivo seleccionado

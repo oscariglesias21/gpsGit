@@ -41,8 +41,13 @@ app.get('/available-seats', (req, res) => {
 app.post('/reserve-seat', (req, res) => {
   const { colectivo } = req.body;
 
-  if (!availableSeats[colectivo] || availableSeats[colectivo] <= 0) {
-    return res.status(400).send('No hay cupos disponibles para el colectivo seleccionado.');
+  // Validar que el valor de colectivo sea válido
+  if (!availableSeats[colectivo]) {
+      return res.status(400).send('Bad Request: Colectivo no válido');
+  }
+
+  if (availableSeats[colectivo] <= 0) {
+      return res.status(400).send('No hay cupos disponibles para el colectivo seleccionado.');
   }
 
   // Reducir el cupo del colectivo seleccionado
@@ -53,6 +58,7 @@ app.post('/reserve-seat', (req, res) => {
 
   res.status(200).send('Reserva exitosa');
 });
+
 
 app.post('/updateFromSniffer', (req, res) => {
   const { Latitude, Longitude, Date, Time, RPM } = req.body;
