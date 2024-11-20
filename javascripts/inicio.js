@@ -1,5 +1,7 @@
 // Inicializar la cantidad de cupos disponibles para cada colectivo desde el servidor
 let availableSeats = {};
+let isFetching = false; // Bandera para prevenir solicitudes duplicadas
+let isInitialized = false; // Bandera para evitar múltiples inicializaciones
 
 // Función para sincronizar los cupos iniciales al cargar la página
 function fetchAvailableSeats() {
@@ -14,8 +16,11 @@ function fetchAvailableSeats() {
 
 // Función para reservar un cupo según el colectivo seleccionado
 function reserveSeat(event) {
-    event.stopPropagation(); // Detener propagación del evento
-    console.log('Evento clic en Reservar ejecutado'); // Verifica si se ejecuta más de una vez
+    if (isFetching) return; // Prevenir solicitudes duplicadas
+    isFetching = true;
+
+    event.stopPropagation();
+    console.log('Evento clic en Reservar ejecutado');
 
     const selectedColectivo = document.getElementById('vehicleSelector').value;
 
@@ -26,6 +31,7 @@ function reserveSeat(event) {
             text: 'Por favor, selecciona un colectivo válido.',
             confirmButtonText: 'Entendido'
         });
+        isFetching = false; // Liberar el flag si la validación falla
         return;
     }
 
@@ -35,16 +41,15 @@ function reserveSeat(event) {
         body: JSON.stringify({ colectivo: selectedColectivo })
     })
         .then(response => {
+            isFetching = false; // Liberar el flag después de la respuesta
             if (response.ok) {
-                console.log('Reserva exitosa'); // Verifica si llega la respuesta del servidor correctamente
                 Swal.fire({
                     icon: 'success',
                     title: 'Reserva Exitosa',
                     text: `¡Cupo reservado para el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}!`,
                     confirmButtonText: 'Aceptar'
                 });
-
-                fetchAvailableSeats(); // Actualizar los cupos disponibles
+                fetchAvailableSeats();
             } else {
                 response.text().then(text => {
                     Swal.fire({
@@ -57,6 +62,7 @@ function reserveSeat(event) {
             }
         })
         .catch(error => {
+            isFetching = false; // Liberar el flag en caso de error
             console.error('Error al reservar el cupo:', error);
             Swal.fire({
                 icon: 'error',
@@ -67,7 +73,7 @@ function reserveSeat(event) {
         });
 }
 
-
+// Función para actualizar la visualización de los cupos disponibles
 function updateAvailableSeatsDisplay() {
     const selectedColectivo = document.getElementById('vehicleSelector').value;
 
@@ -81,16 +87,23 @@ function updateAvailableSeatsDisplay() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (isInitialized) return; // Prevenir inicialización múltiple
+    isInitialized = true;
+
     fetchAvailableSeats(); // Sincronizar los cupos disponibles al cargar
     updateAvailableSeatsDisplay(); // Actualizar la interfaz
 
     // Registrar el evento "Reservar cupo" de manera única
     const reserveButton = document.getElementById('reserveSeatBtn');
-    reserveButton.removeEventListener('click', reserveSeat); // Asegurarte de que no existan duplicados
-    reserveButton.addEventListener('click', reserveSeat); // Registrar solo una vez
+    reserveButton.replaceWith(reserveButton.cloneNode(true)); // Clona el botón para eliminar eventos duplicados
+    const newReserveButton = document.getElementById('reserveSeatBtn');
+    newReserveButton.addEventListener('click', reserveSeat); // Agregar el evento una sola vez
 
     // Escuchar cambios en el selector de colectivos
     document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
+
+    // Ejemplo de inicialización adicional de componentes si es necesario
+    console.log('Componentes inicializados correctamente.');
 
     const rpmGaugeElement = document.getElementById("rpmGauge");
     console.log('RPM Gauge element:', rpmGaugeElement); 
