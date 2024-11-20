@@ -37,19 +37,29 @@ function reserveSeat(event) {
         return;
     }
 
-    // Verificar si ya se reservó desde este dispositivo
+    // Verificar si ya se reservó desde este dispositivo y si han pasado 5 minutos
     const reservationKey = `reservation_${selectedColectivo}`;
-    if (localStorage.getItem(reservationKey)) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Reserva no permitida',
-            text: 'Ya has reservado un cupo para este colectivo desde este dispositivo.',
-            confirmButtonText: 'Aceptar'
-        });
-        isFetching = false; // Liberar el flag si ya se reservó
-        return;
+    const lastReservationTime = localStorage.getItem(reservationKey);
+    const now = Date.now();
+
+    if (lastReservationTime) {
+        const timeElapsed = (now - parseInt(lastReservationTime, 10)) / 1000; // Tiempo transcurrido en segundos
+        const waitTime = 2 * 60; // 5 minutos en segundos
+
+        if (timeElapsed < waitTime) {
+            const remainingTime = Math.ceil((waitTime - timeElapsed) / 60); // Tiempo restante en minutos
+            Swal.fire({
+                icon: 'warning',
+                title: 'Reserva no permitida',
+                text: `Debes esperar ${remainingTime} minuto(s) antes de realizar otra reserva.`,
+                confirmButtonText: 'Aceptar'
+            });
+            isFetching = false; // Liberar el flag si no ha pasado suficiente tiempo
+            return;
+        }
     }
 
+    // Enviar solicitud de reserva al servidor
     fetch('/reserve-seat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -65,8 +75,8 @@ function reserveSeat(event) {
                     confirmButtonText: 'Aceptar'
                 });
 
-                // Guardar el estado de la reserva en localStorage
-                localStorage.setItem(reservationKey, true);
+                // Guardar el tiempo de la reserva en localStorage
+                localStorage.setItem(reservationKey, now.toString());
 
                 fetchAvailableSeats();
             } else {
@@ -91,6 +101,7 @@ function reserveSeat(event) {
             });
         });
 }
+
 
 
 // Función para actualizar la visualización de los cupos disponibles
