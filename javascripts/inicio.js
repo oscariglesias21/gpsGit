@@ -90,9 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el contador de cupos disponibles en la interfaz
     updateAvailableSeatsDisplay();
 
-    // Registrar el evento "Reservar cupo" con `once: true`
+    // Registrar el evento "Reservar cupo" de manera segura
     const reserveButton = document.getElementById('reserveSeatBtn');
-    reserveButton.addEventListener('click', reserveSeat, { once: true });
+    reserveButton.removeEventListener('click', reserveSeat); // Asegurarse de que no haya eventos duplicados
+    reserveButton.addEventListener('click', reserveSeat); // Registrar el evento de manera única
 
     // Escuchar cambios en el selector de colectivos
     document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
@@ -102,6 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
+
+    // Resto del código se mantiene igual...
+});
+
 
     // Iconos de los camiones
     var truckIcon = L.icon({
