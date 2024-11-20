@@ -37,6 +37,19 @@ function reserveSeat(event) {
         return;
     }
 
+    // Verificar si ya se reservó desde este dispositivo
+    const reservationKey = `reservation_${selectedColectivo}`;
+    if (localStorage.getItem(reservationKey)) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Reserva no permitida',
+            text: 'Ya has reservado un cupo para este colectivo desde este dispositivo.',
+            confirmButtonText: 'Aceptar'
+        });
+        isFetching = false; // Liberar el flag si ya se reservó
+        return;
+    }
+
     fetch('/reserve-seat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -51,6 +64,10 @@ function reserveSeat(event) {
                     text: `¡Cupo reservado para el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}!`,
                     confirmButtonText: 'Aceptar'
                 });
+
+                // Guardar el estado de la reserva en localStorage
+                localStorage.setItem(reservationKey, true);
+
                 fetchAvailableSeats();
             } else {
                 response.text().then(text => {
@@ -74,6 +91,7 @@ function reserveSeat(event) {
             });
         });
 }
+
 
 // Función para actualizar la visualización de los cupos disponibles
 function updateAvailableSeatsDisplay() {
