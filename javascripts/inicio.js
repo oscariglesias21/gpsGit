@@ -86,8 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el contador de cupos disponibles en la interfaz
     updateAvailableSeatsDisplay();
 
-    // Escuchar el clic del botón "Reservar cupo"
-    document.getElementById('reserveSeatBtn').addEventListener('click', reserveSeat);
+    // Escuchar el clic del botón "Reservar cupo" (asegurarse de que solo se registre una vez)
+    const reserveButton = document.getElementById('reserveSeatBtn');
+    reserveButton.removeEventListener('click', reserveSeat); // Por si se registró antes
+    reserveButton.addEventListener('click', reserveSeat);
 
     // Escuchar cambios en el selector de colectivos
     document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
