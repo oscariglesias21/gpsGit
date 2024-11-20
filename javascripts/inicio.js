@@ -14,7 +14,6 @@ function fetchAvailableSeats() {
 
 // Función para reservar un cupo según el colectivo seleccionado
 function reserveSeat(event) {
-    // Detener la propagación del evento
     event.stopPropagation();
 
     const selectedColectivo = document.getElementById('vehicleSelector').value;
@@ -29,7 +28,6 @@ function reserveSeat(event) {
         return;
     }
 
-    // Realizar la solicitud de reserva al servidor
     fetch('/reserve-seat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -43,6 +41,9 @@ function reserveSeat(event) {
                     text: `¡Cupo reservado para el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}!`,
                     confirmButtonText: 'Aceptar'
                 });
+
+                // Volver a sincronizar los cupos con el servidor
+                fetchAvailableSeats();
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -62,6 +63,7 @@ function reserveSeat(event) {
             });
         });
 }
+
 
 // Actualizar la visualización de los cupos según el colectivo seleccionado
 function updateAvailableSeatsDisplay() {
