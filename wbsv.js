@@ -58,6 +58,10 @@ app.post('/reserve-seat', (req, res) => {
 
   res.status(200).send('Reserva exitosa');
 });
+app.post('/reset-seats', (req, res) => {
+  availableSeats = { item1: 10, item2: 10 }; // Valores iniciales
+  res.status(200).send('Cupos reiniciados automáticamente');
+});
 
 
 app.post('/updateFromSniffer', (req, res) => {
