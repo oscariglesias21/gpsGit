@@ -14,11 +14,11 @@ function fetchAvailableSeats() {
 
 // Función para reservar un cupo según el colectivo seleccionado
 function reserveSeat(event) {
-    event.stopPropagation(); // Asegura que el evento se detiene correctamente
+    event.stopPropagation(); // Detener propagación del evento
 
     const selectedColectivo = document.getElementById('vehicleSelector').value;
 
-    // Validar que el colectivo sea válido
+    // Validar que el colectivo seleccionado sea válido
     if (!["item1", "item2"].includes(selectedColectivo)) {
         Swal.fire({
             icon: 'info',
@@ -29,6 +29,7 @@ function reserveSeat(event) {
         return;
     }
 
+    // Hacer la solicitud al servidor para reservar el cupo
     fetch('/reserve-seat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -46,11 +47,13 @@ function reserveSeat(event) {
                 // Actualizar los cupos disponibles después de la reserva
                 fetchAvailableSeats();
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Cupo No Disponible',
-                    text: 'Lo sentimos, no hay cupos disponibles para el colectivo seleccionado.',
-                    confirmButtonText: 'Aceptar'
+                response.text().then(text => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: text || 'Algo salió mal. Por favor, inténtalo nuevamente.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 });
             }
         })
@@ -65,20 +68,22 @@ function reserveSeat(event) {
         });
 }
 
-
-
-// Actualizar la visualización de los cupos según el colectivo seleccionado
 function updateAvailableSeatsDisplay() {
     const selectedColectivo = document.getElementById('vehicleSelector').value;
 
     if (selectedColectivo === "item1") {
-        document.getElementById('availableSeats').innerText = availableSeats.colectivo1 || 0;
+        document.getElementById('availableSeats').innerText = availableSeats.item1 || 0;
     } else if (selectedColectivo === "item2") {
-        document.getElementById('availableSeats').innerText = availableSeats.colectivo2 || 0;
+        document.getElementById('availableSeats').innerText = availableSeats.item2 || 0;
     } else if (selectedColectivo === "item3") {
-        document.getElementById('availableSeats').innerText = `C1: ${availableSeats.colectivo1 || 0}, C2: ${availableSeats.colectivo2 || 0}`;
+        document.getElementById('availableSeats').innerText = `C1: ${availableSeats.item1 || 0}, C2: ${availableSeats.item2 || 0}`;
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAvailableSeats(); // Sincronizar los cupos disponibles al cargar
+    updateAvailableSeatsDisplay(); // Actualizar la interfaz
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     const rpmGaugeElement = document.getElementById("rpmGauge");
