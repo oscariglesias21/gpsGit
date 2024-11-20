@@ -87,13 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el contador de cupos disponibles en la interfaz
     updateAvailableSeatsDisplay();
 
-    // Registrar el evento "Reservar cupo" una sola vez
+    // Registrar el evento "Reservar cupo" eliminando duplicados
     const reserveButton = document.getElementById('reserveSeatBtn');
-    if (reserveButton.getAttribute('data-event-registered') !== 'true') {
-        console.log("Registrando el evento click en el botón 'Reservar cupo'."); // Depuración
-        reserveButton.addEventListener('click', reserveSeat);
-        reserveButton.setAttribute('data-event-registered', 'true'); // Marcar que ya se registró el evento
-    }
+    reserveButton.removeEventListener('click', reserveSeat); // Elimina cualquier evento duplicado
+    reserveButton.addEventListener('click', reserveSeat); // Registra el evento de manera única
 
     // Escuchar cambios en el selector de colectivos
     document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
