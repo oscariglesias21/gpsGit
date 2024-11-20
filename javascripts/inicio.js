@@ -1,14 +1,38 @@
-// Inicializar la cantidad de cupos disponibles
-let availableSeats = 10;
+// Inicializar la cantidad de cupos disponibles para cada colectivo
+let availableSeats = {
+    colectivo1: 10,
+    colectivo2: 10
+};
 
-// Función para reservar un cupo
+// Función para reservar un cupo según el colectivo seleccionado
 function reserveSeat() {
-    if (availableSeats > 0) {
-        availableSeats--; // Reducir el contador de cupos
-        document.getElementById('availableSeats').innerText = availableSeats; // Actualizar el texto
-        alert('¡Cupo reservado con éxito!');
+    const selectedColectivo = document.getElementById('vehicleSelector').value;
+
+    if (selectedColectivo === "item1" && availableSeats.colectivo1 > 0) {
+        availableSeats.colectivo1--;
+        document.getElementById('availableSeats').innerText = availableSeats.colectivo1;
+        alert('¡Cupo reservado para Colectivo 1!');
+    } else if (selectedColectivo === "item2" && availableSeats.colectivo2 > 0) {
+        availableSeats.colectivo2--;
+        document.getElementById('availableSeats').innerText = availableSeats.colectivo2;
+        alert('¡Cupo reservado para Colectivo 2!');
+    } else if (selectedColectivo === "item3") {
+        alert('Por favor, selecciona un colectivo específico para reservar.');
     } else {
-        alert('Lo sentimos, no hay cupos disponibles.');
+        alert('Lo sentimos, no hay cupos disponibles para el colectivo seleccionado.');
+    }
+}
+
+// Actualizar la visualización de los cupos según el colectivo seleccionado
+function updateAvailableSeatsDisplay() {
+    const selectedColectivo = document.getElementById('vehicleSelector').value;
+
+    if (selectedColectivo === "item1") {
+        document.getElementById('availableSeats').innerText = availableSeats.colectivo1;
+    } else if (selectedColectivo === "item2") {
+        document.getElementById('availableSeats').innerText = availableSeats.colectivo2;
+    } else if (selectedColectivo === "item3") {
+        document.getElementById('availableSeats').innerText = "--";
     }
 }
 
@@ -60,10 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Inicializar el contador de cupos disponibles en la interfaz
-    document.getElementById('availableSeats').innerText = availableSeats;
+    updateAvailableSeatsDisplay();
 
     // Escuchar el clic del botón "Reservar cupo"
     document.getElementById('reserveSeatBtn').addEventListener('click', reserveSeat);
+
+    // Escuchar cambios en el selector de colectivos
+    document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
 
     // Inicialización del mapa de Leaflet y otros componentes
     const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
