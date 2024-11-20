@@ -22,10 +22,9 @@ function reserveSeat(event) {
     isFetching = true;
 
     event.stopPropagation();
-    const selectedColectivo = document.getElementById('vehicleSelector').value;
+    console.log('Evento clic en Reservar ejecutado');
 
-    // Log para verificar el valor seleccionado
-    console.log('Colectivo seleccionado:', selectedColectivo);
+    const selectedColectivo = document.getElementById('vehicleSelector').value;
 
     if (!["item1", "item2"].includes(selectedColectivo)) {
         Swal.fire({
@@ -37,45 +36,6 @@ function reserveSeat(event) {
         isFetching = false; // Liberar el flag si la validación falla
         return;
     }
-
-    fetch('/reserve-seat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ colectivo: selectedColectivo })
-    })
-        .then(response => {
-            console.log('Respuesta del servidor:', response);
-            isFetching = false; // Liberar el flag después de la respuesta
-            if (response.ok) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Reserva Exitosa',
-                    text: `¡Cupo reservado para el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}!`,
-                    confirmButtonText: 'Aceptar'
-                });
-                fetchAvailableSeats();
-            } else {
-                response.text().then(text => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: text || 'Algo salió mal. Por favor, inténtalo nuevamente.',
-                        confirmButtonText: 'Aceptar'
-                    });
-                });
-            }
-        })
-        .catch(error => {
-            isFetching = false; // Liberar el flag en caso de error
-            console.error('Error al reservar el cupo:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error de conexión',
-                text: 'No se pudo conectar con el servidor.',
-                confirmButtonText: 'Aceptar'
-            });
-        });
-
 
     fetch('/reserve-seat', {
         method: 'POST',
