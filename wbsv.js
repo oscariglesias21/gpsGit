@@ -12,6 +12,12 @@ app.use(express.static(path.join(__dirname, 'assets')));
 app.use(express.static(path.join(__dirname, 'styles')));
 app.use(express.json()); 
 
+// Mantener los cupos disponibles en el servidor
+let availableSeats = {
+  colectivo1: 10,
+  colectivo2: 10
+};
+
 const dbConnection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -25,6 +31,27 @@ dbConnection.connect((err) => {
     process.exit(1);
   }
   console.log('Conexión a la base de datos establecida correctamente');
+});
+// Endpoint para obtener los cupos actuales
+app.get('/available-seats', (req, res) => {
+  res.json(availableSeats);
+});
+
+// Endpoint para reservar un cupo
+app.post('/reserve-seat', (req, res) => {
+  const { colectivo } = req.body;
+
+  if (!availableSeats[colectivo] || availableSeats[colectivo] <= 0) {
+    return res.status(400).send('No hay cupos disponibles para el colectivo seleccionado.');
+  }
+
+  // Reducir el cupo del colectivo seleccionado
+  availableSeats[colectivo]--;
+
+  // Emitir el cambio a todos los clientes
+  io.emit('updateSeats', availableSeats);
+
+  res.status(200).send('Reserva exitosa');
 });
 
 app.post('/updateFromSniffer', (req, res) => {
