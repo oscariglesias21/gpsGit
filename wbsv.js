@@ -14,8 +14,8 @@ app.use(express.json());
 
 // Mantener los cupos disponibles en el servidor
 let availableSeats = {
-  colectivo1: 10,
-  colectivo2: 10
+  item1: 10,
+  item2: 10
 };
 
 const dbConnection = mysql.createConnection({
@@ -39,20 +39,41 @@ app.get('/available-seats', (req, res) => {
 
 // Endpoint para reservar un cupo
 app.post('/reserve-seat', (req, res) => {
+  console.log('Datos recibidos en /reserve-seat:', req.body);
+
   const { colectivo } = req.body;
 
-  if (!availableSeats[colectivo] || availableSeats[colectivo] <= 0) {
-    return res.status(400).send('No hay cupos disponibles para el colectivo seleccionado.');
+  // Validar que se recibió el campo "colectivo"
+  if (!colectivo) {
+      console.error('El campo "colectivo" no se envió en la solicitud.');
+      return res.status(400).send('Bad Request: El campo "colectivo" es obligatorio.');
   }
 
-  // Reducir el cupo del colectivo seleccionado
+  // Validar que el colectivo esté en availableSeats
+  if (!availableSeats[colectivo]) {
+      console.error('Colectivo no válido:', colectivo);
+      return res.status(400).send('Bad Request: Colectivo no válido.');
+  }
+
+  // Validar si hay cupos disponibles
+  if (availableSeats[colectivo] <= 0) {
+      console.error('No hay cupos disponibles para:', colectivo);
+      return res.status(400).send('No hay cupos disponibles para el colectivo seleccionado.');
+  }
+
+  // Reducir el cupo y emitir el cambio
   availableSeats[colectivo]--;
-
-  // Emitir el cambio a todos los clientes
   io.emit('updateSeats', availableSeats);
-
+  console.log('Cupo reservado exitosamente para:', colectivo);
   res.status(200).send('Reserva exitosa');
 });
+
+app.post('/reset-seats', (req, res) => {
+  availableSeats = { item1: 10, item2: 10 }; // Valores iniciales
+  io.emit('updateSeats', availableSeats); // Notificar a todos los clientes
+  res.status(200).send('Cupos reiniciados automáticamente');
+});
+
 
 app.post('/updateFromSniffer', (req, res) => {
   const { Latitude, Longitude, Date, Time, RPM } = req.body;

@@ -1,5 +1,7 @@
 // Inicializar la cantidad de cupos disponibles para cada colectivo desde el servidor
 let availableSeats = {};
+let isFetching = false; // Bandera para prevenir solicitudes duplicadas
+let isInitialized = false; // Bandera para evitar múltiples inicializaciones
 
 // Función para sincronizar los cupos iniciales al cargar la página
 function fetchAvailableSeats() {
@@ -7,33 +9,64 @@ function fetchAvailableSeats() {
         .then(response => response.json())
         .then(data => {
             availableSeats = data;
-            updateAvailableSeatsDisplay();
+            updateAvailableSeatsDisplay(); // Actualiza la interfaz
+            checkAndResetSeats(); // Verifica si es necesario reiniciar
         })
         .catch(error => console.error('Error al obtener los cupos disponibles:', error));
 }
 
+
 // Función para reservar un cupo según el colectivo seleccionado
 function reserveSeat(event) {
+    if (isFetching) return; // Prevenir solicitudes duplicadas
+    isFetching = true;
+
     event.stopPropagation();
+    console.log('Evento clic en Reservar ejecutado');
 
     const selectedColectivo = document.getElementById('vehicleSelector').value;
 
-    if (selectedColectivo === "item3") {
+    if (!["item1", "item2"].includes(selectedColectivo)) {
         Swal.fire({
             icon: 'info',
             title: 'Información',
-            text: 'Por favor, selecciona un colectivo específico para reservar.',
+            text: 'Por favor, selecciona un colectivo válido.',
             confirmButtonText: 'Entendido'
         });
+        isFetching = false; // Liberar el flag si la validación falla
         return;
     }
 
+    // Verificar si ya se reservó desde este dispositivo y si han pasado 5 minutos
+    const reservationKey = `reservation_${selectedColectivo}`;
+    const lastReservationTime = localStorage.getItem(reservationKey);
+    const now = Date.now();
+
+    if (lastReservationTime) {
+        const timeElapsed = (now - parseInt(lastReservationTime, 10)) / 1000; // Tiempo transcurrido en segundos
+        const waitTime = 2 * 60; // 5 minutos en segundos
+
+        if (timeElapsed < waitTime) {
+            const remainingTime = Math.ceil((waitTime - timeElapsed) / 60); // Tiempo restante en minutos
+            Swal.fire({
+                icon: 'warning',
+                title: 'Reserva no permitida',
+                text: `Debes esperar ${remainingTime} minuto(s) antes de realizar otra reserva.`,
+                confirmButtonText: 'Aceptar'
+            });
+            isFetching = false; // Liberar el flag si no ha pasado suficiente tiempo
+            return;
+        }
+    }
+
+    // Enviar solicitud de reserva al servidor
     fetch('/reserve-seat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ colectivo: selectedColectivo })
     })
         .then(response => {
+            isFetching = false; // Liberar el flag después de la respuesta
             if (response.ok) {
                 Swal.fire({
                     icon: 'success',
@@ -42,18 +75,23 @@ function reserveSeat(event) {
                     confirmButtonText: 'Aceptar'
                 });
 
-                // Volver a sincronizar los cupos con el servidor
+                // Guardar el tiempo de la reserva en localStorage
+                localStorage.setItem(reservationKey, now.toString());
+
                 fetchAvailableSeats();
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Cupo No Disponible',
-                    text: 'Lo sentimos, no hay cupos disponibles para el colectivo seleccionado.',
-                    confirmButtonText: 'Aceptar'
+                response.text().then(text => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: text || 'Algo salió mal. Por favor, inténtalo nuevamente.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 });
             }
         })
         .catch(error => {
+            isFetching = false; // Liberar el flag en caso de error
             console.error('Error al reservar el cupo:', error);
             Swal.fire({
                 icon: 'error',
@@ -65,20 +103,114 @@ function reserveSeat(event) {
 }
 
 
-// Actualizar la visualización de los cupos según el colectivo seleccionado
+
+// Función para actualizar la visualización de los cupos disponibles
 function updateAvailableSeatsDisplay() {
     const selectedColectivo = document.getElementById('vehicleSelector').value;
 
     if (selectedColectivo === "item1") {
-        document.getElementById('availableSeats').innerText = availableSeats.colectivo1 || 0;
+        document.getElementById('availableSeats').innerText = availableSeats.item1 || 0;
     } else if (selectedColectivo === "item2") {
-        document.getElementById('availableSeats').innerText = availableSeats.colectivo2 || 0;
+        document.getElementById('availableSeats').innerText = availableSeats.item2 || 0;
     } else if (selectedColectivo === "item3") {
-        document.getElementById('availableSeats').innerText = `C1: ${availableSeats.colectivo1 || 0}, C2: ${availableSeats.colectivo2 || 0}`;
+        document.getElementById('availableSeats').innerText = `C1: ${availableSeats.item1 || 0}, C2: ${availableSeats.item2 || 0}`;
+    }
+}
+let isResetting = false; // Nueva bandera para evitar reinicios múltiples
+
+function checkAndResetSeats() {
+    const allZero = availableSeats.item1 === 0 && availableSeats.item2 === 0;
+
+    if (allZero && !isResetting) {
+        console.log('Cupos en cero. Reiniciando automáticamente...');
+        isResetting = true; // Evitar reinicios adicionales
+        resetSeats();
     }
 }
 
+function resetSeats() {
+    fetch('/reset-seats', { method: 'POST' })
+        .then(response => {
+            if (response.ok) {
+                console.log('Cupos reiniciados automáticamente.');
+                fetchAvailableSeats(); // Actualizar los datos tras el reinicio
+                isResetting = false; // Permitir futuros reinicios
+            } else {
+                console.error('Error al reiniciar los cupos automáticamente.');
+                isResetting = false; // Liberar la bandera en caso de error
+            }
+        })
+        .catch(error => {
+            console.error('Error al intentar reiniciar los cupos:', error);
+            isResetting = false; // Liberar la bandera en caso de error
+        });
+}
+
+// Verificar periódicamente los cupos
+function startMonitoringSeats() {
+    setInterval(() => {
+        fetchAvailableSeats(); // Sincronizar los datos actuales
+        checkAndResetSeats(); // Verificar si es necesario reiniciar
+    }, 5000); // Ejecutar cada 5 segundos (ajustable)
+}
+
+
+function reserveSeatWithUserName(selectedColectivo, userName) {
+    fetch('/reserve-seat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ colectivo: selectedColectivo, user: userName })
+    })
+    .then(response => {
+        if (response.ok) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Reserva Exitosa',
+                text: `¡Cupo reservado por ${userName} en el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}!`,
+                confirmButtonText: 'Aceptar'
+            });
+        } else {
+            response.text().then(text => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: text || 'Algo salió mal. Por favor, inténtalo nuevamente.',
+                    confirmButtonText: 'Aceptar'
+                });
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error al reservar el cupo:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error de conexión',
+            text: 'No se pudo conectar con el servidor.',
+            confirmButtonText: 'Aceptar'
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    if (isInitialized) return; // Prevenir inicialización múltiple
+    isInitialized = true;
+
+    fetchAvailableSeats(); // Sincronizar los cupos disponibles al cargar
+    updateAvailableSeatsDisplay(); // Actualizar la interfaz
+
+    // Registrar el evento "Reservar cupo" de manera única
+    const reserveButton = document.getElementById('reserveSeatBtn');
+    reserveButton.replaceWith(reserveButton.cloneNode(true)); // Clona el botón para eliminar eventos duplicados
+    const newReserveButton = document.getElementById('reserveSeatBtn');
+    newReserveButton.addEventListener('click', reserveSeat); // Agregar el evento una sola vez
+
+    // Escuchar cambios en el selector de colectivos
+    document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
+    startMonitoringSeats();
+
+    // Ejemplo de inicialización adicional de componentes si es necesario
+    console.log('Componentes inicializados correctamente.');
+
     const rpmGaugeElement = document.getElementById("rpmGauge");
     console.log('RPM Gauge element:', rpmGaugeElement); 
     if (rpmGaugeElement) {
@@ -125,17 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Canvas element not found!');
     }
 
-    // Inicializar el contador de cupos disponibles en la interfaz
-    fetchAvailableSeats();
-
-    // Registrar el evento "Reservar cupo" de manera segura
-    const reserveButton = document.getElementById('reserveSeatBtn');
-    reserveButton.removeEventListener('click', reserveSeat); // Asegurarse de que no haya eventos duplicados
-    reserveButton.addEventListener('click', reserveSeat); // Registrar el evento de manera única
-
-    // Escuchar cambios en el selector de colectivos
-    document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
-
     // Inicialización del mapa de Leaflet y otros componentes
     const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -144,14 +265,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Iconos y marcadores de camiones
     var truckIcon = L.icon({
-        iconUrl: '/camion1_.png',
+        iconUrl: '/colectivo1 (2).png',
         iconSize: [40, 40],
         iconAnchor: [20, 20],
         popupAnchor: [0, -20]
     });
 
     var truckIcon2 = L.icon({
-        iconUrl: '/camion2__.png',
+        iconUrl: '/colectivo2-removebg-preview.png',
         iconSize: [40, 40],
         iconAnchor: [20, 20],
         popupAnchor: [0, -20]
@@ -194,12 +315,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Escuchar actualizaciones de cupos en tiempo real
     socket.on('updateSeats', (data) => {
-        availableSeats = data;
+        console.log('Cupos actualizados desde el servidor:', data);
+        availableSeats = data; // Sincronizar con los datos del servidor
         updateAvailableSeatsDisplay();
+        checkAndResetSeats(); // Verificar si es necesario reiniciar
     });
-
+    
     // Actualización de la visualización del vehículo 2
     function updateVehicleDisplay(data, marker, routePath) {
         const { Latitude, Longitude, Date, Time, RPM } = data;
