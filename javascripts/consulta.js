@@ -1,5 +1,5 @@
 var truckIcon = L.icon({
-    iconUrl: '/colectivo1.png', 
+    iconUrl: '/colectivo2-removebg-preview.png', 
     iconSize: [40, 40],  // Tamaño del ícono
     iconAnchor: [20, 20],  // Punto del ícono que corresponderá a la coordenada del marcador
     popupAnchor: [0, -20]  // Dónde se mostrará el popup en relación al ícono
