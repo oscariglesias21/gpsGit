@@ -124,13 +124,66 @@ function startMonitoringSeats() {
         checkAndResetSeats(); // Verificar si es necesario reiniciar
     }, 5000); // Ejecutar cada 5 segundos (ajustable)
 }
+function requestUserNameAndReserve(selectedColectivo) {
+    Swal.fire({
+        title: 'Ingresa tu nombre',
+        input: 'text',
+        inputPlaceholder: 'Tu nombre aquí...',
+        showCancelButton: true,
+        confirmButtonText: 'Reservar',
+        cancelButtonText: 'Cancelar',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Por favor, ingresa tu nombre.';
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            reserveSeatWithUserName(selectedColectivo, result.value);
+        }
+    });
+}
 
+
+function reserveSeatWithUserName(selectedColectivo, userName) {
+    fetch('/reserve-seat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ colectivo: selectedColectivo, user: userName })
+    })
+    .then(response => {
+        if (response.ok) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Reserva Exitosa',
+                text: `¡Cupo reservado por ${userName} en el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}!`,
+                confirmButtonText: 'Aceptar'
+            });
+        } else {
+            response.text().then(text => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: text || 'Algo salió mal. Por favor, inténtalo nuevamente.',
+                    confirmButtonText: 'Aceptar'
+                });
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error al reservar el cupo:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error de conexión',
+            text: 'No se pudo conectar con el servidor.',
+            confirmButtonText: 'Aceptar'
+        });
+    });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     if (isInitialized) return; // Prevenir inicialización múltiple
     isInitialized = true;
-
-    fetchAvailableSeats(); // Sincronizar los cupos disponibles al cargar
     updateAvailableSeatsDisplay(); // Actualizar la interfaz
 
     // Registrar el evento "Reservar cupo" de manera única
@@ -256,6 +309,17 @@ document.addEventListener('DOMContentLoaded', () => {
         updateAvailableSeatsDisplay();
         checkAndResetSeats(); // Verificar si es necesario reiniciar
     });
+    socket.on('seatReserved', (data) => {
+        const { colectivo, user } = data;
+        Swal.fire({
+            icon: 'info',
+            title: 'Actualización',
+            text: `El cupo para ${colectivo === "item1" ? "Colectivo 1" : "Colectivo 2"} ha sido reservado por ${user}.`,
+            confirmButtonText: 'Aceptar'
+        });
+        fetchAvailableSeats(); // Actualizar los datos de la interfaz
+    });
+    
     
     // Actualización de la visualización del vehículo 2
     function updateVehicleDisplay(data, marker, routePath) {
