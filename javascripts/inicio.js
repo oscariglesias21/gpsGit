@@ -9,10 +9,12 @@ function fetchAvailableSeats() {
         .then(response => response.json())
         .then(data => {
             availableSeats = data;
-            updateAvailableSeatsDisplay();
+            updateAvailableSeatsDisplay(); // Actualiza la interfaz
+            checkAndResetSeats(); // Verifica si es necesario reiniciar
         })
         .catch(error => console.error('Error al obtener los cupos disponibles:', error));
 }
+
 
 // Función para reservar un cupo según el colectivo seleccionado
 function reserveSeat(event) {
@@ -85,26 +87,33 @@ function updateAvailableSeatsDisplay() {
         document.getElementById('availableSeats').innerText = `C1: ${availableSeats.item1 || 0}, C2: ${availableSeats.item2 || 0}`;
     }
 }
+let isResetting = false; // Nueva bandera para evitar reinicios múltiples
+
 function checkAndResetSeats() {
     const allZero = availableSeats.item1 === 0 && availableSeats.item2 === 0;
 
-    if (allZero) {
+    if (allZero && !isResetting) {
         console.log('Cupos en cero. Reiniciando automáticamente...');
+        isResetting = true; // Evitar reinicios adicionales
         resetSeats();
     }
 }
+
 function resetSeats() {
     fetch('/reset-seats', { method: 'POST' })
         .then(response => {
             if (response.ok) {
                 console.log('Cupos reiniciados automáticamente.');
                 fetchAvailableSeats(); // Actualizar los datos tras el reinicio
+                isResetting = false; // Permitir futuros reinicios
             } else {
                 console.error('Error al reiniciar los cupos automáticamente.');
+                isResetting = false; // Liberar la bandera en caso de error
             }
         })
         .catch(error => {
             console.error('Error al intentar reiniciar los cupos:', error);
+            isResetting = false; // Liberar la bandera en caso de error
         });
 }
 
@@ -241,12 +250,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Escuchar actualizaciones de cupos en tiempo real
     socket.on('updateSeats', (data) => {
-        availableSeats = data;
+        console.log('Cupos actualizados desde el servidor:', data);
+        availableSeats = data; // Sincronizar con los datos del servidor
         updateAvailableSeatsDisplay();
+        checkAndResetSeats(); // Verificar si es necesario reiniciar
     });
-
+    
     // Actualización de la visualización del vehículo 2
     function updateVehicleDisplay(data, marker, routePath) {
         const { Latitude, Longitude, Date, Time, RPM } = data;

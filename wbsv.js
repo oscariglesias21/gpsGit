@@ -60,6 +60,7 @@ app.post('/reserve-seat', (req, res) => {
 });
 app.post('/reset-seats', (req, res) => {
   availableSeats = { item1: 10, item2: 10 }; // Valores iniciales
+  io.emit('updateSeats', availableSeats); // Notificar a todos los clientes
   res.status(200).send('Cupos reiniciados automáticamente');
 });
 
