@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Iconos y marcadores de camiones
     var truckIcon = L.icon({
-        iconUrl: '/colectivo1.png',
+        iconUrl: '/colectivo2-removebg-preview.png',
         iconSize: [40, 40],
         iconAnchor: [20, 20],
         popupAnchor: [0, -20]
