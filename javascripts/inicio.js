@@ -1,3 +1,83 @@
+// Inicializar la cantidad de cupos disponibles para cada colectivo desde el servidor
+let availableSeats = {};
+
+// Función para sincronizar los cupos iniciales al cargar la página
+function fetchAvailableSeats() {
+    fetch('/available-seats')
+        .then(response => response.json())
+        .then(data => {
+            availableSeats = data;
+            updateAvailableSeatsDisplay();
+        })
+        .catch(error => console.error('Error al obtener los cupos disponibles:', error));
+}
+
+// Función para reservar un cupo según el colectivo seleccionado
+function reserveSeat(event) {
+    event.stopPropagation();
+
+    const selectedColectivo = document.getElementById('vehicleSelector').value;
+
+    if (selectedColectivo === "item3") {
+        Swal.fire({
+            icon: 'info',
+            title: 'Información',
+            text: 'Por favor, selecciona un colectivo específico para reservar.',
+            confirmButtonText: 'Entendido'
+        });
+        return;
+    }
+
+    fetch('/reserve-seat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ colectivo: selectedColectivo })
+    })
+        .then(response => {
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Reserva Exitosa',
+                    text: `¡Cupo reservado para el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}!`,
+                    confirmButtonText: 'Aceptar'
+                });
+
+                // Volver a sincronizar los cupos con el servidor
+                fetchAvailableSeats();
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Cupo No Disponible',
+                    text: 'Lo sentimos, no hay cupos disponibles para el colectivo seleccionado.',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error al reservar el cupo:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No se pudo conectar con el servidor.',
+                confirmButtonText: 'Aceptar'
+            });
+        });
+}
+
+
+// Actualizar la visualización de los cupos según el colectivo seleccionado
+function updateAvailableSeatsDisplay() {
+    const selectedColectivo = document.getElementById('vehicleSelector').value;
+
+    if (selectedColectivo === "item1") {
+        document.getElementById('availableSeats').innerText = availableSeats.colectivo1 || 0;
+    } else if (selectedColectivo === "item2") {
+        document.getElementById('availableSeats').innerText = availableSeats.colectivo2 || 0;
+    } else if (selectedColectivo === "item3") {
+        document.getElementById('availableSeats').innerText = `C1: ${availableSeats.colectivo1 || 0}, C2: ${availableSeats.colectivo2 || 0}`;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const rpmGaugeElement = document.getElementById("rpmGauge");
     console.log('RPM Gauge element:', rpmGaugeElement); 
@@ -45,13 +125,24 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Canvas element not found!');
     }
 
+    // Inicializar el contador de cupos disponibles en la interfaz
+    fetchAvailableSeats();
+
+    // Registrar el evento "Reservar cupo" de manera segura
+    const reserveButton = document.getElementById('reserveSeatBtn');
+    reserveButton.removeEventListener('click', reserveSeat); // Asegurarse de que no haya eventos duplicados
+    reserveButton.addEventListener('click', reserveSeat); // Registrar el evento de manera única
+
+    // Escuchar cambios en el selector de colectivos
+    document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
+
     // Inicialización del mapa de Leaflet y otros componentes
     const myMap = L.map('map-in-container').setView([11.02115114, -74.84057200], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(myMap);
 
-    // Iconos de los camiones
+    // Iconos y marcadores de camiones
     var truckIcon = L.icon({
         iconUrl: '/camion1_.png',
         iconSize: [40, 40],
@@ -66,15 +157,12 @@ document.addEventListener('DOMContentLoaded', () => {
         popupAnchor: [0, -20]
     });
 
-    // Marcadores de los camiones
     let marker = L.marker([0, 0], {icon: truckIcon2}).addTo(myMap);
     let marker2 = L.marker([0, 0], {icon: truckIcon}).addTo(myMap);
 
-    // Rutas de los camiones
     let routePath = L.polyline([], {color: 'blue'}).addTo(myMap);
     let routePath2 = L.polyline([], {color: 'red'}).addTo(myMap);
 
-    // Variables de posición y temporizador
     let lastMarkerPosition = null;
     let lastMarkerPosition2 = null;
     let inactivityTimer;
@@ -104,6 +192,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById("vehicleSelector").value === "item1" || document.getElementById("vehicleSelector").value === "item3") {
             updateVehicleDisplay2(data2, marker2, routePath2);
         }
+    });
+
+    // Escuchar actualizaciones de cupos en tiempo real
+    socket.on('updateSeats', (data) => {
+        availableSeats = data;
+        updateAvailableSeatsDisplay();
     });
 
     // Actualización de la visualización del vehículo 2
