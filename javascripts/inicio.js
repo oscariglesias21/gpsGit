@@ -83,9 +83,6 @@ function updateAvailableSeatsDisplay() {
 document.addEventListener('DOMContentLoaded', () => {
     fetchAvailableSeats(); // Sincronizar los cupos disponibles al cargar
     updateAvailableSeatsDisplay(); // Actualizar la interfaz
-});
-
-document.addEventListener('DOMContentLoaded', () => {
     const rpmGaugeElement = document.getElementById("rpmGauge");
     console.log('RPM Gauge element:', rpmGaugeElement); 
     if (rpmGaugeElement) {
