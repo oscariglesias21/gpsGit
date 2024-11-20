@@ -5,7 +5,10 @@ let availableSeats = {
 };
 
 // Función para reservar un cupo según el colectivo seleccionado
-function reserveSeat() {
+function reserveSeat(event) {
+    // Detener la propagación del evento
+    event.stopPropagation();
+
     console.log("Función reserveSeat ejecutada."); // Depuración
     const selectedColectivo = document.getElementById('vehicleSelector').value;
 
@@ -87,10 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el contador de cupos disponibles en la interfaz
     updateAvailableSeatsDisplay();
 
-    // Registrar el evento "Reservar cupo" eliminando duplicados
+    // Registrar el evento "Reservar cupo" con `once: true`
     const reserveButton = document.getElementById('reserveSeatBtn');
-    reserveButton.removeEventListener('click', reserveSeat); // Elimina cualquier evento duplicado
-    reserveButton.addEventListener('click', reserveSeat); // Registra el evento de manera única
+    reserveButton.addEventListener('click', reserveSeat, { once: true });
 
     // Escuchar cambios en el selector de colectivos
     document.getElementById('vehicleSelector').addEventListener('change', updateAvailableSeatsDisplay);
