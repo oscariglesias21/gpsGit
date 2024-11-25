@@ -71,7 +71,7 @@ function reserveSeat(event) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Reserva Exitosa',
-                    text: `¡Cupo reservado para el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}!`,
+                    text: `¡Cupo reservado para el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}, Renault Duster, Placa: MHW 268!`,
                     confirmButtonText: 'Aceptar'
                 });
 
@@ -166,7 +166,7 @@ function reserveSeatWithUserName(selectedColectivo, userName) {
             Swal.fire({
                 icon: 'success',
                 title: 'Reserva Exitosa',
-                text: `¡Cupo reservado por ${userName} en el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}!`,
+                text: `¡Cupo reservado por ${userName} en el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}! Chevloret Captiva, Placa: JLM 377`,
                 confirmButtonText: 'Aceptar'
             });
         } else {
