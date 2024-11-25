@@ -58,53 +58,69 @@ function reserveSeat(event) {
             return;
         }
     }
-    const vehicleSelector = document.getElementById('vehicleSelector');
-    const selectedOption = vehicleSelector.options[vehicleSelector.selectedIndex];
-    const car = selectedOption.dataset.car;
-    const plate = selectedOption.dataset.plate;
-    
-    // Enviar solicitud de reserva al servidor
-    fetch('/reserve-seat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ colectivo: selectedColectivo })
-    })
-        .then(response => {
-            isFetching = false; // Liberar el flag después de la respuesta
-            if (response.ok) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Reserva Exitosa',
-                    text: `¡Cupo reservado para el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}, ${car}, Placa: ${plate}!`,
-                    confirmButtonText: 'Aceptar'
-                });
 
-                // Guardar el tiempo de la reserva en localStorage
-                localStorage.setItem(reservationKey, now.toString());
+    Swal.fire({
+        title: 'Selecciona el método de pago',
+        input: 'select',
+        inputOptions: {
+            efectivo: 'Efectivo',
+            tarjeta: 'Tarjeta'
+        },
+        inputPlaceholder: 'Selecciona un método de pago',
+        showCancelButton: true,
+        confirmButtonText: 'Reservar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const paymentMethod = result.value;
 
-                fetchAvailableSeats();
-            } else {
-                response.text().then(text => {
+            // Enviar solicitud de reserva al servidor con el método de pago
+            fetch('/reserve-seat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ colectivo: selectedColectivo, paymentMethod })
+            })
+                .then(response => {
+                    isFetching = false; // Liberar el flag después de la respuesta
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Reserva Exitosa',
+                            text: `¡Cupo reservado para el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"} con pago en ${paymentMethod}!`,
+                            confirmButtonText: 'Aceptar'
+                        });
+
+                        // Guardar el tiempo de la reserva en localStorage
+                        localStorage.setItem(reservationKey, now.toString());
+
+                        fetchAvailableSeats();
+                    } else {
+                        response.text().then(text => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: text || 'Algo salió mal. Por favor, inténtalo nuevamente.',
+                                confirmButtonText: 'Aceptar'
+                            });
+                        });
+                    }
+                })
+                .catch(error => {
+                    isFetching = false; // Liberar el flag en caso de error
+                    console.error('Error al reservar el cupo:', error);
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
-                        text: text || 'Algo salió mal. Por favor, inténtalo nuevamente.',
+                        title: 'Error de conexión',
+                        text: 'No se pudo conectar con el servidor.',
                         confirmButtonText: 'Aceptar'
                     });
                 });
-            }
-        })
-        .catch(error => {
-            isFetching = false; // Liberar el flag en caso de error
-            console.error('Error al reservar el cupo:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error de conexión',
-                text: 'No se pudo conectar con el servidor.',
-                confirmButtonText: 'Aceptar'
-            });
-        });
+        } else {
+            isFetching = false; // Liberar el flag si el usuario cancela
+        }
+    });
 }
+
 
 
 
