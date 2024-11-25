@@ -25,6 +25,10 @@ function reserveSeat(event) {
     console.log('Evento clic en Reservar ejecutado');
 
     const selectedColectivo = document.getElementById('vehicleSelector').value;
+    const vehicleSelector = document.getElementById('vehicleSelector');
+    const selectedOption = vehicleSelector.options[vehicleSelector.selectedIndex];
+    const car = selectedOption.dataset.car; // Vehículo
+    const plate = selectedOption.dataset.plate; // Placa
 
     if (!["item1", "item2"].includes(selectedColectivo)) {
         Swal.fire({
@@ -74,11 +78,16 @@ function reserveSeat(event) {
         if (result.isConfirmed) {
             const paymentMethod = result.value;
 
-            // Enviar solicitud de reserva al servidor con el método de pago
+            // Enviar solicitud de reserva al servidor con método de pago, vehículo y placa
             fetch('/reserve-seat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ colectivo: selectedColectivo, paymentMethod })
+                body: JSON.stringify({ 
+                    colectivo: selectedColectivo,
+                    paymentMethod,
+                    car,
+                    plate 
+                })
             })
                 .then(response => {
                     isFetching = false; // Liberar el flag después de la respuesta
@@ -86,7 +95,7 @@ function reserveSeat(event) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Reserva Exitosa',
-                            text: `¡Cupo reservado para el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"} con pago en ${paymentMethod}!`,
+                            text: `¡Cupo reservado para el ${selectedColectivo === "item1" ? "Colectivo 1" : "Colectivo 2"}, Vehículo: ${car}, Placa: ${plate} con pago en ${paymentMethod}!`,
                             confirmButtonText: 'Aceptar'
                         });
 
@@ -120,6 +129,7 @@ function reserveSeat(event) {
         }
     });
 }
+
 
 
 
